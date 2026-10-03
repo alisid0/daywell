@@ -17,6 +17,16 @@ Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 - Improved desktop, tablet and phone layouts, keyboard focus and save status.
 - Repeatable local database setup and regression tests.
 
+## First-time experience
+
+New users see a three-step welcome: an introduction, a choice of tools, and
+instructions tailored to those tools. The dashboard includes a dismissible
+checklist linked to real entry forms. The choice to hide it is saved.
+
+Open `/welcome` to replay setup without deleting existing entries, or select
+**Getting started** in the app. Fresh workspaces begin with three suggested
+tools: priorities, timers and groceries. Users can choose any combination.
+
 ## Run locally
 
 Install Node.js 22.13 or newer. In the project folder:

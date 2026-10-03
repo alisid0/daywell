@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./everyday.css";
+import "./welcome.css";
 
 export const metadata: Metadata = {
   title: "Daywell — Your day, in balance",

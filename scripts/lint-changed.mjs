@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 import { ESLint } from "eslint";
 
 const base = process.argv[2] || "origin/main";
-const git = (...args) => execFileSync("git", args, { encoding: "utf8", maxBuffer: 32 * 1024 * 1024 });
+const git = (...args) => execFileSync("git", args, { encoding: "utf8", maxBuffer: 32 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] });
 const since = git("merge-base", base, "HEAD").trim();
 const files = git("diff", "--name-only", "--diff-filter=ACMR", since, "--", "*.ts", "*.tsx", "*.mjs")
   .split("\n").map(file => file.trim()).filter(file => file && !file.startsWith("work/"));

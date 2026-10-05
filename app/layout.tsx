@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "@fontsource-variable/atkinson-hyperlegible-next";
 import "./globals.css";
 import "./everyday.css";
 import "./welcome.css";
@@ -16,6 +17,7 @@ import "./audio-library.css";
 import "./meditation.css";
 import "./mic-states.css";
 import "./navigation.css";
+import "./typography.css";
 
 export const metadata: Metadata = {
   title: "Daywell — Your day, in balance",

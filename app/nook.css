@@ -40,8 +40,8 @@ html[data-daywell-style="nook"]{color-scheme:light}
 .nook-shell .host-talk-symbol svg{width:23px;height:23px}
 .nook-shell .daywell-host .host-talk:hover:not(:disabled){background:#76527c;filter:none}
 .nook-shell .daywell-host .host-talk:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #46334d}
-.nook-shell .host-type{font-size:13px;background:none;color:var(--dw-muted);padding:12px 0;text-decoration:underline;text-underline-offset:5px}
-.nook-shell .host-voice-note{grid-column:1;grid-row:3;font-size:11px;line-height:1.6;margin-top:19px;max-width:41ch;align-self:start}
+.nook-shell .host-type{font-size:14px;background:none;color:var(--dw-muted);padding:12px 0;text-decoration:underline;text-underline-offset:5px}
+.nook-shell .host-voice-note{grid-column:1;grid-row:3;font-size:14px;line-height:1.6;margin-top:19px;max-width:41ch;align-self:start}
 
 /* The scene is decorative, never a menu of characters to remember. */
 .nook-company{grid-column:2;grid-row:1 / 4;position:relative;height:365px;align-self:center;isolation:isolate;pointer-events:none}
@@ -55,7 +55,7 @@ html[data-daywell-style="nook"]{color-scheme:light}
 .nook-shell .host-suggestions button{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#f9dca1;border:1px solid #e7c786;border-radius:25px;min-height:80px;padding:14px 20px;font-size:17px;font-weight:650;color:var(--dw-ink);box-shadow:0 5px 0 #ddbd8180,inset 0 2px 0 #ffffff90}
 .nook-shell .host-suggestions button[data-activity="sleep"]{background:#e9e0f3;border-color:#d4c5e6;box-shadow:0 5px 0 #b9a9d15c,inset 0 2px 0 #fff9}
 .nook-shell .host-suggestions button[data-activity="move"]{background:#f4cdc7;border-color:#e7b7b2;box-shadow:0 5px 0 #cf9f9d5c,inset 0 2px 0 #fff9}
-.nook-shell .host-suggestions small{display:block;font-size:11px;line-height:1.5;margin-top:3px;font-weight:400;color:#6d566e}
+.nook-shell .host-suggestions small{display:block;font-size:14px;line-height:1.5;margin-top:3px;font-weight:400;color:#6d566e}
 .nook-shell .host-suggestions button:hover{filter:brightness(1.025)}
 .nook-shell .host-suggestions button:active{transform:translateY(3px);box-shadow:none}
 .nook-shell :is(.host-form,.host-conversation,.host-error,.host-plan,.host-activity,.host-history-actions,.host-change-summary,.host-ack,.host-settings,.host-help,.host-topline){grid-column:1 / -1;width:100%;max-width:710px;justify-self:center}
@@ -79,9 +79,9 @@ html[data-daywell-style="nook"]{color-scheme:light}
 .nook-shell .host-change-summary,.nook-shell .host-ack{order:8}
 .nook-shell .host-ack{width:fit-content}
 .nook-shell .host-topline{order:9;justify-content:center;margin:25px auto 0}
-.nook-shell .host-settings-toggle{font-size:12px;color:var(--dw-muted)}
+.nook-shell .host-settings-toggle{font-size:14px;color:var(--dw-muted)}
 .nook-shell .host-settings{order:10;border:1px solid var(--dw-line);border-radius:25px;margin:15px auto 0}
-.nook-shell .host-help{order:11;font-size:11px;margin:0 auto;text-align:center}
+.nook-shell .host-help{order:11;font-size:14px;margin:0 auto;text-align:center}
 .nook-shell .host-help summary{margin:auto}
 .nook-shell .host-help[open]{background:#fffcf4;padding:20px 25px;margin-top:14px;border:1px solid var(--dw-line);border-radius:24px;text-align:left}
 .nook-shell .host-help[open] summary{margin:0}
@@ -136,14 +136,14 @@ html[data-daywell-style="nook"] .stillwater-tool-list button:hover,html[data-day
   .nook-company .companion-image-pip{width:59%;left:22%;bottom:-3%}
   .nook-shell .host-input-actions{grid-column:1;grid-row:3;justify-content:center;gap:7px 16px}
   .nook-shell .daywell-host .host-talk{padding:14px 22px;min-height:54px!important;font-size:14px}
-  .nook-shell .host-type{font-size:12px}
-  .nook-shell .host-voice-note{grid-column:1;grid-row:4;justify-self:center;text-align:center;font-size:10px;margin:16px auto 0;max-width:37ch}
+  .nook-shell .host-type{font-size:14px}
+  .nook-shell .host-voice-note{grid-column:1;grid-row:4;justify-self:center;text-align:center;font-size:14px;margin:16px auto 0;max-width:37ch}
   .nook-shell .host-suggestions{gap:10px;margin-top:23px}
   .nook-shell .host-suggestions button{border-radius:21px;padding:12px 6px;min-height:70px;font-size:15px}
-  .nook-shell .host-suggestions small{font-size:9px}
+  .nook-shell .host-suggestions small{font-size:14px}
   .nook-shell .host-topline{margin-top:20px}
-  .nook-shell .host-settings-toggle{font-size:11px}
-  .nook-shell .host-help{font-size:10px}
+  .nook-shell .host-settings-toggle{font-size:14px}
+  .nook-shell .host-help{font-size:14px}
   .nook-shell .host-activity{padding:18px;border-radius:28px}
   .nook-shell .host-activity-main>img{width:118px;height:118px}
   .nook-shell .host-activity h3{font-size:25px}
@@ -160,7 +160,7 @@ html[data-daywell-style="nook"] .stillwater-tool-list button:hover,html[data-day
 }
 @media(max-width:700px) and (max-height:740px){
   .nook-shell .host-invitation h2{font-size:30px;max-width:none}
-  .nook-shell .host-invitation p{font-size:12px;margin-top:8px;max-width:42ch}
+  .nook-shell .host-invitation p{font-size:14px;margin-top:8px;max-width:42ch}
   .nook-company{width:200px;height:129px;margin:6px 0 14px}
   .nook-shell .host-suggestions{margin-top:18px}
   .nook-shell .host-suggestions button{min-height:58px;padding:8px 5px}

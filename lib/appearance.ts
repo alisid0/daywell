@@ -104,6 +104,9 @@ export function appearanceTokens(look: Appearance): Record<string, string> {
   const p = palettes[look.palette], v = p.tokens;
   return { ...v, "--dw-wash":v["--dw-soft"], "--dw-muted-soft":v["--dw-muted"], "--dw-focus":v["--dw-accent"], "--dw-mark":v["--dw-accent"], "--dw-tock":v["--dw-soft"], "--dw-note":v["--dw-soft"], "--dw-selected-plan":v["--dw-soft"], "--dw-selected-record":v["--dw-positive"], "--dw-error":p.scheme === "dark" ? "#ffdae0" : "#932b4a", "--dw-error-bg":p.scheme === "dark" ? "#633e4d" : "#ffe9ed" };
 }
-export function letteringTokens(value: Appearance["lettering"]) {
-  return value === "journal" ? { "--dw-display":"Newsreader, Georgia, serif", "--dw-font":"'DM Sans', sans-serif", "--dw-display-weight":"450" } : value === "clean" ? { "--dw-display":"Manrope, sans-serif", "--dw-font":"Manrope, sans-serif", "--dw-display-weight":"550" } : { "--dw-display":"'Bricolage Grotesque', sans-serif", "--dw-font":"'DM Sans', sans-serif", "--dw-display-weight":"650" };
+// One readable font for everyone. Lettering stays in saved looks so older favourites still load,
+// but every option now uses the same font; people choose fonts in Reading comfort instead.
+export const readingFont = "'Atkinson Hyperlegible Next Variable', 'Atkinson Hyperlegible Next', system-ui, sans-serif";
+export function letteringTokens(_lettering: Appearance["lettering"]) {
+  return { "--dw-display": readingFont, "--dw-font": readingFont, "--dw-display-weight": "700" };
 }

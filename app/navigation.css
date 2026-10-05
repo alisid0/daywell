@@ -4,13 +4,13 @@
 .stillwater-dock[data-tabs="5"] button{min-width:96px;padding:10px 14px;gap:8px}
 @media(max-width:767px){
   .stillwater-dock[data-tabs="5"]{left:12px;right:12px;transform:none;max-width:none;justify-content:space-between;gap:2px;padding:5px}
-  .stillwater-dock[data-tabs="5"] button{flex:1;min-width:0;min-height:52px;padding:7px 2px;gap:3px;flex-direction:column;font-size:10.5px}
+  .stillwater-dock[data-tabs="5"] button{flex:1;min-width:0;min-height:52px;padding:7px 2px;gap:3px;flex-direction:column;font-size:14px}
   .stillwater-dock[data-tabs="5"] button svg{width:19px;height:19px}
 }
 
 /* Today: the everyday extras below the host */
 .today-extras{display:grid;justify-items:center;gap:8px;margin:20px auto 120px}
-.today-extras>span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dw-muted,#86607a)}
+.today-extras>span{font-size:14px;font-weight:700;color:var(--dw-muted,#86607a)}
 .today-extras>div{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .today-extras button{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:10px 16px;border-radius:999px;background:var(--dw-surface,#fff8fb);border:1px solid var(--dw-line,#ebd3e1);color:var(--dw-ink,#522d46);font-size:14px}
 .today-extras button svg{color:var(--dw-accent,#803c65)}
@@ -27,10 +27,10 @@
 .rest-space .calendar-strip{margin:26px auto 8px}
 .calendar-strip-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .calendar-strip-head b{font-size:14px}
-.calendar-strip-head>span{display:inline-flex;align-items:center;gap:2px;color:var(--dw-accent,#803c65);font-weight:700;font-size:13px}
+.calendar-strip-head>span{display:inline-flex;align-items:center;gap:2px;color:var(--dw-accent,#803c65);font-weight:700;font-size:14px}
 .calendar-strip-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
 .calendar-strip-days>span{display:grid;justify-items:center;gap:2px;padding:5px 0;border-radius:12px}
-.calendar-strip-days small{font-size:11px;color:var(--dw-muted,#86607a)}
+.calendar-strip-days small{font-size:14px;color:var(--dw-muted,#86607a)}
 .calendar-strip-days b{font-size:14px;font-variant-numeric:tabular-nums}
 .calendar-strip-days .calendar-strip-today{background:var(--dw-soft,#f3dce8)}
 .calendar-strip-dots{display:flex;gap:2px;justify-content:center;min-height:6px}

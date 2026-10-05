@@ -1,0 +1,117 @@
+/* These compositions refine the selected Stillwater mix. The host stays mounted. */
+html[data-appearance-composition] .stillwater-shell .host-workspace .page{max-width:1200px}
+html[data-appearance-composition][data-appearance-backdrop="speckle"] .host-workspace{background-image:radial-gradient(color-mix(in srgb,var(--dw-ink) 7%,transparent) .7px,transparent .7px)}
+html[data-appearance-composition] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active){max-width:960px;padding-top:26px}
+html[data-appearance-composition] .stillwater-shell .host-invitation h2{font-size:clamp(34px,3.5vw,46px);letter-spacing:-1.5px;line-height:1.12}
+html[data-appearance-composition] .stillwater-shell .host-invitation p{max-width:34ch;margin-top:16px;line-height:1.7}
+html[data-appearance-composition] .stillwater-shell .host-suggestions{gap:12px}
+html[data-appearance-composition] .stillwater-shell .host-suggestions button{min-height:44px;padding:11px 23px}
+html[data-appearance-composition] .stillwater-shell .host-topline{margin-top:17px}
+html[data-appearance-composition] .stillwater-shell .host-talk-symbol{width:140px;height:140px}
+html[data-appearance-composition] .stillwater-shell .host-talk:hover:not(:disabled) .host-talk-symbol{outline:2px solid var(--dw-accent);outline-offset:7px}
+html[data-appearance-composition] .stillwater-shell .host-voice-note{max-width:44ch}
+html[data-appearance-composition] .stillwater-shell .nook-company:after{display:none}
+
+/* Breathing room: the microphone leads; a small, quiet company follows. */
+html[data-appearance-composition="breathing"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active){padding-top:35px}
+html[data-appearance-composition="breathing"] .stillwater-shell .host-invitation{margin:0 0 40px}
+html[data-appearance-composition="breathing"] .stillwater-shell .host-talk-symbol{width:136px;height:136px}
+html[data-appearance-composition="breathing"] .stillwater-shell .nook-company{order:8;width:215px;height:105px;margin:24px auto 0}
+html[data-appearance-composition="breathing"] .stillwater-shell .nook-company:before{inset:61% 2% 3%;border-radius:50%;background:color-mix(in srgb,var(--dw-positive) 70%,var(--dw-canvas));box-shadow:none;transform:none}
+html[data-appearance-composition="breathing"] .stillwater-shell .nook-company .dw-companion-image{filter:drop-shadow(0 4px 3px #49334c14)}
+html[data-appearance-composition="breathing"] .stillwater-shell .host-suggestions{margin-top:26px}
+
+/* Cosy cove: one arched surface, spanning the company and voice rows. */
+html[data-appearance-composition="cove"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active){display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;isolation:isolate;position:relative;max-width:760px;padding-top:10px}
+html[data-appearance-composition="cove"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active):before{content:"";grid-column:1;grid-row:2 / 4;align-self:stretch;justify-self:center;width:min(390px,100%);z-index:-1;background:var(--dw-surface);border-radius:190px 190px 85px 85px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--dw-line) 50%,transparent),0 8px color-mix(in srgb,var(--dw-soft) 75%,transparent);margin-bottom:-12px;pointer-events:none}
+html[data-appearance-composition="cove"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active)>*{grid-column:1;order:initial}
+html[data-appearance-composition="cove"] .stillwater-shell .host-invitation{grid-row:1;margin:0 0 24px}
+html[data-appearance-composition="cove"] .stillwater-shell .nook-company{grid-row:2;width:300px;max-width:90%;height:137px;margin:16px auto 0;align-items:flex-end}
+html[data-appearance-composition="cove"] .stillwater-shell .nook-company:before{display:none}
+html[data-appearance-composition="cove"] .stillwater-shell .host-input-actions{grid-row:3;padding:15px 0 10px}
+html[data-appearance-composition="cove"] .stillwater-shell .host-talk-symbol{width:114px;height:114px}
+html[data-appearance-composition="cove"] .stillwater-shell .host-talk{gap:14px}
+html[data-appearance-composition="cove"] .stillwater-shell .host-voice-note{grid-row:4;margin:32px auto 0}
+html[data-appearance-composition="cove"] .stillwater-shell .host-form{grid-row:5}
+html[data-appearance-composition="cove"] .stillwater-shell .host-suggestions{grid-row:6;margin-top:18px}
+html[data-appearance-composition="cove"] .stillwater-shell .host-conversation{grid-row:7}
+html[data-appearance-composition="cove"] .stillwater-shell .host-error{grid-row:8}
+html[data-appearance-composition="cove"] .stillwater-shell .host-plan{grid-row:9}
+html[data-appearance-composition="cove"] .stillwater-shell .host-history-actions{grid-row:10}
+html[data-appearance-composition="cove"] .stillwater-shell .host-change-summary{grid-row:11}
+html[data-appearance-composition="cove"] .stillwater-shell .host-ack{grid-row:12}
+html[data-appearance-composition="cove"] .stillwater-shell .host-topline{grid-row:13}
+html[data-appearance-composition="cove"] .stillwater-shell .host-settings{grid-row:14}
+html[data-appearance-composition="cove"] .stillwater-shell .host-help{grid-row:15}
+
+/* Gentle company: breathing space between the invitation and a soft resting place. */
+html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:65px;padding-top:55px}
+html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active)>*{grid-column:1 / -1;order:initial;justify-self:center}
+html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-invitation{grid-column:1;grid-row:1;text-align:left;margin:0 0 28px;justify-self:start}
+html[data-appearance-composition="beside"] .stillwater-shell .host-invitation h2{max-width:13ch;margin:0;font-size:clamp(38px,4vw,54px)}
+html[data-appearance-composition="beside"] .stillwater-shell .host-invitation p{margin:17px 0 0}
+html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-input-actions{grid-column:1;grid-row:2;justify-self:start;align-items:center;margin-left:12px}
+html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-voice-note{grid-column:1;grid-row:3;text-align:left;justify-self:start;margin:12px 0 0;max-width:36ch}
+html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-suggestions{grid-column:1;grid-row:4;justify-self:start;margin:24px 0 0;gap:8px}
+html[data-appearance-composition="beside"] .stillwater-shell .host-suggestions button{padding:11px 19px}
+html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .nook-company{grid-column:2;grid-row:1 / 5;width:100%;height:300px;margin:0;align-self:center}
+html[data-appearance-composition="beside"] .stillwater-shell .nook-company:before{display:block;inset:-20px -5px 0;border-radius:49% 49% 35% 35%;background:var(--dw-surface);box-shadow:0 8px color-mix(in srgb,var(--dw-soft) 80%,transparent);transform:rotate(4deg)}
+html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .dw-companion-image{width:38%;position:static;transform:none;max-width:none;align-self:center}
+html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-luma{transform:translateY(14px) rotate(-7deg)}
+html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-pip{transform:translateY(45px)}
+html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-bounce{transform:translateY(-12px) rotate(7deg)}
+html[data-appearance-composition="beside"] .stillwater-shell .host-form{grid-row:5}
+html[data-appearance-composition="beside"] .stillwater-shell .host-conversation{grid-row:6}
+html[data-appearance-composition="beside"] .stillwater-shell .host-error{grid-row:7}
+html[data-appearance-composition="beside"] .stillwater-shell .host-plan{grid-row:8}
+html[data-appearance-composition="beside"] .stillwater-shell .host-history-actions{grid-row:9}
+html[data-appearance-composition="beside"] .stillwater-shell .host-change-summary{grid-row:10}
+html[data-appearance-composition="beside"] .stillwater-shell .host-ack{grid-row:11}
+html[data-appearance-composition="beside"] .stillwater-shell .host-topline{grid-row:12;margin-top:36px}
+html[data-appearance-composition="beside"] .stillwater-shell .host-settings{grid-row:13}
+html[data-appearance-composition="beside"] .stillwater-shell .host-help{grid-row:14}
+html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active):not(:has(.nook-company)){grid-template-columns:minmax(0,1fr);max-width:460px}
+html[data-appearance-composition] .stillwater-shell .host-is-active .host-talk-symbol{width:93px;height:93px}
+html[data-appearance-composition] .stillwater-shell .host-is-active .host-invitation h2{font-size:31px;max-width:22ch;margin:auto;text-align:center}
+html[data-appearance-composition] .stillwater-shell .host-is-active .host-invitation p{margin:13px auto 0}
+
+/* Temporary review controls, shown only after choosing Try this design. */
+.iteration-review{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;max-width:950px;margin:0 auto;padding:10px 18px;border-block:1px solid var(--dw-line);color:var(--dw-muted);font:12px "DM Sans",sans-serif}
+.iteration-review-choices{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.iteration-review button{min-height:38px;padding:8px 12px;cursor:pointer;border-radius:13px}
+.iteration-review button[aria-pressed="true"]{background:var(--dw-surface);color:var(--dw-ink);box-shadow:inset 0 0 0 1px var(--dw-line)}
+.iteration-review-compare{text-decoration:underline;text-underline-offset:4px;color:var(--dw-accent)}
+.iteration-review .iteration-review-close{padding:8px;display:grid;place-items:center}
+.iteration-review p{flex-basis:100%;text-align:center;font-size:11px}
+.iteration-review button:focus-visible{outline:3px solid var(--dw-accent);outline-offset:3px}
+@media(max-width:767px){
+  html[data-appearance-composition] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active){padding-top:24px}
+  html[data-appearance-composition] .stillwater-shell .host-invitation h2{font-size:35px;max-width:16ch}
+  html[data-appearance-composition] .stillwater-shell .host-invitation p{font-size:13px;max-width:29ch;margin-top:12px}
+  html[data-appearance-composition="breathing"] .stillwater-shell .host-invitation{margin-bottom:33px}
+  html[data-appearance-composition="breathing"] .stillwater-shell .nook-company{width:192px;height:90px;margin-top:19px}
+  html[data-appearance-composition="cove"] .stillwater-shell .nook-company{width:270px;height:110px;margin-top:17px}
+  html[data-appearance-composition="cove"] .stillwater-shell .host-input-actions{padding-top:12px}
+  html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active){grid-template-columns:minmax(0,1fr);max-width:430px;padding-top:22px}
+  html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-invitation{grid-row:1;margin-bottom:22px}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-invitation h2{font-size:38px;max-width:13ch}
+  html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .nook-company{grid-column:1;grid-row:2;width:230px;height:160px;justify-self:end;margin:-5px 5px -55px 0}
+  html[data-appearance-composition="beside"] .stillwater-shell .nook-company:before{inset:0;border-radius:48% 45% 35% 35%}
+  html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-pip{transform:translateY(20px)}
+  html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-input-actions{grid-row:3;margin-left:0;z-index:1}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-talk-symbol{width:104px;height:104px}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-talk{padding:0 10px}
+  html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-voice-note{grid-row:4;max-width:38ch}
+  html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-suggestions{grid-row:5;margin-top:20px}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-form{grid-row:6}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-conversation{grid-row:7}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-error{grid-row:8}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-plan{grid-row:9}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-history-actions{grid-row:10}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-change-summary{grid-row:11}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-ack{grid-row:12}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-topline{grid-row:13;margin-top:25px}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-settings{grid-row:14}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-help{grid-row:15}
+  .iteration-review{font-size:10px;padding:8px 12px;gap:1px}.iteration-review-choices{width:100%;gap:2px}.iteration-review button{padding:8px 9px;min-height:36px}
+}

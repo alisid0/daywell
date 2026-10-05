@@ -16,10 +16,12 @@
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "db:setup": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 migrations apply DB --local --config dist/server/wrangler.json --persist-to .wrangler/state",
     "setup": "npm run build && npm run db:setup",
-    "check": "npm run typecheck && npm test && npm run build"
+    "check": "npm run typecheck && npm test && npm run build",
+    "voice:setup": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/connect-voice.ps1"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "@elevenlabs/client": "^1.26.0",
     "@hookform/resolvers": "^5.7.1",
     "@shadcn/react": "^0.3.0",
     "class-variance-authority": "0.7.1",

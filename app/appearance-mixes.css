@@ -1,0 +1,68 @@
+/* Independent material overrides. An original preset keeps its own CSS intact. */
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell){background:var(--dw-canvas)}
+html[data-appearance-palette] .host-workspace{color:var(--dw-ink)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .daywell-host{color:var(--dw-ink)}
+html[data-appearance-palette] :is(.stillwater-wordmark,.stillwater-header-button,.host-talk-label,.host-plan h3,.host-activity h3){color:var(--dw-ink)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) :is(.host-invitation p,.host-voice-note,.host-type,.host-help,.host-settings-toggle,.host-activity-main p,.host-activity-main small,.host-activity-label,.host-conversation .host-heard,.host-history-actions>button,.host-history-actions>span,.calendar-host-disclosure>summary,.calendar-host-disclosure>summary>span,.calendar-day-agenda .calendar-empty){color:var(--dw-muted)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) :is(.host-conversation,.host-form>div,.host-plan,.host-settings,.host-change-summary,.host-ack,.host-help[open],.calendar-workspace,.calendar-month,.design-picker){background:var(--dw-surface);color:var(--dw-ink);border-color:var(--dw-line)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-form textarea{color:var(--dw-ink)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-conversation .host-reply>span{color:var(--dw-accent)}
+html[data-appearance-palette] .nook-shell .daywell-host .host-talk{background:var(--dw-accent);color:var(--dw-on-accent);border-color:var(--dw-accent);box-shadow:0 5px color-mix(in srgb,var(--dw-accent) 75%,#000),inset 0 2px #ffffff35}
+html[data-appearance-palette] .nook-shell .daywell-host .host-talk .host-talk-label{color:var(--dw-on-accent)}
+html[data-appearance-palette] .stillwater-shell .daywell-host .host-talk{color:var(--dw-ink)}
+html[data-appearance-palette] .stillwater-shell .host-talk-symbol{color:var(--dw-on-accent);background:radial-gradient(circle at 30% 25%,color-mix(in srgb,var(--dw-accent) 78%,#fff),var(--dw-accent) 65%,color-mix(in srgb,var(--dw-accent) 70%,#000));border-color:var(--dw-accent);box-shadow:inset 0 5px 10px #ffffff35,0 0 0 13px color-mix(in srgb,var(--dw-accent) 10%,transparent),0 12px 25px #00000018}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-suggestions button{color:var(--dw-ink);background:color-mix(in srgb,var(--dw-halo) 15%,var(--dw-surface));border-color:var(--dw-line);box-shadow:0 4px color-mix(in srgb,var(--dw-ink) 12%,transparent),inset 0 2px #ffffff25}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-suggestions button[data-activity="sleep"]{background:var(--dw-luma)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-suggestions button[data-activity="move"]{background:var(--dw-soft)}
+html[data-appearance-palette] .nook-shell .host-suggestions small{color:var(--dw-muted)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) :is(.host-activity,.host-activity-tock){background:var(--dw-soft);border-color:var(--dw-line)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-activity-luma{background:var(--dw-luma)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-activity-bounce{background:var(--dw-positive)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-phrase-list button{background:var(--dw-soft);color:var(--dw-ink)}
+html[data-appearance-palette] .nook-company:before{background:var(--dw-positive);box-shadow:inset 0 4px #ffffff25,0 9px color-mix(in srgb,var(--dw-positive) 85%,#000),0 17px 27px #00000015}
+html[data-appearance-palette] .nook-company:after{background:color-mix(in srgb,var(--dw-positive) 80%,#000)}
+html[data-appearance-palette] .stillwater-header-button,html[data-appearance-palette] .stillwater-dock{color:var(--dw-ink);background:var(--dw-surface);border-color:var(--dw-line);box-shadow:0 4px color-mix(in srgb,var(--dw-ink) 10%,transparent)}
+html[data-appearance-palette] .nook-shell .stillwater-wordmark svg{background:var(--dw-accent);color:var(--dw-on-accent)}
+html[data-appearance-palette] .stillwater-dock button{color:var(--dw-muted)}
+html[data-appearance-palette] .stillwater-dock button[aria-current="page"],html[data-appearance-palette] .stillwater-dock button[aria-expanded="true"]{background:var(--dw-accent);color:var(--dw-on-accent);box-shadow:none}
+html[data-appearance-palette] .stillwater-dock button:hover:not([aria-current="page"]){background:var(--dw-soft)}
+html[data-appearance-palette] .stillwater-drawer{background:var(--dw-surface);color:var(--dw-ink);border-color:var(--dw-line)}
+html[data-appearance-palette] .stillwater-drawer :is([data-slot="sheet-description"],small,p){color:var(--dw-muted)}
+html[data-appearance-palette] .stillwater-drawer :is(.stillwater-tool-list button,.stillwater-drawer-link){color:var(--dw-ink);border-color:var(--dw-line)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .calendar-days button[aria-pressed="true"]{background:var(--dw-accent);color:var(--dw-on-accent)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .calendar-view-tabs{background:var(--dw-soft)}
+html[data-appearance-palette] .nook-shell .calendar-progress{background:var(--dw-positive);color:var(--dw-positive-ink)}
+
+html[data-appearance-backdrop] .host-workspace{background-color:var(--dw-canvas);background-attachment:fixed}
+html[data-appearance-backdrop] .stillwater-shell:before{display:none}
+html[data-appearance-backdrop="plain"] .host-workspace{background-image:none}
+html[data-appearance-backdrop="gingham"] .host-workspace{background-image:repeating-linear-gradient(0deg,color-mix(in srgb,var(--dw-accent) 5%,transparent) 0 32px,transparent 32px 64px),repeating-linear-gradient(90deg,color-mix(in srgb,var(--dw-accent) 5%,transparent) 0 32px,transparent 32px 64px)}
+html[data-appearance-backdrop="speckle"] .host-workspace{background-image:radial-gradient(color-mix(in srgb,var(--dw-ink) 14%,transparent) .7px,transparent .7px);background-size:8px 8px}
+html[data-appearance-backdrop="lake"] .host-workspace{background-image:linear-gradient(color-mix(in srgb,var(--dw-canvas) 82%,transparent),color-mix(in srgb,var(--dw-canvas) 90%,transparent)),url('/scenes/stillwater-lake.png');background-size:cover;background-position:center}
+
+html[data-appearance-lettering] .host-workspace :is(h1,h2,h3){font-family:var(--dw-display);font-weight:var(--dw-display-weight)}
+html[data-appearance-lettering="journal"] .host-invitation h2{letter-spacing:-1px}
+html[data-appearance-buttons] :is(.host-primary,.host-suggestions button,.calendar-primary,.calendar-view-tabs button,.stillwater-dock button,[data-slot="button"]){border-radius:var(--mix-radius);box-shadow:var(--mix-shadow)}
+html[data-appearance-buttons="pillowy"]{--mix-radius:22px;--mix-shadow:inset 0 2px #ffffff40,0 4px color-mix(in srgb,var(--dw-ink) 18%,transparent)}
+html[data-appearance-buttons="pebble"]{--mix-radius:40px;--mix-shadow:none}
+html[data-appearance-buttons="simple"]{--mix-radius:7px;--mix-shadow:none}
+html[data-appearance-buttons] .nook-shell .daywell-host .host-talk{border-radius:var(--mix-radius);box-shadow:var(--mix-shadow)}
+html[data-appearance-buttons] :is(.nook-shell,.stillwater-shell) .host-suggestions button{border-radius:var(--mix-radius);box-shadow:var(--mix-shadow)}
+html[data-appearance-buttons="simple"] .stillwater-shell .host-talk-symbol{border-radius:25px;box-shadow:none}
+html[data-appearance-buttons="pillowy"] .stillwater-shell .host-talk-symbol{border-radius:43%;box-shadow:inset 0 5px 15px #ffffff45,0 7px color-mix(in srgb,var(--dw-ink) 20%,transparent)}
+
+.stillwater-shell .nook-company{order:1;flex-shrink:0;width:min(360px,85%);height:245px;margin:0 auto 24px}
+.host-workspace:not(.nook-shell .host-workspace):not(.stillwater-shell .host-workspace) .nook-company{max-width:410px;margin:20px auto 25px}
+html[data-appearance-company="perch"] .nook-company{display:flex;justify-content:center;align-items:center}
+html[data-appearance-company="perch"] .nook-company .dw-companion-image{position:static;width:34%;transform:none;max-width:none}
+html[data-appearance-company="perch"] .nook-company .companion-image-pip{order:2}
+html[data-appearance-company="perch"] .nook-company .companion-image-luma{order:1}
+html[data-appearance-company="perch"] .nook-company .companion-image-bounce{order:3}
+html[data-appearance-company="perch"] .nook-company:before{inset:55% 0 15%;border-radius:50% 50% 28px 28px;transform:none}
+html[data-appearance-company="perch"] .nook-company:after{bottom:12%;height:30px;transform:none}
+html[data-appearance-company="quiet"] .nook-shell .host-workspace .daywell-host{grid-template-columns:minmax(0,1fr);max-width:850px}
+html[data-appearance-company="quiet"] .nook-shell .host-invitation{text-align:center}
+html[data-appearance-company="quiet"] .nook-shell .host-invitation :is(h2,p){margin-left:auto;margin-right:auto;max-width:24ch}
+html[data-appearance-company="quiet"] .nook-shell .host-input-actions{justify-content:center}
+html[data-appearance-company="quiet"] .nook-shell .host-voice-note{justify-self:center;text-align:center}
+@media(max-width:700px){html[data-appearance-company="quiet"] .nook-shell .host-input-actions{grid-row:2}html[data-appearance-company="quiet"] .nook-shell .host-voice-note{grid-row:3}.stillwater-shell .nook-company{width:240px;height:165px}}

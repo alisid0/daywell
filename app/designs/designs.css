@@ -1,0 +1,377 @@
+@font-face{font-family:"DM Sans";src:url("/fonts/dmsans.ttf") format("truetype");font-style:normal;font-weight:100 1000;font-display:swap}
+@font-face{font-family:Manrope;src:url("/fonts/manrope.ttf") format("truetype");font-style:normal;font-weight:200 800;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url("/fonts/bricolagegrotesque.ttf") format("truetype");font-style:normal;font-weight:200 800;font-display:swap}
+@font-face{font-family:Newsreader;src:url("/fonts/newsreader.ttf") format("truetype");font-style:normal;font-weight:200 800;font-display:swap}
+
+/* The review frame is deliberately separate from the three product identities. */
+.design-gallery,.concept-root{font-family:"DM Sans",sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.design-gallery *,.concept-root *{box-sizing:border-box}
+.design-gallery a,.concept-root a{color:inherit;text-decoration:none}
+.design-gallery button,.concept-root button,.concept-root input,.concept-root select{font:inherit}
+.design-gallery :focus-visible,.concept-root :focus-visible{outline:3px solid #2275d1;outline-offset:4px}
+.concept-root h1:focus{outline:none}
+.design-gallery h1,.design-gallery h2,.concept-root h1,.concept-root h2,.concept-root h3{color:inherit;letter-spacing:normal}
+.design-gallery p,.concept-root p{max-width:68ch}
+.concept-root h1,.concept-root .sample-item-list label>span:last-child{overflow-wrap:anywhere}
+.design-gallery{background:#f3f5f8;color:#242b3d;min-height:100vh;padding:30px max(28px,calc((100vw - 1344px)/2)) 28px}
+.gallery-header{display:flex;align-items:center;justify-content:space-between}
+.gallery-brand{font-family:Manrope,sans-serif;font-size:27px;font-weight:800;letter-spacing:-1.5px}
+.gallery-header>span{font-size:14px;color:#596277}
+.gallery-intro{margin:52px 0 34px;display:flex;align-items:flex-end;justify-content:space-between;gap:30px}
+.gallery-intro h1{font:600 clamp(38px,4.3vw,64px)/1.06 Manrope,sans-serif;letter-spacing:-2.7px}
+.gallery-intro p{font-size:16px;line-height:1.7;color:#596277;max-width:38ch;padding-bottom:4px}
+.gallery-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.gallery-option{background:white;border-radius:20px;overflow:hidden;border:1px solid #dde2e9}
+.gallery-thumbnail{display:block;position:relative;height:325px;padding:25px 26px;overflow:hidden}
+.mini-brand{display:flex;gap:7px;align-items:center;font-family:Manrope,sans-serif;font-weight:800;font-size:17px;letter-spacing:-.8px}
+.mini-brand svg{width:19px;height:19px}
+.mini-heading{position:relative;z-index:1;margin-top:23px;font-size:27px;font-weight:650;line-height:1.18;letter-spacing:-1.1px}
+.gallery-daybreak .gallery-thumbnail{background:#e6effb;color:#183d8c;font-family:Manrope,sans-serif}
+.mini-sun{position:absolute;top:132px;right:27px;width:144px;height:144px;background:#f8cb4a;border-radius:50%;display:grid;place-items:center;border:11px solid #e6effb;outline:1px solid #183d8c22}
+.mini-sun span{font-size:29px;letter-spacing:-1px;font-weight:600}
+.mini-bottom{position:absolute;bottom:0;left:0;right:0;background:white;padding:17px 24px;display:grid;gap:7px;font-size:11px}
+.mini-bottom span{display:flex;align-items:center;gap:9px}
+.mini-bottom svg{height:13px;width:13px}
+.gallery-pocket .gallery-thumbnail{background:#f7e7ed;color:#472e55;font-family:"Bricolage Grotesque",sans-serif}
+.gallery-pocket .mini-heading{font-size:33px;line-height:1.03;letter-spacing:-1px}
+.mini-pocket-board{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:21px}
+.mini-pocket-board>div{background:#fffcfe;padding:12px;border-radius:6px 20px 6px 6px;font-size:10px}
+.mini-pocket-board p{padding:8px 0;border-bottom:1px solid #e4dce6}
+.mini-pocket-board b{display:flex;align-items:center;gap:3px;margin-top:7px;font-size:10px}
+.mini-pocket-board b svg{width:11px;height:11px}
+.mini-pocket-board>div+div{background:#ff9855;border-radius:50px 50px 12px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.mini-pocket-board strong{font-size:27px;line-height:1.5}
+.mini-pocket-board svg{width:17px}
+.gallery-current .gallery-thumbnail{background:#edf4f1;color:#174c43}
+.gallery-current .mini-heading{font:400 35px/1.06 Newsreader,Georgia,serif;letter-spacing:-1px}
+.mini-current-line{position:relative;margin:18px 0 0 5px;border-left:1px solid #8eb5a8;padding:0 0 0 20px;display:grid;gap:10px;z-index:1}
+.mini-current-line>span{position:relative;display:flex;align-items:center;gap:16px;font-size:10px}
+.mini-current-line i{position:absolute;left:-24px;width:7px;height:7px;border-radius:50%;background:#174c43;box-shadow:0 0 0 4px #edf4f1}
+.mini-current-line strong{font-size:11px;font-weight:500}
+.mini-wave{position:absolute;bottom:-5px;right:-38px;width:210px;height:70px;color:#b8d9dc}
+.gallery-option-copy{padding:25px 26px 26px}
+.gallery-option h2{font:700 26px/1.2 Manrope,sans-serif;letter-spacing:-.8px}
+.gallery-character{margin:8px 0 12px;font-weight:500;color:#3b465a;font-size:14px}
+.gallery-option-copy>p:not(.gallery-character){color:#636c7d;font-size:14px;line-height:1.65;min-height:70px}
+.gallery-palette{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin:22px 0}
+.gallery-palette>span{width:16px;height:16px;border-radius:50%;border:1px solid #00000012}
+.gallery-palette>small{width:100%;font-size:11px;color:#677080;margin-top:5px}
+.gallery-open{display:block;border-radius:8px;padding:12px;text-align:center;color:white!important;background:#183d8c;font-size:14px;font-weight:600}
+.gallery-pocket .gallery-open{background:#472e55}
+.gallery-current .gallery-open{background:#174c43}
+.gallery-daily-link{display:block;text-align:center;text-decoration:underline!important;text-underline-offset:3px;font-size:12px;color:#596277!important;margin-top:14px}
+.gallery-footer{display:flex;gap:25px;justify-content:space-between;margin-top:28px;font-size:12px;color:#636c7d}
+.gallery-footer a{text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.concept-review-bar{min-height:58px;background:#fff;color:#444c5b;display:flex;align-items:center;justify-content:space-between;padding:10px 28px;gap:16px;border-bottom:1px solid #dee3ea;font-size:12px;position:relative;z-index:2}
+.concept-review-bar>a{display:flex;align-items:center;gap:3px;white-space:nowrap}
+.concept-review-bar nav{display:flex;gap:5px}
+.concept-review-bar nav>a{padding:7px 14px;border-radius:6px}
+.concept-review-bar nav>a[aria-current=page]{background:#e9edf2;color:#252b38;font-weight:650}
+.review-view-switch{display:flex;border:1px solid #d8dee6;border-radius:6px;padding:3px;gap:3px}
+.review-view-switch button{border:0;color:#566074;background:transparent;border-radius:3px;padding:4px 11px;font-size:11px;white-space:nowrap}
+.review-view-switch button[aria-pressed=true]{background:#35435a;color:#fff}
+.concept-root{--blue:#183d8c;--sky:#e6effb;--sun:#f8cb4a;--forest:#174c43;--mist:#edf4f1;--water:#b8d9dc;--coral:#f2a18c;--plum:#472e55;--rose:#f7e7ed;--apricot:#ff9855;--mint:#d9eee1;--ink:#142443;--accent:var(--blue);--soft:var(--sky);--paper:#fff;--heading:Manrope,sans-serif;background:var(--paper);color:var(--ink);min-height:100vh}
+.concept-pocket{--ink:#342738;--accent:var(--plum);--soft:var(--rose);--paper:#fffcfe;--heading:"Bricolage Grotesque",sans-serif;background:#f7e7ed}
+.concept-current{--ink:#18342e;--accent:var(--forest);--soft:var(--mist);--heading:Newsreader,Georgia,serif;background:var(--mist)}
+.concept-shell{max-width:1536px;margin:0 auto}
+.concept-header{height:98px;display:flex;align-items:center;justify-content:space-between;padding:0 5.5%;gap:20px;background:var(--paper)}
+.concept-brand{display:flex;align-items:center;gap:9px;color:var(--accent);font:800 29px/1 Manrope,sans-serif;letter-spacing:-1.5px}
+.concept-brand>svg{width:30px;height:30px;stroke-width:1.8}
+.concept-brand-button{background:transparent;border:0;padding:0;color:inherit}
+.concept-header-note{font-size:13px;color:var(--accent);opacity:.75}
+.concept-header-note{max-width:40ch;overflow-wrap:anywhere}
+.concept-header-actions{display:flex;align-items:center;gap:20px}
+.concept-avatar{background:var(--soft);color:var(--accent);border:0;border-radius:50%;width:38px;height:38px;font-weight:600!important;font-size:14px!important}
+.concept-root .concept-plain{background:transparent;color:var(--accent);border:0;display:flex;align-items:center;gap:8px;font-size:12px;padding:8px 0}
+.concept-root .concept-primary{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:45px;border:0;background:var(--accent);color:white;border-radius:8px;padding:12px 22px;font-size:14px;font-weight:600}
+.concept-root .concept-primary:disabled{opacity:.5}
+.concept-root .concept-primary:hover:not(:disabled){filter:brightness(1.12)}
+.concept-root .concept-secondary{display:flex;align-items:center;justify-content:center;gap:6px;min-height:41px;padding:10px 15px;border-radius:7px;background:transparent;color:var(--accent);border:1px solid currentColor;font-size:12px;font-weight:600}
+.concept-root .concept-icon-button{background:transparent;border:1px solid #00000022;display:grid;place-items:center;border-radius:50%;min-height:40px;min-width:40px;color:inherit}
+.concept-welcome{display:grid;grid-template-columns:1.1fr 1fr;min-height:660px;margin:0 5.5% 24px;border-radius:28px;overflow:hidden}
+.welcome-message{position:relative;padding:50px 44px 245px;background:var(--soft);overflow:hidden}
+.welcome-message h1{font:600 clamp(42px,4.5vw,68px)/1.05 var(--heading);letter-spacing:-2.7px;max-width:11ch;position:relative;z-index:1}
+.welcome-message>p{font-size:16px;line-height:1.65;margin:23px 0 24px;max-width:35ch;position:relative;z-index:1}
+.welcome-guidance{display:grid;gap:11px;font-size:13px;position:relative;z-index:1}
+.welcome-guidance>span{display:flex;align-items:center;gap:10px}
+.welcome-guidance svg{color:var(--accent);stroke-width:1.6}
+.concept-welcome-art{position:absolute;bottom:0;left:0;right:0;height:240px;overflow:hidden}
+.welcome-sun{width:280px;height:280px;border-radius:50%;background:var(--sun);position:absolute;top:45px;left:50%;transform:translateX(-50%)}
+.welcome-sun:before{content:"";position:absolute;border:1px solid #183d8c33;border-radius:50%;inset:-26px}
+.welcome-horizon{position:absolute;bottom:0;left:0;right:0;height:43px;background:#183d8c}
+.sun-note{position:absolute;bottom:75px;left:0;width:100%;display:flex;justify-content:center;align-items:center;gap:10px;color:#142443;font-size:13px;font-weight:500}
+.welcome-setup{padding:48px 45px;background:var(--paper);align-self:center;max-width:600px;width:100%}
+.welcome-setup>h2{font:600 27px/1.15 var(--heading);letter-spacing:-.8px}
+.welcome-setup>p{font-size:14px;line-height:1.6;margin:11px 0 29px;color:#526075;max-width:34ch}
+.concept-name-label{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;margin:0 0 8px}
+.concept-name-label>span{font-size:11px;font-weight:400;opacity:.7}
+.concept-name-input{width:100%;min-height:47px;border:1px solid #a9b4c4;border-radius:7px;padding:10px 13px;background:var(--paper);color:var(--ink);font-size:15px!important}
+.welcome-tool-options{border:0;padding:0;margin:25px 0 24px;min-width:0}
+.welcome-tool-options>legend{font-size:13px;font-weight:600;margin:0 0 9px;padding:0}
+.welcome-tool-option{display:flex;gap:12px;align-items:center;min-height:79px;padding:12px 13px;border:1px solid #dce2e9;border-radius:9px;margin-bottom:9px;cursor:pointer;background:var(--paper)}
+.welcome-tool-option.tool-selected{border-color:var(--accent);background:var(--soft)}
+.welcome-tool-option>svg{color:var(--accent);flex-shrink:0}
+.welcome-tool-option>span{flex:1;min-width:0}
+.welcome-tool-option strong{display:block;font-weight:600;font-size:13px}
+.welcome-tool-option small{display:block;font-size:11px;opacity:.75;margin-top:4px}
+.welcome-tool-option>input{accent-color:var(--accent);width:17px;height:17px;flex-shrink:0;cursor:pointer}
+.concept-root .welcome-submit{width:100%;min-height:49px}
+.welcome-setup .concept-welcome-reassurance{margin:12px 0 0;font-size:11px;text-align:center;max-width:none;color:var(--accent)}
+.welcome-setup .concept-form-message{font-size:12px;color:#8a251f;margin:-10px 0 15px}
+.concept-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:23px 5.5% 28px;font-size:11px;color:var(--accent)}
+.concept-footer>span{font-weight:600;white-space:nowrap}
+.concept-footer>p{opacity:.8}
+.concept-footer>a{white-space:nowrap;text-decoration:underline;text-underline-offset:3px}
+.concept-live-status{position:fixed;width:1px;height:1px;clip-path:inset(50%);overflow:hidden}
+
+/* Daybreak: one broad sky, a focus dial on the horizon, open lists below. */
+.concept-day{padding:28px 5.5% 0}
+.day-greeting{display:flex;justify-content:space-between;align-items:center;gap:25px;margin:2px 0 26px}
+.day-date{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--accent);margin-bottom:14px}
+.day-date>span{opacity:.68;border-left:1px solid #0000002b;padding-left:12px;font-size:11px}
+.day-greeting h1{font:600 clamp(36px,3.8vw,58px)/1.1 var(--heading);letter-spacing:-2px;max-width:19ch}
+.day-greeting p{font-size:14px;line-height:1.6;margin-top:14px;color:var(--accent)}
+.greeting-sun{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--blue);padding:25px}
+.greeting-sun svg{color:#b88a0b;stroke-width:1.2}
+.sample-getting-started{display:flex;align-items:center;gap:13px;font-size:12px;border-bottom:1px solid #00000018;padding:0 0 19px;margin:0 0 28px;color:var(--accent)}
+.sample-getting-started>svg{flex-shrink:0}
+.sample-getting-started p{flex:1;max-width:none}
+.sample-getting-started strong{font-weight:650;margin-right:6px}
+.sample-getting-started button{border:0;background:transparent;text-decoration:underline;text-underline-offset:4px;color:inherit;white-space:nowrap;font-size:12px}
+.daily-board{display:grid;grid-template-columns:1.16fr 1fr;gap:34px 42px;align-items:start}
+.daily-board.custom-tools{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.concept-pocket .daily-board.custom-tools>*{grid-column:auto;grid-row:auto;min-height:0}
+.sample-section-top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.sample-section-top>h2,.sample-evening h2{font:600 21px/1.25 var(--heading);letter-spacing:-.65px}
+.sample-section-top>span{font-size:11px;opacity:.75}
+.sample-timer>p,.sample-priorities>p,.sample-shopping>p,.sample-evening p{font-size:12px;line-height:1.65;margin-top:8px;opacity:.8}
+.sample-timer{background:var(--sky);padding:27px 30px 25px;border-radius:18px 18px 0 0;overflow:hidden;color:var(--blue)}
+.timer-visual{position:relative;height:212px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:10px 0 14px;isolation:isolate}
+.concept-daybreak .timer-visual{overflow:hidden}
+.timer-sun{position:absolute;top:30px;width:250px;height:250px;border-radius:50%;background:var(--sun);z-index:-1}
+.timer-orbit{position:absolute;top:9px;width:290px;height:290px;border:1px solid #183d8c2b;border-radius:50%;z-index:-1}
+.sample-time{font:500 73px/1.15 var(--heading);letter-spacing:-3px;font-variant-numeric:tabular-nums;margin-top:25px;z-index:1}
+.sample-time>span{margin:0 1px;font-weight:300}
+.timer-state{font-size:11px;z-index:1;margin-top:4px}
+.timer-controls{display:flex;align-items:center;gap:10px;position:relative;z-index:1;background:inherit}
+.timer-controls select{font-size:11px;background:transparent;border:0;border-radius:4px;max-width:109px;color:inherit;padding:6px 0;margin-left:auto;cursor:pointer}
+.timer-controls .concept-icon-button{border-color:#183d8c33}
+.sample-priorities{padding:25px 0 0}
+.sample-item-list{list-style:none;margin:18px 0 0;padding:0}
+.sample-item-list>li{border-bottom:1px solid #00000013}
+.sample-item-list label{display:flex;position:relative;align-items:center;gap:12px;min-height:51px;padding:11px 0;cursor:pointer;font-size:13px}
+.sample-item-list label>input{position:absolute;width:1px;height:1px;opacity:0}
+.sample-checkbox{height:20px;width:20px;border:1px solid #a1abb7;border-radius:50%;flex-shrink:0;display:grid;place-items:center;background:transparent}
+.sample-item-list label>input:focus-visible+.sample-checkbox{outline:3px solid #2275d1;outline-offset:4px}
+.sample-item-list .item-done{color:#607084}
+.item-done>.sample-checkbox{background:var(--accent);color:#fff;border-color:var(--accent)}
+.item-done>span:last-child{text-decoration:line-through;text-decoration-thickness:1px}
+.sample-add-item{display:flex;gap:10px;align-items:center;margin-top:17px;border:1px solid #afbbc7;border-radius:7px;background:var(--paper);padding:5px 7px 5px 12px;color:var(--accent)}
+.sample-add-item>svg{flex-shrink:0}
+.sample-add-item input{flex:1;width:50px;min-width:0;background:transparent;border:0;min-height:32px;color:var(--ink);font-size:12px}
+.sample-add-item input::placeholder{color:#68717f;opacity:1}
+.sample-add-item button{border:0;background:var(--soft);color:var(--accent);border-radius:4px;padding:6px 10px;font-size:11px;font-weight:600}
+.sample-add-item button:disabled{opacity:.45}
+.sample-shopping{padding:0 0 15px}
+.sample-evening{background:#f5f7fa;display:grid;grid-template-columns:auto 1fr;gap:18px 17px;padding:25px;border-radius:4px 24px 4px 4px;align-items:center}
+.evening-moon{width:40px;height:40px;display:grid;place-items:center;color:var(--accent)}
+.evening-moon svg{height:30px;width:30px;stroke-width:1.4}
+.sample-evening h2{font-size:19px}
+.sample-evening label{display:flex;flex-direction:column;gap:6px;font-size:10px;grid-column:2}
+.sample-evening input{border:0;background:transparent;color:var(--accent);font:500 24px/1.2 var(--heading);width:135px;padding:3px 0}
+.sample-evening button{grid-column:2;justify-self:start}
+.daily-closing{text-align:center;font-size:12px;color:var(--accent);opacity:.8;margin:35px auto 20px!important}
+
+/* Pocket: tabbed paper lists and a softer, sculptural timer; no repeated card kit. */
+.concept-pocket .concept-header{background:var(--rose);height:94px}
+.concept-pocket .concept-brand{font-family:"Bricolage Grotesque",sans-serif;font-size:31px;letter-spacing:-1.5px}
+.concept-pocket .concept-brand>svg{background:var(--plum);color:var(--rose);border-radius:9px;padding:6px;width:34px;height:34px}
+.concept-pocket .concept-avatar{background:var(--plum);color:white}
+.concept-pocket .concept-welcome{margin:0 4.5% 20px;border-radius:0;grid-template-columns:1.13fr 1fr;overflow:visible;gap:50px}
+.concept-pocket .welcome-message{padding:24px 0 300px;background:transparent;overflow:visible}
+.concept-pocket .welcome-message h1{font-weight:650;font-size:clamp(48px,5.1vw,76px);line-height:.98;letter-spacing:-3px;max-width:10ch;color:var(--plum)}
+.concept-pocket .welcome-message>p{max-width:36ch;font-size:15px;margin-top:24px}
+.concept-pocket .welcome-guidance{gap:8px;font-size:12px}
+.concept-pocket .welcome-setup{border:1px solid #472e5525;border-radius:7px 34px 7px 7px;align-self:start;padding:32px 35px;margin-top:10px}
+.concept-pocket .welcome-setup>p{color:#66516c}
+.concept-pocket .welcome-setup h2{font-size:29px}
+.concept-pocket .welcome-tool-options{margin-top:22px}
+.concept-pocket .welcome-tool-option{border-radius:4px 14px 4px 4px;border-color:#d1bccc;background:transparent}
+.concept-pocket .welcome-tool-option.tool-selected{background:#f7e7ed;border-color:#b298bb}
+.concept-pocket .welcome-tool-option:nth-of-type(2).tool-selected{background:#d9eee1;border-color:#91b7a1}
+.concept-pocket .welcome-tool-option:nth-of-type(3).tool-selected{background:#ffe6d5;border-color:#d4a88b}
+.concept-pocket .concept-primary{border-radius:7px}
+.concept-pocket .concept-welcome-art{height:260px;overflow:visible;bottom:13px}
+.pocket-note{position:absolute;padding:24px 25px;background:var(--paper);width:260px;color:var(--plum);display:flex;flex-direction:column;gap:10px;border-radius:5px 30px 5px 5px;border:1px solid #472e5522}
+.pocket-note>svg{width:23px;height:23px;stroke-width:1.5}
+.pocket-note>strong{font:600 26px/1.1 var(--heading);letter-spacing:-.8px}
+.pocket-note>span{font-size:12px}
+.note-priority{top:5px;left:0;z-index:1}
+.note-tick{display:flex;align-items:center;gap:7px;padding-top:10px;color:#476656}
+.note-tick svg{width:15px;height:15px}
+.note-grocery{background:var(--mint);width:230px;right:0;top:75px;z-index:2}
+.pocket-stamp{position:absolute;top:0;right:8px;background:var(--apricot);width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;z-index:3;color:var(--plum)}
+.pocket-stamp span{font-size:9px}
+.concept-pocket .concept-day{padding:24px 5.5% 0}
+.concept-pocket .day-greeting h1{font-size:clamp(38px,4.5vw,65px);font-weight:650;max-width:13ch;line-height:1;letter-spacing:-2px}
+.concept-pocket .day-greeting p{font-size:14px;margin-top:15px}
+.pocket-day-tag{display:flex;align-items:center;gap:12px;background:var(--apricot);color:var(--plum);padding:20px 25px;border-radius:50px;font:600 19px/1.1 var(--heading)}
+.pocket-day-tag svg{height:31px;width:31px;stroke-width:1.3}
+.concept-pocket .sample-getting-started{border-bottom-color:#472e5526}
+.concept-pocket .daily-board{grid-template-columns:1.35fr 1fr 1fr;gap:26px;align-items:start}
+.concept-pocket .sample-priorities{grid-row:span 2;background:var(--paper);border:1px solid #472e551a;padding:26px;border-radius:6px 26px 6px 6px;position:relative;margin-top:24px;min-height:435px}
+.concept-pocket .sample-priorities:before{content:"Your priorities";position:absolute;top:-24px;left:-1px;height:25px;border:1px solid #472e551a;border-bottom:0;background:var(--paper);border-radius:7px 7px 0 0;padding:4px 17px;font-size:10px}
+.concept-pocket .sample-section-top{align-items:flex-start}
+.concept-pocket .sample-section-top h2{font-size:24px;line-height:1.05;letter-spacing:-.8px}
+.concept-pocket .sample-section-top>span{font-size:10px;white-space:nowrap;padding-top:6px}
+.concept-pocket .sample-item-list label{min-height:59px;font-size:12px}
+.concept-pocket .sample-checkbox{border-radius:4px;border-color:#af9bb7}
+.concept-pocket .item-done{color:#716677}
+.concept-pocket .sample-add-item{border-color:#c7baca;border-radius:4px}
+.concept-pocket .sample-add-item button{padding:6px;font-size:10px}
+.concept-pocket .sample-timer{background:var(--apricot);color:var(--plum);border-radius:100px 100px 15px 15px;padding:40px 23px 23px;text-align:center;margin-top:24px;min-height:326px}
+.concept-pocket .sample-timer>.sample-section-top{display:block}
+.concept-pocket .sample-timer>.sample-section-top>svg{display:none}
+.concept-pocket .sample-timer h2{font-size:24px;max-width:9ch;margin:auto}
+.concept-pocket .sample-timer>p{font-size:11px;max-width:22ch;margin:10px auto 0}
+.concept-pocket .timer-visual{height:125px;margin:0 0 6px}
+.concept-pocket .timer-sun,.concept-pocket .timer-orbit{display:none}
+.concept-pocket .sample-time{font-size:61px;letter-spacing:-2px;margin-top:10px}
+.concept-pocket .timer-state{font-size:10px}
+.concept-pocket .timer-controls{justify-content:center;flex-wrap:wrap;gap:8px}
+.concept-pocket .timer-controls .concept-primary{padding:10px 12px;font-size:12px;min-height:41px}
+.concept-pocket .timer-controls .concept-icon-button{min-width:34px;min-height:34px;border-color:#472e554d}
+.concept-pocket .timer-controls select{margin:0 25px;font-size:10px}
+.concept-pocket .sample-shopping{padding:26px 22px 23px;background:var(--mint);border-radius:5px;margin-top:24px;position:relative}
+.concept-pocket .sample-shopping:after{content:"";position:absolute;bottom:-8px;left:0;right:0;height:9px;background:linear-gradient(135deg,var(--mint) 25%,transparent 25%) -6px 0/12px 12px,linear-gradient(225deg,var(--mint) 25%,transparent 25%) -6px 0/12px 12px}
+.concept-pocket .sample-shopping h2{font-size:22px;max-width:10ch}
+.concept-pocket .sample-shopping .sample-add-item{background:#f1f8f4;border-color:#92b39f}
+.concept-pocket .sample-shopping .sample-add-item button{background:#c8e1d2}
+.concept-pocket .sample-evening{grid-column:2/4;border-radius:0;background:transparent;padding:0;margin-top:0;grid-template-columns:auto 1fr auto;gap:9px 10px}
+.concept-pocket .sample-evening h2{font-size:20px}
+.concept-pocket .sample-evening p{font-size:11px;max-width:23ch}
+.concept-pocket .sample-evening label{grid-column:3;grid-row:1}
+.concept-pocket .sample-evening input{font-size:20px;width:116px}
+.concept-pocket .sample-evening button{grid-column:2/4;font-size:11px;min-height:36px;margin-top:4px}
+.concept-pocket .daily-closing{margin-top:40px!important}
+
+/* Current: an unhurried vertical day path, with the tools attached to moments. */
+.concept-current .concept-header{background:var(--mist);height:102px;border-bottom:1px solid #174c431a}
+.concept-current .concept-brand{font-family:Newsreader,Georgia,serif;font-weight:550;letter-spacing:-1px;font-size:34px}
+.concept-current .concept-brand svg{width:31px;height:31px}
+.concept-current .concept-avatar{background:var(--water);color:var(--forest)}
+.concept-current .concept-welcome{margin:30px 5.5% 20px;grid-template-columns:1fr 1fr;border-radius:0;overflow:visible;gap:55px;min-height:660px}
+.concept-current .welcome-message{background:var(--forest);color:white;border-radius:150px 150px 8px 8px;padding:65px 40px 260px;text-align:center}
+.concept-current .welcome-message h1{font-weight:400;font-size:clamp(44px,4.6vw,68px);letter-spacing:-1.7px;max-width:12ch;margin:0 auto}
+.concept-current .welcome-message>p{font-size:14px;max-width:31ch;margin:23px auto;color:#e1eeea;line-height:1.7}
+.concept-current .welcome-guidance{display:none}
+.concept-current .welcome-setup{padding:15px 0;max-width:450px;justify-self:center}
+.concept-current .welcome-setup h2{font-weight:450;font-size:35px;letter-spacing:-.7px}
+.concept-current .welcome-setup>p{color:#53695f;font-size:14px;max-width:36ch;margin-bottom:28px}
+.concept-current .welcome-setup{background:transparent}
+.concept-current .concept-name-input{background:transparent;border-color:#78998e;border-radius:4px}
+.concept-current .welcome-tool-option{border-radius:5px;background:transparent;border-color:#aec7ba;min-height:80px}
+.concept-current .welcome-tool-option.tool-selected{background:#dfece6;border-color:#678a7d}
+.concept-current .welcome-tool-option strong{font-weight:550}
+.concept-current .concept-primary{border-radius:30px;font-weight:500}
+.concept-current .concept-welcome-art{height:285px}
+.current-river{position:relative;width:100%;height:100%}
+.current-river svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.river-welcome{--water:#4d8073;--forest:#c0dad0;--coral:#f2a18c}
+.river-label{position:absolute;z-index:1;font-size:10px;color:#e8f5ef;padding:4px 8px;background:#174c43;border-radius:5px}
+.river-now{left:13%;top:48%}
+.river-later{left:48%;top:72%}
+.river-night{right:7%;top:27%}
+.concept-current .concept-day{display:grid;grid-template-columns:130px minmax(0,1fr);gap:50px;padding:35px 5.5% 0}
+.current-aside{display:flex;flex-direction:column;gap:24px;padding-top:14px;align-items:flex-start;color:#46695e;font-size:12px}
+.current-aside>span{font-size:11px;margin-bottom:4px;opacity:.85}
+.current-aside a{display:flex;align-items:center;gap:11px;padding:4px 0}
+.nav-dot{width:9px;height:9px;margin:0 4px;border-radius:50%;background:var(--forest)}
+.current-aside button{display:flex;align-items:center;gap:10px;line-height:1.5;margin-top:35px;border:0;background:transparent;font-size:11px;text-align:left;padding:0;color:inherit}
+.concept-current .day-greeting h1{font-weight:400;font-size:clamp(40px,4.2vw,62px);letter-spacing:-1.7px;max-width:18ch}
+.concept-current .day-greeting p{font-size:14px;margin-top:14px;color:#567065}
+.concept-current .day-date{font-size:11px;margin-bottom:18px}
+.concept-current .sample-getting-started{font-size:11px;padding-bottom:22px;margin-bottom:30px;border-color:#174c4322}
+.concept-current .sample-getting-started strong{font-weight:600}
+.concept-current .sample-getting-started button{font-size:11px}
+.current-timeline{border-left:1px solid #afc9be;margin-left:6px}
+.current-moment{padding:0 0 33px 32px;position:relative;scroll-margin-top:25px}
+.moment-label{display:flex;align-items:center;margin:0 0 13px;font-size:12px;font-weight:500;color:var(--forest);gap:10px}
+.moment-label>span{position:absolute;left:-5px;height:9px;width:9px;border-radius:50%;background:var(--forest);box-shadow:0 0 0 7px var(--mist)}
+.current-moment:last-child{padding-bottom:0}
+.current-moment:last-child .moment-label>span{background:var(--coral);border:1px solid #b17667}
+.current-focus-pair{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.concept-current .sample-timer{background:var(--forest);color:white;padding:25px 26px;border-radius:9px;min-width:0}
+.concept-current .sample-timer h2{font-weight:400;font-size:27px}
+.concept-current .sample-timer .sample-section-top>svg{width:18px;height:18px;stroke-width:1.4}
+.concept-current .sample-timer>p{font-size:11px;color:#c3d8cf;max-width:25ch}
+.concept-current .timer-visual{height:109px;margin:8px 0 13px;align-items:flex-start}
+.concept-current .timer-sun{width:90px;height:90px;right:-38px;top:0;background:var(--water);opacity:.2}
+.concept-current .timer-orbit{width:135px;height:135px;right:-62px;top:-22px;border-color:#b8d9dc44}
+.concept-current .sample-time{font-size:65px;font-weight:400;letter-spacing:-1px;margin-top:0}
+.concept-current .timer-state{font-size:10px;color:#d7e5de}
+.concept-current .timer-controls{flex-wrap:wrap;gap:8px}
+.concept-current .timer-controls .concept-primary{background:#e4eee8;color:#174c43;padding:10px 16px;font-size:12px;min-height:39px}
+.concept-current .timer-controls .concept-icon-button{border-color:#e4eee852;min-width:34px;min-height:34px}
+.concept-current .timer-controls select{font-size:10px;color:#d1e3dc;margin-left:auto;width:88px}
+.concept-current .timer-controls select option{color:#18342e;background:white}
+.concept-current .sample-priorities{padding:9px 0 0;min-width:0}
+.concept-current .sample-section-top>h2,.concept-current .sample-evening h2{font-size:27px;font-weight:450;letter-spacing:-.5px}
+.concept-current .sample-section-top>span{font-size:10px;white-space:nowrap}
+.concept-current .sample-priorities>p{font-size:11px}
+.concept-current .sample-item-list{margin-top:12px}
+.concept-current .sample-item-list label{font-size:11px;min-height:44px;gap:9px}
+.concept-current .sample-checkbox{width:17px;height:17px;border-color:#6f9485}
+.concept-current .sample-add-item{border:0;border-bottom:1px solid #91b4a5;border-radius:0;background:transparent;padding-left:0;margin-top:12px}
+.concept-current .sample-add-item input{font-size:11px}
+.concept-current .sample-add-item button{font-size:10px;background:#d7e6de}
+.concept-current .sample-shopping{display:grid;grid-template-columns:1fr 1fr;column-gap:32px;padding:20px 26px;background:#e0ece6;border-radius:6px}
+.concept-current .sample-shopping>.sample-section-top{grid-column:1;justify-content:flex-start;gap:15px}
+.concept-current .sample-shopping h2{font-size:25px}
+.concept-current .sample-shopping>.sample-section-top>svg{width:18px;height:18px}
+.concept-current .sample-shopping>p{grid-column:1;font-size:11px;align-self:start;margin-top:10px}
+.concept-current .sample-shopping .sample-item-list{grid-column:2;grid-row:1/4;margin:0}
+.concept-current .sample-shopping .sample-add-item{grid-column:1;align-self:end;margin-top:15px}
+.concept-current .sample-shopping .sample-add-item button{background:#c7ddd1}
+.concept-current .sample-evening{grid-template-columns:auto 1fr auto;background:transparent;padding:7px 0;gap:10px 17px}
+.concept-current .sample-evening>div:nth-child(2){max-width:31ch}
+.concept-current .sample-evening h2{font-size:27px}
+.concept-current .sample-evening p{font-size:11px}
+.concept-current .evening-moon{background:var(--coral);border-radius:50%;width:52px;height:52px}
+.concept-current .evening-moon svg{width:26px;height:26px}
+.concept-current .sample-evening label{grid-column:3;grid-row:1}
+.concept-current .sample-evening input{font-family:"DM Sans",sans-serif;font-size:20px;width:118px}
+.concept-current .sample-evening button{grid-column:2/4;font-size:11px;border-color:#8fac9f;border-radius:25px;min-height:36px}
+.empty-moment{font-size:13px;padding:18px 0;color:#59786a}
+.concept-current .daily-closing{margin-top:32px!important;text-align:left}
+.concept-help{padding:30px;border:1px solid #b0b9c6;border-radius:16px;color:var(--ink);background:var(--paper);width:min(520px,calc(100vw - 36px));max-height:85vh;overflow:auto;margin:auto}
+.concept-help::backdrop{background:#18342e66;backdrop-filter:blur(3px)}
+.concept-help h2{font:500 29px/1.1 var(--heading);letter-spacing:-.8px}
+.concept-help>p{font-size:13px;margin:15px 0 20px}
+.concept-help ol{padding-left:23px;margin:0 0 22px;display:grid;gap:18px;font-size:13px}
+.concept-help li{padding-left:5px}
+.concept-help li strong{display:block;margin-bottom:5px;font-weight:600}
+.concept-help li span{font-size:12px;line-height:1.6;color:#586570}
+
+@media(min-width:1500px){.gallery-thumbnail{height:340px}.concept-welcome{min-height:715px}.welcome-message{padding-top:60px}.concept-pocket .welcome-message{padding-top:45px}.concept-current .welcome-message{padding-top:76px}}
+@media(max-width:1100px){
+ .gallery-intro{align-items:flex-start;flex-direction:column;gap:20px}.gallery-intro p{max-width:65ch}.gallery-options{gap:16px}.gallery-thumbnail{padding:24px 20px;height:300px}.gallery-option-copy{padding:23px 20px}.mini-heading{font-size:23px}.gallery-pocket .mini-heading{font-size:28px}.mini-sun{right:10px;top:125px;width:136px;height:136px}.gallery-current .mini-heading{font-size:31px}.mini-pocket-board{gap:6px}.mini-pocket-board>div{padding:10px}.mini-pocket-board strong{font-size:23px}.gallery-character{min-height:42px}.gallery-option-copy>p:not(.gallery-character){min-height:93px}
+ .concept-header{padding:0 4%;height:86px}.concept-welcome{margin:0 4% 20px;grid-template-columns:1fr 1fr}.welcome-message{padding:36px 30px 235px}.welcome-message h1{font-size:48px}.welcome-setup{padding:35px 28px}.welcome-message>p{font-size:14px}.welcome-setup h2{font-size:24px}.welcome-tool-option{padding:11px 10px;gap:10px}.welcome-tool-option strong{font-size:12px}.welcome-tool-option small{font-size:10px}.concept-header-note{font-size:11px}
+ .concept-pocket .concept-welcome{gap:28px}.concept-pocket .welcome-message h1{font-size:57px}.concept-pocket .welcome-setup{padding:28px 25px}.concept-pocket .welcome-setup h2{font-size:25px}.pocket-note{width:225px;padding:21px}.note-grocery{width:210px;top:97px}.pocket-stamp{right:0}
+ .concept-current .concept-welcome{gap:32px;margin:25px 4% 20px}.concept-current .welcome-message{padding:60px 27px 240px;border-radius:120px 120px 6px 6px}.concept-current .welcome-message h1{font-size:54px}.concept-current .welcome-setup h2{font-size:31px}
+ .concept-day,.concept-pocket .concept-day{padding:25px 4% 0}.daily-board{gap:28px}.sample-timer{padding:24px}.timer-controls .concept-primary{padding:11px 15px;font-size:12px}.timer-controls select{font-size:10px;max-width:96px}.greeting-sun{padding-right:0}.sample-evening{padding:20px}.sample-evening h2{font-size:18px}.sample-section-top>h2{font-size:20px}
+ .concept-pocket .daily-board{grid-template-columns:1fr 1fr;gap:24px}.concept-pocket .sample-priorities{grid-row:1/3;min-height:450px}.concept-pocket .sample-timer{min-height:290px;border-radius:90px 90px 12px 12px}.concept-pocket .sample-shopping{grid-column:1;margin-top:0;grid-row:3}.concept-pocket .sample-evening{grid-column:2;grid-row:2/4;grid-template-columns:auto 1fr;align-self:start}.concept-pocket .sample-evening label{grid-column:2;grid-row:auto}.concept-pocket .sample-evening button{grid-column:2}.concept-pocket .sample-timer .timer-controls select{margin:0}
+ .concept-current .concept-day{padding:30px 4% 0;grid-template-columns:95px 1fr;gap:28px}.current-focus-pair{gap:24px;grid-template-columns:1fr 1fr}.concept-current .sample-timer{padding:21px}.concept-current .sample-time{font-size:57px}.concept-current .timer-controls select{margin-left:0}.concept-current .sample-timer h2{font-size:24px}.concept-current .sample-priorities .sample-section-top{flex-direction:column;gap:4px}.concept-current .sample-priorities .sample-section-top>span{display:none}.current-moment{padding-left:25px}.concept-current .sample-shopping{column-gap:24px;padding:20px}.concept-current .sample-shopping h2{font-size:22px}.concept-current .sample-evening h2{font-size:24px}.concept-current .sample-evening>div:nth-child(2){max-width:26ch}
+}
+@media(max-width:760px){
+ .design-gallery{padding:22px}.gallery-intro{margin:36px 0 27px}.gallery-intro h1{font-size:42px;letter-spacing:-2px}.gallery-intro p{font-size:14px}.gallery-intro p br{display:none}.gallery-options{grid-template-columns:1fr;gap:26px;max-width:520px;margin:auto}.gallery-thumbnail{height:320px;padding:25px 28px}.mini-heading{font-size:29px}.gallery-pocket .mini-heading{font-size:35px}.mini-sun{right:38px;top:128px;width:153px;height:153px}.mini-pocket-board{grid-template-columns:1.1fr 1fr;max-width:340px;gap:18px}.mini-pocket-board>div{padding:13px}.gallery-current .mini-heading{font-size:38px}.mini-current-line{gap:12px}.gallery-character,.gallery-option-copy>p:not(.gallery-character){min-height:0}.gallery-option-copy{padding:25px 28px}.gallery-palette>small{width:auto;margin:0 0 0 8px;font-size:10px}.gallery-footer{flex-direction:column;gap:12px;line-height:1.6}
+ .concept-review-bar{padding:10px 16px;gap:9px;flex-wrap:wrap}.concept-review-bar>a{font-size:11px}.concept-review-bar nav{margin-left:auto}.concept-review-bar nav>a{padding:6px 8px;font-size:11px}.review-view-switch{width:100%;justify-content:center}.review-view-switch button{width:50%;padding:5px 9px}.concept-header,.concept-pocket .concept-header,.concept-current .concept-header{padding:0 23px;height:79px}.concept-header-note{display:none}.concept-brand{font-size:27px}.concept-brand>svg{width:27px;height:27px}.concept-header-actions{gap:14px}.concept-header .concept-plain{font-size:11px;gap:6px}.concept-avatar{height:34px;width:34px;font-size:12px!important}
+ .concept-welcome{grid-template-columns:1fr;margin:0 18px 15px;border-radius:20px;min-height:0}.welcome-message{padding:33px 28px 183px}.welcome-message h1{font-size:48px;max-width:11ch;letter-spacing:-2px}.welcome-message>p{font-size:14px;max-width:36ch;margin:18px 0 22px}.welcome-guidance{font-size:12px;gap:9px}.concept-welcome-art{height:173px}.welcome-sun{width:230px;height:230px;top:43px}.welcome-sun:before{inset:-19px}.welcome-horizon{height:24px}.sun-note{bottom:38px;font-size:12px}.welcome-setup{padding:29px 10px 19px;max-width:none}.welcome-setup>h2{font-size:27px}.welcome-setup>p{font-size:13px;max-width:39ch;margin:10px 0 24px}.welcome-tool-option{padding:13px 12px;min-height:77px}.welcome-tool-option strong{font-size:13px}.welcome-tool-option small{font-size:11px}.welcome-tool-options{margin:22px 0}.concept-welcome-reassurance{font-size:11px!important}.concept-footer{padding:23px 27px;flex-wrap:wrap;gap:9px 15px;font-size:10px}.concept-footer>span{order:1}.concept-footer>a{order:2;margin-left:auto}.concept-footer>p{order:3;max-width:47ch}
+ .concept-pocket .concept-welcome{grid-template-columns:1fr;margin:0 25px 20px;gap:10px}.concept-pocket .welcome-message{padding:17px 0 265px;overflow:hidden}.concept-pocket .welcome-message h1{font-size:57px;letter-spacing:-2.4px;max-width:10ch}.concept-pocket .welcome-message>p{font-size:14px;max-width:36ch;margin-top:20px}.concept-pocket .concept-welcome-art{height:233px;bottom:5px}.pocket-note{width:230px;padding:20px;left:0}.pocket-note>strong{font-size:25px}.note-grocery{left:auto;right:0;width:203px;top:107px}.pocket-stamp{top:9px;right:0;width:74px;height:74px}.concept-pocket .welcome-setup{padding:27px 21px;margin-top:0;border-radius:6px 27px 6px 6px}.concept-pocket .welcome-setup>h2{font-size:26px}.concept-pocket .welcome-tool-option{gap:9px;padding:11px 9px}.concept-pocket .welcome-tool-option strong{font-size:12px}.concept-pocket .welcome-tool-option small{font-size:10px}
+ .concept-current .concept-welcome{grid-template-columns:1fr;margin:17px 23px 20px;gap:23px;min-height:0}.concept-current .welcome-message{padding:54px 25px 190px;border-radius:130px 130px 6px 6px}.concept-current .welcome-message h1{font-size:51px;letter-spacing:-1.3px}.concept-current .welcome-message>p{font-size:14px;max-width:29ch;line-height:1.7}.concept-current .concept-welcome-art{height:211px}.concept-current .welcome-setup{padding:12px 0;max-width:none}.concept-current .welcome-setup h2{font-size:34px}.concept-current .welcome-setup>p{max-width:34ch}.concept-current .welcome-tool-option{min-height:79px}.river-label{font-size:9px}
+ .concept-day,.concept-pocket .concept-day{padding:23px 23px 0}.day-greeting{margin:0 0 23px;align-items:flex-start;gap:10px}.day-date{font-size:11px;margin-bottom:13px;gap:8px}.day-date>span{font-size:10px;padding-left:8px}.day-greeting h1{font-size:43px;letter-spacing:-1.7px}.day-greeting p{font-size:13px;line-height:1.6;max-width:33ch;margin-top:12px}.greeting-sun{display:none}.sample-getting-started{display:grid;grid-template-columns:auto 1fr;gap:8px 11px;padding-bottom:20px;margin-bottom:24px;align-items:start;font-size:11px;line-height:1.7}.sample-getting-started>svg{margin-top:2px}.sample-getting-started strong{display:block}.sample-getting-started button{grid-column:2;justify-self:start;font-size:11px}.daily-board{grid-template-columns:1fr;gap:30px}.sample-timer{padding:25px}.sample-section-top>h2{font-size:21px}.sample-timer>p,.sample-priorities>p,.sample-shopping>p{font-size:12px}.sample-priorities{padding:0}.sample-item-list label{font-size:13px;min-height:52px}.timer-visual{height:207px}.sample-time{font-size:72px}.timer-controls{gap:8px}.timer-controls .concept-primary{font-size:12px;padding:11px 16px}.timer-controls select{font-size:10px}.sample-evening{padding:23px;gap:16px}.sample-evening h2{font-size:21px}.sample-evening p{font-size:12px}.daily-closing{font-size:11px;max-width:34ch!important;margin-top:32px!important}
+ .concept-pocket .day-greeting h1{font-size:46px;letter-spacing:-1.8px;max-width:12ch}.pocket-day-tag{display:none}.concept-pocket .day-greeting p{font-size:13px}.concept-pocket .daily-board{grid-template-columns:1fr;gap:30px}.concept-pocket .sample-priorities{grid-row:auto;min-height:0;margin-top:24px;padding:25px}.concept-pocket .sample-priorities .sample-section-top>h2{font-size:29px}.concept-pocket .sample-section-top>span{padding-top:10px}.concept-pocket .sample-item-list label{font-size:13px;min-height:59px}.concept-pocket .sample-timer{grid-row:auto;margin:0 15px;border-radius:120px 120px 15px 15px;padding:39px 25px 25px}.concept-pocket .sample-timer h2{max-width:none;font-size:27px}.concept-pocket .sample-timer>p{max-width:none;font-size:12px}.concept-pocket .sample-time{font-size:76px;margin-top:5px}.concept-pocket .timer-visual{height:151px}.concept-pocket .timer-controls{gap:12px}.concept-pocket .timer-controls select{margin:0;font-size:11px}.concept-pocket .sample-shopping{grid-column:auto;grid-row:auto;padding:25px;margin-top:0}.concept-pocket .sample-shopping h2{max-width:11ch;font-size:28px}.concept-pocket .sample-shopping .sample-item-list label{min-height:52px}.concept-pocket .sample-evening{grid-column:auto;grid-row:auto;grid-template-columns:auto 1fr;padding:7px 0}.concept-pocket .sample-evening h2{font-size:25px}.concept-pocket .sample-evening p{max-width:none;font-size:12px}.concept-pocket .sample-evening label{grid-column:2;grid-row:auto;margin-top:6px}.concept-pocket .sample-evening button{grid-column:2}
+ .concept-current .concept-day{display:block;padding:27px 24px 0}.current-aside{display:none}.concept-current .day-greeting h1{font-size:46px;max-width:13ch;line-height:1.04}.concept-current .day-greeting p{font-size:13px;max-width:32ch}.concept-current .day-date{margin-bottom:16px}.concept-current .sample-getting-started{font-size:11px;line-height:1.7;margin-bottom:28px}.current-moment{padding-left:21px;padding-bottom:28px}.current-focus-pair{grid-template-columns:1fr;gap:27px}.concept-current .sample-timer{padding:24px 22px;border-radius:6px}.concept-current .sample-timer h2{font-size:29px}.concept-current .sample-timer>p{font-size:12px;max-width:27ch}.concept-current .timer-visual{height:129px}.concept-current .sample-time{font-size:77px}.concept-current .timer-controls{gap:8px}.concept-current .timer-controls select{font-size:10px;margin-left:auto;width:86px}.concept-current .timer-controls .concept-primary{font-size:11px;padding:10px 13px}.concept-current .timer-controls .concept-icon-button{width:32px;min-width:32px;height:32px;min-height:32px}.concept-current .sample-priorities{padding-top:0}.concept-current .sample-priorities .sample-section-top{flex-direction:row;align-items:center}.concept-current .sample-priorities .sample-section-top>span{display:block}.concept-current .sample-section-top>h2{font-size:28px}.concept-current .sample-priorities>p{font-size:12px}.concept-current .sample-item-list label{font-size:12px;min-height:51px}.concept-current .sample-shopping{display:block;padding:24px 21px}.concept-current .sample-shopping h2{font-size:28px;max-width:12ch}.concept-current .sample-shopping>.sample-section-top{justify-content:space-between}.concept-current .sample-shopping>p{margin-top:12px;font-size:12px}.concept-current .sample-shopping .sample-item-list{margin-top:15px}.concept-current .sample-evening{grid-template-columns:auto 1fr;gap:14px 12px;padding:3px 0}.concept-current .sample-evening h2{font-size:27px}.concept-current .sample-evening p{font-size:12px}.concept-current .evening-moon{width:39px;height:39px;align-self:start}.concept-current .evening-moon svg{width:23px;height:23px}.concept-current .sample-evening label{grid-column:2;grid-row:auto;margin-top:4px}.concept-current .sample-evening button{grid-column:2}.concept-current .daily-closing{text-align:left;max-width:none!important;margin-left:28px!important}.concept-help{padding:25px}.concept-help h2{font-size:26px}
+}
+@media(max-width:370px){.concept-review-bar{padding:9px 11px}.concept-review-bar nav>a{padding:6px}.concept-header,.concept-pocket .concept-header,.concept-current .concept-header{padding:0 19px}.welcome-message h1{font-size:44px}.welcome-message{padding-left:23px;padding-right:23px}.welcome-setup>h2{font-size:25px}.concept-pocket .welcome-message h1{font-size:50px}.concept-pocket .concept-welcome{margin-left:20px;margin-right:20px}.concept-pocket .welcome-setup{padding:24px 17px}.concept-current .welcome-message h1{font-size:46px}.concept-current .welcome-message{padding-left:20px;padding-right:20px}.timer-controls{flex-wrap:wrap}.concept-current .timer-controls select{margin-left:0}.concept-footer{padding-left:23px;padding-right:23px}.gallery-intro h1{font-size:36px}.gallery-thumbnail{padding-left:24px;padding-right:24px}}
+@media(prefers-reduced-motion:reduce){.concept-root *,.design-gallery *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

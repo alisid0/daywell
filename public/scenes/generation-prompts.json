@@ -1,0 +1,5 @@
+{
+  "asset": "stillwater-lake.png",
+  "generator": "Built-in image_gen tool",
+  "prompt": "Use case: photorealistic-natural. Asset type: original full-viewport background for Daywell, an audio-first personal wellbeing app, not a UI mockup. Primary request: a tranquil misty mountain lake at blue hour, immersive and quietly beautiful. Scene: soft distant mountain silhouettes at the far left and right, a low forested shoreline, absolutely still blue-teal water reflecting a pale overcast sky. Wide horizontal 16:9 landscape with a calm open center, uncluttered negative space in the center and upper half for readable interface text. Eye-level from the water's edge, natural photographic detail, fine film texture, realistic atmospheric haze. Cool lake blue, desaturated sea glass, blue-grey mist, soft silver daylight. Gentle tonal contrast, no dazzling highlights, no dramatic sunset, no pink sky. Keep the middle mostly smooth mist and water so it crops gracefully to a portrait phone screen. No people, animals, buildings, boats, props, text, logos, watermark, frames, buttons, or interface elements. Generate one polished high-resolution photographic landscape."
+}

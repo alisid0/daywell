@@ -1,0 +1,157 @@
+@font-face{font-family:Manrope;src:url("/fonts/manrope.ttf") format("truetype");font-style:normal;font-weight:200 800;font-display:swap}
+@font-face{font-family:Newsreader;src:url("/fonts/newsreader.ttf") format("truetype");font-style:normal;font-weight:200 800;font-display:swap}
+
+/* Cloud: petal #faedf1, paper #fffcfe, ink #412d49, plum #67466d,
+   blush #e8c8d7 and mint #daece0. The depth belongs to the controls. */
+html[data-daywell-style="cloud"],.design-option-cloud{
+  --dw-canvas:#fffcfe;--dw-surface:#fff;--dw-ink:#412d49;--dw-accent:#67466d;--dw-on-accent:#fff;
+  --dw-muted:#776079;--dw-muted-soft:#8e798e;--dw-soft:#faedf1;--dw-wash:#f5edf5;--dw-line:#e5d5e0;
+  --dw-focus:#895398;--dw-mark:#9e547d;--dw-positive:#daece0;--dw-positive-ink:#35694d;
+  --dw-luma:#eee6f7;--dw-tock:#e5edf6;--dw-halo:#f5bf96;--dw-note:#f6e9ec;
+  --dw-error:#97283e;--dw-error-bg:#fff0f3;--dw-selected-plan:#ffcfdf;--dw-selected-record:#c3f3d7;
+  --dw-font:"DM Sans",sans-serif;--dw-display:"Bricolage Grotesque",sans-serif;--dw-display-weight:650;
+  --dw-button-radius:17px;--dw-panel-radius:30px 30px 12px 30px;
+  --dw-button-shadow:0 4px 0 #412d4938,inset 0 1px 0 #ffffff30;
+}
+/* Grove: frost #f2f7f2, paper #fcfef9, ink #243d36, pine #285c47,
+   sage #dce9ca and pollen #dbb95f. A personal journal, with useful rules. */
+html[data-daywell-style="grove"],.design-option-grove{
+  --dw-canvas:#f2f7f2;--dw-surface:#fcfef9;--dw-ink:#243d36;--dw-accent:#285c47;--dw-on-accent:#fff;
+  --dw-muted:#4e6c60;--dw-muted-soft:#728879;--dw-soft:#e5eedc;--dw-wash:#e9f0e4;--dw-line:#cbd9c8;
+  --dw-focus:#337757;--dw-mark:#497955;--dw-positive:#dce9ca;--dw-positive-ink:#365c35;
+  --dw-luma:#e6e7e9;--dw-tock:#dde9e5;--dw-halo:#dbb95f;--dw-note:#e9eccc;
+  --dw-error:#993d3d;--dw-error-bg:#f9e8e2;--dw-selected-plan:#f2d47f;--dw-selected-record:#b6e7c5;
+  --dw-font:"DM Sans",sans-serif;--dw-display:Newsreader,Georgia,serif;--dw-display-weight:450;
+  --dw-button-radius:6px 14px 6px 6px;--dw-panel-radius:12px 36px 12px 12px;
+  --dw-button-shadow:0 2px 0 #163d2b40;
+}
+/* Moonlight: midnight #1d253a, dusk #29334d, lilac #c8b4f4,
+   moon #f5f0ff, mist #bcc4db and blue #a8cde5. No ambient motion. */
+html[data-daywell-style="moonlight"],.design-option-moonlight{
+  --dw-canvas:#1d253a;--dw-surface:#29334d;--dw-ink:#f5f0ff;--dw-accent:#c8b4f4;--dw-on-accent:#26304b;
+  --dw-muted:#bcc4db;--dw-muted-soft:#929fbd;--dw-soft:#333e5c;--dw-wash:#27314b;--dw-line:#4b5775;
+  --dw-focus:#e0ccff;--dw-mark:#d4b5e5;--dw-positive:#2c4946;--dw-positive-ink:#bce4ca;
+  --dw-luma:#3d395a;--dw-tock:#31445c;--dw-halo:#a8cde5;--dw-note:#483c55;
+  --dw-error:#ffd1d9;--dw-error-bg:#542f46;--dw-selected-plan:#573252;--dw-selected-record:#254736;
+  --dw-font:Manrope,sans-serif;--dw-display:Manrope,sans-serif;--dw-display-weight:600;
+  --dw-button-radius:28px;--dw-panel-radius:26px;
+  --dw-button-shadow:0 0 0 1px #e0ccff38,0 3px 16px #c8b4f414;
+}
+html[data-daywell-style]{
+  --background:var(--dw-canvas);--foreground:var(--dw-ink);--card:var(--dw-surface);--card-foreground:var(--dw-ink);
+  --popover:var(--dw-surface);--popover-foreground:var(--dw-ink);--primary:var(--dw-accent);--primary-foreground:var(--dw-on-accent);
+  --secondary:var(--dw-wash);--secondary-foreground:var(--dw-ink);--muted:var(--dw-wash);--muted-foreground:var(--dw-muted);
+  --accent:var(--dw-soft);--accent-foreground:var(--dw-ink);--border:var(--dw-line);--input:var(--dw-line);--ring:var(--dw-focus);
+  --sidebar:var(--dw-surface);--sidebar-foreground:var(--dw-muted);--sidebar-primary:var(--dw-accent);--sidebar-primary-foreground:var(--dw-on-accent);
+  --sidebar-accent:var(--dw-soft);--sidebar-accent-foreground:var(--dw-ink);--sidebar-border:var(--dw-line);--sidebar-ring:var(--dw-focus);
+  color-scheme:light;
+}
+html[data-daywell-style="moonlight"]{color-scheme:dark}
+[data-daywell-style] body,[data-daywell-style] .host-workspace,[data-daywell-style] .daywell-host,[data-daywell-style] .calendar-workspace{font-family:var(--dw-font)}
+[data-daywell-style] .host-workspace{background:var(--dw-canvas);color:var(--dw-ink)}
+[data-daywell-style] .host-workspace :is(h1,h2,h3),[data-daywell-style] [data-slot="dialog-title"]{font-family:var(--dw-display);font-weight:var(--dw-display-weight)}
+[data-daywell-style] :is(button,input,select,textarea,a,summary):focus-visible{outline:3px solid var(--dw-focus);outline-offset:3px}
+[data-daywell-style] input::placeholder,[data-daywell-style] textarea::placeholder{color:var(--dw-muted);opacity:.85}
+[data-daywell-style] .host-workspace .topbar{background:var(--dw-canvas);border-color:var(--dw-line)}
+[data-daywell-style] .topbar>div,[data-daywell-style] .topbar .getting-started-button,[data-daywell-style] .save-status{color:var(--dw-muted)}
+.top-tools-short{display:none}
+[data-daywell-style] .top-actions{gap:10px}
+[data-daywell-style] .top-actions .style-toggle{color:var(--dw-ink);border-color:var(--dw-line);background:var(--dw-surface);white-space:nowrap}
+[data-daywell-style] .top-actions .style-toggle[aria-expanded="true"]{background:var(--dw-soft);box-shadow:inset 0 0 0 1px var(--dw-mark)}
+[data-daywell-style] [data-slot="button"]{border-radius:var(--dw-button-radius);font-family:var(--dw-font)}
+[data-daywell-style] [data-slot="button"][data-variant="default"]{box-shadow:var(--dw-button-shadow)}
+[data-daywell-style] .brand{font-family:var(--dw-display);color:var(--dw-ink);font-size:30px;font-weight:650}
+[data-daywell-style] .brand>span:first-child{background:var(--dw-accent);color:var(--dw-on-accent);border-radius:14px}
+[data-daywell-style] .brand-dot{color:var(--dw-accent)}
+[data-daywell-style] .nav-label{letter-spacing:0;font-size:12px;font-weight:500;color:var(--dw-muted)}
+[data-daywell-style] [data-slot="sidebar-menu-button"]{border-radius:var(--dw-button-radius);font-family:var(--dw-font)}
+[data-daywell-style] [data-slot="sidebar-menu-button"][data-active="true"]{box-shadow:inset 3px 0 var(--dw-mark)}
+[data-daywell-style] .side-note{background:var(--dw-soft);color:var(--dw-muted);border-radius:var(--dw-panel-radius)}
+[data-daywell-style] .side-note strong,[data-daywell-style] .profile strong{color:var(--dw-ink)}
+[data-daywell-style] .profile>span{background:var(--dw-soft);color:var(--dw-ink)}
+[data-daywell-style] .manage-side{color:var(--dw-muted)}
+[data-daywell-style] .daywell-host{border-radius:var(--dw-panel-radius);border:1px solid var(--dw-line)}
+[data-daywell-style] .host-invitation h2{max-width:18ch}
+[data-daywell-style] .host-listening-mark{color:var(--dw-on-accent);background:var(--dw-accent);border-radius:42%;transform:none;box-shadow:var(--dw-button-shadow)}
+[data-daywell-style] :is(.host-talk,.host-primary){border-radius:var(--dw-button-radius);box-shadow:var(--dw-button-shadow);padding:14px 22px}
+[data-daywell-style] :is(.host-talk,.host-primary):hover{background:var(--dw-accent);filter:brightness(1.07)}
+[data-daywell-style] :is(.host-type,.host-form>div,.host-form button,.host-phrase-list button,.host-settings,.host-plan,.host-activity){border-radius:var(--dw-button-radius)}
+[data-daywell-style] .host-form textarea{color:var(--dw-ink)}
+[data-daywell-style] .host-time{font-family:var(--dw-display)}
+[data-daywell-style] :is(.host-talk,.host-primary,.calendar-primary,.design-picker-done,[data-slot="button"][data-variant="default"]):active:not(:disabled){transform:translateY(2px);box-shadow:none}
+[data-daywell-style="grove"] .host-invitation h2{font-size:clamp(34px,4vw,49px);letter-spacing:-1px}
+[data-daywell-style="grove"] .host-listening-mark{border-radius:50% 50% 6px 50%}
+[data-daywell-style="moonlight"] .host-invitation h2{letter-spacing:-1.4px}
+[data-daywell-style] .calendar-month{border:1px solid var(--dw-line);border-radius:var(--dw-panel-radius)}
+[data-daywell-style] .calendar-days button{border-radius:var(--dw-button-radius);min-height:49px}
+[data-daywell-style] .calendar-days button[aria-pressed="true"]{box-shadow:var(--dw-button-shadow)}
+[data-daywell-style] .calendar-workspace .calendar-primary{border-radius:var(--dw-button-radius);box-shadow:var(--dw-button-shadow);min-height:44px}
+[data-daywell-style] :is(.calendar-view-tabs button,.calendar-add-actions button,.calendar-month-controls button){border-radius:var(--dw-button-radius)}
+[data-daywell-style] .calendar-view-tabs{border-radius:var(--dw-button-radius);border:1px solid var(--dw-line)}
+[data-daywell-style] .calendar-view-tabs button[aria-pressed="true"]{box-shadow:var(--dw-button-shadow)}
+[data-daywell-style] .calendar-progress{border-radius:var(--dw-panel-radius)}
+[data-daywell-style] .calendar-progress-metrics strong{font-family:var(--dw-display)}
+[data-daywell-style] .calendar-form-check input{accent-color:var(--dw-accent)}
+[data-daywell-style] .calendar-text-field,[data-daywell-style] .calendar-text-field textarea{color:var(--dw-ink)}
+[data-daywell-style="grove"] .calendar-days button{border-radius:4px}
+[data-daywell-style="grove"] .calendar-days button[aria-pressed="true"]{border-radius:4px 15px 4px 4px}
+[data-daywell-style="grove"] .calendar-weekdays{border-bottom:1px solid var(--dw-line);margin-bottom:7px}
+[data-daywell-style="moonlight"] .calendar-intro>svg{color:var(--dw-halo)}
+
+/* Existing everyday tools share the same surfaces and form controls. */
+[data-daywell-style] :is(.card,.snapshot-card,.host-workspace .module-card,.date-pill){background:var(--dw-surface);color:var(--dw-ink);border-color:var(--dw-line);box-shadow:none}
+[data-daywell-style] :is(.snapshot-card>div,.snapshot-card small,.muted,.helper,.section-description,.entry-main small,.card-foot,.empty-priorities p,.rhythm-item p,.world-grid p,.focus-summary p,.timer-settings>p,.photo-card p,.recipe-card p,.recipe-card small,.movement-prompts p,.field>span,.calendar-text-field){color:var(--dw-muted)}
+[data-daywell-style] :is(.snapshot-card strong,.focus-summary>strong,.field input,.field select,.quick-entry input,.calorie-count,.nutrition-card .fuel-circle strong){color:var(--dw-ink)}
+[data-daywell-style] :is(.field input,.field select,.field [data-slot="select-trigger"],.calendar-text-field textarea,.quick-entry){background:var(--dw-surface);border-color:var(--dw-line)}
+[data-daywell-style] :is(.quick-actions button,.filter-row button,.preset-times button,.preset-row button){background:var(--dw-wash);color:var(--dw-muted);border-color:var(--dw-line);border-radius:var(--dw-button-radius)}
+[data-daywell-style] :is(.filter-row button[aria-pressed="true"],.preset-times .selected,.choose-module.chosen){background:var(--dw-soft);border-color:var(--dw-mark);color:var(--dw-ink)}
+[data-daywell-style] :is(.task-row,.card-foot,.profile,.choose-module,.settings-dialog,.entry-dialog){border-color:var(--dw-line)}
+[data-daywell-style] .choose-module{background:var(--dw-surface);color:var(--dw-ink)}
+[data-daywell-style] :is(.choose-module small,.modal-bottom>span,.settings-dialog [data-slot="dialog-description"],.entry-dialog [data-slot="dialog-description"]){color:var(--dw-muted)}
+[data-daywell-style] [data-slot="dialog-content"]{background:var(--dw-surface);color:var(--dw-ink);font-family:var(--dw-font);border-color:var(--dw-line)}
+[data-daywell-style] .modal-mark{background:var(--dw-soft);color:var(--dw-accent)}
+[data-daywell-style] :is(.notice,.movement-hero){background:var(--dw-positive);color:var(--dw-positive-ink);border-color:var(--dw-line)}
+[data-daywell-style] :is(.movement-hero h2,.movement-hero p,.movement-hero .eyebrow,.movement-total,.movement-prompts>button>span){color:var(--dw-positive-ink)}
+[data-daywell-style] .movement-hero{border-radius:var(--dw-panel-radius)}
+[data-daywell-style] .movement-hero [data-slot="button"]{background:var(--dw-accent);color:var(--dw-on-accent)}
+[data-daywell-style] .feature-note,[data-daywell-style] .focus-summary small,[data-daywell-style] .card-foot button,[data-daywell-style] .plan-link{color:var(--dw-muted);border-color:var(--dw-line)}
+[data-daywell-style] .form-error,[data-daywell-style] .error-banner{background:var(--dw-error-bg);color:var(--dw-error);border-color:var(--dw-line)}
+[data-daywell-style] .fuel-circle>div{background:var(--dw-surface)}
+[data-daywell-style] .fuel-circle small,[data-daywell-style] .macros small{color:var(--dw-muted)}
+[data-daywell-style] .overdue-label{background:var(--dw-note);color:var(--dw-muted)}
+[data-daywell-style] .workspace .focus-card,[data-daywell-style] .sleep-hero{background:#30374e;border-radius:var(--dw-panel-radius);color:#fff}
+[data-daywell-style="grove"] .workspace .focus-card,[data-daywell-style="grove"] .sleep-hero{background:#29463b}
+[data-daywell-style="cloud"] .workspace .focus-card,[data-daywell-style="cloud"] .sleep-hero{background:#4a3757}
+
+
+/* The three actual buttons are small previews, not separate sample apps. */
+.design-picker{padding:24px;background:var(--dw-surface);border:1px solid var(--dw-line);border-radius:22px;margin:0 0 28px;scroll-margin-top:20px}
+.design-picker-heading{display:flex;gap:20px;justify-content:space-between;align-items:flex-start;margin-bottom:21px}
+.design-picker-heading h2{font-size:28px;line-height:1.2;letter-spacing:-.8px}
+.design-picker-heading p{font-size:13px;color:var(--dw-muted);line-height:1.6;margin-top:7px}
+.design-picker-done{display:flex;align-items:center;gap:6px;background:var(--dw-accent);color:var(--dw-on-accent);padding:10px 15px;min-height:42px;border-radius:var(--dw-button-radius);font-size:13px;box-shadow:var(--dw-button-shadow);flex-shrink:0}
+.design-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:15px}
+.design-option{display:block;min-width:0;text-align:left;border:2px solid var(--dw-line);border-radius:19px;padding:4px;background:var(--dw-canvas);color:var(--dw-ink);font-family:var(--dw-font)}
+.design-option:hover{border-color:var(--dw-mark)}
+.design-option[aria-pressed="true"]{border-color:var(--dw-accent);outline:2px solid var(--dw-accent);outline-offset:2px}
+.design-option:focus-visible{outline:3px solid var(--dw-focus);outline-offset:5px}
+.design-option-preview{display:flex;flex-direction:column;align-items:flex-start;padding:21px 19px 17px;min-height:225px;background:var(--dw-soft);border-radius:13px;position:relative;overflow:hidden}
+.design-preview-brand{font-family:var(--dw-display);font-size:17px;font-weight:650;letter-spacing:-.8px}
+.design-preview-heading{font-family:var(--dw-display);font-size:29px;letter-spacing:-1px;line-height:1.07;font-weight:var(--dw-display-weight);margin:19px 0 18px}
+.design-option-grove .design-preview-heading{font-size:33px;letter-spacing:-.7px}
+.design-preview-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--dw-accent);color:var(--dw-on-accent);padding:11px 12px;font-size:11px;font-weight:650;border-radius:var(--dw-button-radius);box-shadow:var(--dw-button-shadow);max-width:100%;white-space:nowrap}
+.design-preview-detail{display:block;font-size:10px;color:var(--dw-muted);margin-top:15px}
+.design-option-grove .design-option-preview{border-radius:11px 25px 11px 11px}
+.design-option-grove .design-preview-brand{width:100%;padding-bottom:8px;border-bottom:1px solid var(--dw-line)}
+.design-option-grove .design-preview-heading{margin-top:10px}
+.design-option-moonlight .design-option-preview{background:#27314b;border:1px solid var(--dw-line)}
+.design-option-caption{display:block;padding:17px 11px 12px}
+.design-option-name{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:16px;font-weight:650}
+.design-selected{display:inline-flex;align-items:center;gap:4px;font-family:"DM Sans",sans-serif;font-size:10px;font-weight:500;color:var(--dw-muted);white-space:nowrap}
+.design-option[aria-pressed="true"] .design-selected{color:var(--dw-accent)}
+.design-option-description{display:block;font-size:12px;line-height:1.6;color:var(--dw-muted);margin-top:8px;max-width:26ch}
+.design-picker-note{display:flex;align-items:center;gap:7px;font-size:11px;line-height:1.6;color:var(--dw-muted);margin-top:18px;min-height:18px}
+.design-picker-note svg{flex-shrink:0}
+@media(min-width:768px) and (max-width:1150px){[data-daywell-style] .topbar{padding:0 25px}[data-daywell-style] .topbar>div:first-child>span{display:none}.design-options{gap:10px}.design-option-preview{padding:18px 13px}.design-preview-heading{font-size:25px}.design-preview-button{padding:10px 8px;font-size:10px}.design-option-grove .design-preview-heading{font-size:29px}}
+@media(max-width:767px){[data-daywell-style] .topbar .getting-started-button{width:34px;padding:8px}[data-daywell-style] .topbar .getting-started-button>svg{display:block}[data-daywell-style] .getting-started-label,.top-tools-long{display:none}.top-tools-short{display:inline}[data-daywell-style] .top-actions{gap:7px}.design-picker{padding:18px}.design-picker-heading{gap:12px}.design-picker-heading h2{font-size:25px}.design-picker-heading p{font-size:12px}.design-options{grid-template-columns:1fr;gap:12px}.design-option{display:grid;grid-template-columns:minmax(125px,.95fr) minmax(0,1fr);align-items:center;gap:8px;border-radius:16px}.design-option-preview{min-height:0;padding:14px 12px}.design-preview-brand{font-size:13px}.design-preview-heading{display:none}.design-option-grove .design-preview-heading{font-size:26px;margin:8px 0 13px}.design-preview-button{font-size:9px;padding:9px 8px;gap:4px;margin-top:20px}.design-preview-button svg{width:13px}.design-preview-detail{display:none}.design-option-caption{padding:8px}.design-option-name{align-items:flex-start;flex-direction:column;gap:5px}.design-option-description{font-size:11px;margin-top:6px}.design-picker-done{padding:9px 12px}.design-picker-note{font-size:10px}.design-picker-note svg{display:none}[data-daywell-style] .calendar-days button{min-height:44px}[data-daywell-style="grove"] .host-invitation h2{font-size:35px}}
+@media(prefers-reduced-motion:reduce){[data-daywell-style] :is(.host-talk,.host-primary,.calendar-primary,.design-picker-done,[data-slot="button"]):active:not(:disabled){transform:none}}

@@ -2,6 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./everyday.css";
 import "./welcome.css";
+import "./companions.css";
+import "./host.css";
+import "./calendar.css";
+import "./design-switcher.css";
+import "./stillwater.css";
+import "./nook.css";
+import "./appearance-mixes.css";
+import "./design-iterations.css";
+import "./appearance-studio.css";
+import "./wellbeing.css";
 
 export const metadata: Metadata = {
   title: "Daywell — Your day, in balance",

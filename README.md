@@ -18,6 +18,18 @@ Focus, clocks/timers and alarms are in **Explore → Everyday extras**. Alarms a
 
 ## Connect ElevenLabs
 
+### Reusable audio: Just listen
+
+Open **Just listen · little words of comfort** on Home, or `/audio-library`. The library contains **500 short recordings in 50 situations**, with ten variations per situation: Relax 100, Sleep 80, Move 80, Eat 60, Focus 40, Progress 40 and Everyday company 100. Choose a situation, press **Listen**, or choose **Another thought**. Search works locally. The resting space also offers recorded Luma guidance.
+
+Each clip is generated once and shipped as an MP3. Listening opens no microphone, live agent, language-model or speech-generation request; ordinary asset delivery still has hosting/bandwidth costs. Playback starts only after a tap and stops on another clip, navigation, hiding the page or starting voice. The words remain readable if an audio file is unavailable. These are brief reusable prompts, not 500 full sessions or personalised answers. All currently use Daywell's existing host voice, with a slower pace for Relax and Sleep; the mascot provides visual company.
+
+Scripts live in `lib/audio-library.ts`; hashed audio assets and the transcript manifest live in `public/audio-library/`. The player refuses to play a recording when its text no longer matches the script. Existing live-agent conversations remain separately metered; adding this library to an agent knowledge base alone would not avoid live-session charges. Subscription access and usage caps still need production billing integration.
+
+To update recordings, edit scripts and run `npm run audio:plan` for an offline estimate, then `npm run audio:generate` for missing or changed clips. Voice/model configuration is in `config/audio-generation.json`. Generation uses the private key from the environment or ignored `.dev.vars`, checks the existing paid-plan allowance, limits a batch to 85,000 characters and preserves a 20,000-credit reserve. It never upgrades a plan or intentionally requests overage. `-- --limit 10` generates at most ten missing clips. A failed batch saves successful clips; review the provider's usage before retrying an ambiguous failed request. Provider credit reporting may be delayed. Review spoken content before public release.
+
+### Live conversation
+
 For direct key entry, open **Voice Setup** at `/voice-setup`, paste your key in the masked **ElevenLabs API key** field and choose **Save key**. You can add an agent ID in the optional section now or later. This form saves local settings; it does not verify credentials or create an agent. It is available only in the signed-in, loopback development preview. Secrets are never returned by the setup endpoint, and Vite blocks direct access to `.dev.vars` files.
 
 To verify credentials or create a prepared Daywell agent:

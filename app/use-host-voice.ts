@@ -30,6 +30,7 @@ export function useHostVoice(onTranscript: (value: string) => void) {
   const stop = useCallback(() => { stopListening(); silence(); }, [stopListening, silence]);
   function speak(text: string, calm = false) {
     if (!("speechSynthesis" in window) || recognition.current) return;
+    window.dispatchEvent(new Event("daywell-stop-library-audio"));
     silence(); const token = epoch.current;
     const line = new SpeechSynthesisUtterance(text);
     const voices = window.speechSynthesis.getVoices();
@@ -43,6 +44,7 @@ export function useHostVoice(onTranscript: (value: string) => void) {
   }
   function start() {
     if (recognition.current) return;
+    window.dispatchEvent(new Event("daywell-stop-library-audio"));
     const browser = window as SpeechWindow; const Constructor = browser.SpeechRecognition || browser.webkitSpeechRecognition;
     if (!Constructor) { setError("This browser doesn’t support voice input. Type your request below."); return; }
     silence(); setError(""); setTranscript("");
@@ -84,7 +86,9 @@ export function useHostVoice(onTranscript: (value: string) => void) {
     queueMicrotask(() => { if (active) { setAvailable(Boolean(browser.SpeechRecognition || browser.webkitSpeechRecognition)); setCanSpeak("speechSynthesis" in window); } });
     const onHide = () => { if (document.hidden) stop(); };
     document.addEventListener("visibilitychange", onHide);
+    window.addEventListener("daywell-stop-voice", stop);
     return () => {
+      window.removeEventListener("daywell-stop-voice", stop);
       active = false; document.removeEventListener("visibilitychange", onHide); silence();
       if (recognition.current) { recognition.current.onend = null; recognition.current.onresult = null; recognition.current.onerror = null; recognition.current.abort(); recognition.current = null; }
       if (timeout.current) clearTimeout(timeout.current);

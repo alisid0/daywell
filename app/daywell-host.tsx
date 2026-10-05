@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { AudioLines, Check, ChevronDown, Keyboard, Mic, Pause, Play, Send, Settings2, Square, Sun, Undo2, Volume2, VolumeX, X } from "lucide-react";
 import { CompanionPortrait } from "@/components/daywell-companions";
 import { companions, type CompanionId } from "@/lib/companions";
@@ -237,6 +238,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     {typed && agent.configured && !agentActive && <button className="host-text-button" onClick={()=>setConsent("text")}>Start an AI text conversation</button>}</div>
     {typed && <form className="host-form" onSubmit={submit}><label htmlFor="host-request">Tell Daywell what you need</label><div><textarea id="host-request" ref={input} value={text} maxLength={600} rows={2} placeholder="Add milk and focus on my email for 10 minutes" onChange={event => setText(event.target.value)} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); sendText(); } }} /><button type="submit" disabled={!text.trim() || busy} aria-label="Send request"><Send size={19} /></button></div></form>}
     {!hasActivity && !pending && <div className="host-suggestions" aria-label="A place to begin"><button className="rest-entry" onClick={goRest}>Just rest</button><button onClick={()=>a.setActive("explore")}>Explore</button></div>}
+    {!hasActivity && !pending && <Link className="host-library-link" href="/audio-library" onClick={() => { voice.stop(); void agent.stop(); }}>Just listen · little words of comfort</Link>}
     <div className="host-conversation" aria-live="polite" aria-atomic="true">{(voice.listening || heard) && <p className="host-heard">{voice.listening ? voice.transcript || "Listening…" : `You: ${heard}`}</p>}<p className="host-reply"><span>Daywell</span>{busy ? "Taking care of that…" : reply}</p></div>
     {(error || voice.error) && <p className="host-error" role="alert">{error || voice.error}</p>}
     {pending && <div className="host-plan" ref={planRegion} tabIndex={-1} aria-label="Review your request"><h3>Here’s the plan</h3><ul>{pending.map((action, index) => <li key={index}><Check size={16} />{describeAction(action)}</li>)}</ul>{pending.some(action => action.type === "activity") && hasActivity && !finished && <p className="host-replace-note">This replaces your current activity. Your lists stay saved.</p>}<div><button className="host-primary" disabled={busy} onClick={() => void applyPlan()}>{busy ? "Saving…" : "Do this"}</button><button className="host-text-button" disabled={busy} onClick={() => { setPending(null); voice.silence(); setReply("Request cleared. Your saved day stays as it is."); }}>Cancel request</button></div></div>}

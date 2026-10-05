@@ -1,0 +1,2505 @@
+{
+  "version": 1,
+  "recordings": {
+    "relax-arrive-01": {
+      "src": "/audio-library/relax-arrive-01-369d78b9d467.mp3",
+      "text": "You can pause here. Find a comfortable place, and let the next thing wait for a moment.",
+      "bytes": 34316
+    },
+    "relax-arrive-02": {
+      "src": "/audio-library/relax-arrive-02-d055175e9176.mp3",
+      "text": "There is nothing to finish in this little corner. Just settle in at your own pace.",
+      "bytes": 38914
+    },
+    "relax-arrive-04": {
+      "src": "/audio-library/relax-arrive-04-9d0f5050b2c7.mp3",
+      "text": "Take the space you need. You can listen, look around, or simply sit quietly.",
+      "bytes": 33898
+    },
+    "relax-arrive-03": {
+      "src": "/audio-library/relax-arrive-03-26fa8af4b2cb.mp3",
+      "text": "For a moment, you do not have to choose what comes next. Let yourself arrive.",
+      "bytes": 33898
+    },
+    "relax-arrive-05": {
+      "src": "/audio-library/relax-arrive-05-0d3076e7e0c4.mp3",
+      "text": "You have found a little pause in the day. There is no right way to spend it.",
+      "bytes": 30555
+    },
+    "relax-arrive-06": {
+      "src": "/audio-library/relax-arrive-06-91a63767691c.mp3",
+      "text": "Let this be a small landing place. The rest of the day can wait outside for a moment.",
+      "bytes": 36197
+    },
+    "relax-arrive-07": {
+      "src": "/audio-library/relax-arrive-07-911af7864071.mp3",
+      "text": "You do not need a good reason to rest. A comfortable seat is enough to begin.",
+      "bytes": 34734
+    },
+    "relax-arrive-10": {
+      "src": "/audio-library/relax-arrive-10-b7c58fb530db.mp3",
+      "text": "We can leave a little silence around this moment. You do not have to fill it.",
+      "bytes": 32435
+    },
+    "relax-arrive-08": {
+      "src": "/audio-library/relax-arrive-08-624327703673.mp3",
+      "text": "Stay for one thought, or stay a little longer. You decide what feels useful.",
+      "bytes": 35779
+    },
+    "relax-arrive-09": {
+      "src": "/audio-library/relax-arrive-09-c9e98b219cea.mp3",
+      "text": "Here is a little room to slow down. No score, no catching up, no instructions to complete.",
+      "bytes": 37660
+    },
+    "relax-scroll-03": {
+      "src": "/audio-library/relax-scroll-03-753147c60884.mp3",
+      "text": "You can leave the feed unfinished. There is no last post you need to reach.",
+      "bytes": 32435
+    },
+    "relax-scroll-01": {
+      "src": "/audio-library/relax-scroll-01-ade33d8f812d.mp3",
+      "text": "The next post can wait. If you like, set your phone down after this and look around your room.",
+      "bytes": 35779
+    },
+    "relax-scroll-02": {
+      "src": "/audio-library/relax-scroll-02-995be4b96c7c.mp3",
+      "text": "You noticed that you want a break from scrolling. That is enough for a new choice right now.",
+      "bytes": 35570
+    },
+    "relax-scroll-04": {
+      "src": "/audio-library/relax-scroll-04-650552dd4f2b.mp3",
+      "text": "Try giving your eyes one ordinary thing to rest on, away from the screen.",
+      "bytes": 30555
+    },
+    "relax-scroll-05": {
+      "src": "/audio-library/relax-scroll-05-3e46eb4c2f2d.mp3",
+      "text": "A pause does not have to become a productive activity. You can simply stop for a while.",
+      "bytes": 37660
+    },
+    "relax-scroll-06": {
+      "src": "/audio-library/relax-scroll-06-75401d4fb751.mp3",
+      "text": "If it helps, move the phone a little further away. Make this next moment easier to choose.",
+      "bytes": 41004
+    },
+    "relax-scroll-08": {
+      "src": "/audio-library/relax-scroll-08-1e556b10aee9.mp3",
+      "text": "Let the stream of other people’s updates carry on without you for a moment.",
+      "bytes": 29092
+    },
+    "relax-scroll-07": {
+      "src": "/audio-library/relax-scroll-07-c236edb34a65.mp3",
+      "text": "You do not have to make up for the time you spent scrolling. Start with where you are.",
+      "bytes": 31390
+    },
+    "relax-scroll-09": {
+      "src": "/audio-library/relax-scroll-09-b811d6270914.mp3",
+      "text": "Pick something small beyond the screen: a window, a cushion, the light on a wall.",
+      "bytes": 35779
+    },
+    "relax-scroll-10": {
+      "src": "/audio-library/relax-scroll-10-f792b0c1b41b.mp3",
+      "text": "When this clip ends, you can close your eyes if comfortable, or leave the screen and keep them open.",
+      "bytes": 41839
+    },
+    "relax-overwhelmed-01": {
+      "src": "/audio-library/relax-overwhelmed-01-9e203ed93554.mp3",
+      "text": "You do not have to untangle everything at once. Choose one small thing that would make this moment easier.",
+      "bytes": 47273
+    },
+    "relax-overwhelmed-02": {
+      "src": "/audio-library/relax-overwhelmed-02-49b5e202ace7.mp3",
+      "text": "If decisions feel heavy, make the next choice smaller. Sitting comfortably can be the whole plan for now.",
+      "bytes": 50408
+    },
+    "relax-overwhelmed-03": {
+      "src": "/audio-library/relax-overwhelmed-03-18a305efef48.mp3",
+      "text": "Let the whole list stay a list. You only need to meet this next moment.",
+      "bytes": 33689
+    },
+    "relax-overwhelmed-05": {
+      "src": "/audio-library/relax-overwhelmed-05-6d4a0125a312.mp3",
+      "text": "Try naming what feels most immediate. You do not need to solve it while you name it.",
+      "bytes": 37033
+    },
+    "relax-overwhelmed-04": {
+      "src": "/audio-library/relax-overwhelmed-04-9964135d7665.mp3",
+      "text": "You can put a few things down without deciding when to pick them up again.",
+      "bytes": 27629
+    },
+    "relax-overwhelmed-06": {
+      "src": "/audio-library/relax-overwhelmed-06-20df140f9ee2.mp3",
+      "text": "A busy mind can have a quiet moment too. Nothing here asks you to clear every thought.",
+      "bytes": 37033
+    },
+    "relax-overwhelmed-07": {
+      "src": "/audio-library/relax-overwhelmed-07-5c5c357972fe.mp3",
+      "text": "You can lower the volume around you, if that feels helpful. One less input may be enough for now.",
+      "bytes": 38078
+    },
+    "relax-overwhelmed-08": {
+      "src": "/audio-library/relax-overwhelmed-08-d4628aa55d2d.mp3",
+      "text": "There is room for a smaller version of today. Keep what matters most, and reconsider the rest later.",
+      "bytes": 46646
+    },
+    "relax-overwhelmed-09": {
+      "src": "/audio-library/relax-overwhelmed-09-e7db8b2ca687.mp3",
+      "text": "If you need company beyond this recording, you can reach out to someone you trust.",
+      "bytes": 35152
+    },
+    "relax-overwhelmed-10": {
+      "src": "/audio-library/relax-overwhelmed-10-49518225c66a.mp3",
+      "text": "You are allowed to take the next step slowly. It does not have to explain the whole journey.",
+      "bytes": 38914
+    },
+    "relax-ground-01": {
+      "src": "/audio-library/relax-ground-01-d0227c14602f.mp3",
+      "text": "Notice one colour near you. Let your eyes stay with it for a comfortable moment.",
+      "bytes": 35152
+    },
+    "relax-ground-03": {
+      "src": "/audio-library/relax-ground-03-d1c7cd9c61d8.mp3",
+      "text": "Listen for a sound nearby. You do not have to decide whether you like it.",
+      "bytes": 31390
+    },
+    "relax-ground-04": {
+      "src": "/audio-library/relax-ground-04-996af659e3be.mp3",
+      "text": "Look for something with a soft edge or a familiar shape. Let that be your focus for a moment.",
+      "bytes": 38078
+    },
+    "relax-ground-02": {
+      "src": "/audio-library/relax-ground-02-17ac541436c8.mp3",
+      "text": "Find the place where your body meets the chair or floor. Notice that contact, without changing anything.",
+      "bytes": 50408
+    },
+    "relax-ground-06": {
+      "src": "/audio-library/relax-ground-06-c7ffd52db08f.mp3",
+      "text": "Let your attention visit your hands. Notice where they are resting.",
+      "bytes": 25539
+    },
+    "relax-ground-07": {
+      "src": "/audio-library/relax-ground-07-9ed98b1357d2.mp3",
+      "text": "Look around and find something ordinary that you had not noticed today.",
+      "bytes": 27629
+    },
+    "relax-ground-05": {
+      "src": "/audio-library/relax-ground-05-5dc24d3f26f3.mp3",
+      "text": "If it feels comfortable, notice the texture of your sleeve or a cushion beside you.",
+      "bytes": 37033
+    },
+    "relax-ground-08": {
+      "src": "/audio-library/relax-ground-08-8a59b97be39c.mp3",
+      "text": "Notice the light in this space. It might be bright, dim, warm, or somewhere in between.",
+      "bytes": 37660
+    },
+    "relax-ground-10": {
+      "src": "/audio-library/relax-ground-10-2222e44854e7.mp3",
+      "text": "Bring your attention back to where you are sitting. There is no need to hold it there perfectly.",
+      "bytes": 39123
+    },
+    "relax-ground-09": {
+      "src": "/audio-library/relax-ground-09-ca195af03c26.mp3",
+      "text": "You can keep your eyes open. Choose one steady point in the room to return to.",
+      "bytes": 35570
+    },
+    "relax-breath-01": {
+      "src": "/audio-library/relax-breath-01-9e8fbe89365a.mp3",
+      "text": "If noticing your breathing feels comfortable, let one breath come and go in its own time.",
+      "bytes": 36197
+    },
+    "relax-breath-02": {
+      "src": "/audio-library/relax-breath-02-077d3378f537.mp3",
+      "text": "There is no count to keep. Let your breathing find the pace that feels natural to you.",
+      "bytes": 38496
+    },
+    "relax-breath-03": {
+      "src": "/audio-library/relax-breath-03-4409667e9f6b.mp3",
+      "text": "You do not need a deeper breath. Simply notice the one that is already happening, if that suits you.",
+      "bytes": 41839
+    },
+    "relax-breath-04": {
+      "src": "/audio-library/relax-breath-04-87702f3fdb7f.mp3",
+      "text": "Let the next breath be ordinary. You can return your attention to the room whenever you prefer.",
+      "bytes": 38078
+    },
+    "relax-breath-06": {
+      "src": "/audio-library/relax-breath-06-740b3767b94c.mp3",
+      "text": "Nothing to hold, nothing to force. Let a comfortable breath pass, then take your time.",
+      "bytes": 40377
+    },
+    "relax-breath-05": {
+      "src": "/audio-library/relax-breath-05-0af4d89c8250.mp3",
+      "text": "If breath focus is not helpful today, leave it alone. Listening to a nearby sound is another option.",
+      "bytes": 52915
+    },
+    "relax-breath-07": {
+      "src": "/audio-library/relax-breath-07-825a5aa23d41.mp3",
+      "text": "You can rest a hand somewhere comfortable and notice the gentle movement of breathing.",
+      "bytes": 33271
+    },
+    "relax-breath-08": {
+      "src": "/audio-library/relax-breath-08-def280229a28.mp3",
+      "text": "Follow one easy breath only if you want to. There is no exercise you need to complete.",
+      "bytes": 36197
+    },
+    "relax-breath-09": {
+      "src": "/audio-library/relax-breath-09-5f4ae6bf0e64.mp3",
+      "text": "When your attention wanders, it has not gone wrong. Come back to a sound, a shape, or a comfortable breath.",
+      "bytes": 53333
+    },
+    "relax-breath-10": {
+      "src": "/audio-library/relax-breath-10-e21508cedc19.mp3",
+      "text": "Let breathing happen in the background. You can simply be here without managing it.",
+      "bytes": 31808
+    },
+    "relax-unclench-01": {
+      "src": "/audio-library/relax-unclench-01-a2915dcce73a.mp3",
+      "text": "If it feels comfortable, let your shoulders settle into a position that takes a little less effort.",
+      "bytes": 39959
+    },
+    "relax-unclench-02": {
+      "src": "/audio-library/relax-unclench-02-58946e80beb7.mp3",
+      "text": "Notice whether your hands are gripping anything. You can loosen that grip if you would like.",
+      "bytes": 35779
+    },
+    "relax-unclench-05": {
+      "src": "/audio-library/relax-unclench-05-5d6fe14425ad.mp3",
+      "text": "Let the chair do a little more of the holding, if that feels right for your body.",
+      "bytes": 29928
+    },
+    "relax-unclench-03": {
+      "src": "/audio-library/relax-unclench-03-4796c54157b3.mp3",
+      "text": "Give your jaw a comfortable resting place. No stretching or forcing is needed.",
+      "bytes": 37660
+    },
+    "relax-unclench-04": {
+      "src": "/audio-library/relax-unclench-04-c15fc66510ef.mp3",
+      "text": "You can adjust the cushion, shift your feet, or move the screen. Comfort is worth a small change.",
+      "bytes": 41839
+    },
+    "relax-unclench-06": {
+      "src": "/audio-library/relax-unclench-06-36f1abf16ad3.mp3",
+      "text": "Try finding a position you do not have to work so hard to keep.",
+      "bytes": 26166
+    },
+    "relax-unclench-07": {
+      "src": "/audio-library/relax-unclench-07-476b3e480fca.mp3",
+      "text": "You can change position during a pause. Stillness is an option, not a requirement.",
+      "bytes": 38078
+    },
+    "relax-unclench-08": {
+      "src": "/audio-library/relax-unclench-08-76b41378ca57.mp3",
+      "text": "Notice one place that could use a little support. A pillow or a different seat might help.",
+      "bytes": 37033
+    },
+    "relax-unclench-10": {
+      "src": "/audio-library/relax-unclench-10-296e5a1a89c1.mp3",
+      "text": "Let your hands rest for a moment. There is nothing they need to carry in this clip.",
+      "bytes": 32435
+    },
+    "relax-unclench-09": {
+      "src": "/audio-library/relax-unclench-09-19f729957fe0.mp3",
+      "text": "Your body does not have to look relaxed. Choose a position that feels comfortable to you.",
+      "bytes": 41004
+    },
+    "relax-thoughts-01": {
+      "src": "/audio-library/relax-thoughts-01-ca5614a25a5d.mp3",
+      "text": "A thought can be here without becoming a task. You can notice it and leave the next step for later.",
+      "bytes": 44347
+    },
+    "relax-thoughts-04": {
+      "src": "/audio-library/relax-thoughts-04-d79be03de25f.mp3",
+      "text": "There is no need to finish the conversation in your head right now.",
+      "bytes": 23658
+    },
+    "relax-thoughts-03": {
+      "src": "/audio-library/relax-thoughts-03-11ec64556c6b.mp3",
+      "text": "If something needs remembering, a short note can hold it while you pause.",
+      "bytes": 29510
+    },
+    "relax-thoughts-02": {
+      "src": "/audio-library/relax-thoughts-02-d62cc400d649.mp3",
+      "text": "You do not have to empty your mind to take a break. Thoughts can come along quietly.",
+      "bytes": 36615
+    },
+    "relax-thoughts-05": {
+      "src": "/audio-library/relax-thoughts-05-df777c75ef5c.mp3",
+      "text": "Let your attention return to one thing you can see. You can do that as often as you need.",
+      "bytes": 37242
+    },
+    "relax-thoughts-06": {
+      "src": "/audio-library/relax-thoughts-06-4c87291588b0.mp3",
+      "text": "A busy thought does not mean you are doing rest badly. There is no test here.",
+      "bytes": 36615
+    },
+    "relax-thoughts-07": {
+      "src": "/audio-library/relax-thoughts-07-02f1b2a058d0.mp3",
+      "text": "You can notice that your mind has wandered without telling yourself off for it.",
+      "bytes": 35152
+    },
+    "relax-thoughts-09": {
+      "src": "/audio-library/relax-thoughts-09-a4d003d9b97a.mp3",
+      "text": "You can leave a question unanswered for this moment. The pause does not need an explanation.",
+      "bytes": 38496
+    },
+    "relax-thoughts-10": {
+      "src": "/audio-library/relax-thoughts-10-3a596fefdbd4.mp3",
+      "text": "Let a sound in the room share your attention with your thoughts. There is room for both.",
+      "bytes": 37242
+    },
+    "relax-thoughts-08": {
+      "src": "/audio-library/relax-thoughts-08-5c9fedd5da44.mp3",
+      "text": "If a thought keeps returning, you might simply name it: planning, remembering, or wondering.",
+      "bytes": 43929
+    },
+    "relax-company-02": {
+      "src": "/audio-library/relax-company-02-36a7f0375017.mp3",
+      "text": "Luma can keep you company on the screen while you take your time.",
+      "bytes": 23658
+    },
+    "relax-company-01": {
+      "src": "/audio-library/relax-company-01-a79fde7eabc1.mp3",
+      "text": "Here is a gentle voice for a moment. After this, there can be as much silence as you like.",
+      "bytes": 32853
+    },
+    "relax-company-03": {
+      "src": "/audio-library/relax-company-03-a51644443ea9.mp3",
+      "text": "You do not have to say anything back. This little pause asks nothing of you.",
+      "bytes": 35152
+    },
+    "relax-company-04": {
+      "src": "/audio-library/relax-company-04-9b4a9d984765.mp3",
+      "text": "A familiar corner, a soft little mascot, and a moment without a new demand.",
+      "bytes": 34734
+    },
+    "relax-company-05": {
+      "src": "/audio-library/relax-company-05-31e32007a3dd.mp3",
+      "text": "You can let this be simple. Just a voice, a comfortable place, and some room to be.",
+      "bytes": 33271
+    },
+    "relax-company-06": {
+      "src": "/audio-library/relax-company-06-d4cf40c29ada.mp3",
+      "text": "There is no conversation you need to keep going. Listen once, then choose what feels right.",
+      "bytes": 40377
+    },
+    "relax-company-08": {
+      "src": "/audio-library/relax-company-08-5172df5c7d4c.mp3",
+      "text": "You are welcome to stay without doing anything with this moment.",
+      "bytes": 23658
+    },
+    "relax-company-09": {
+      "src": "/audio-library/relax-company-09-9c3c058deaf3.mp3",
+      "text": "Let this little recording be a kind interruption in your day.",
+      "bytes": 24703
+    },
+    "relax-company-07": {
+      "src": "/audio-library/relax-company-07-184d6c970779.mp3",
+      "text": "If quiet company is what you wanted, you can stop choosing clips and rest here for a while.",
+      "bytes": 37660
+    },
+    "relax-company-10": {
+      "src": "/audio-library/relax-company-10-b627efebcf55.mp3",
+      "text": "You can listen again, or let the room take over. Both are welcome.",
+      "bytes": 27629
+    },
+    "relax-pause-02": {
+      "src": "/audio-library/relax-pause-02-988d30b0c8cc.mp3",
+      "text": "One thing has your attention next. For this moment, you can let your attention rest.",
+      "bytes": 34734
+    },
+    "relax-pause-01": {
+      "src": "/audio-library/relax-pause-01-54c9b7a7afd4.mp3",
+      "text": "Before the next task, let there be a small gap. You do not have to carry the same pace into everything.",
+      "bytes": 48109
+    },
+    "relax-pause-04": {
+      "src": "/audio-library/relax-pause-04-ba4538bf21ff.mp3",
+      "text": "A break can be short and still be worth taking. You decide when it ends.",
+      "bytes": 31390
+    },
+    "relax-pause-05": {
+      "src": "/audio-library/relax-pause-05-73e5d495dc5f.mp3",
+      "text": "You can finish a pause without proving that it helped. Taking it was enough.",
+      "bytes": 36615
+    },
+    "relax-pause-03": {
+      "src": "/audio-library/relax-pause-03-dd6d6ccca6ca.mp3",
+      "text": "If you have been sitting in the same position, choose a comfortable adjustment before you continue.",
+      "bytes": 42466
+    },
+    "relax-pause-07": {
+      "src": "/audio-library/relax-pause-07-810feef9b6e6.mp3",
+      "text": "Give yourself a moment before saying yes to the next thing.",
+      "bytes": 23240
+    },
+    "relax-pause-08": {
+      "src": "/audio-library/relax-pause-08-5d079f0ce69f.mp3",
+      "text": "You can step away from the work without turning the break into another project.",
+      "bytes": 33271
+    },
+    "relax-pause-06": {
+      "src": "/audio-library/relax-pause-06-0d2477977021.mp3",
+      "text": "Let the previous task have an ending, even if it is only closing a tab or setting something down.",
+      "bytes": 39959
+    },
+    "relax-pause-10": {
+      "src": "/audio-library/relax-pause-10-7769404857c9.mp3",
+      "text": "There is no need to rush the transition. Let your next step begin when you are ready.",
+      "bytes": 34316
+    },
+    "relax-pause-09": {
+      "src": "/audio-library/relax-pause-09-cb7d4d19c591.mp3",
+      "text": "Choose one small comfort for this gap: a different seat, a quiet room, or a look outside.",
+      "bytes": 38078
+    },
+    "relax-return-01": {
+      "src": "/audio-library/relax-return-01-deec96dcb4d7.mp3",
+      "text": "When you are ready, choose one gentle next step. You can take the quiet with you.",
+      "bytes": 39959
+    },
+    "relax-return-02": {
+      "src": "/audio-library/relax-return-02-c78a15548591.mp3",
+      "text": "You can stay a little longer. Leaving this pause is your choice.",
+      "bytes": 26584
+    },
+    "relax-return-03": {
+      "src": "/audio-library/relax-return-03-e34bb3c3c2f2.mp3",
+      "text": "Look around once before returning to your day. Let the room come back into focus.",
+      "bytes": 36615
+    },
+    "relax-return-04": {
+      "src": "/audio-library/relax-return-04-ec8ce997ec61.mp3",
+      "text": "Your next step can be small. A glass of water, a message, or opening one useful thing.",
+      "bytes": 39959
+    },
+    "relax-return-05": {
+      "src": "/audio-library/relax-return-05-86e55c2f49d1.mp3",
+      "text": "There is no need to catch up with the whole day as you leave this moment.",
+      "bytes": 25748
+    },
+    "relax-return-06": {
+      "src": "/audio-library/relax-return-06-b2c6d96088f3.mp3",
+      "text": "If you are ready to continue, decide what deserves your attention first.",
+      "bytes": 29092
+    },
+    "relax-return-07": {
+      "src": "/audio-library/relax-return-07-bb77fa3478ad.mp3",
+      "text": "You can end the recording and keep resting. The screen does not need to stay open.",
+      "bytes": 36615
+    },
+    "relax-return-10": {
+      "src": "/audio-library/relax-return-10-8016b9c6922b.mp3",
+      "text": "This quiet corner will be here when you choose to visit again.",
+      "bytes": 24285
+    },
+    "relax-return-09": {
+      "src": "/audio-library/relax-return-09-a9794e62df34.mp3",
+      "text": "Let the return be unhurried. You can begin with the easiest part.",
+      "bytes": 29510
+    },
+    "relax-return-08": {
+      "src": "/audio-library/relax-return-08-2df8de5e456d.mp3",
+      "text": "Take a moment to notice what you need next, without making it a long list.",
+      "bytes": 33689
+    },
+    "sleep-begin-02": {
+      "src": "/audio-library/sleep-begin-02-1e7043270e61.mp3",
+      "text": "Let the evening become a little simpler. Choose one thing you can put away for tonight.",
+      "bytes": 33689
+    },
+    "sleep-begin-01": {
+      "src": "/audio-library/sleep-begin-01-2f5b30179063.mp3",
+      "text": "You can begin winding down before everything is finished. Some things can belong to tomorrow.",
+      "bytes": 38078
+    },
+    "sleep-begin-03": {
+      "src": "/audio-library/sleep-begin-03-127f6a1b41d0.mp3",
+      "text": "There is no need to produce a perfect bedtime. A small familiar routine can be enough to start.",
+      "bytes": 40586
+    },
+    "sleep-begin-04": {
+      "src": "/audio-library/sleep-begin-04-825e873bf299.mp3",
+      "text": "You can set aside the day without deciding how you feel about all of it.",
+      "bytes": 30346
+    },
+    "sleep-begin-05": {
+      "src": "/audio-library/sleep-begin-05-23c856e73fcc.mp3",
+      "text": "If it suits your evening, choose a quieter activity and let the pace soften.",
+      "bytes": 38496
+    },
+    "sleep-begin-06": {
+      "src": "/audio-library/sleep-begin-06-acc1309e0535.mp3",
+      "text": "Take a moment to make your resting place comfortable. You know what feels familiar to you.",
+      "bytes": 34316
+    },
+    "sleep-begin-07": {
+      "src": "/audio-library/sleep-begin-07-74e8d954e097.mp3",
+      "text": "Let this be an invitation to wind down, not another deadline to meet.",
+      "bytes": 30555
+    },
+    "sleep-begin-08": {
+      "src": "/audio-library/sleep-begin-08-82f08e49dc50.mp3",
+      "text": "You do not have to earn the end of the day. You can start settling whenever you are ready.",
+      "bytes": 34734
+    },
+    "sleep-begin-09": {
+      "src": "/audio-library/sleep-begin-09-acaba5065055.mp3",
+      "text": "Choose a gentle ending to this part of the evening. One small ritual will do.",
+      "bytes": 32226
+    },
+    "sleep-begin-10": {
+      "src": "/audio-library/sleep-begin-10-e60498b0c86b.mp3",
+      "text": "For now, you can leave tomorrow’s whole shape undecided.",
+      "bytes": 23240
+    },
+    "sleep-phone-01": {
+      "src": "/audio-library/sleep-phone-01-b422fbff234d.mp3",
+      "text": "If you are finished with the screen, you can put it down after this recording.",
+      "bytes": 36197
+    },
+    "sleep-phone-02": {
+      "src": "/audio-library/sleep-phone-02-7e54e30aa99d.mp3",
+      "text": "You can leave the messages for a time when you want to meet them. Choose what is practical for you tonight.",
+      "bytes": 50408
+    },
+    "sleep-phone-04": {
+      "src": "/audio-library/sleep-phone-04-b6674a54a0d0.mp3",
+      "text": "If it helps, place the phone where it is less easy to reach while you settle.",
+      "bytes": 31808
+    },
+    "sleep-phone-03": {
+      "src": "/audio-library/sleep-phone-03-928cefce42d9.mp3",
+      "text": "There does not have to be one more video. You can choose an ending here.",
+      "bytes": 28465
+    },
+    "sleep-phone-05": {
+      "src": "/audio-library/sleep-phone-05-ef1c3be7b5a8.mp3",
+      "text": "You can turn down the screen brightness for comfort, then leave the rest of the app for tomorrow.",
+      "bytes": 42257
+    },
+    "sleep-phone-07": {
+      "src": "/audio-library/sleep-phone-07-8592eb30bd29.mp3",
+      "text": "You can close this page when you want to. There is nothing here you need to watch until the end.",
+      "bytes": 34734
+    },
+    "sleep-phone-06": {
+      "src": "/audio-library/sleep-phone-06-2116f844661c.mp3",
+      "text": "A familiar piece of audio can be enough company. You do not need to keep looking at the screen.",
+      "bytes": 39123
+    },
+    "sleep-phone-08": {
+      "src": "/audio-library/sleep-phone-08-49899b24142b.mp3",
+      "text": "Let the scrolling stop at an ordinary moment. It does not need a special final post.",
+      "bytes": 38078
+    },
+    "sleep-phone-09": {
+      "src": "/audio-library/sleep-phone-09-5fee065284e5.mp3",
+      "text": "If your phone needs to stay nearby, you can still choose to turn the screen away.",
+      "bytes": 32853
+    },
+    "sleep-phone-10": {
+      "src": "/audio-library/sleep-phone-10-5416f219ed28.mp3",
+      "text": "Choose one last useful thing to do on the phone, if needed, and let that be the stopping point.",
+      "bytes": 35779
+    },
+    "sleep-room-01": {
+      "src": "/audio-library/sleep-room-01-171202a3d5e1.mp3",
+      "text": "Notice whether the light feels comfortable. You can change it if that is easy to do.",
+      "bytes": 37242
+    },
+    "sleep-room-03": {
+      "src": "/audio-library/sleep-room-03-3415e1e94e2a.mp3",
+      "text": "You can keep a familiar sound nearby, or choose quiet. There is no single right atmosphere.",
+      "bytes": 39959
+    },
+    "sleep-room-02": {
+      "src": "/audio-library/sleep-room-02-ed027afa1fb8.mp3",
+      "text": "Arrange the pillow or blanket in a way that suits you. Small comforts are allowed to matter.",
+      "bytes": 38078
+    },
+    "sleep-room-04": {
+      "src": "/audio-library/sleep-room-04-84dfc4ffbc87.mp3",
+      "text": "Let your resting place feel like somewhere you can stop arranging things for a while.",
+      "bytes": 31808
+    },
+    "sleep-room-06": {
+      "src": "/audio-library/sleep-room-06-a36e8ea167c5.mp3",
+      "text": "Choose the light level that feels comfortable and practical for your room tonight.",
+      "bytes": 30555
+    },
+    "sleep-room-07": {
+      "src": "/audio-library/sleep-room-07-a40ea484b8c3.mp3",
+      "text": "You might put tomorrow’s first useful item somewhere easy to find, then leave the rest.",
+      "bytes": 36615
+    },
+    "sleep-room-05": {
+      "src": "/audio-library/sleep-room-05-9f9a816bbafa.mp3",
+      "text": "If something is uncomfortable, you can adjust it. You do not need to stay still for this recording.",
+      "bytes": 38914
+    },
+    "sleep-room-09": {
+      "src": "/audio-library/sleep-room-09-38a13fc2cbd1.mp3",
+      "text": "There is no special position to get right. Find the one that asks less of you.",
+      "bytes": 34734
+    },
+    "sleep-room-10": {
+      "src": "/audio-library/sleep-room-10-faffe667456b.mp3",
+      "text": "You can make this space a little quieter without making it perfect.",
+      "bytes": 25539
+    },
+    "sleep-room-08": {
+      "src": "/audio-library/sleep-room-08-752ad9fe9c4e.mp3",
+      "text": "Let your hands settle where they feel comfortable. The bed or chair can do some of the holding.",
+      "bytes": 39123
+    },
+    "sleep-thoughts-02": {
+      "src": "/audio-library/sleep-thoughts-02-61c0b9167548.mp3",
+      "text": "You do not have to solve a whole problem at bedtime. You can choose a time to revisit it.",
+      "bytes": 33271
+    },
+    "sleep-thoughts-01": {
+      "src": "/audio-library/sleep-thoughts-01-c2ff112b6ef5.mp3",
+      "text": "If tomorrow keeps asking for attention, write one short reminder and let the note hold it for now.",
+      "bytes": 43720
+    },
+    "sleep-thoughts-03": {
+      "src": "/audio-library/sleep-thoughts-03-7f026f9a25bd.mp3",
+      "text": "A thought can pass through the evening without becoming tonight’s project.",
+      "bytes": 34734
+    },
+    "sleep-thoughts-04": {
+      "src": "/audio-library/sleep-thoughts-04-1f2c813a1009.mp3",
+      "text": "If writing helps, keep it brief. A few words can be enough to remember the important part.",
+      "bytes": 36197
+    },
+    "sleep-thoughts-06": {
+      "src": "/audio-library/sleep-thoughts-06-f103ebf45d7b.mp3",
+      "text": "You can notice a planning thought and return to the room without arguing with it.",
+      "bytes": 32853
+    },
+    "sleep-thoughts-05": {
+      "src": "/audio-library/sleep-thoughts-05-55164751cab0.mp3",
+      "text": "Let tomorrow have a place on a page, rather than asking yourself to keep rehearsing it.",
+      "bytes": 36197
+    },
+    "sleep-thoughts-07": {
+      "src": "/audio-library/sleep-thoughts-07-aab9dcb8a795.mp3",
+      "text": "There is room for unfinished thoughts at the end of a day.",
+      "bytes": 21777
+    },
+    "sleep-thoughts-08": {
+      "src": "/audio-library/sleep-thoughts-08-1068e9f483b5.mp3",
+      "text": "If a worry needs another person’s help, you can make a note of who you might speak with.",
+      "bytes": 35570
+    },
+    "sleep-thoughts-09": {
+      "src": "/audio-library/sleep-thoughts-09-1d6ba41bebe4.mp3",
+      "text": "You can leave a decision for a time when you feel more ready to make it.",
+      "bytes": 27211
+    },
+    "sleep-settle-01": {
+      "src": "/audio-library/sleep-settle-01-edb860c6132c.mp3",
+      "text": "You do not have to make sleep happen for this moment to count as rest.",
+      "bytes": 29928
+    },
+    "sleep-thoughts-10": {
+      "src": "/audio-library/sleep-thoughts-10-c93309a9645c.mp3",
+      "text": "Tonight does not have to contain every answer. A reminder for later may be enough.",
+      "bytes": 35779
+    },
+    "sleep-settle-02": {
+      "src": "/audio-library/sleep-settle-02-e103f50a765b.mp3",
+      "text": "Let your body choose a comfortable position. There is nothing in this clip to keep up with.",
+      "bytes": 38496
+    },
+    "sleep-settle-04": {
+      "src": "/audio-library/sleep-settle-04-10380ac63708.mp3",
+      "text": "There is no finish line in this recording. Just a little space to settle.",
+      "bytes": 27629
+    },
+    "sleep-settle-05": {
+      "src": "/audio-library/sleep-settle-05-15af85cfb882.mp3",
+      "text": "If closing your eyes feels comfortable, you can. Keeping them open is fine too.",
+      "bytes": 41839
+    },
+    "sleep-settle-03": {
+      "src": "/audio-library/sleep-settle-03-f63b158f0275.mp3",
+      "text": "You can listen without concentrating on every word. It is fine to let the voice fade into the background.",
+      "bytes": 49990
+    },
+    "sleep-settle-07": {
+      "src": "/audio-library/sleep-settle-07-ff5021da3e10.mp3",
+      "text": "You can stop checking whether you are doing this correctly. There is no score for settling.",
+      "bytes": 39123
+    },
+    "sleep-settle-06": {
+      "src": "/audio-library/sleep-settle-06-b2912724c9e5.mp3",
+      "text": "Let the next few moments be ordinary. No special breathing, no effort to feel a certain way.",
+      "bytes": 41004
+    },
+    "sleep-settle-08": {
+      "src": "/audio-library/sleep-settle-08-9c37088d7e23.mp3",
+      "text": "Notice something comfortable, however small, and let that be enough for now.",
+      "bytes": 32226
+    },
+    "sleep-settle-10": {
+      "src": "/audio-library/sleep-settle-10-03eb5da109b1.mp3",
+      "text": "Let the recording end without choosing another thing straight away.",
+      "bytes": 25121
+    },
+    "sleep-settle-09": {
+      "src": "/audio-library/sleep-settle-09-d2122c8f4533.mp3",
+      "text": "If you need to shift position, take your time. Rest does not require perfect stillness.",
+      "bytes": 38914
+    },
+    "sleep-awake-01": {
+      "src": "/audio-library/sleep-awake-01-1e2b70ec1460.mp3",
+      "text": "Being awake can feel frustrating. You do not have to turn this moment into a judgement about tomorrow.",
+      "bytes": 41004
+    },
+    "sleep-awake-02": {
+      "src": "/audio-library/sleep-awake-02-8bdd41ca0e9f.mp3",
+      "text": "There is no need to keep checking the time while this little recording plays.",
+      "bytes": 29928
+    },
+    "sleep-awake-04": {
+      "src": "/audio-library/sleep-awake-04-7ee38c73a0e3.mp3",
+      "text": "Let this moment be separate from predictions about the whole next day.",
+      "bytes": 28465
+    },
+    "sleep-awake-03": {
+      "src": "/audio-library/sleep-awake-03-cadc503a83aa.mp3",
+      "text": "If it feels useful, choose something quiet and familiar while you decide what you need.",
+      "bytes": 35570
+    },
+    "sleep-awake-06": {
+      "src": "/audio-library/sleep-awake-06-b3ad2ea519a5.mp3",
+      "text": "If sound is irritating right now, you can stop the clip and choose silence.",
+      "bytes": 35570
+    },
+    "sleep-awake-07": {
+      "src": "/audio-library/sleep-awake-07-28f737004069.mp3",
+      "text": "There is nothing you need to achieve by the end of this recording.",
+      "bytes": 23658
+    },
+    "sleep-awake-05": {
+      "src": "/audio-library/sleep-awake-05-1e7ee20dcbfd.mp3",
+      "text": "You can make yourself comfortable without trying to force a particular result.",
+      "bytes": 33271
+    },
+    "sleep-awake-10": {
+      "src": "/audio-library/sleep-awake-10-b0215f6d90f6.mp3",
+      "text": "For now, meet the moment you are in. Tomorrow does not need a verdict tonight.",
+      "bytes": 30346
+    },
+    "sleep-awake-09": {
+      "src": "/audio-library/sleep-awake-09-73691cfc4ef8.mp3",
+      "text": "If sleep difficulties keep troubling you, a healthcare professional can help you explore them.",
+      "bytes": 35152
+    },
+    "sleep-awake-08": {
+      "src": "/audio-library/sleep-awake-08-43a4d551ecf1.mp3",
+      "text": "You can let the room be simple: one familiar sound, one comfortable place, one moment at a time.",
+      "bytes": 43302
+    },
+    "sleep-reflect-02": {
+      "src": "/audio-library/sleep-reflect-02-67a05ddb8aa1.mp3",
+      "text": "You can name one thing that felt difficult without making the whole day a difficult day.",
+      "bytes": 31808
+    },
+    "sleep-reflect-03": {
+      "src": "/audio-library/sleep-reflect-03-55a3d7e23bf3.mp3",
+      "text": "Think of a moment when you met a need, however quietly. You can let that matter.",
+      "bytes": 40586
+    },
+    "sleep-reflect-01": {
+      "src": "/audio-library/sleep-reflect-01-ca8807148e66.mp3",
+      "text": "Was there one small moment today that you would like to remember? It does not have to be an achievement.",
+      "bytes": 43929
+    },
+    "sleep-reflect-04": {
+      "src": "/audio-library/sleep-reflect-04-96288c36269f.mp3",
+      "text": "If reflection feels like more work, you can skip it tonight.",
+      "bytes": 22404
+    },
+    "sleep-reflect-06": {
+      "src": "/audio-library/sleep-reflect-06-58a0a9b15d43.mp3",
+      "text": "What would you like to carry into tomorrow, and what can stay with today?",
+      "bytes": 25539
+    },
+    "sleep-reflect-05": {
+      "src": "/audio-library/sleep-reflect-05-b827a1e44585.mp3",
+      "text": "You might remember a kind word, a useful pause, or something you noticed outside.",
+      "bytes": 39123
+    },
+    "sleep-reflect-08": {
+      "src": "/audio-library/sleep-reflect-08-f071b33e5c22.mp3",
+      "text": "You can end with one sentence rather than a full account of the day.",
+      "bytes": 24703
+    },
+    "sleep-reflect-09": {
+      "src": "/audio-library/sleep-reflect-09-12c822495fe6.mp3",
+      "text": "Is there a small kindness you could offer yourself before the evening ends?",
+      "bytes": 29928
+    },
+    "sleep-reflect-07": {
+      "src": "/audio-library/sleep-reflect-07-98eb5bd217fb.mp3",
+      "text": "A day can hold both effort and unfinished things. You do not have to choose only one story about it.",
+      "bytes": 45183
+    },
+    "sleep-goodnight-02": {
+      "src": "/audio-library/sleep-goodnight-02-5caa4647ef7c.mp3",
+      "text": "Goodnight from Daywell. Leave the next thing for whenever you are ready to meet it.",
+      "bytes": 29928
+    },
+    "sleep-goodnight-01": {
+      "src": "/audio-library/sleep-goodnight-01-cc05d79e2c61.mp3",
+      "text": "That is all from this little voice for now. You can let the room become quiet.",
+      "bytes": 33689
+    },
+    "sleep-reflect-10": {
+      "src": "/audio-library/sleep-reflect-10-20e46cc7e37c.mp3",
+      "text": "Let the reflection be brief and gentle. You can close it whenever you have had enough.",
+      "bytes": 37242
+    },
+    "sleep-goodnight-03": {
+      "src": "/audio-library/sleep-goodnight-03-253bc30eb6ba.mp3",
+      "text": "You can put the screen away and let your own evening continue.",
+      "bytes": 22404
+    },
+    "sleep-goodnight-04": {
+      "src": "/audio-library/sleep-goodnight-04-23f804f0ff5d.mp3",
+      "text": "Nothing else is required here tonight. Take the quiet you need.",
+      "bytes": 27211
+    },
+    "sleep-goodnight-05": {
+      "src": "/audio-library/sleep-goodnight-05-ad80fac3f1d5.mp3",
+      "text": "Luma can stay a little picture on the screen, or you can close the app. Either way, the clip is finished.",
+      "bytes": 43302
+    },
+    "sleep-goodnight-06": {
+      "src": "/audio-library/sleep-goodnight-06-e3ea2111416c.mp3",
+      "text": "Let this be a gentle ending, with no new instruction waiting after it.",
+      "bytes": 29928
+    },
+    "sleep-goodnight-08": {
+      "src": "/audio-library/sleep-goodnight-08-7f06d7335e00.mp3",
+      "text": "The words can stop now. There is room for your own quiet.",
+      "bytes": 21777
+    },
+    "sleep-goodnight-07": {
+      "src": "/audio-library/sleep-goodnight-07-2c7eae75dd26.mp3",
+      "text": "You have permission to leave this moment unfinished too. Rest in whatever way suits you.",
+      "bytes": 40377
+    },
+    "sleep-goodnight-10": {
+      "src": "/audio-library/sleep-goodnight-10-d6c71f231532.mp3",
+      "text": "Take your time settling. Daywell will be here when you choose to return.",
+      "bytes": 30346
+    },
+    "sleep-goodnight-09": {
+      "src": "/audio-library/sleep-goodnight-09-81a09a5f0812.mp3",
+      "text": "Goodnight. There is no need to reply, choose a score, or record anything.",
+      "bytes": 32435
+    },
+    "move-begin-01": {
+      "src": "/audio-library/move-begin-01-b9dc5268ef41.mp3",
+      "text": "Choose a little movement that suits your body today. It can be much smaller than a full workout.",
+      "bytes": 39123
+    },
+    "move-begin-03": {
+      "src": "/audio-library/move-begin-03-6e5948cbf50f.mp3",
+      "text": "You do not need a dramatic start. Make enough space to move comfortably, then choose one thing.",
+      "bytes": 34734
+    },
+    "move-begin-02": {
+      "src": "/audio-library/move-begin-02-beff2f02d33f.mp3",
+      "text": "A familiar, comfortable movement is a good place to begin. You set the pace.",
+      "bytes": 35570
+    },
+    "move-begin-04": {
+      "src": "/audio-library/move-begin-04-f88682a18b06.mp3",
+      "text": "Before you begin, check that your space and equipment are ready for what you have chosen.",
+      "bytes": 33271
+    },
+    "move-begin-06": {
+      "src": "/audio-library/move-begin-06-f41deed6ee7a.mp3",
+      "text": "A short session can stand on its own. It does not need to become a longer one.",
+      "bytes": 32435
+    },
+    "move-begin-05": {
+      "src": "/audio-library/move-begin-05-78f1c4cca2bc.mp3",
+      "text": "You can choose movement because it feels useful, without making it a punishment for anything.",
+      "bytes": 39959
+    },
+    "move-begin-07": {
+      "src": "/audio-library/move-begin-07-9a6cf14020f6.mp3",
+      "text": "Start with something you already know how to do comfortably. New movements can wait for suitable guidance.",
+      "bytes": 42466
+    },
+    "move-begin-08": {
+      "src": "/audio-library/move-begin-08-13721f9a669c.mp3",
+      "text": "There is room for a gentle version of your plan today.",
+      "bytes": 22195
+    },
+    "move-begin-09": {
+      "src": "/audio-library/move-begin-09-e16897b5b485.mp3",
+      "text": "Your first step can be getting ready. Choose a comfortable place and something familiar to begin with.",
+      "bytes": 41421
+    },
+    "move-begin-10": {
+      "src": "/audio-library/move-begin-10-6cf6e8f61aae.mp3",
+      "text": "If movement is not right for you today, you can choose rest. The plan is allowed to change.",
+      "bytes": 40586
+    },
+    "move-pace-01": {
+      "src": "/audio-library/move-pace-01-87620d1fd4c7.mp3",
+      "text": "You can slow down without ending the session. Your pace belongs to you.",
+      "bytes": 27629
+    },
+    "move-pace-03": {
+      "src": "/audio-library/move-pace-03-d23bc03c310e.mp3",
+      "text": "There is no need to match the pace of this voice. Move in the way that suits you.",
+      "bytes": 35570
+    },
+    "move-pace-02": {
+      "src": "/audio-library/move-pace-02-c3be05d23c5a.mp3",
+      "text": "Keep your attention on how the movement feels, rather than how it might look to someone else.",
+      "bytes": 36197
+    },
+    "move-pace-04": {
+      "src": "/audio-library/move-pace-04-fc07e378186a.mp3",
+      "text": "A comfortable, familiar pace is enough. You can adjust it as you go.",
+      "bytes": 31390
+    },
+    "move-pace-05": {
+      "src": "/audio-library/move-pace-05-c417d8ed52c0.mp3",
+      "text": "If the effort feels wrong for you, pause and reconsider the next step.",
+      "bytes": 30346
+    },
+    "move-pace-06": {
+      "src": "/audio-library/move-pace-06-40500c1bf6af.mp3",
+      "text": "You can make a movement smaller or choose a familiar alternative that feels comfortable.",
+      "bytes": 33689
+    },
+    "move-pace-08": {
+      "src": "/audio-library/move-pace-08-45851664baef.mp3",
+      "text": "Let a steady pace matter more than finishing quickly.",
+      "bytes": 22195
+    },
+    "move-pace-09": {
+      "src": "/audio-library/move-pace-09-0d37398682b1.mp3",
+      "text": "You can check in with yourself without comparing today with another day.",
+      "bytes": 30346
+    },
+    "move-pace-07": {
+      "src": "/audio-library/move-pace-07-69c43562ea3c.mp3",
+      "text": "There is no prize for rushing through the part you are doing now.",
+      "bytes": 23867
+    },
+    "move-pace-10": {
+      "src": "/audio-library/move-pace-10-08973b74b208.mp3",
+      "text": "Choose the version you can do comfortably. Making an adjustment is part of looking after yourself.",
+      "bytes": 38914
+    },
+    "move-rest-01": {
+      "src": "/audio-library/move-rest-01-23ca9a33575d.mp3",
+      "text": "A rest belongs in the session too. Take the time you need before deciding whether to continue.",
+      "bytes": 37660
+    },
+    "move-rest-02": {
+      "src": "/audio-library/move-rest-02-7a6bb2d2b99c.mp3",
+      "text": "Set the equipment down safely, if you are using any, and give yourself a comfortable pause.",
+      "bytes": 37660
+    },
+    "move-rest-04": {
+      "src": "/audio-library/move-rest-04-829238ffe3dc.mp3",
+      "text": "Let this be a pause without a challenge hidden inside it.",
+      "bytes": 22822
+    },
+    "move-rest-03": {
+      "src": "/audio-library/move-rest-03-806c7078ce5f.mp3",
+      "text": "You do not need to fill every gap with another exercise.",
+      "bytes": 22404
+    },
+    "move-rest-05": {
+      "src": "/audio-library/move-rest-05-94f24c45bc11.mp3",
+      "text": "You can take longer than you planned to rest. Your next move can wait.",
+      "bytes": 28047
+    },
+    "move-rest-08": {
+      "src": "/audio-library/move-rest-08-256554a62317.mp3",
+      "text": "A break does not erase the movement you have already chosen to do.",
+      "bytes": 24703
+    },
+    "move-rest-06": {
+      "src": "/audio-library/move-rest-06-609959f3ab39.mp3",
+      "text": "Check whether continuing feels right today. Stopping is one of your options.",
+      "bytes": 33271
+    },
+    "move-rest-07": {
+      "src": "/audio-library/move-rest-07-eb67aaf89b71.mp3",
+      "text": "If you would like a drink, take a moment for that. There is no need to hurry back.",
+      "bytes": 37660
+    },
+    "move-rest-10": {
+      "src": "/audio-library/move-rest-10-bacb355df4ff.mp3",
+      "text": "Use this gap to get comfortable again before choosing what comes next.",
+      "bytes": 29510
+    },
+    "move-walk-01": {
+      "src": "/audio-library/move-walk-01-422f93fe68c7.mp3",
+      "text": "Choose a route and distance that suit you today. A short familiar loop is a complete option.",
+      "bytes": 38078
+    },
+    "move-rest-09": {
+      "src": "/audio-library/move-rest-09-404f6fe88f34.mp3",
+      "text": "There is no instruction to push through pain here. Stop if something hurts or feels concerning.",
+      "bytes": 37242
+    },
+    "move-walk-03": {
+      "src": "/audio-library/move-walk-03-fea2f01ff005.mp3",
+      "text": "You can turn back whenever you choose. There is no distance you owe the app.",
+      "bytes": 28883
+    },
+    "move-walk-04": {
+      "src": "/audio-library/move-walk-04-504e09a3f02c.mp3",
+      "text": "A few comfortable minutes of moving around can be the whole plan.",
+      "bytes": 22822
+    },
+    "move-walk-02": {
+      "src": "/audio-library/move-walk-02-e2c81bc5c322.mp3",
+      "text": "If you go outside, keep your attention on your surroundings. This recording can wait when you need to listen.",
+      "bytes": 45810
+    },
+    "move-walk-06": {
+      "src": "/audio-library/move-walk-06-76e45fb8b1e5.mp3",
+      "text": "Choose somewhere practical and comfortable for the way you move.",
+      "bytes": 22822
+    },
+    "move-walk-05": {
+      "src": "/audio-library/move-walk-05-ab2fff7f751e.mp3",
+      "text": "You might notice one detail along your route: a colour, a sound, or the shape of a tree.",
+      "bytes": 33898
+    },
+    "move-walk-07": {
+      "src": "/audio-library/move-walk-07-06254ffbb4d7.mp3",
+      "text": "If going outside is not possible, you can choose another familiar movement or a pause indoors.",
+      "bytes": 37660
+    },
+    "move-walk-08": {
+      "src": "/audio-library/move-walk-08-9f3b798e028c.mp3",
+      "text": "You do not have to make the outing faster or longer to make it worth doing.",
+      "bytes": 30555
+    },
+    "move-walk-09": {
+      "src": "/audio-library/move-walk-09-d51cd06c6388.mp3",
+      "text": "Let the route fit your energy and circumstances, rather than forcing yourself to fit a target.",
+      "bytes": 39959
+    },
+    "move-walk-10": {
+      "src": "/audio-library/move-walk-10-79db606edad8.mp3",
+      "text": "When you return, you can decide whether to record the outing. It counts as an experience either way.",
+      "bytes": 39541
+    },
+    "move-strength-03": {
+      "src": "/audio-library/move-strength-03-b5aafa295b69.mp3",
+      "text": "Take a moment to check the space around you before lifting or moving equipment.",
+      "bytes": 29092
+    },
+    "move-strength-02": {
+      "src": "/audio-library/move-strength-02-4e19cb693a8d.mp3",
+      "text": "Choose a manageable version of the session. You do not need a personal record today.",
+      "bytes": 32853
+    },
+    "move-strength-01": {
+      "src": "/audio-library/move-strength-01-f6fb1681097a.mp3",
+      "text": "Use a familiar plan and equipment you know how to handle. Ask a qualified trainer when you need help with technique.",
+      "bytes": 50408
+    },
+    "move-strength-05": {
+      "src": "/audio-library/move-strength-05-d4f450a9518b.mp3",
+      "text": "Give each movement your attention. A slower setup can be a useful part of the session.",
+      "bytes": 33271
+    },
+    "move-strength-04": {
+      "src": "/audio-library/move-strength-04-520b2242529d.mp3",
+      "text": "You can record the exercises and loads you choose, so there is less to remember next time.",
+      "bytes": 38496
+    },
+    "move-strength-06": {
+      "src": "/audio-library/move-strength-06-52f1461a4aa3.mp3",
+      "text": "You can stop a set when you need to. A number on the plan is not an instruction to ignore discomfort.",
+      "bytes": 44765
+    },
+    "move-strength-08": {
+      "src": "/audio-library/move-strength-08-c25e279718ed.mp3",
+      "text": "Keep your equipment and water within practical reach before you begin.",
+      "bytes": 27629
+    },
+    "move-strength-09": {
+      "src": "/audio-library/move-strength-09-d12a9a8cd625.mp3",
+      "text": "If you are unsure about an exercise, get suitable guidance before trying to follow it from a short recording.",
+      "bytes": 41421
+    },
+    "move-strength-07": {
+      "src": "/audio-library/move-strength-07-e2a8a8395e92.mp3",
+      "text": "Let your current ability guide today’s choices. Someone else’s routine does not have to be yours.",
+      "bytes": 42466
+    },
+    "move-adapt-02": {
+      "src": "/audio-library/move-adapt-02-ad4770df9d03.mp3",
+      "text": "You can choose a seated, standing, or other familiar option that suits your mobility.",
+      "bytes": 33271
+    },
+    "move-adapt-01": {
+      "src": "/audio-library/move-adapt-01-1a02299cb7c9.mp3",
+      "text": "A shorter session can be a thoughtful choice. You can change the plan without calling it a failure.",
+      "bytes": 39123
+    },
+    "move-strength-10": {
+      "src": "/audio-library/move-strength-10-f4e2bdd40abd.mp3",
+      "text": "Choose one clear intention for the session, such as practising a familiar movement carefully.",
+      "bytes": 38078
+    },
+    "move-adapt-04": {
+      "src": "/audio-library/move-adapt-04-4213516b8e7d.mp3",
+      "text": "If the space is busy or uncomfortable, you can choose a different place or another time.",
+      "bytes": 35570
+    },
+    "move-adapt-03": {
+      "src": "/audio-library/move-adapt-03-2534580eb0ce.mp3",
+      "text": "Today’s energy does not need to match yesterday’s. Make today’s plan for today.",
+      "bytes": 35570
+    },
+    "move-adapt-05": {
+      "src": "/audio-library/move-adapt-05-8712b3e2624f.mp3",
+      "text": "You can leave out an exercise that is not right for you. The app does not need every box filled.",
+      "bytes": 39123
+    },
+    "move-adapt-07": {
+      "src": "/audio-library/move-adapt-07-b1902c9cf0ff.mp3",
+      "text": "Your circumstances are part of the plan. Work with what is possible right now.",
+      "bytes": 33898
+    },
+    "move-adapt-06": {
+      "src": "/audio-library/move-adapt-06-16439b652e3b.mp3",
+      "text": "A useful adjustment might be less time, a familiar alternative, or a rest day.",
+      "bytes": 37242
+    },
+    "move-adapt-08": {
+      "src": "/audio-library/move-adapt-08-e4b806d3308c.mp3",
+      "text": "If you need support or advice for an injury or health condition, a qualified professional can guide your choices.",
+      "bytes": 51035
+    },
+    "move-adapt-10": {
+      "src": "/audio-library/move-adapt-10-64e8b61f58e6.mp3",
+      "text": "Changing the plan can be a way of paying attention to yourself.",
+      "bytes": 23240
+    },
+    "move-adapt-09": {
+      "src": "/audio-library/move-adapt-09-f53b83e48470.mp3",
+      "text": "You do not have to compensate tomorrow for choosing less today.",
+      "bytes": 23240
+    },
+    "move-finish-01": {
+      "src": "/audio-library/move-finish-01-32d84095282a.mp3",
+      "text": "If you are finishing, bring the session to a comfortable close using your usual routine.",
+      "bytes": 33689
+    },
+    "move-finish-02": {
+      "src": "/audio-library/move-finish-02-d77fd3042d98.mp3",
+      "text": "Take a moment before rushing to the next thing. You can let the session have an ending.",
+      "bytes": 31808
+    },
+    "move-finish-03": {
+      "src": "/audio-library/move-finish-03-6b7eaf20831e.mp3",
+      "text": "Put any equipment away safely when you are ready. The next task can wait a moment.",
+      "bytes": 35152
+    },
+    "move-finish-04": {
+      "src": "/audio-library/move-finish-04-a7646bee783d.mp3",
+      "text": "You can acknowledge the time you chose for movement without rating how impressive it was.",
+      "bytes": 36615
+    },
+    "move-finish-05": {
+      "src": "/audio-library/move-finish-05-714a68f0016e.mp3",
+      "text": "Notice what you would like to remember for next time, if anything.",
+      "bytes": 25121
+    },
+    "move-finish-06": {
+      "src": "/audio-library/move-finish-06-8509a5353f89.mp3",
+      "text": "Finishing sooner than planned is still a decision you are allowed to make.",
+      "bytes": 27211
+    },
+    "move-finish-07": {
+      "src": "/audio-library/move-finish-07-38b97b430694.mp3",
+      "text": "Let the session end without adding one more challenge just because it is available.",
+      "bytes": 30973
+    },
+    "move-finish-10": {
+      "src": "/audio-library/move-finish-10-f253729ae43b.mp3",
+      "text": "Your movement time can be complete now. Choose what you need next.",
+      "bytes": 27629
+    },
+    "move-finish-08": {
+      "src": "/audio-library/move-finish-08-e7bc3045feae.mp3",
+      "text": "If a short note would help, record what you did and how it felt in your own words.",
+      "bytes": 37033
+    },
+    "move-finish-09": {
+      "src": "/audio-library/move-finish-09-2dbef9eab305.mp3",
+      "text": "There is room to feel pleased, tired, neutral, or a mixture. No particular reaction is required.",
+      "bytes": 42466
+    },
+    "move-return-01": {
+      "src": "/audio-library/move-return-01-c872fd5887eb.mp3",
+      "text": "You do not need to repay the days you missed. Choose a manageable place to begin again.",
+      "bytes": 37033
+    },
+    "move-return-02": {
+      "src": "/audio-library/move-return-02-960c885c9956.mp3",
+      "text": "A return can be gentle. Start with something familiar that suits how you feel today.",
+      "bytes": 35570
+    },
+    "move-return-03": {
+      "src": "/audio-library/move-return-03-178f813236f4.mp3",
+      "text": "There is no catch-up session waiting here. Today can have its own small plan.",
+      "bytes": 34316
+    },
+    "move-return-05": {
+      "src": "/audio-library/move-return-05-e19407a931d3.mp3",
+      "text": "Let the first session back be about finding a comfortable starting point.",
+      "bytes": 27629
+    },
+    "move-return-06": {
+      "src": "/audio-library/move-return-06-9ce69c47e834.mp3",
+      "text": "You can leave comparison with your old routine for another time.",
+      "bytes": 23240
+    },
+    "move-return-04": {
+      "src": "/audio-library/move-return-04-320fc2ad1d5b.mp3",
+      "text": "You are allowed to be a beginner again at something you have done before.",
+      "bytes": 28465
+    },
+    "move-return-07": {
+      "src": "/audio-library/move-return-07-0ce276339535.mp3",
+      "text": "A gap can happen for many reasons. You do not owe the app an explanation.",
+      "bytes": 35152
+    },
+    "move-return-08": {
+      "src": "/audio-library/move-return-08-f267efc9a3d3.mp3",
+      "text": "Choose a version you would feel comfortable coming back to, rather than the biggest possible effort.",
+      "bytes": 34316
+    },
+    "move-return-09": {
+      "src": "/audio-library/move-return-09-bea30ba39826.mp3",
+      "text": "The plan can grow later if that suits you. There is no need to decide that today.",
+      "bytes": 37660
+    },
+    "eat-begin-02": {
+      "src": "/audio-library/eat-begin-02-16280bc01c37.mp3",
+      "text": "You can choose something simple. A meal does not have to be a project.",
+      "bytes": 27211
+    },
+    "eat-begin-01": {
+      "src": "/audio-library/eat-begin-01-9e080287a882.mp3",
+      "text": "What food is available and practical for you right now? Start with that, rather than an ideal meal.",
+      "bytes": 44347
+    },
+    "move-return-10": {
+      "src": "/audio-library/move-return-10-7c5c0ddd5d5e.mp3",
+      "text": "Coming back can start with opening your plan and choosing one achievable action.",
+      "bytes": 32435
+    },
+    "eat-begin-04": {
+      "src": "/audio-library/eat-begin-04-a22be325d40a.mp3",
+      "text": "You do not have to earn a meal through exercise or productivity.",
+      "bytes": 23867
+    },
+    "eat-begin-05": {
+      "src": "/audio-library/eat-begin-05-368bbab33f2a.mp3",
+      "text": "If deciding feels difficult, choose a familiar option that fits your needs.",
+      "bytes": 32435
+    },
+    "eat-begin-03": {
+      "src": "/audio-library/eat-begin-03-429b65323e43.mp3",
+      "text": "Give yourself a moment to decide what would be satisfying and manageable to eat.",
+      "bytes": 30555
+    },
+    "eat-begin-06": {
+      "src": "/audio-library/eat-begin-06-42f3b204ab55.mp3",
+      "text": "There is room for convenience. Use the food and help that make eating possible today.",
+      "bytes": 32226
+    },
+    "eat-begin-07": {
+      "src": "/audio-library/eat-begin-07-e2b81394fd21.mp3",
+      "text": "You can make a little space for your food, even if the rest of the day feels untidy.",
+      "bytes": 32435
+    },
+    "eat-begin-08": {
+      "src": "/audio-library/eat-begin-08-355b14eb5e6a.mp3",
+      "text": "Choose what works with your preferences, access, and dietary needs.",
+      "bytes": 28465
+    },
+    "eat-begin-09": {
+      "src": "/audio-library/eat-begin-09-0b6b7df92b29.mp3",
+      "text": "A meal can be ordinary and still deserve your time.",
+      "bytes": 19061
+    },
+    "eat-begin-10": {
+      "src": "/audio-library/eat-begin-10-cc0f652a3779.mp3",
+      "text": "You can leave judgement out of this moment and focus on what is practical to eat.",
+      "bytes": 30973
+    },
+    "eat-simple-01": {
+      "src": "/audio-library/eat-simple-01-fa7e1fb2651e.mp3",
+      "text": "Think of one familiar meal with fewer steps. That can be your starting point today.",
+      "bytes": 30973
+    },
+    "eat-simple-02": {
+      "src": "/audio-library/eat-simple-02-3da2edd9b6c1.mp3",
+      "text": "You can use ready-prepared ingredients if they make the meal more manageable.",
+      "bytes": 30973
+    },
+    "eat-simple-03": {
+      "src": "/audio-library/eat-simple-03-89865d0179ee.mp3",
+      "text": "A simple assembly of foods you enjoy can be enough. It does not need a recipe title.",
+      "bytes": 38078
+    },
+    "eat-simple-04": {
+      "src": "/audio-library/eat-simple-04-00c4eb5bb549.mp3",
+      "text": "If cooking is not possible, choose an available option that meets your needs.",
+      "bytes": 32853
+    },
+    "eat-simple-07": {
+      "src": "/audio-library/eat-simple-07-57cceea56b7a.mp3",
+      "text": "There is no need to make everything from scratch to take care of yourself.",
+      "bytes": 28047
+    },
+    "eat-simple-05": {
+      "src": "/audio-library/eat-simple-05-58c0ef6aed83.mp3",
+      "text": "You might prepare just the next meal, rather than planning the whole week.",
+      "bytes": 29510
+    },
+    "eat-simple-06": {
+      "src": "/audio-library/eat-simple-06-39bb35259c9a.mp3",
+      "text": "Choose the easiest useful step: find a bowl, take out an ingredient, or decide on a familiar dish.",
+      "bytes": 41421
+    },
+    "eat-simple-09": {
+      "src": "/audio-library/eat-simple-09-4cd004c6fd6e.mp3",
+      "text": "Let the meal fit the energy you have for making it.",
+      "bytes": 22822
+    },
+    "eat-simple-08": {
+      "src": "/audio-library/eat-simple-08-a92bfcf37745.mp3",
+      "text": "You can repeat a meal you like. Variety does not need to become pressure at every sitting.",
+      "bytes": 34316
+    },
+    "eat-simple-10": {
+      "src": "/audio-library/eat-simple-10-16a2ca96c143.mp3",
+      "text": "If help is available, you can ask for it. Preparing food does not have to be a solo task.",
+      "bytes": 38496
+    },
+    "eat-pantry-02": {
+      "src": "/audio-library/eat-pantry-02-1db0d803d4a2.mp3",
+      "text": "A quick look at your available food can make the next decision smaller.",
+      "bytes": 27629
+    },
+    "eat-pantry-03": {
+      "src": "/audio-library/eat-pantry-03-9b17a135b8b8.mp3",
+      "text": "Check what needs using, and follow the storage and date guidance on the packaging.",
+      "bytes": 34316
+    },
+    "eat-pantry-01": {
+      "src": "/audio-library/eat-pantry-01-70e34adf18bb.mp3",
+      "text": "Choose one ingredient you already have and a familiar way you like to use it.",
+      "bytes": 36615
+    },
+    "eat-pantry-04": {
+      "src": "/audio-library/eat-pantry-04-26570cd9dea5.mp3",
+      "text": "You can build your shopping list around a meal you already know you enjoy.",
+      "bytes": 28465
+    },
+    "eat-pantry-06": {
+      "src": "/audio-library/eat-pantry-06-aeab066e9280.mp3",
+      "text": "You do not need to use everything at once. Choose what makes sense for the next meal.",
+      "bytes": 32853
+    },
+    "eat-pantry-05": {
+      "src": "/audio-library/eat-pantry-05-eab7900a6180.mp3",
+      "text": "If an ingredient is missing, a familiar suitable alternative may keep the plan simple.",
+      "bytes": 35152
+    },
+    "eat-pantry-09": {
+      "src": "/audio-library/eat-pantry-09-79008f8047b9.mp3",
+      "text": "Before shopping, check whether you already have the main thing you need.",
+      "bytes": 25121
+    },
+    "eat-pantry-07": {
+      "src": "/audio-library/eat-pantry-07-6c644706d7c2.mp3",
+      "text": "Let your budget and available ingredients guide the plan without turning it into a test.",
+      "bytes": 34734
+    },
+    "eat-pantry-08": {
+      "src": "/audio-library/eat-pantry-08-d0f4d3b4f455.mp3",
+      "text": "You can keep a short list of meals that work with your usual cupboard staples.",
+      "bytes": 31390
+    },
+    "eat-shopping-01": {
+      "src": "/audio-library/eat-shopping-01-1b458c0d52ec.mp3",
+      "text": "Write down the foods for one or two useful meals first. The list can grow only if it needs to.",
+      "bytes": 41421
+    },
+    "eat-pantry-10": {
+      "src": "/audio-library/eat-pantry-10-749f26845036.mp3",
+      "text": "If you are unsure whether food is safe to eat, follow trusted food-safety advice rather than guessing.",
+      "bytes": 45183
+    },
+    "eat-shopping-02": {
+      "src": "/audio-library/eat-shopping-02-ff6fac6b3575.mp3",
+      "text": "Keep familiar, practical options on your list. Shopping does not need to reinvent your routine.",
+      "bytes": 41004
+    },
+    "eat-shopping-04": {
+      "src": "/audio-library/eat-shopping-04-95e383e34f75.mp3",
+      "text": "A short list can hold the remembering for you. Add the things you know you need.",
+      "bytes": 33689
+    },
+    "eat-shopping-05": {
+      "src": "/audio-library/eat-shopping-05-dfca12cf4776.mp3",
+      "text": "Choose quantities that fit your household, storage space, and plans.",
+      "bytes": 29092
+    },
+    "eat-shopping-03": {
+      "src": "/audio-library/eat-shopping-03-f2899dfb3ca6.mp3",
+      "text": "You can group similar items together to make the shop easier to follow.",
+      "bytes": 30555
+    },
+    "eat-shopping-06": {
+      "src": "/audio-library/eat-shopping-06-ad77d4871ed1.mp3",
+      "text": "Leave room for your budget. A useful list does not have to be an ambitious one.",
+      "bytes": 34734
+    },
+    "eat-shopping-07": {
+      "src": "/audio-library/eat-shopping-07-078c8f0be5e2.mp3",
+      "text": "If the usual item is unavailable, pause and choose a suitable alternative rather than rushing.",
+      "bytes": 36615
+    },
+    "eat-shopping-08": {
+      "src": "/audio-library/eat-shopping-08-7e09a41419ff.mp3",
+      "text": "Check ingredients against any allergies or dietary requirements that apply to you.",
+      "bytes": 33271
+    },
+    "eat-shopping-09": {
+      "src": "/audio-library/eat-shopping-09-44f5c2803b28.mp3",
+      "text": "You can keep a few reliable meal ingredients on the list for busy days.",
+      "bytes": 28465
+    },
+    "eat-shopping-10": {
+      "src": "/audio-library/eat-shopping-10-3154bd4364a4.mp3",
+      "text": "When the list feels too long, start with the essentials for your next meals.",
+      "bytes": 33271
+    },
+    "eat-notice-01": {
+      "src": "/audio-library/eat-notice-01-1e3464179d08.mp3",
+      "text": "If it feels comfortable, notice one flavour or texture in the food you have chosen.",
+      "bytes": 31390
+    },
+    "eat-notice-03": {
+      "src": "/audio-library/eat-notice-03-1b7ba322c58b.mp3",
+      "text": "You can choose a comfortable place to eat, if your day allows it.",
+      "bytes": 22822
+    },
+    "eat-notice-04": {
+      "src": "/audio-library/eat-notice-04-9b56ce11f7b6.mp3",
+      "text": "Let the meal have a little space in your day without grading it.",
+      "bytes": 22404
+    },
+    "eat-notice-02": {
+      "src": "/audio-library/eat-notice-02-fe51b7578656.mp3",
+      "text": "You do not need to turn eating into an exercise. A small moment of attention is optional.",
+      "bytes": 36615
+    },
+    "eat-notice-07": {
+      "src": "/audio-library/eat-notice-07-4b89035ad956.mp3",
+      "text": "You can enjoy a familiar food without making it a reward you had to earn.",
+      "bytes": 30973
+    },
+    "eat-notice-05": {
+      "src": "/audio-library/eat-notice-05-86d2575a5ae7.mp3",
+      "text": "If noticing food closely is not helpful for you, you can simply eat in the way that suits you.",
+      "bytes": 39123
+    },
+    "eat-notice-06": {
+      "src": "/audio-library/eat-notice-06-cd2a4f522ed3.mp3",
+      "text": "There is no perfect pace to match in this recording. Take the time that feels practical.",
+      "bytes": 33271
+    },
+    "eat-notice-09": {
+      "src": "/audio-library/eat-notice-09-7f26040041dc.mp3",
+      "text": "You do not need to compare this meal with someone else’s plate.",
+      "bytes": 21777
+    },
+    "eat-notice-10": {
+      "src": "/audio-library/eat-notice-10-c005c37c5572.mp3",
+      "text": "Let the words finish, and give your attention to whatever makes eating feel manageable today.",
+      "bytes": 37242
+    },
+    "eat-notice-08": {
+      "src": "/audio-library/eat-notice-08-a819d103a67e.mp3",
+      "text": "A meal can include comfort, convenience, culture, and enjoyment. It does not need one single purpose.",
+      "bytes": 51453
+    },
+    "eat-log-02": {
+      "src": "/audio-library/eat-log-02-d1f577102206.mp3",
+      "text": "You can leave numbers out and keep a simple note about your meal.",
+      "bytes": 21777
+    },
+    "eat-log-01": {
+      "src": "/audio-library/eat-log-01-c5de64976730.mp3",
+      "text": "If you want a record, write what you ate in the amount of detail that feels useful.",
+      "bytes": 31808
+    },
+    "eat-log-03": {
+      "src": "/audio-library/eat-log-03-53671a9ae1d5.mp3",
+      "text": "A food record can help you remember practical things, such as a meal you would like to make again.",
+      "bytes": 40377
+    },
+    "eat-log-04": {
+      "src": "/audio-library/eat-log-04-bf08916f9ae0.mp3",
+      "text": "You do not need to label the meal good or bad to remember it.",
+      "bytes": 23240
+    },
+    "eat-log-05": {
+      "src": "/audio-library/eat-log-05-42cdf0f6eca1.mp3",
+      "text": "If tracking food feels unhelpful, you can skip the record and keep using the other tools.",
+      "bytes": 35570
+    },
+    "eat-log-06": {
+      "src": "/audio-library/eat-log-06-c4a6bd01b337.mp3",
+      "text": "You might note what made the meal easier today, rather than giving it a score.",
+      "bytes": 33898
+    },
+    "eat-log-07": {
+      "src": "/audio-library/eat-log-07-223d82230a41.mp3",
+      "text": "A short description can be enough. The record is for you.",
+      "bytes": 23867
+    },
+    "eat-log-09": {
+      "src": "/audio-library/eat-log-09-26fffe9c5258.mp3",
+      "text": "You can use your history to find meals you enjoyed and practical ideas for later.",
+      "bytes": 35779
+    },
+    "eat-log-08": {
+      "src": "/audio-library/eat-log-08-3b564a7a6858.mp3",
+      "text": "If you are unsure about an amount, avoid treating a guess as an exact measurement.",
+      "bytes": 37033
+    },
+    "focus-start-01": {
+      "src": "/audio-library/focus-start-01-d8f0d8ecd97a.mp3",
+      "text": "Choose one thing you can begin without solving the whole task first.",
+      "bytes": 24285
+    },
+    "eat-log-10": {
+      "src": "/audio-library/eat-log-10-6d757a446c6f.mp3",
+      "text": "Before saving, check that the words say what you want to remember.",
+      "bytes": 23240
+    },
+    "focus-start-02": {
+      "src": "/audio-library/focus-start-02-78fc60ada477.mp3",
+      "text": "Make the first step concrete: open the document, find the tool, or write one sentence.",
+      "bytes": 35152
+    },
+    "focus-start-05": {
+      "src": "/audio-library/focus-start-05-f877a21c0d46.mp3",
+      "text": "If starting feels difficult, make the starting action smaller.",
+      "bytes": 23658
+    },
+    "focus-start-04": {
+      "src": "/audio-library/focus-start-04-8212ee599fca.mp3",
+      "text": "Pick a piece of the task that fits the time and attention you have right now.",
+      "bytes": 30346
+    },
+    "focus-start-03": {
+      "src": "/audio-library/focus-start-03-0468b645ffbc.mp3",
+      "text": "You can start with a rough version. It does not have to look finished yet.",
+      "bytes": 30973
+    },
+    "focus-start-06": {
+      "src": "/audio-library/focus-start-06-8f7b91fb418f.mp3",
+      "text": "You do not need a perfect plan to take one useful step.",
+      "bytes": 21777
+    },
+    "focus-start-07": {
+      "src": "/audio-library/focus-start-07-b3cc2a4de7a6.mp3",
+      "text": "Put one task in front of you, and let the rest stay on the list for now.",
+      "bytes": 29510
+    },
+    "focus-start-08": {
+      "src": "/audio-library/focus-start-08-25354849f6b9.mp3",
+      "text": "Choose what you are beginning, then decide how long you would like to try.",
+      "bytes": 30346
+    },
+    "focus-start-10": {
+      "src": "/audio-library/focus-start-10-ca76e83f45fd.mp3",
+      "text": "The next action can be small enough to describe in a few words.",
+      "bytes": 23240
+    },
+    "focus-return-01": {
+      "src": "/audio-library/focus-return-01-b3b669189c11.mp3",
+      "text": "You noticed your attention moved. You can return without telling yourself off.",
+      "bytes": 31808
+    },
+    "focus-start-09": {
+      "src": "/audio-library/focus-start-09-a2f9b6164677.mp3",
+      "text": "You can begin with preparation if that is the step that helps you move forward.",
+      "bytes": 33271
+    },
+    "focus-return-03": {
+      "src": "/audio-library/focus-return-03-85e922b6911b.mp3",
+      "text": "A distraction does not erase the work you already did.",
+      "bytes": 20524
+    },
+    "focus-return-02": {
+      "src": "/audio-library/focus-return-02-e1fea444fa24.mp3",
+      "text": "Find the next small action in your task. Begin there, rather than restarting the whole plan.",
+      "bytes": 38496
+    },
+    "focus-return-04": {
+      "src": "/audio-library/focus-return-04-495cdd23c369.mp3",
+      "text": "If a thought needs remembering, put it on a short later list and return when you are ready.",
+      "bytes": 32853
+    },
+    "focus-return-05": {
+      "src": "/audio-library/focus-return-05-ae29b0818174.mp3",
+      "text": "You can close one unnecessary tab if that makes the next step easier.",
+      "bytes": 26584
+    },
+    "focus-return-06": {
+      "src": "/audio-library/focus-return-06-9d387358e2ed.mp3",
+      "text": "Take a moment to remember what you meant to do next. There is no rush.",
+      "bytes": 31390
+    },
+    "focus-return-07": {
+      "src": "/audio-library/focus-return-07-f18545e677b3.mp3",
+      "text": "You do not have to recover every lost minute. Choose what is useful now.",
+      "bytes": 32853
+    },
+    "focus-return-09": {
+      "src": "/audio-library/focus-return-09-0e1bb00ab830.mp3",
+      "text": "Returning is part of focusing. You are allowed to do it more than once.",
+      "bytes": 29092
+    },
+    "focus-return-08": {
+      "src": "/audio-library/focus-return-08-3b7c164f2630.mp3",
+      "text": "If the task has become unclear, write the next action in plain words.",
+      "bytes": 28465
+    },
+    "focus-return-10": {
+      "src": "/audio-library/focus-return-10-521c369102b8.mp3",
+      "text": "You can choose to continue, take a break, or change the plan. Make that choice deliberately.",
+      "bytes": 38496
+    },
+    "focus-priority-03": {
+      "src": "/audio-library/focus-priority-03-da93f6462b8a.mp3",
+      "text": "Choose one priority and give it a clear next action.",
+      "bytes": 22195
+    },
+    "focus-priority-02": {
+      "src": "/audio-library/focus-priority-02-277c5fe6c17c.mp3",
+      "text": "A list can hold possibilities without asking you to finish them all today.",
+      "bytes": 29510
+    },
+    "focus-priority-01": {
+      "src": "/audio-library/focus-priority-01-c0a6f966a0d6.mp3",
+      "text": "Which task would make the next part of your day easier? You can start by choosing just that one.",
+      "bytes": 41004
+    },
+    "focus-priority-05": {
+      "src": "/audio-library/focus-priority-05-556f5f215ffc.mp3",
+      "text": "Not everything that is written down has the same urgency.",
+      "bytes": 21359
+    },
+    "focus-priority-04": {
+      "src": "/audio-library/focus-priority-04-e8c9bf759c0e.mp3",
+      "text": "You can move a task to another day when that is the practical choice.",
+      "bytes": 27002
+    },
+    "focus-priority-06": {
+      "src": "/audio-library/focus-priority-06-3a51bf9b77c3.mp3",
+      "text": "Look for what matters now, then let the rest wait somewhere you can find it.",
+      "bytes": 30555
+    },
+    "focus-priority-08": {
+      "src": "/audio-library/focus-priority-08-547da7765b1e.mp3",
+      "text": "You can remove a task that no longer serves a purpose.",
+      "bytes": 22195
+    },
+    "focus-priority-09": {
+      "src": "/audio-library/focus-priority-09-53038de1fb0b.mp3",
+      "text": "A useful plan leaves room for real life, including interruptions and rest.",
+      "bytes": 30346
+    },
+    "focus-priority-07": {
+      "src": "/audio-library/focus-priority-07-7532f255dced.mp3",
+      "text": "If the list feels crowded, separate what must happen today from what can be reconsidered.",
+      "bytes": 36615
+    },
+    "focus-priority-10": {
+      "src": "/audio-library/focus-priority-10-5733926b14e1.mp3",
+      "text": "You do not need a long list to make a meaningful choice about today.",
+      "bytes": 25539
+    },
+    "focus-finish-01": {
+      "src": "/audio-library/focus-finish-01-9eccb0d11d3f.mp3",
+      "text": "If you are stopping now, leave yourself a short note about where to pick up next time.",
+      "bytes": 33689
+    },
+    "focus-finish-02": {
+      "src": "/audio-library/focus-finish-02-ac76ca8eec2f.mp3",
+      "text": "You can recognise the attention you gave, even if the task is not finished.",
+      "bytes": 29510
+    },
+    "focus-finish-05": {
+      "src": "/audio-library/focus-finish-05-a4189a83c123.mp3",
+      "text": "You do not need to keep going just because there is more to do.",
+      "bytes": 24285
+    },
+    "focus-finish-04": {
+      "src": "/audio-library/focus-finish-04-78115eeb7450.mp3",
+      "text": "What is the next useful step? A few words can save you some remembering later.",
+      "bytes": 31808
+    },
+    "focus-finish-03": {
+      "src": "/audio-library/focus-finish-03-e93ee9658559.mp3",
+      "text": "Give the session an ending by saving your work where appropriate and choosing a pause.",
+      "bytes": 32435
+    },
+    "focus-finish-08": {
+      "src": "/audio-library/focus-finish-08-8028b13d643b.mp3",
+      "text": "Choose whether to continue later or leave the task for another day.",
+      "bytes": 26584
+    },
+    "focus-finish-07": {
+      "src": "/audio-library/focus-finish-07-b6d3293f18f4.mp3",
+      "text": "A session can end with progress, a discovery, or a clearer question.",
+      "bytes": 27002
+    },
+    "focus-finish-06": {
+      "src": "/audio-library/focus-finish-06-fc6737bd31d1.mp3",
+      "text": "If you finished something, take a moment to notice it before adding the next task.",
+      "bytes": 29928
+    },
+    "focus-finish-09": {
+      "src": "/audio-library/focus-finish-09-4a67a245f460.mp3",
+      "text": "You can put the work down without making a promise to do more tonight.",
+      "bytes": 25121
+    },
+    "progress-small-01": {
+      "src": "/audio-library/progress-small-01-2aef8c53ce85.mp3",
+      "text": "What is one small thing you would like to acknowledge today? It does not need to impress anyone.",
+      "bytes": 40586
+    },
+    "focus-finish-10": {
+      "src": "/audio-library/focus-finish-10-fbadce10fc33.mp3",
+      "text": "Let a small ending be enough: close the file, move the note, or turn away from the desk.",
+      "bytes": 52288
+    },
+    "progress-small-02": {
+      "src": "/audio-library/progress-small-02-bff56ce05715.mp3",
+      "text": "You can notice effort that would never appear on a checklist.",
+      "bytes": 21777
+    },
+    "progress-small-03": {
+      "src": "/audio-library/progress-small-03-f865d11ee0d8.mp3",
+      "text": "A helpful choice can be quiet: asking for support, eating a meal, or taking a pause.",
+      "bytes": 33898
+    },
+    "progress-small-04": {
+      "src": "/audio-library/progress-small-04-fcec1c62ffb2.mp3",
+      "text": "If something felt a little easier today, you can let yourself notice that.",
+      "bytes": 31390
+    },
+    "progress-small-06": {
+      "src": "/audio-library/progress-small-06-376c66ae3fd5.mp3",
+      "text": "A small win can be something you chose not to add to an already full day.",
+      "bytes": 30346
+    },
+    "progress-small-07": {
+      "src": "/audio-library/progress-small-07-f665ed4f6cc6.mp3",
+      "text": "You can be pleased with one step without claiming that everything is sorted.",
+      "bytes": 29092
+    },
+    "progress-small-05": {
+      "src": "/audio-library/progress-small-05-c2688fa11ef2.mp3",
+      "text": "You do not need a streak to recognise a moment of care.",
+      "bytes": 21359
+    },
+    "progress-small-09": {
+      "src": "/audio-library/progress-small-09-cc74fd568094.mp3",
+      "text": "Progress can include learning what does not work for you.",
+      "bytes": 23867
+    },
+    "progress-small-08": {
+      "src": "/audio-library/progress-small-08-77f2075c2ed2.mp3",
+      "text": "If you would like, keep a sentence about what mattered. A sentence is enough.",
+      "bytes": 34734
+    },
+    "progress-small-10": {
+      "src": "/audio-library/progress-small-10-4a8dae7ea95c.mp3",
+      "text": "Look for something real and specific, however small, that you want to remember.",
+      "bytes": 30555
+    },
+    "progress-lookback-02": {
+      "src": "/audio-library/progress-lookback-02-bb2cbee05882.mp3",
+      "text": "Look for a pattern that feels useful, rather than a number to judge yourself by.",
+      "bytes": 32853
+    },
+    "progress-lookback-01": {
+      "src": "/audio-library/progress-lookback-01-7c57a3b90ea0.mp3",
+      "text": "Your history can show moments, not a verdict on who you are. Read it with some room for context.",
+      "bytes": 36197
+    },
+    "progress-lookback-03": {
+      "src": "/audio-library/progress-lookback-03-8068217583b6.mp3",
+      "text": "An empty day in the record is simply a day without an entry. It is not proof that nothing happened.",
+      "bytes": 38914
+    },
+    "progress-lookback-05": {
+      "src": "/audio-library/progress-lookback-05-c7cfc2668b7d.mp3",
+      "text": "Notice something you would like to repeat, if anything stands out.",
+      "bytes": 26166
+    },
+    "progress-lookback-06": {
+      "src": "/audio-library/progress-lookback-06-dfe0a2cd1a58.mp3",
+      "text": "Your records belong to you. You can choose how much of the past to look at today.",
+      "bytes": 33689
+    },
+    "progress-lookback-04": {
+      "src": "/audio-library/progress-lookback-04-4194553a76f2.mp3",
+      "text": "You can remember the circumstances around a difficult week as well as the things you recorded.",
+      "bytes": 34734
+    },
+    "progress-lookback-08": {
+      "src": "/audio-library/progress-lookback-08-bce9c8bd2ffa.mp3",
+      "text": "You might find a small practical idea in an older note that would help now.",
+      "bytes": 32226
+    },
+    "progress-lookback-09": {
+      "src": "/audio-library/progress-lookback-09-78f34d692ba4.mp3",
+      "text": "Compare your plans with what was possible, not with an imaginary perfect week.",
+      "bytes": 31808
+    },
+    "progress-lookback-07": {
+      "src": "/audio-library/progress-lookback-07-0af4ad395645.mp3",
+      "text": "A change in routine can tell a story worth understanding, without needing blame.",
+      "bytes": 31808
+    },
+    "progress-reset-02": {
+      "src": "/audio-library/progress-reset-02-345bf566192a.mp3",
+      "text": "You can begin again without making up for every missed plan.",
+      "bytes": 22195
+    },
+    "progress-lookback-10": {
+      "src": "/audio-library/progress-lookback-10-0875c9d89d1c.mp3",
+      "text": "You can close the history whenever you have learned enough for today.",
+      "bytes": 24285
+    },
+    "progress-reset-01": {
+      "src": "/audio-library/progress-reset-01-9f04a8ed9ef7.mp3",
+      "text": "One difficult day does not need to decide the next one. Choose what would help you now.",
+      "bytes": 36615
+    },
+    "progress-reset-03": {
+      "src": "/audio-library/progress-reset-03-5d70dab4f930.mp3",
+      "text": "There is no debt of self-care to repay. Start with one need in front of you.",
+      "bytes": 30555
+    },
+    "progress-reset-04": {
+      "src": "/audio-library/progress-reset-04-4e854c13103a.mp3",
+      "text": "A smaller plan may fit better tomorrow. You are allowed to adjust it.",
+      "bytes": 30973
+    },
+    "progress-reset-05": {
+      "src": "/audio-library/progress-reset-05-d3d1d01697ee.mp3",
+      "text": "You do not need to explain a gap before returning to your tools.",
+      "bytes": 24703
+    },
+    "progress-reset-07": {
+      "src": "/audio-library/progress-reset-07-71de7a41dac3.mp3",
+      "text": "You can keep what helped and leave the rest of the plan behind.",
+      "bytes": 21359
+    },
+    "progress-reset-06": {
+      "src": "/audio-library/progress-reset-06-5a452c103ba6.mp3",
+      "text": "If a goal has become pressure, you can reconsider the goal itself.",
+      "bytes": 25748
+    },
+    "progress-reset-08": {
+      "src": "/audio-library/progress-reset-08-c18b95c09094.mp3",
+      "text": "A fresh start can happen in the middle of a day, without waiting for Monday.",
+      "bytes": 32853
+    },
+    "progress-reset-09": {
+      "src": "/audio-library/progress-reset-09-1d14c934db54.mp3",
+      "text": "Choose something manageable enough that it feels like an invitation.",
+      "bytes": 25121
+    },
+    "progress-reset-10": {
+      "src": "/audio-library/progress-reset-10-8275dce6815e.mp3",
+      "text": "You can be honest about what was hard and still make room for a different next step.",
+      "bytes": 29092
+    },
+    "progress-next-01": {
+      "src": "/audio-library/progress-next-01-cf1b2cc0a3bf.mp3",
+      "text": "What is one small thing that would support tomorrow? Choose something practical rather than ambitious.",
+      "bytes": 48945
+    },
+    "progress-next-02": {
+      "src": "/audio-library/progress-next-02-230cf3227225.mp3",
+      "text": "Make the next step easy to recognise when the time comes.",
+      "bytes": 22822
+    },
+    "progress-next-04": {
+      "src": "/audio-library/progress-next-04-fee04e7809e3.mp3",
+      "text": "Leave some room in the plan for things you cannot predict.",
+      "bytes": 20524
+    },
+    "progress-next-03": {
+      "src": "/audio-library/progress-next-03-9547bc0ea1d1.mp3",
+      "text": "You can put a reminder somewhere useful without filling the whole day with alerts.",
+      "bytes": 33271
+    },
+    "progress-next-07": {
+      "src": "/audio-library/progress-next-07-d13f60a60b63.mp3",
+      "text": "You can prepare one small thing now and leave the rest for tomorrow.",
+      "bytes": 24285
+    },
+    "progress-next-05": {
+      "src": "/audio-library/progress-next-05-2bf9664c8711.mp3",
+      "text": "Choose a time that fits your life, and allow yourself to change it if needed.",
+      "bytes": 28465
+    },
+    "progress-next-06": {
+      "src": "/audio-library/progress-next-06-70e52864140c.mp3",
+      "text": "A useful plan can include a meal, a break, or a familiar piece of movement.",
+      "bytes": 30555
+    },
+    "progress-next-09": {
+      "src": "/audio-library/progress-next-09-f70401c6512f.mp3",
+      "text": "Your next step does not have to be harder than the last one.",
+      "bytes": 21359
+    },
+    "progress-next-08": {
+      "src": "/audio-library/progress-next-08-4a89caf9aded.mp3",
+      "text": "Decide what enough might look like, so the task does not keep growing.",
+      "bytes": 27629
+    },
+    "progress-next-10": {
+      "src": "/audio-library/progress-next-10-5e44a27a960e.mp3",
+      "text": "Let tomorrow begin with an invitation you would feel comfortable accepting.",
+      "bytes": 29928
+    },
+    "everyday-hello-02": {
+      "src": "/audio-library/everyday-hello-02-86cb58b9ac37.mp3",
+      "text": "Welcome in. You do not have to arrive with a plan.",
+      "bytes": 21359
+    },
+    "everyday-hello-03": {
+      "src": "/audio-library/everyday-hello-03-15252ce45d10.mp3",
+      "text": "You can start with how today feels, or simply choose something you need.",
+      "bytes": 30973
+    },
+    "everyday-hello-01": {
+      "src": "/audio-library/everyday-hello-01-3a1079f66e88.mp3",
+      "text": "Hello from Daywell. Choose a little company, a useful tool, or a quiet moment for yourself.",
+      "bytes": 41839
+    },
+    "everyday-hello-06": {
+      "src": "/audio-library/everyday-hello-06-f0882af04c21.mp3",
+      "text": "You can take a moment before choosing. The tools will wait.",
+      "bytes": 22195
+    },
+    "everyday-hello-04": {
+      "src": "/audio-library/everyday-hello-04-ce41a852bba1.mp3",
+      "text": "There is room here for an ordinary day. Pick one small place to begin.",
+      "bytes": 33898
+    },
+    "everyday-hello-05": {
+      "src": "/audio-library/everyday-hello-05-ca2739d59bdf.mp3",
+      "text": "Hello. Your next step can be practical, restful, or still undecided.",
+      "bytes": 27629
+    },
+    "everyday-hello-09": {
+      "src": "/audio-library/everyday-hello-09-7fcd3ef17f18.mp3",
+      "text": "Let this visit fit the day you are actually having.",
+      "bytes": 20941
+    },
+    "everyday-hello-07": {
+      "src": "/audio-library/everyday-hello-07-637bc171a70a.mp3",
+      "text": "Welcome back to your little corner of Daywell. Choose what is useful today.",
+      "bytes": 29928
+    },
+    "everyday-hello-08": {
+      "src": "/audio-library/everyday-hello-08-48d2f2b64a3c.mp3",
+      "text": "You do not have to use every part of the app. One helpful thing is enough.",
+      "bytes": 31808
+    },
+    "everyday-morning-02": {
+      "src": "/audio-library/everyday-morning-02-73623e735b1c.mp3",
+      "text": "You can begin the morning with something familiar and practical.",
+      "bytes": 22195
+    },
+    "everyday-morning-01": {
+      "src": "/audio-library/everyday-morning-01-3c26d3102ef3.mp3",
+      "text": "Before the day gets crowded, choose one thing you would like to make room for.",
+      "bytes": 28465
+    },
+    "everyday-hello-10": {
+      "src": "/audio-library/everyday-hello-10-c636170a8526.mp3",
+      "text": "Come in at your own pace. There is no routine you need to complete before you belong here.",
+      "bytes": 35152
+    },
+    "everyday-morning-03": {
+      "src": "/audio-library/everyday-morning-03-36c2ee72a07d.mp3",
+      "text": "There is no need to design the whole day before taking the first step.",
+      "bytes": 26584
+    },
+    "everyday-morning-04": {
+      "src": "/audio-library/everyday-morning-04-bd43a65324cf.mp3",
+      "text": "Notice what you need this morning, rather than what a perfect morning is supposed to contain.",
+      "bytes": 31390
+    },
+    "everyday-morning-05": {
+      "src": "/audio-library/everyday-morning-05-452a09362b1d.mp3",
+      "text": "A slower start can still be a start. Choose what is possible now.",
+      "bytes": 34316
+    },
+    "everyday-morning-06": {
+      "src": "/audio-library/everyday-morning-06-073b673d34aa.mp3",
+      "text": "If the morning has already been busy, you can make a small pause here.",
+      "bytes": 24285
+    },
+    "everyday-morning-07": {
+      "src": "/audio-library/everyday-morning-07-5c3a05dee7d7.mp3",
+      "text": "Choose one useful thing for the next hour. The rest can stay undecided for a moment.",
+      "bytes": 35152
+    },
+    "everyday-morning-08": {
+      "src": "/audio-library/everyday-morning-08-79b00594efda.mp3",
+      "text": "You can start with food, a comfortable movement, or checking what is planned.",
+      "bytes": 32226
+    },
+    "everyday-morning-10": {
+      "src": "/audio-library/everyday-morning-10-43e83d95587c.mp3",
+      "text": "Let the first choice be a kind and practical one.",
+      "bytes": 19479
+    },
+    "everyday-lowenergy-01": {
+      "src": "/audio-library/everyday-lowenergy-01-2ca257f9990d.mp3",
+      "text": "If energy feels limited, choose a smaller version of the plan.",
+      "bytes": 23867
+    },
+    "everyday-morning-09": {
+      "src": "/audio-library/everyday-morning-09-fb754dd15413.mp3",
+      "text": "Today does not need to copy yesterday. Make room for the circumstances you have.",
+      "bytes": 32435
+    },
+    "everyday-lowenergy-02": {
+      "src": "/audio-library/everyday-lowenergy-02-d0432a040ed3.mp3",
+      "text": "You can keep the essentials and reconsider the extras.",
+      "bytes": 20524
+    },
+    "everyday-lowenergy-04": {
+      "src": "/audio-library/everyday-lowenergy-04-171cfd4af313.mp3",
+      "text": "Choose the next action that asks a little less of you.",
+      "bytes": 23867
+    },
+    "everyday-lowenergy-03": {
+      "src": "/audio-library/everyday-lowenergy-03-91945c38e762.mp3",
+      "text": "There is no need to make a low-energy day look like a high-energy one.",
+      "bytes": 26584
+    },
+    "everyday-lowenergy-05": {
+      "src": "/audio-library/everyday-lowenergy-05-c4af227e6ca2.mp3",
+      "text": "You can use a familiar shortcut, ask for help, or take a pause.",
+      "bytes": 24703
+    },
+    "everyday-lowenergy-06": {
+      "src": "/audio-library/everyday-lowenergy-06-8ad866761250.mp3",
+      "text": "An easier meal or a shorter task can be a sensible choice today.",
+      "bytes": 26584
+    },
+    "everyday-lowenergy-07": {
+      "src": "/audio-library/everyday-lowenergy-07-10dccd7b3c0e.mp3",
+      "text": "Let your plan respond to your circumstances rather than arguing with them.",
+      "bytes": 34316
+    },
+    "everyday-lowenergy-09": {
+      "src": "/audio-library/everyday-lowenergy-09-6af1c52fbcde.mp3",
+      "text": "A day with less energy still deserves comfort and care.",
+      "bytes": 21359
+    },
+    "everyday-lowenergy-08": {
+      "src": "/audio-library/everyday-lowenergy-08-4f9cf63d2aff.mp3",
+      "text": "You can decide what needs doing and what can wait, one thing at a time.",
+      "bytes": 32853
+    },
+    "everyday-lowenergy-10": {
+      "src": "/audio-library/everyday-lowenergy-10-361a5361ab47.mp3",
+      "text": "If this is a time to rest, you do not have to turn rest into an achievement.",
+      "bytes": 29092
+    },
+    "everyday-choice-03": {
+      "src": "/audio-library/everyday-choice-03-d482f717d65a.mp3",
+      "text": "A useful choice does not have to be the best possible choice.",
+      "bytes": 23240
+    },
+    "everyday-choice-02": {
+      "src": "/audio-library/everyday-choice-02-7b1b3ad7d037.mp3",
+      "text": "Start by asking what you need most immediately, rather than what would be ideal.",
+      "bytes": 35152
+    },
+    "everyday-choice-01": {
+      "src": "/audio-library/everyday-choice-01-2756fa08c01c.mp3",
+      "text": "You can narrow the choice to two practical options, then pick the one that feels easier to begin.",
+      "bytes": 44765
+    },
+    "everyday-choice-05": {
+      "src": "/audio-library/everyday-choice-05-9fcc9727829c.mp3",
+      "text": "Let one decision be small enough to make now. The others can wait.",
+      "bytes": 27211
+    },
+    "everyday-choice-04": {
+      "src": "/audio-library/everyday-choice-04-5d7c44bf922f.mp3",
+      "text": "You can choose a familiar option when comparing everything feels like too much.",
+      "bytes": 32435
+    },
+    "everyday-choice-06": {
+      "src": "/audio-library/everyday-choice-06-cb8cd6f8ebb0.mp3",
+      "text": "If nothing stands out, a short pause is also an available choice.",
+      "bytes": 32435
+    },
+    "everyday-choice-09": {
+      "src": "/audio-library/everyday-choice-09-bdd0821a270e.mp3",
+      "text": "You can change your mind after trying a small first step.",
+      "bytes": 20941
+    },
+    "everyday-choice-08": {
+      "src": "/audio-library/everyday-choice-08-52a4d1a6032b.mp3",
+      "text": "Choose what fits the time you have, and allow the plan to stay simple.",
+      "bytes": 28465
+    },
+    "everyday-choice-07": {
+      "src": "/audio-library/everyday-choice-07-6b6be966f2f1.mp3",
+      "text": "You do not have to optimise this moment. Something workable can be enough.",
+      "bytes": 31808
+    },
+    "everyday-time-02": {
+      "src": "/audio-library/everyday-time-02-bafc12c88243.mp3",
+      "text": "Pick a length that feels manageable. A timer is a tool you can change.",
+      "bytes": 29510
+    },
+    "everyday-time-01": {
+      "src": "/audio-library/everyday-time-01-7180981a18cf.mp3",
+      "text": "You can choose a short timer to give an activity a clear beginning and end.",
+      "bytes": 33689
+    },
+    "everyday-choice-10": {
+      "src": "/audio-library/everyday-choice-10-31657157759e.mp3",
+      "text": "Put aside the options that are not practical today. Work with what remains.",
+      "bytes": 37242
+    },
+    "everyday-time-05": {
+      "src": "/audio-library/everyday-time-05-0c4b6ee9a547.mp3",
+      "text": "A small amount of time can have a clear purpose without becoming a challenge.",
+      "bytes": 32226
+    },
+    "everyday-time-03": {
+      "src": "/audio-library/everyday-time-03-6fa2c70824fa.mp3",
+      "text": "You can pause or end a timer when you need to. The number does not make the decision for you.",
+      "bytes": 38078
+    },
+    "everyday-time-04": {
+      "src": "/audio-library/everyday-time-04-65f89714da51.mp3",
+      "text": "Decide what the timer is for before you start it: focus, a break, or a familiar activity.",
+      "bytes": 44347
+    },
+    "everyday-time-06": {
+      "src": "/audio-library/everyday-time-06-73d7cb238a34.mp3",
+      "text": "If timing adds pressure today, you can do the activity without a countdown.",
+      "bytes": 32435
+    },
+    "everyday-time-07": {
+      "src": "/audio-library/everyday-time-07-fea03a209416.mp3",
+      "text": "Keep the next stretch of time simple enough to explain in one sentence.",
+      "bytes": 27629
+    },
+    "everyday-time-08": {
+      "src": "/audio-library/everyday-time-08-4361b8887aca.mp3",
+      "text": "You can leave a little space between activities rather than filling every minute.",
+      "bytes": 31808
+    },
+    "everyday-time-09": {
+      "src": "/audio-library/everyday-time-09-40a104446898.mp3",
+      "text": "Choose a stopping point that makes it easier to return later.",
+      "bytes": 22822
+    },
+    "everyday-time-10": {
+      "src": "/audio-library/everyday-time-10-dea3eea0eb03.mp3",
+      "text": "Time can help hold a plan, but you are allowed to adjust the plan.",
+      "bytes": 25539
+    },
+    "everyday-water-01": {
+      "src": "/audio-library/everyday-water-01-a3c0982bcb65.mp3",
+      "text": "Would a drink be useful right now? Choose what suits you and any guidance you follow.",
+      "bytes": 36615
+    },
+    "everyday-water-03": {
+      "src": "/audio-library/everyday-water-03-c01a4b846516.mp3",
+      "text": "You can put something you often need within easy reach.",
+      "bytes": 21359
+    },
+    "everyday-water-04": {
+      "src": "/audio-library/everyday-water-04-cfbef9a777df.mp3",
+      "text": "Before the next task, ask whether there is a small comfort you have been putting off.",
+      "bytes": 33898
+    },
+    "everyday-water-02": {
+      "src": "/audio-library/everyday-water-02-771420702d0f.mp3",
+      "text": "Take a moment to check a practical need: a drink, a meal, a comfortable seat, or a break.",
+      "bytes": 32853
+    },
+    "everyday-water-05": {
+      "src": "/audio-library/everyday-water-05-b7c8325f1ad5.mp3",
+      "text": "If you need to refill your usual drink, this can be a convenient moment.",
+      "bytes": 28883
+    },
+    "everyday-water-07": {
+      "src": "/audio-library/everyday-water-07-704c6d30c35b.mp3",
+      "text": "You can take care of an ordinary need before getting back to the list.",
+      "bytes": 26584
+    },
+    "everyday-water-06": {
+      "src": "/audio-library/everyday-water-06-3e8ff2c57730.mp3",
+      "text": "A practical check-in does not need a score. Notice what would help and choose one thing.",
+      "bytes": 37033
+    },
+    "everyday-water-08": {
+      "src": "/audio-library/everyday-water-08-d6b76d24f53d.mp3",
+      "text": "Maybe the next useful step is simply making yourself more comfortable.",
+      "bytes": 25748
+    },
+    "everyday-water-09": {
+      "src": "/audio-library/everyday-water-09-d6dc3903b534.mp3",
+      "text": "Choose what your situation calls for, rather than following every suggestion in the app.",
+      "bytes": 36615
+    },
+    "everyday-water-10": {
+      "src": "/audio-library/everyday-water-10-c10e008514e9.mp3",
+      "text": "You can skip this reminder if it is not useful. Your own needs come first.",
+      "bytes": 34316
+    },
+    "everyday-transition-02": {
+      "src": "/audio-library/everyday-transition-02-937ee318f60e.mp3",
+      "text": "You can mark the change with something small, such as putting a tool away or moving to another seat.",
+      "bytes": 40377
+    },
+    "everyday-transition-03": {
+      "src": "/audio-library/everyday-transition-03-7f5f11de0076.mp3",
+      "text": "What belongs in the next part of your day? Choose one thing to carry forward.",
+      "bytes": 32853
+    },
+    "everyday-transition-01": {
+      "src": "/audio-library/everyday-transition-01-e7de26ecd99b.mp3",
+      "text": "Let one part of the day end before you ask yourself to begin the next.",
+      "bytes": 31808
+    },
+    "everyday-transition-05": {
+      "src": "/audio-library/everyday-transition-05-f39c1d92c58d.mp3",
+      "text": "Give yourself a moment to arrive at the next activity.",
+      "bytes": 20941
+    },
+    "everyday-transition-04": {
+      "src": "/audio-library/everyday-transition-04-b304ad37f44a.mp3",
+      "text": "You do not have to take the pace of work into your rest time.",
+      "bytes": 21777
+    },
+    "everyday-transition-06": {
+      "src": "/audio-library/everyday-transition-06-330bb481a499.mp3",
+      "text": "If a task is unfinished, a short note can make it easier to leave for now.",
+      "bytes": 34734
+    },
+    "everyday-transition-08": {
+      "src": "/audio-library/everyday-transition-08-c16faa651db2.mp3",
+      "text": "Let the transition include a little space for what you need.",
+      "bytes": 23658
+    },
+    "everyday-transition-07": {
+      "src": "/audio-library/everyday-transition-07-ca9d2b22233f.mp3",
+      "text": "You can choose a different rhythm for the next hour.",
+      "bytes": 22822
+    },
+    "everyday-transition-09": {
+      "src": "/audio-library/everyday-transition-09-33caa30053ad.mp3",
+      "text": "There is no rule that the next activity has to start immediately.",
+      "bytes": 23658
+    },
+    "everyday-kindness-02": {
+      "src": "/audio-library/everyday-kindness-02-f2096f915f65.mp3",
+      "text": "You can name a difficulty and still speak to yourself with care.",
+      "bytes": 22195
+    },
+    "everyday-transition-10": {
+      "src": "/audio-library/everyday-transition-10-90229f3514ee.mp3",
+      "text": "You can begin the next part of the day with one clear, manageable choice.",
+      "bytes": 29092
+    },
+    "everyday-kindness-01": {
+      "src": "/audio-library/everyday-kindness-01-7bff49bc9371.mp3",
+      "text": "Try describing the situation without adding an insult about yourself.",
+      "bytes": 27002
+    },
+    "everyday-kindness-04": {
+      "src": "/audio-library/everyday-kindness-04-1e71dc7d7279.mp3",
+      "text": "You do not need to be harsh with yourself to choose a useful next step.",
+      "bytes": 25748
+    },
+    "everyday-kindness-05": {
+      "src": "/audio-library/everyday-kindness-05-0bb83c208a12.mp3",
+      "text": "What would a practical, kind response sound like in this moment?",
+      "bytes": 23658
+    },
+    "everyday-kindness-03": {
+      "src": "/audio-library/everyday-kindness-03-7e426cb0d63f.mp3",
+      "text": "A mistake can be something to respond to, rather than a definition of who you are.",
+      "bytes": 34734
+    },
+    "everyday-kindness-08": {
+      "src": "/audio-library/everyday-kindness-08-535e5d648b55.mp3",
+      "text": "You are allowed to need support while working on something that matters.",
+      "bytes": 25539
+    },
+    "everyday-kindness-07": {
+      "src": "/audio-library/everyday-kindness-07-01eb690c276d.mp3",
+      "text": "Let the next sentence you say to yourself leave room for your circumstances.",
+      "bytes": 30973
+    },
+    "everyday-kindness-06": {
+      "src": "/audio-library/everyday-kindness-06-159d27a4dd83.mp3",
+      "text": "You can acknowledge that something is hard without deciding you should find it easy.",
+      "bytes": 32853
+    },
+    "everyday-kindness-10": {
+      "src": "/audio-library/everyday-kindness-10-9ef3c41d5bd2.mp3",
+      "text": "Kindness can be ordinary and specific. It does not need to sound like a grand affirmation.",
+      "bytes": 37033
+    },
+    "everyday-kindness-09": {
+      "src": "/audio-library/everyday-kindness-09-d5e934f8f3e6.mp3",
+      "text": "Try replacing a verdict with a description of what happened and what might help next.",
+      "bytes": 33689
+    },
+    "everyday-boundary-01": {
+      "src": "/audio-library/everyday-boundary-01-5919e499794f.mp3",
+      "text": "You can check the space in your day before agreeing to another task.",
+      "bytes": 25748
+    },
+    "everyday-boundary-02": {
+      "src": "/audio-library/everyday-boundary-02-7c9f23f1fcb7.mp3",
+      "text": "A useful answer can be that you need time to think about it.",
+      "bytes": 22195
+    },
+    "everyday-boundary-03": {
+      "src": "/audio-library/everyday-boundary-03-8ba03a429656.mp3",
+      "text": "You do not have to fill every available gap with something productive.",
+      "bytes": 27002
+    },
+    "everyday-boundary-04": {
+      "src": "/audio-library/everyday-boundary-04-38fc16ca8a01.mp3",
+      "text": "Choose what fits your responsibilities and the capacity you have today.",
+      "bytes": 28047
+    },
+    "everyday-boundary-07": {
+      "src": "/audio-library/everyday-boundary-07-f927fc034662.mp3",
+      "text": "You can leave one part of the day without a new commitment.",
+      "bytes": 21777
+    },
+    "everyday-boundary-05": {
+      "src": "/audio-library/everyday-boundary-05-16e68f3357ea.mp3",
+      "text": "You can make a request smaller or ask when it really needs to happen.",
+      "bytes": 27211
+    },
+    "everyday-boundary-06": {
+      "src": "/audio-library/everyday-boundary-06-61dca0646799.mp3",
+      "text": "A little room in the plan can help you respond when life changes it.",
+      "bytes": 25748
+    },
+    "everyday-boundary-08": {
+      "src": "/audio-library/everyday-boundary-08-145fb6b06f60.mp3",
+      "text": "Before adding more, look at what you have already chosen to carry.",
+      "bytes": 25121
+    },
+    "everyday-boundary-10": {
+      "src": "/audio-library/everyday-boundary-10-92f9d3e0b958.mp3",
+      "text": "Keep some space for ordinary needs, including food, rest, and the unexpected.",
+      "bytes": 32853
+    },
+    "everyday-boundary-09": {
+      "src": "/audio-library/everyday-boundary-09-ef854461d581.mp3",
+      "text": "You are allowed to reconsider a plan when your circumstances change.",
+      "bytes": 26166
+    },
+    "everyday-goodbye-01": {
+      "src": "/audio-library/everyday-goodbye-01-d751a3177afa.mp3",
+      "text": "You can leave the app and take one small idea with you.",
+      "bytes": 21777
+    },
+    "everyday-goodbye-03": {
+      "src": "/audio-library/everyday-goodbye-03-e3b2956d4079.mp3",
+      "text": "Choose the next useful thing, or choose a little more quiet.",
+      "bytes": 23658
+    },
+    "everyday-goodbye-02": {
+      "src": "/audio-library/everyday-goodbye-02-cf0633a22a6d.mp3",
+      "text": "There is nothing else you need to complete here before returning to your day.",
+      "bytes": 27629
+    },
+    "everyday-goodbye-06": {
+      "src": "/audio-library/everyday-goodbye-06-6b3c069e8c5e.mp3",
+      "text": "You can come back when you want a tool or a little company.",
+      "bytes": 19897
+    },
+    "everyday-goodbye-05": {
+      "src": "/audio-library/everyday-goodbye-05-ac766c459570.mp3",
+      "text": "Let the words end and your own day continue at your pace.",
+      "bytes": 23240
+    },
+    "everyday-goodbye-04": {
+      "src": "/audio-library/everyday-goodbye-04-114c037ce21d.mp3",
+      "text": "Daywell can be a brief visit. You do not need to stay on the screen.",
+      "bytes": 27002
+    },
+    "everyday-goodbye-09": {
+      "src": "/audio-library/everyday-goodbye-09-a595d950be33.mp3",
+      "text": "The next step belongs to you. Keep it manageable.",
+      "bytes": 20524
+    },
+    "everyday-goodbye-07": {
+      "src": "/audio-library/everyday-goodbye-07-d75c9476d8ee.mp3",
+      "text": "Take what was useful from this moment and leave the rest.",
+      "bytes": 22404
+    },
+    "everyday-goodbye-08": {
+      "src": "/audio-library/everyday-goodbye-08-2a3b98ea9513.mp3",
+      "text": "You do not need to turn this visit into a streak. A useful moment is enough.",
+      "bytes": 35570
+    },
+    "everyday-goodbye-10": {
+      "src": "/audio-library/everyday-goodbye-10-8c5c84f1c713.mp3",
+      "text": "A little space, a little care, and then back to whatever you choose next.",
+      "bytes": 28465
+    }
+  }
+}

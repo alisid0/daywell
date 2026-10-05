@@ -10,11 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
       - run: npm run install:ci
       - run: npm run check
+      # The project still has older lint debt, so a pull request only has to avoid adding lint errors to the files it changes.
+      - name: Lint changed files
+        if: github.event_name == 'pull_request'
+        run: npm run lint:changed -- "origin/${{ github.base_ref }}"
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
       - run: npm run db:setup
       - run: npm run db:setup

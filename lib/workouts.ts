@@ -1,4 +1,4 @@
-import library from "./workout-library.json" with { type: "json" };
+import library from "../content/workouts.json" with { type: "json" };
 import type { WorkoutSet } from "./wellbeing.ts";
 
 export type Where = "none" | "home" | "gym";

@@ -1,0 +1,100 @@
+{
+  "pip": {
+    "name": "Pip", "job": "Focus & priorities", "module": "focus", "colour": "#F2BD72",
+    "hello": "One little thing. That’s a good place to start.",
+    "hint": "Write down one small priority. Give it a little focus time, then tick it off when you’re done.",
+    "action": "Add a priority",
+    "personality": "Keen and earnest, a little fidgety. Happiest when one small thing gets done.",
+    "voice": "Short, plain sentences. Counts in ones. Always offers the smallest next step.",
+    "movement": "Alert head tilts with a pencil-tap rhythm. Reacts with a quick double hop.",
+    "never": "Rushes you, or lists more than one thing at a time.",
+    "lines": {
+      "calm": "One thing at a time. I’ve got my pencil ready.", "listening": "Go on, I’m writing it down.", "thinking": "Hmm. Which one feels smallest?", "speaking": "Let’s pick one thing and give it ten minutes.",
+      "happy": "Ticked off! That one’s done.", "encouraging": "Just the first step. I’ll keep you company.", "sleepy": "The list can wait until morning.", "concerned": "That sounds like a lot. Let’s set most of it down."
+    }
+  },
+  "tock": {
+    "name": "Tock", "job": "Clocks & timers", "module": "clock", "colour": "#C7DCF4",
+    "hello": "I’ll keep the time. You take it at your pace.",
+    "hint": "Choose a length and press Start. You can pause whenever you need, or reset to begin again.",
+    "action": "Open timers",
+    "personality": "Steady and patient, with a dry sense of humour.",
+    "voice": "Measured and even. Light time puns, never a countdown in your ear.",
+    "movement": "An even pendulum sway, one beat per second. Reacts with two firm ticks.",
+    "never": "Hurries you or makes time feel like pressure.",
+    "lines": {
+      "calm": "Tick. Tock. No hurry.", "listening": "Take your time. I’m keeping it.", "thinking": "Let me count that out.", "speaking": "Twenty-five minutes, then a proper break.",
+      "happy": "Right on time. Nicely done.", "encouraging": "Just five minutes. I’ll watch the clock.", "sleepy": "Even clocks rest their hands.", "concerned": "Time can stop for a minute. I’ll hold it."
+    }
+  },
+  "momo": {
+    "name": "Momo", "job": "Groceries", "module": "grocery", "colour": "#D4E2B9",
+    "hello": "Pop it on the list. I’ll keep it here for you.",
+    "hint": "Add the things you need. Tick each one when it’s in your bag; untick it if you need it again.",
+    "action": "Add a shopping item",
+    "personality": "Homely and a bit fussy, in a helpful way.",
+    "voice": "Chatty and practical. Thinks in short lists.",
+    "movement": "A side-to-side shuffle with a little basket swing. Reacts with a pat and a wiggle.",
+    "never": "Judges what goes in the basket.",
+    "lines": {
+      "calm": "Basket’s here whenever you need it.", "listening": "Mm-hm, pop it on the list.", "thinking": "Have we got eggs? Let me check.", "speaking": "Milk, oats and a little something nice.",
+      "happy": "All in the bag! Lovely.", "encouraging": "Just three things today. Easy trip.", "sleepy": "We’ll shop tomorrow. The apple can wait.", "concerned": "No need for a big shop. Something simple will do."
+    }
+  },
+  "luma": {
+    "name": "Luma", "job": "Sleep & winding down", "module": "sleep", "colour": "#D9C9F2",
+    "hello": "You can put the day down for a little while.",
+    "hint": "Choose a time to wind down. In your saved workspace, you can also log your sleep and how it felt.",
+    "action": "Log sleep",
+    "personality": "Soft, dreamy and unhurried.",
+    "voice": "Few words, long pauses, all in lowercase.",
+    "movement": "A slow float that rises and settles like breathing. Glows instead of jumping.",
+    "never": "Bounces, rushes, or raises its voice.",
+    "lines": {
+      "calm": "you can put the day down now.", "listening": "mm… i’m here.", "thinking": "let’s see… softly.", "speaking": "breathe out a little longer than you breathe in.",
+      "happy": "that’s a lovely, gentle thing.", "encouraging": "just lie down for a moment. that’s enough.", "sleepy": "the moon’s out. so am i, nearly.", "concerned": "it’s alright to feel heavy tonight. i’m right here."
+    }
+  },
+  "nori": {
+    "name": "Nori", "job": "Food & nourishment", "module": "food", "colour": "#F3C5B5",
+    "hello": "A little nourishment, without the judgement.",
+    "hint": "Add a meal and the details you want to remember. Daywell keeps your entries together for the day.",
+    "action": "Log a meal",
+    "personality": "Warm and nourishing, with no judgement about food.",
+    "voice": "Kind and unfussy. Talks about food as comfort, not numbers.",
+    "movement": "A contented wiggle and slow nods. Reacts with one deep, satisfied nod.",
+    "never": "Mentions calories unprompted, or calls food good or bad.",
+    "lines": {
+      "calm": "Something warm sounds nice.", "listening": "Tell me what’s in the cupboard.", "thinking": "Rice, eggs, spinach… I’ve got an idea.", "speaking": "How about an omelette with whatever greens you have?",
+      "happy": "That sounds tasty. Noted.", "encouraging": "Even toast counts. Let’s eat something.", "sleepy": "A warm drink before bed?", "concerned": "You haven’t eaten much. Something small and easy?"
+    }
+  },
+  "bounce": {
+    "name": "Bounce", "job": "Movement", "module": "move", "colour": "#F3A6A9",
+    "hello": "A stretch counts. A small walk counts, too.",
+    "hint": "Record a walk, stretch or workout and how long it lasted. Small amounts of movement count here.",
+    "action": "Log movement",
+    "personality": "Upbeat and springy, but never pushy.",
+    "voice": "Energetic and short. Firmly believes a stretch counts.",
+    "movement": "A springy idle with squash-and-stretch landings. Reacts with a big jump.",
+    "never": "Shames rest, or counts calories burned.",
+    "lines": {
+      "calm": "Little bounce. Just warming up.", "listening": "Ooh, what are we doing?", "thinking": "Walk or stretch? Both are great.", "speaking": "Ten-minute walk, nice and easy.",
+      "happy": "You moved! That counts. Every bit.", "encouraging": "Stand up with me. That’s the hardest bit done.", "sleepy": "Rest is part of training too.", "concerned": "No workout today. A gentle stretch, or nothing at all."
+    }
+  },
+  "sunny": {
+    "name": "Sunny", "job": "Alarms & mornings", "module": "alarm", "colour": "#F5DF9E",
+    "hello": "A gentle nudge for your next fresh start.",
+    "hint": "Choose a time and the days for your alarm. Keep Daywell open to hear it; alarms don’t run after the app is closed.",
+    "action": "Set an alarm",
+    "personality": "Bright and hopeful, gentle about mornings.",
+    "voice": "Warm, quietly cheerful, never loud.",
+    "movement": "A slow rise like the sun coming up, with a warm pulse. Reacts by rising and glowing.",
+    "never": "Blares, nags, or counts snoozes.",
+    "lines": {
+      "calm": "A soft start is still a start.", "listening": "I’m up. What time shall I ring?", "thinking": "Seven, or seven-thirty?", "speaking": "I’ll ring gently at 7 am.",
+      "happy": "Good morning! You made it.", "encouraging": "Open the curtains. Just that.", "sleepy": "Shh. I’ll wake you when it’s time.", "concerned": "Rough night? We can start slowly."
+    }
+  }
+}

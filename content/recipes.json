@@ -1,0 +1,54 @@
+[
+  {
+    "id": "chickpeas",
+    "title": "Chickpea sunshine bowl",
+    "time": "15 minutes",
+    "ingredients": [
+      "Chickpeas",
+      "Couscous",
+      "Tomatoes",
+      "Cucumber",
+      "Lemon"
+    ],
+    "steps": [
+      "Prepare couscous following its packet instructions.",
+      "Drain and rinse canned chickpeas. Chop the tomato and cucumber.",
+      "Toss everything with lemon juice, a little olive oil and your favourite seasoning."
+    ],
+    "note": "Contains wheat. Use rice or a suitable alternative if needed."
+  },
+  {
+    "id": "eggs",
+    "title": "Eggs & greens on toast",
+    "time": "10 minutes",
+    "ingredients": [
+      "Eggs",
+      "Spinach",
+      "Wholegrain bread",
+      "Tomatoes"
+    ],
+    "steps": [
+      "Wash and soften the spinach and chopped tomatoes in a pan with a little oil.",
+      "Scramble the eggs in the pan until fully cooked.",
+      "Serve on toast. Add a little pepper or herbs if you like."
+    ],
+    "note": "Contains eggs and wheat. Check ingredients for your own dietary needs."
+  },
+  {
+    "id": "oats",
+    "title": "A bowl of berry oats",
+    "time": "10 minutes",
+    "ingredients": [
+      "Oats",
+      "Milk",
+      "Berries",
+      "Pumpkin seeds"
+    ],
+    "steps": [
+      "Cook the oats with milk or a suitable alternative, following the packet instructions.",
+      "Add washed berries and a spoonful of pumpkin seeds.",
+      "Adjust the texture with a little more milk, then settle in."
+    ],
+    "note": "Choose milk and oats that suit your dietary needs; check labels for allergens."
+  }
+]

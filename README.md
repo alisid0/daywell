@@ -6,15 +6,15 @@ Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 
 ## Four-area MVP
 
-The selected **Cosy cove** is the default for new browsers; existing appearance selections are preserved. Home offers **Talk to Daywell**, **Just rest** and **Explore**.
+The selected **Cosy cove** is the default for new browsers; existing appearance selections are preserved. The bottom bar holds **Today · Move · Eat · Sleep · Relax**, each one tap away. Today offers **Talk to Daywell**, **Just rest** and **Just listen**, a last-7-days calendar strip and the everyday extras.
 
 - **Move:** record walks and other activity, save/edit strength sessions with sets, reps and kg, and see previous records for the same exercise.
 - **Relax:** untimed quiet company with Luma, optional grounding prompts and locally generated soft rustling audio. No automatic record or score. Reflections are optional.
 - **Eat:** three practical meal ideas ranked by typed ingredients, reviewed missing-ingredient shopping lists, and a meal journal with optional nutrition estimates.
 - **Sleep:** wind-down space, adjustable bedtime/wake preferences and an editable sleep journal.
-- **Calendar:** plans and retrospective history; existing calendar-file and history exports remain available. No live Google/Apple sync.
+- **Calendar:** plans and retrospective history; existing calendar-file and history exports remain available. No live Google/Apple sync. Every tab shows a last-7-days strip; from Today it opens everything, from an area only that area's history.
 
-Focus, clocks/timers and alarms are in **Explore → Everyday extras**. Alarms and encouragement require the app to remain open. This is a local wellbeing MVP, not a medical or validated longevity product.
+Focus, timers and alarms are the **Everyday extras** on Today. Alarms and encouragement require the app to remain open. This is a local wellbeing MVP, not a medical or validated longevity product.
 
 ## Connect ElevenLabs
 
@@ -53,7 +53,7 @@ Implementation references: [ElevenLabs JavaScript SDK](https://elevenlabs.io/doc
 
 The saved MVP at `/` now opens with **Daywell**, one place for requests. Users
 never need to select or name a mascot. Tools and existing entries are available
-under **Your tools & saved day**, as well as the sidebar.
+under **Your tools & saved day**, the bottom bar, and the sidebar in the classic layout.
 
 - Pip accompanies focus, Luma winding down, and Bounce movement.
 - Momo, Nori and Sunny briefly acknowledge shopping, meal and alarm changes.
@@ -82,9 +82,13 @@ Browser audio references: [SpeechRecognition](https://developer.mozilla.org/en-U
 and [SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis).
 Live microphone transcription has not been verified on the user's device.
 
+## Talk button
+
+The Talk button keeps its look and shows what Daywell is doing: sound bars while listening, dots and a breathing glow while thinking, rings spreading outward while Daywell speaks, a stop square during a conversation and a greyed, crossed-out mic when the microphone is refused. The home companions lean in, look up or bounce along. Phones vibrate briefly when listening starts and stops. Reduced-motion settings turn the animations into still indicators.
+
 ## Calendar and history
 
-Open **Calendar & history** in the sidebar, or visit `/calendar`.
+Tap the **Last 7 days** strip on Today, or visit `/calendar`. The strip on Move, Eat, Sleep or Relax opens that area's history only: Move shows walks and workouts, Eat meals, Sleep sleep logs and Relax reflections. Chips switch between areas and **Everything**, which adds plans, priorities, focus sessions and shopping.
 
 - Plan dated tasks and appointments, including all-day items, a start time,
   duration, location and notes. Browse months or choose a date directly.
@@ -299,6 +303,23 @@ Daywell's content lives in `content/` as plain JSON, separate from code and from
 - `content/workouts.json` — exercises and routines on the Move screen
 
 To change content, edit the file on a branch and open a pull request. `npm test`, which the GitHub check also runs, validates every file against `lib/content-schema.ts` and checks that references such as easier/harder exercises and routine companions point to something real. This repository is public, so never put personal or user data in `content/`. Saved entries belong in the D1 database.
+
+## Working on Daywell
+
+1. **Preview first.** Visible changes start as an interactive before/after preview. Nothing is built until it's approved.
+2. **One branch and pull request per change.** Fill in the template: what's new, testing, and anything not yet verified.
+3. **Checks must pass.** The GitHub check runs the type check, tests and build, lints the files the pull request changes, and fails on high-severity advisories in production dependencies.
+4. **Merge, then update.** After merging, run `git pull` in your copy. If the pull request adds a database migration (a new file in `drizzle/`), also run `npm run setup` once.
+
+Dependabot opens weekly pull requests for dependency updates; they go through the same checks.
+
+## Limits and allowances
+
+- Live voice: 6 conversation starts per person per 10 minutes.
+- Photo and voice capture: 20 checks per person per day.
+- Saved entries: up to 20,000 per person; edits to existing entries always fit.
+
+Allowances are counted in the `usage_limits` table (migration `0001`) and set in `lib/request-guards.ts`. A monthly live-voice allowance is still to be decided.
 
 ## Project map
 

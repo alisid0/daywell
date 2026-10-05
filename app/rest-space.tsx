@@ -6,6 +6,7 @@ import { CompanionPortrait } from "@/components/daywell-companions";
 import { responseInGroup } from "@/lib/audio-library";
 import { useLibraryAudio } from "./use-library-audio";
 import type { AppState } from "./use-daywell";
+import { CalendarStrip } from "./calendar-strip";
 
 const moments = [
   responseInGroup("relax-unclench")!,
@@ -57,6 +58,7 @@ export function RestSpace({ a, bedtime = false, onLeave }: { a: AppState; bedtim
     <Link className="rest-library-link" href="/audio-library" onClick={() => { recording.stop(); silence(); }}>More little words of comfort</Link>
     {sound && <label className="rest-volume">Volume<input aria-label="Rest sound volume" type="range" min="0" max="0.5" step=".01" value={volume} onChange={event => { const value = Number(event.target.value); setVolume(value); if (audio.current) audio.current.gain.gain.setTargetAtTime(value, audio.current.context.currentTime, .1); }} /></label>}
     {soundError && <p role="alert">{soundError}</p>}
+    {!bedtime && <CalendarStrip a={a} area="relax" />}
     <details className="rest-reflection"><summary>Something you’d like to remember?</summary><p>Only if you want to. Your pause doesn’t need a record.</p><button className="well-text-button" onClick={() => a.openEditor("reflection")}>Write a private reflection</button></details>
   </section>;
 }

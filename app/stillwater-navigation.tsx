@@ -18,7 +18,7 @@ const tabFor: Record<string, string> = { move: "move", eat: "eat", food: "eat", 
 export function StillwaterNavigation({ a, tools, onStyle }: { a: AppState; tools: Tool[]; onStyle: () => void }) {
   const [drawer, setDrawer] = useState<"tools" | "settings">("tools");
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const currentTab = tabFor[a.active] ?? "today";
+  const currentTab = a.active === "calendar" ? (a.calendarArea === "all" ? "today" : a.calendarArea) : tabFor[a.active] ?? "today";
   function openDrawer(view: "tools" | "settings") { setDrawer(view); setDrawerOpen(true); }
   function go(view: string, history = false) {
     a.setActive(view); if (view === "calendar") a.setCalendarView(history ? "history" : "plan");

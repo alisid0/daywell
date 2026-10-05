@@ -8,15 +8,40 @@
   .stillwater-dock[data-tabs="5"] button svg{width:19px;height:19px}
 }
 
-/* Today: the calendar row above the host, and the everyday extras below it */
-.today-calendar{display:flex;align-items:center;gap:12px;width:min(100%,520px);min-height:52px;margin:4px auto 12px;padding:12px 16px;border-radius:20px;background:var(--dw-surface,#fff8fb);border:1px solid var(--dw-line,#ebd3e1);color:var(--dw-ink,#522d46);text-align:left}
-.today-calendar>span{flex:1;font-weight:650}
-.today-calendar small{display:block;margin-top:2px;font-size:12px;font-weight:400;color:var(--dw-muted,#86607a)}
-.today-calendar>svg:first-child{color:var(--dw-accent,#803c65)}
+/* Today: the everyday extras below the host */
 .today-extras{display:grid;justify-items:center;gap:8px;margin:20px auto 120px}
 .today-extras>span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dw-muted,#86607a)}
 .today-extras>div{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .today-extras button{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:10px 16px;border-radius:999px;background:var(--dw-surface,#fff8fb);border:1px solid var(--dw-line,#ebd3e1);color:var(--dw-ink,#522d46);font-size:14px}
 .today-extras button svg{color:var(--dw-accent,#803c65)}
-:is(.today-calendar,.today-extras button):hover{background:var(--dw-soft,#f3dce8)}
-:is(.today-calendar,.today-extras button):focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:3px}
+.today-extras button:hover{background:var(--dw-soft,#f3dce8)}
+.today-extras button:focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:3px}
+
+/* Area colours, shared by the strips, the calendar and its legend */
+.area-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.area-move{background:#d9646d}.area-eat{background:#d98a3d}.area-sleep{background:#7e6cc8}.area-relax{background:#4e9a7a}.area-plan{background:var(--dw-accent,#803c65)}
+
+/* Last 7 days strip, on Today and on each area */
+.calendar-strip{display:grid;gap:8px;width:min(100%,520px);margin:4px auto 14px;padding:12px 14px 10px;border-radius:20px;background:var(--dw-surface,#fff8fb);border:1px solid var(--dw-line,#ebd3e1);color:var(--dw-ink,#522d46);text-align:left}
+.well-space .calendar-strip{margin:0 0 22px}
+.rest-space .calendar-strip{margin:26px auto 8px}
+.calendar-strip-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.calendar-strip-head b{font-size:14px}
+.calendar-strip-head>span{display:inline-flex;align-items:center;gap:2px;color:var(--dw-accent,#803c65);font-weight:700;font-size:13px}
+.calendar-strip-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.calendar-strip-days>span{display:grid;justify-items:center;gap:2px;padding:5px 0;border-radius:12px}
+.calendar-strip-days small{font-size:11px;color:var(--dw-muted,#86607a)}
+.calendar-strip-days b{font-size:14px;font-variant-numeric:tabular-nums}
+.calendar-strip-days .calendar-strip-today{background:var(--dw-soft,#f3dce8)}
+.calendar-strip-dots{display:flex;gap:2px;justify-content:center;min-height:6px}
+.calendar-strip:hover{border-color:var(--dw-accent,#803c65)}
+.calendar-strip:focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:3px}
+
+/* Calendar: back to the area it was opened from, and the area filter */
+.calendar-back{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:8px 0;color:var(--dw-accent,#803c65);font-weight:700;font-size:14px}
+.calendar-areas{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.calendar-areas button{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--dw-line,#ebd3e1);background:var(--dw-surface,#fff8fb);color:var(--dw-ink,#522d46);font-size:14px}
+.calendar-areas button[aria-pressed="true"]{background:var(--dw-accent,#803c65);border-color:var(--dw-accent,#803c65);color:var(--dw-on-accent,#fff7fb);font-weight:700}
+.calendar-areas button[aria-pressed="true"] .area-dot{box-shadow:0 0 0 2px var(--dw-on-accent,#fff7fb)}
+.calendar-legend{flex-wrap:wrap}
+.calendar-legend span{display:inline-flex;align-items:center;gap:6px}

@@ -15,6 +15,7 @@ import {DaySnapshot,QuickEntry} from "./everyday";
 import {filterTasks} from "@/lib/routines";
 import {DaywellHost} from "./daywell-host";
 import {CalendarWorkspace} from "./calendar-workspace";
+import {CalendarStrip} from "./calendar-strip";
 import {useDaywellStyle} from "./design-switcher";
 import {AppearanceStudio,IterationReview} from "./appearance-studio";
 import {StillwaterNavigation} from "./stillwater-navigation";
@@ -34,11 +35,11 @@ export default function Daywell({showWelcome=false,initialView="today"}:{showWel
  {!a.loaded&&!a.loadError&&<div className="loading-state"><LoaderCircle className="spin"/>Opening your space…</div>}
  {a.loaded&&showStyles&&<AppearanceStudio look={look} name={settings.name} onDone={()=>setChoosingStyle(false)} onTry={()=>{setReviewingDesigns(true);setChoosingStyle(false);a.setActive("today");requestAnimationFrame(()=>window.scrollTo({top:0,behavior:"instant"}))}}/>}
  {a.loaded&&reviewingDesigns&&active==="today"&&<IterationReview look={look} onCompare={()=>setChoosingStyle(true)} onClose={()=>setReviewingDesigns(false)}/>}
- {a.loaded&&immersive&&active==="today"&&<button className="today-calendar" onClick={()=>{a.setCalendarView("plan");a.setActive("calendar")}}><CalendarDays size={19}/><span>{dateLabel}<small>Calendar & history</small></span><ChevronRight size={17}/></button>}
+ {a.loaded&&immersive&&active==="today"&&<CalendarStrip a={a} area="all"/>}
  {a.loaded&&<details className={active==="calendar"||(immersive&&active!=="today")?"calendar-host-disclosure":"calendar-host-always"} open={active!=="calendar"&&(!immersive||active==="today")}><summary>Talk or type to Daywell<span>One host, wherever you are</span></summary><DaywellHost a={a} immersive={immersive} cozy={cozy} company={look.current.company}/></details>}
  {a.loaded&&immersive&&active==="today"&&<nav className="today-extras" aria-label="Everyday extras"><span>Everyday extras</span><div>{EXTRAS.map(x=><button key={x.id} onClick={()=>a.setActive(x.id)}><x.icon size={16}/>{x.name}</button>)}</div></nav>}
  {a.loaded&&active==="calendar"&&<CalendarWorkspace a={a}/>}
- {a.loaded&&active==="today"&&<button className="calendar-home-link" onClick={()=>a.setActive("calendar")}><CalendarDays size={19}/><span>Calendar & history<small>What’s next, and how far you’ve come</small></span><ChevronRight size={17}/></button>}
+ {a.loaded&&active==="today"&&<button className="calendar-home-link" onClick={()=>{a.setCalendarArea("all");a.setActive("calendar")}}><CalendarDays size={19}/><span>Calendar & history<small>What’s next, and how far you’ve come</small></span><ChevronRight size={17}/></button>}
  {a.loaded&&active==="today"&&<details className="host-tools"><summary>Your tools & saved day<span>Here whenever you need them</span></summary><TodayTools a={a}/></details>}
  {a.loaded&&active!=="today"&&active!=="calendar"&&<PillarWorkspace key={active} a={a}/>}<footer className="page-footer"><Sun size={15}/>Small steps. Better days.</footer></div></main><Dialogs a={a} modules={modules}/><Toaster position="bottom-right" richColors/></SidebarProvider>;
 }

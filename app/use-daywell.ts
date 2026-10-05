@@ -1,7 +1,7 @@
 "use client";
 import {useEffect,useRef,useState} from "react";
 import {starterModules} from "@/lib/onboarding";
-import {stampCompletions} from "@/lib/calendar";
+import {stampCompletions,type CalendarArea} from "@/lib/calendar";
 import {timerTitle} from "@/lib/routines";
 import {toast} from "sonner";
 import {defaults,today,sleepMinutes,type Settings,type Entry,type Kind} from "@/lib/daywell";
@@ -9,6 +9,7 @@ export const initialTimer={title:"One thing at a time.",duration:1500,remaining:
 export function useDaywell(showWelcome=false,initialView="today"){
  const [welcome,setWelcome]=useState(false);
  const [calendarView,setCalendarView]=useState<"plan"|"history">("plan");
+ const [calendarArea,setCalendarArea]=useState<CalendarArea>("all");
  const [sw,setSw]=useState({start:0,elapsed:0,running:false});
  const [syncError,setSyncError]=useState("");
  const [settings,setSettings]=useState<Settings>(defaults),[entries,setEntries]=useState<Entry[]>([]),[active,setActive]=useState(initialView),[loaded,setLoaded]=useState(false),[loadError,setLoadError]=useState(""),[saving,setSaving]=useState(0),[now,setNow]=useState(Date.now());
@@ -36,7 +37,7 @@ export function useDaywell(showWelcome=false,initialView="today"){
  const day=today(),d=new Date(now);current.current.entries.filter(e=>e.kind==="alarm"&&e.data.enabled&&current.current.settings.modules.includes("alarm")).forEach(e=>{const a=e.data,[h,m]=a.time.split(":").map(Number),due=new Date(d.getFullYear(),d.getMonth(),d.getDate(),h,m).getTime(),snooze=a.snoozeAt&&now>=a.snoozeAt&&prevTick.current<a.snoozeAt,regular=now>=due&&prevTick.current<due&&(!a.days.length||a.days.includes(d.getDay())),key=snooze?`${e.id}-${a.snoozeAt}`:`${e.id}-${day}`;if((snooze||regular)&&!alarmFired.current.has(key)&&a.lastFired!==key){alarmFired.current.add(key);setRing({title:a.title,id:e.id});beep();void save([{...e,data:{...a,lastFired:key,snoozeAt:null,enabled:!!a.days.length}}])}});prevTick.current=now;
  },[now,loaded]);
  useEffect(()=>{const context=(document as any).modelContext;if(!context?.registerTool)return;const life=new AbortController();Promise.resolve(context.registerTool({name:"get_daywell_summary",description:"Read Daywell's enabled modules and today's tasks. Does not change data.",inputSchema:{type:"object",properties:{},additionalProperties:false},annotations:{readOnlyHint:true,untrustedContentHint:true},execute(input:any){if(!input||Object.keys(input).length)throw Error("Expected an empty object");const s=current.current;return {modules:s.settings.modules,tasks:s.entries.filter(e=>e.kind==="task"&&e.data.date===today()).map(e=>({id:e.id,...e.data}))}}},{signal:life.signal})).catch(()=>{});Promise.resolve(context.registerTool({name:"add_daywell_tasks",description:"Create and save one to ten tasks for today in Daywell. Updates the visible task list.",inputSchema:{type:"object",properties:{titles:{type:"array",minItems:1,maxItems:10,items:{type:"string",minLength:1,maxLength:160}}},required:["titles"],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:true},async execute(input:any){if(!input||Object.keys(input).some(k=>k!=="titles")||!Array.isArray(input.titles)||input.titles.length<1||input.titles.length>10||input.titles.some((x:any)=>typeof x!=="string"||!x.trim()||x.length>160))throw Error("Provide 1–10 nonempty task titles");if(!current.current.settings.modules.includes("focus"))throw Error("Enable Productivity first");const items:Entry[]=input.titles.map((title:string)=>({id:crypto.randomUUID(),kind:"task",data:{title:title.trim(),date:today(),done:false,minutes:25}}));await put(items);return {created:items.map(x=>({id:x.id,title:x.data.title}))}}},{signal:life.signal})).catch(()=>{});return ()=>life.abort()},[]);
- return {calendarView,setCalendarView,welcome,setWelcome,dismissGuide,sw,setSw,syncError,settings,entries,active,setActive,loaded,loadError,saving,now,customize,setCustomize,prefs,setPrefs,editor,setEditor,draft,setDraft,submitting,formError,setFormError,photo,setPhoto,photoDialog,setPhotoDialog,plan,setPlan,ring,setRing,load,save,hostChange,remove,saveSettings,openEditor,submitEntry,unlockAudio,beep,enabled,by,dayEntries,timer,remaining,runTimer,pauseTimer,resetTimer};
+ return {calendarView,setCalendarView,calendarArea,setCalendarArea,welcome,setWelcome,dismissGuide,sw,setSw,syncError,settings,entries,active,setActive,loaded,loadError,saving,now,customize,setCustomize,prefs,setPrefs,editor,setEditor,draft,setDraft,submitting,formError,setFormError,photo,setPhoto,photoDialog,setPhotoDialog,plan,setPlan,ring,setRing,load,save,hostChange,remove,saveSettings,openEditor,submitEntry,unlockAudio,beep,enabled,by,dayEntries,timer,remaining,runTimer,pauseTimer,resetTimer};
 }
 export type AppState=ReturnType<typeof useDaywell>;
 

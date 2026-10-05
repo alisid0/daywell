@@ -106,3 +106,20 @@ export function historyCsv(records: HistoryRecord[]) {
   const rows = [["Date", "Record", "Title", "Details", "Minutes", "Planned date"], ...records.map(row => [row.date || "Date not recorded", row.entry.kind, row.title, row.detail, String(row.minutes || ""), ["task", "event"].includes(row.entry.kind) ? row.entry.data.date : ""])];
   return "\uFEFF" + rows.map(row => row.map(cell).join(",")).join("\r\n") + "\r\n";
 }
+
+// Calendar areas match the bottom bar. Plans, priorities, focus and shopping only appear under Everything.
+export type CalendarArea = "all" | "move" | "eat" | "sleep" | "relax";
+export type DayMark = Exclude<CalendarArea, "all"> | "plan";
+export const calendarAreas: CalendarArea[] = ["all", "move", "eat", "sleep", "relax"];
+export const areaLabels: Record<CalendarArea, string> = { all: "Everything", move: "Move", eat: "Eat", sleep: "Sleep", relax: "Relax" };
+const areaByKind: Record<string, Exclude<CalendarArea, "all">> = { move: "move", food: "eat", sleep: "sleep", reflection: "relax" };
+export function areaOf(kind: string): DayMark { return areaByKind[kind] ?? "plan"; }
+export function inArea(kind: string, area: CalendarArea) { return area === "all" || areaByKind[kind] === area; }
+export function recentDays(today: string, count = 7) { return Array.from({ length: count }, (_, index) => shiftDay(today, index - count + 1)); }
+// One mark per kind of thing on a day, in a fixed order. Unfinished plans only count under Everything.
+export function dayMarks(records: HistoryRecord[], plans: Entry[], date: string, area: CalendarArea): DayMark[] {
+  const marks = new Set<DayMark>();
+  for (const row of records) if (row.date === date && inArea(row.entry.kind, area)) marks.add(areaOf(row.entry.kind));
+  if (area === "all" && plans.some(entry => entry.data.date === date && !entry.data.done)) marks.add("plan");
+  return (["move", "eat", "sleep", "relax", "plan"] as DayMark[]).filter(mark => marks.has(mark));
+}

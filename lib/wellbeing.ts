@@ -1,4 +1,5 @@
 import { z } from "zod";
+import recipes from "../content/recipes.json" with { type: "json" };
 import type { Entry } from "./daywell";
 
 export const pillars = [
@@ -7,17 +8,21 @@ export const pillars = [
   { id: "eat", title: "Eat", companion: "nori", line: "Something good, made simple.", detail: "Meal ideas, ingredients and your food journal." },
   { id: "sleep", title: "Sleep", companion: "luma", line: "Let the day soften around you.", detail: "Wind down, find your rhythm and notice your rest." },
 ] as const;
+// Each set is counted in reps or, for holds, walks and cardio, in seconds.
 export const workoutSetSchema = z.object({
   exercise: z.string().trim().min(1).max(80),
-  reps: z.number().int().min(1).max(200),
+  reps: z.number().int().min(1).max(200).optional(),
+  seconds: z.number().int().min(1).max(3600).optional(),
   kg: z.number().min(0).max(500),
-});
+}).refine(set => (set.reps === undefined) !== (set.seconds === undefined), { message: "Count each set in reps or seconds." });
 export type WorkoutSet = z.infer<typeof workoutSetSchema>;
-export const recipeIdeas = [
-  { id: "chickpeas", title: "Chickpea sunshine bowl", time: "15 minutes", ingredients: ["Chickpeas", "Couscous", "Tomatoes", "Cucumber", "Lemon"], steps: ["Prepare couscous following its packet instructions.", "Drain and rinse canned chickpeas. Chop the tomato and cucumber.", "Toss everything with lemon juice, a little olive oil and your favourite seasoning."], note: "Contains wheat. Use rice or a suitable alternative if needed." },
-  { id: "eggs", title: "Eggs & greens on toast", time: "10 minutes", ingredients: ["Eggs", "Spinach", "Wholegrain bread", "Tomatoes"], steps: ["Wash and soften the spinach and chopped tomatoes in a pan with a little oil.", "Scramble the eggs in the pan until fully cooked.", "Serve on toast. Add a little pepper or herbs if you like."], note: "Contains eggs and wheat. Check ingredients for your own dietary needs." },
-  { id: "oats", title: "A bowl of berry oats", time: "10 minutes", ingredients: ["Oats", "Milk", "Berries", "Pumpkin seeds"], steps: ["Cook the oats with milk or a suitable alternative, following the packet instructions.", "Add washed berries and a spoonful of pumpkin seeds.", "Adjust the texture with a little more milk, then settle in."], note: "Choose milk and oats that suit your dietary needs; check labels for allergens." },
-] as const;
+export function describeSet(set: WorkoutSet) {
+  const amount = set.seconds !== undefined ? (set.seconds >= 60 && set.seconds % 60 === 0 ? `${set.seconds / 60} min` : `${set.seconds} sec`) : `${set.reps} reps`;
+  return `${amount} · ${set.kg === 0 ? "bodyweight" : `${set.kg} kg`}`;
+}
+export type Recipe = { id: string; title: string; time: string; ingredients: string[]; steps: string[]; note: string };
+// Meal ideas live in content/recipes.json.
+export const recipeIdeas = recipes as Recipe[];
 export function matchingRecipes(pantry: string) {
   const words = pantry.toLowerCase().split(/[,\n]+/).map(x => x.trim()).filter(Boolean);
   const score = (ingredients: readonly string[]) => words.filter(word => ingredients.some(i => i.toLowerCase().includes(word) || word.includes(i.toLowerCase()))).length;

@@ -290,9 +290,20 @@ The existing `.openai/hosting.json` metadata and vendored Sites support files
 are retained because the build uses them. Uploading this repository does not
 publish or change the original hosted project.
 
+## App content
+
+Daywell's content lives in `content/` as plain JSON, separate from code and from anyone's personal records:
+
+- `content/companions.json` — each companion's name, colour, job, personality, way of talking and a line for every mood
+- `content/recipes.json` — meal ideas on the Eat screen
+- `content/workouts.json` — exercises and routines on the Move screen
+
+To change content, edit the file on a branch and open a pull request. `npm test`, which the GitHub check also runs, validates every file against `lib/content-schema.ts` and checks that references such as easier/harder exercises and routine companions point to something real. This repository is public, so never put personal or user data in `content/`. Saved entries belong in the D1 database.
+
 ## Project map
 
 - `app/` — dashboard, everyday tools, dialogs and API routes
+- `content/` — companions, meal ideas, exercises and routines
 - `lib/` — validation, capture drafts and routine helpers
 - `db/`, `drizzle/` — database access, schema and migrations
 - `scripts/`, `build/` — local tooling and Sites runtime adapters

@@ -8,6 +8,13 @@
       "when": 1790949163524,
       "tag": "0000_brave_gauntlet",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1791210454390,
+      "tag": "0001_usage_limits",
+      "breakpoints": true
     }
   ]
 }

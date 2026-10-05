@@ -18,6 +18,10 @@ Focus, clocks/timers and alarms are in **Explore → Everyday extras**. Alarms a
 
 ## Connect ElevenLabs
 
+For direct key entry, open **Voice Setup** at `/voice-setup`, paste your key in the masked **ElevenLabs API key** field and choose **Save key**. You can add an agent ID in the optional section now or later. This form saves local settings; it does not verify credentials or create an agent. It is available only in the signed-in, loopback development preview. Secrets are never returned by the setup endpoint, and Vite blocks direct access to `.dev.vars` files.
+
+To verify credentials or create a prepared Daywell agent:
+
 1. Open **Connect voice.cmd**, or run `npm run voice:setup`.
 2. Enter an existing dedicated agent ID, or **NEW** to create the prepared Daywell agent.
 3. Enter the key at the hidden prompt. It is verified against ElevenLabs and written to ignored `.dev.vars`; existing unrelated settings are preserved. Do not paste the key into chat or source code.

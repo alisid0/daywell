@@ -20,7 +20,7 @@
             }
           }
         ],
-        "built_in_tools": { "end_call": {} }
+        "built_in_tools": { "end_call": { "type": "system", "name": "end_call", "description": "End the conversation when the user asks to stop or says goodbye.", "params": { "system_tool_type": "end_call" } } }
       }
     },
     "conversation": { "max_duration_seconds": 900, "client_events": ["audio", "interruption", "user_transcript", "agent_response", "client_tool_call"] }

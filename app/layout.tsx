@@ -13,6 +13,7 @@ import "./design-iterations.css";
 import "./appearance-studio.css";
 import "./wellbeing.css";
 import "./audio-library.css";
+import "./meditation.css";
 
 export const metadata: Metadata = {
   title: "Daywell — Your day, in balance",

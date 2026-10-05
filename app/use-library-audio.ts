@@ -30,6 +30,7 @@ export function useLibraryAudio() {
     if (!recording) { setError('This recording is not ready yet. The written words are still here.'); return; }
     // Stop other local playback and ask every live-agent instance to end its session.
     window.dispatchEvent(new Event('daywell-stop-library-audio'));
+    window.dispatchEvent(new Event('daywell-stop-guided-audio'));
     window.dispatchEvent(new Event('daywell-stop-voice'));
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     stop(); const token = epoch.current;

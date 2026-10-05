@@ -6,6 +6,7 @@ import { CompanionPortrait } from '@/components/daywell-companions';
 import { audioCategories, audioGroups, audioResponses, searchAudioResponses, type AudioCategory, type AudioResponse } from '@/lib/audio-library';
 import { useDaywellStyle } from '../design-switcher';
 import { useLibraryAudio } from '../use-library-audio';
+import { guidedSessions } from '@/lib/guided-sessions';
 
 export default function AudioLibrary() {
   useDaywellStyle();
@@ -25,6 +26,7 @@ export default function AudioLibrary() {
   return <main className="audio-library">
     <header className="audio-library-top"><Link href="/" onClick={audio.stop}><ArrowLeft size={17} />Back to Daywell</Link><span><Headphones size={17} />Just listen</span></header>
     <div className="audio-library-intro"><h1>A little comfort,<br />already here.</h1><p>Choose a moment. Press play. Nothing you need to say.</p></div>
+    <section className="guided-invitation" aria-labelledby="guided-invitation-title"><div><h2 id="guided-invitation-title">Stay for a little longer</h2><p>Gentle breathing and meditation, with room for quiet.</p></div><nav className="guided-links" aria-label="Breathing and meditation">{guidedSessions.map(session=><Link key={session.id} href={`/meditate?session=${session.id}`} onClick={audio.stop}>{session.title}<small>{session.seconds/60} min</small></Link>)}</nav></section>
     <nav className="audio-categories" aria-label="Choose the kind of moment">{audioCategories.map(item => <button key={item.id} aria-pressed={category === item.id} onClick={() => changeCategory(item.id)}>{item.label}</button>)}</nav>
     <section className="audio-listening-space" aria-labelledby="audio-moment-title">
       <div className="audio-mascot-cove"><CompanionPortrait id={selected.companion} size={240} decorative eager /><span aria-hidden="true" /></div>

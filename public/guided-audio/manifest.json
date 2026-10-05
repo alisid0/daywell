@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "recordings": {
+    "easy-breath": {
+      "src": "/guided-audio/easy-breath-a420d66b3923.mp3",
+      "transcript": "Find a comfortable seat, with a little support for your back. Let your hands rest. You can keep your eyes open. For these two minutes, there is nothing else you need to finish.\n\nNotice a breath coming in, and then leaving. If comfortable, breathe gently through your nose and let it flow out through your mouth. Keep each breath easy. There is no need to fill your lungs.\n\nFollow another breath in your own time. Let it come in, and flow out, without holding it. You do not need to match the pace of my voice. We will leave a little quiet here.\n\nLet a few more comfortable breaths come and go. If you feel dizzy or uncomfortable, stop the exercise and breathe normally. You can also leave your breathing alone and notice the chair beneath you.\n\nLet your breathing carry on by itself. Notice the room again. You can stay quietly, or return to your day when you are ready.",
+      "seconds": 120,
+      "bytes": 1440749,
+      "model": "eleven_v4",
+      "segments": [
+        {
+          "at": 0,
+          "end": 11.76
+        },
+        {
+          "at": 25,
+          "end": 38.36
+        },
+        {
+          "at": 52,
+          "end": 64.08
+        },
+        {
+          "at": 80,
+          "end": 92
+        },
+        {
+          "at": 104,
+          "end": 113.28
+        }
+      ]
+    },
+    "leave-the-feed": {
+      "src": "/guided-audio/leave-the-feed-62ebffe3b35d.mp3",
+      "transcript": "You can leave the feed unfinished. Settle somewhere comfortable. This recording has quiet spaces, so you can turn away from the screen. Let the next post wait outside this little corner.\n\nLook around slowly. Find one ordinary thing to rest your eyes on. A colour, the edge of a window, or a patch of light. There is no special thing you need to find.\n\nNotice where your body is supported. You can adjust your position, move your feet, or settle a cushion. Let comfort be enough for this moment.\n\nListen for a sound in the room. Near or far, quiet or clear. Let it come to you. You do not have to push any other sounds away.\n\nIf your attention returns to the feed, you have not done anything wrong. Notice that thought, then return to one colour or sound around you. We can leave some more quiet now.\n\nThere is no lost time to make up for here. Choose what would feel useful next. A little more rest, a drink, or one ordinary thing away from the screen. Take your time.",
+      "seconds": 180,
+      "bytes": 2160788,
+      "model": "eleven_v4",
+      "segments": [
+        {
+          "at": 0,
+          "end": 11.44
+        },
+        {
+          "at": 28,
+          "end": 40.08
+        },
+        {
+          "at": 59,
+          "end": 68.68
+        },
+        {
+          "at": 89,
+          "end": 99.24
+        },
+        {
+          "at": 117,
+          "end": 128.36
+        },
+        {
+          "at": 157,
+          "end": 168.68
+        }
+      ]
+    },
+    "softer-goodnight": {
+      "src": "/guided-audio/softer-goodnight-44818b2f1bc4.mp3",
+      "transcript": "Let this be a softer end to the day. Find a position that feels comfortable, and adjust anything you need. Your eyes can close, or stay gently open. You do not have to make sleep happen.\n\nNotice the support beneath you. The bed, the pillow, or the chair. Let them take a little of the effort. You can move whenever you need to.\n\nBring a little attention to your face. If comfortable, let your jaw find an easy resting place. Let your shoulders settle. Nothing to stretch, and nothing to force.\n\nNotice your hands, wherever they are resting. They do not need to hold anything right now. Let the arms be comfortable too. We will stay quiet for a little while.\n\nYour breathing can happen in the background. You do not need to count or change it. If following the breath is not helpful, return to the feeling of the bedding around you.\n\nIf something from today returns to mind, you can notice it without finishing the story. There is no need to argue with the thought. Let your attention find the support beneath you again.\n\nThere is nothing to report, and no score for how restful this feels. You can simply lie here. After these last words, the recording will end quietly. Let the rest of the night unfold in its own time.",
+      "seconds": 300,
+      "bytes": 3600866,
+      "model": "eleven_v4",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.88
+        },
+        {
+          "at": 35,
+          "end": 44.12
+        },
+        {
+          "at": 72,
+          "end": 82.88
+        },
+        {
+          "at": 111,
+          "end": 121.48
+        },
+        {
+          "at": 153,
+          "end": 162.76
+        },
+        {
+          "at": 196,
+          "end": 207.2
+        },
+        {
+          "at": 244,
+          "end": 257.04
+        }
+      ]
+    }
+  }
+}

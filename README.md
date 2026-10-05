@@ -302,3 +302,13 @@ publish or change the original hosted project.
 
 Salmon bowl photo by [Oskar Kadaksoo on Unsplash](https://unsplash.com/photos/a-bowl-of-food-on-a-plate-Be2IMDyTDII).
 Third-party notices are preserved in `vendor/` and `build/`.
+
+## Expressive breathing and meditation
+
+**Stay for a little longer** in Just listen opens `/meditate`: **An easy breath** (2 minutes), **Leave the feed behind** (3 minutes), and **A softer goodnight** (5 minutes). Relax and Sleep also link to these sessions. Each uses a saved Eleven v4 recording, with explicit warm, unhurried delivery directions and measured quiet intervals. Daywell's connected live host was already configured for Eleven v4 Turbo; these sessions do not open a live connection.
+
+The player provides pause/continue, end, position and volume controls, current-passage captions and the full written guidance. It pauses when the tab is hidden and stops when leaving the page; return to the same page to resume a paused session. A new page visit starts at the beginning. Playback does not save a completion, open a microphone, or incur new speech-generation/agent usage. The 500 short-response library remains available separately.
+
+Scripts and timelines are in `lib/guided-sessions.ts`; configuration is in `config/guided-audio-generation.json`. Run `npm run meditation:plan`, then `npm run meditation:generate` to generate missing sessions. Generation requires FFmpeg/FFprobe on PATH, checks the existing included allowance with a conservative two-credit-per-character budget and a 20,000-credit reserve, and never buys an upgrade. Private keys remain in the environment or ignored `.dev.vars`. Narration is cached under ignored `work/guided-audio`; final recordings and timing metadata are under `public/guided-audio`. The assembler rejects a passage that would overflow its allotted slot instead of cutting off speech. Review the audio before public release.
+
+Delivery references: [Eleven v4](https://elevenlabs.io/v4) and [audio-tag guidance](https://elevenlabs.io/docs/overview/capabilities/text-to-speech/best-practices). The breathing script follows the general principle of gentle, comfortable, unforced breathing described by the [NHS](https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/); this short introductory recording is not the NHS's full recommended practice or a treatment protocol. No breath holds or claimed health outcomes are included.

@@ -28,6 +28,7 @@ export function useElevenAgent(options: Options) {
   async function start(textOnly = false) {
     if(connecting.current || session.current) return;
     window.dispatchEvent(new Event("daywell-stop-library-audio"));
+    window.dispatchEvent(new Event("daywell-stop-guided-audio"));
     connecting.current = true; const attempt = ++generation.current;
     const valid = () => mounted.current && generation.current === attempt;
     setError(""); setStatus("connecting");

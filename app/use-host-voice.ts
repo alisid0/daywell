@@ -31,6 +31,7 @@ export function useHostVoice(onTranscript: (value: string) => void) {
   function speak(text: string, calm = false) {
     if (!("speechSynthesis" in window) || recognition.current) return;
     window.dispatchEvent(new Event("daywell-stop-library-audio"));
+    window.dispatchEvent(new Event("daywell-stop-guided-audio"));
     silence(); const token = epoch.current;
     const line = new SpeechSynthesisUtterance(text);
     const voices = window.speechSynthesis.getVoices();
@@ -45,6 +46,7 @@ export function useHostVoice(onTranscript: (value: string) => void) {
   function start() {
     if (recognition.current) return;
     window.dispatchEvent(new Event("daywell-stop-library-audio"));
+    window.dispatchEvent(new Event("daywell-stop-guided-audio"));
     const browser = window as SpeechWindow; const Constructor = browser.SpeechRecognition || browser.webkitSpeechRecognition;
     if (!Constructor) { setError("This browser doesn’t support voice input. Type your request below."); return; }
     silence(); setError(""); setTranscript("");

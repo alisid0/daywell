@@ -1,0 +1,5 @@
+{
+  "voiceId": "cjVigY5qzO86Huf0OWal",
+  "modelId": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.75, "speed": 0.85 }
+}

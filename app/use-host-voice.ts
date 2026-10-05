@@ -18,6 +18,8 @@ export function useHostVoice(onTranscript: (value: string) => void) {
   const [speaking, setSpeaking] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [error, setError] = useState("");
+  // True when the browser or device refused the microphone, so the button can show it.
+  const [blocked, setBlocked] = useState(false);
   const recognition = useRef<Recognition | null>(null);
   const latest = useRef(onTranscript);
   useEffect(() => { latest.current = onTranscript; }, [onTranscript]);
@@ -56,7 +58,7 @@ export function useHostVoice(onTranscript: (value: string) => void) {
     rec.onresult = event => {
       if (recognition.current !== rec || delivered) return;
       const result = Array.from(event.results).map(item => item[0].transcript).join(" ");
-      setTranscript(result);
+      setBlocked(false); setTranscript(result);
       if (Array.from(event.results).every(item => item.isFinal)) {
         delivered = true; rec.abort(); recognition.current = null;
         if (timeout.current) clearTimeout(timeout.current);
@@ -72,6 +74,7 @@ export function useHostVoice(onTranscript: (value: string) => void) {
         "network": "The browser’s speech service couldn’t connect. Type your request below.",
         "no-speech": "I didn’t catch any speech. Tap Talk to try again, or type below.",
       };
+      if (["not-allowed", "service-not-allowed", "audio-capture"].includes(event.error)) setBlocked(true);
       if (event.error !== "aborted") setError(messages[event.error] || "Voice input stopped. Please try again or type below.");
     };
     rec.onend = () => {
@@ -97,5 +100,5 @@ export function useHostVoice(onTranscript: (value: string) => void) {
       if ("speechSynthesis" in window) window.speechSynthesis.cancel();
     };
   }, [stop, silence]);
-  return { available, canSpeak, listening, speaking, transcript, error, start, stop, silence, speak };
+  return { available, canSpeak, listening, speaking, transcript, error, blocked, start, stop, silence, speak };
 }

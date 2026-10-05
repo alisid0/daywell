@@ -1,0 +1,57 @@
+/* Talk button states. .daywell-host carries data-mic: idle, listening, thinking, speaking, connected or blocked.
+   Loaded after every look so the states work with each palette, layout and button style. */
+.daywell-host .host-talk{position:relative}
+.daywell-host .host-talk-symbol{position:relative}
+.mic-stack{display:inline-grid;place-items:center}
+.mic-layer{grid-area:1/1;display:flex;align-items:center;justify-content:center;gap:4px;opacity:0;transform:scale(.7);transition:opacity .18s ease,transform .18s ease}
+.daywell-host:not([data-mic]) .mic-layer-mic,
+.daywell-host:is([data-mic="idle"],[data-mic="speaking"]) .mic-layer-mic,
+.daywell-host[data-mic="listening"] .mic-layer-bars,
+.daywell-host[data-mic="thinking"] .mic-layer-dots,
+.daywell-host[data-mic="connected"] .mic-layer-stop,
+.daywell-host[data-mic="blocked"] .mic-layer-off{opacity:1;transform:none}
+.stillwater-shell .host-talk-symbol .mic-layer svg{width:37px;height:37px;stroke-width:1.35}
+
+/* Listening: bars that move like a voice */
+.mic-layer-bars{height:22px}
+.mic-layer-bars i{width:4px;height:30%;border-radius:3px;background:currentColor;animation:mic-bars 1s ease-in-out infinite}
+.mic-layer-bars i:nth-child(2){animation-delay:.12s}.mic-layer-bars i:nth-child(3){animation-delay:.24s}.mic-layer-bars i:nth-child(4){animation-delay:.36s}.mic-layer-bars i:nth-child(5){animation-delay:.48s}
+.stillwater-shell .mic-layer-bars{height:40px;gap:5px}.stillwater-shell .mic-layer-bars i{width:6px}
+@keyframes mic-bars{0%,100%{height:30%}50%{height:100%}}
+
+/* Thinking: three dots and a slow breathing glow */
+.mic-layer-dots i{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.4;animation:mic-dot 1.2s ease-in-out infinite}
+.mic-layer-dots i:nth-child(2){animation-delay:.15s}.mic-layer-dots i:nth-child(3){animation-delay:.3s}
+.stillwater-shell .mic-layer-dots{gap:7px}.stillwater-shell .mic-layer-dots i{width:10px;height:10px}
+@keyframes mic-dot{0%,60%,100%{opacity:.4;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+.mic-glow,.mic-ring{position:absolute;inset:-10px;border-radius:inherit;pointer-events:none;opacity:0}
+.mic-glow{background:color-mix(in srgb,var(--dw-accent,currentColor) 18%,transparent)}
+.daywell-host[data-mic="thinking"] .mic-glow{animation:mic-breathe 2.4s ease-in-out infinite}
+@keyframes mic-breathe{0%,100%{opacity:0;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+
+/* Speaking: rings spread outward, like sound leaving the button */
+.mic-ring{border:2px solid var(--dw-accent,currentColor)}
+.daywell-host[data-mic="speaking"] .mic-ring{animation:mic-ring 1.8s ease-out infinite}
+.daywell-host[data-mic="speaking"] .mic-ring+.mic-ring{animation-delay:.9s}
+@keyframes mic-ring{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.2);opacity:0}}
+
+/* Microphone refused */
+.daywell-host[data-mic="blocked"] .host-talk-symbol{filter:grayscale(1);opacity:.6}
+
+/* Companions react: lean in to listen, look up to think, the main companion bounces while Daywell speaks.
+   Uses rotate/translate/scale so each layout's own transform stays intact. */
+.nook-company .dw-companion-image{transition:rotate .5s cubic-bezier(.3,.7,.3,1),translate .5s cubic-bezier(.3,.7,.3,1),scale .5s}
+.daywell-host[data-mic="listening"] .nook-company .companion-image-luma{rotate:6deg;translate:0 2px}
+.daywell-host[data-mic="listening"] .nook-company .companion-image-bounce{rotate:-6deg;translate:0 2px}
+.daywell-host[data-mic="listening"] .nook-company .companion-image-pip{scale:1.03;translate:0 3px}
+.daywell-host[data-mic="thinking"] .nook-company .dw-companion-image{rotate:-4deg;translate:0 -3px}
+.daywell-host[data-mic="speaking"] .nook-company .companion-image-pip{animation:mic-talk 1s ease-in-out infinite}
+@keyframes mic-talk{0%,100%{translate:0 0;scale:1}15%{translate:0 -2px;scale:1.02 .97}30%{translate:0 0;scale:.99 1.02}50%{translate:0 -3px;scale:1.02 .97}70%{translate:0 0;scale:1 1.01}}
+
+@media(prefers-reduced-motion:reduce){
+  .mic-layer,.nook-company .dw-companion-image{transition:none}
+  .mic-layer-bars i,.mic-layer-dots i,.mic-glow,.mic-ring,.nook-company .dw-companion-image{animation:none!important}
+  .mic-layer-bars i:nth-child(odd){height:60%}.mic-layer-bars i:nth-child(3){height:100%}
+  .daywell-host[data-mic="thinking"] .mic-glow{opacity:.6}
+  .daywell-host[data-mic="speaking"] .mic-ring:first-of-type{opacity:.5;transform:scale(1.1)}
+}

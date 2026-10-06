@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Pause, Play, Square, Volume2 } from 'lucide-react';
 import { CompanionPortrait } from '@/components/daywell-companions';
+import { CompanionMotionControl } from '@/components/companion-motion-preference';
 import { guidedSessions, guidedRecordingFor, guidedMoment, type GuidedManifest } from '@/lib/guided-sessions';
 import { useDaywellStyle } from '../design-switcher';
 
@@ -55,14 +56,14 @@ export default function MeditationSpace({initialSessionId}: {initialSessionId?: 
     <div className="meditation-intro"><p>Let the next thing wait.</p><h1>Some room to exhale.</h1><span>A gentle voice. Quiet spaces. Nothing to get right.</span></div>
     <nav className="meditation-choices" aria-label="Choose a guided moment">{guidedSessions.map(item=><button key={item.id} aria-pressed={session.id===item.id} onClick={()=>{stop();setSessionId(item.id);}}><strong>{item.title}</strong><span>{item.seconds/60} minutes</span></button>)}</nav>
     <section className="meditation-listening" aria-labelledby="meditation-title">
-      <div className="meditation-cove"><CompanionPortrait id="luma" size={240} decorative eager/></div>
+      <div className="meditation-cove"><CompanionPortrait id="luma" size={240} motion="idle" decorative eager/></div>
       <div className="meditation-copy"><h2 id="meditation-title">{session.title}</h2><p className="meditation-description">{session.description}</p>
         <p className="meditation-caption" aria-live="polite">{finished ? 'You can stay here quietly. There is nothing else to finish.' : moment.segment.text}</p>
         <p className="meditation-quiet" aria-live="polite">{playing ? quiet ? 'A little quiet. Take your time.' : 'Luma is guiding you.' : finished ? 'Your quiet space is still here.' : elapsed>0 ? 'Paused. Come back at your own pace.' : 'Settle somewhere comfortable before you begin.'}</p>
         <div className="meditation-controls"><button className="audio-play" disabled={!recording} onClick={()=>playing||loading ? pause() : void start()}>{playing||loading ? <Pause size={18}/> : <Play size={18}/>} {loading ? 'Cancel' : playing ? 'Pause' : finished ? 'Listen again' : elapsed>0 ? 'Continue' : loaded && !recording ? 'Audio unavailable' : 'Begin'}</button><button className="meditation-stop" disabled={!playing&&!loading&&elapsed===0} onClick={stop}><Square size={16}/>End for now</button></div>
         <div className="meditation-progress"><input aria-label="Session position" type="range" min="0" max={session.seconds} step="1" value={Math.min(elapsed,session.seconds)} disabled={!recording} onChange={event=>{const value=Number(event.target.value);if(player.current){player.current.currentTime=value;setElapsed(value);}}}/><span>{clock(elapsed)} / {clock(session.seconds)}</span></div>
         <label className="meditation-volume"><Volume2 size={16}/><span>Voice volume</span><input aria-label="Voice volume" type="range" min="0" max="1" step=".05" value={volume} onChange={event=>{const value=Number(event.target.value);setVolume(value);if(player.current)player.current.volume=value;}}/></label>
-        <p className="meditation-note">Recorded guidance · your microphone stays off. Audio pauses when you leave this tab.</p>
+        <CompanionMotionControl /><p className="meditation-note">Recorded guidance · your microphone stays off. Audio pauses when you leave this tab.</p>
         {error&&<p className="audio-error" role="alert">{error}</p>}
       </div>
     </section>

@@ -17,6 +17,7 @@ import "./audio-library.css";
 import "./meditation.css";
 import "./mic-states.css";
 import "./navigation.css";
+import "./companion-motion.css";
 import "./typography.css";
 
 export const metadata: Metadata = {

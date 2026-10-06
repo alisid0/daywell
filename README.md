@@ -51,6 +51,8 @@ Implementation references: [ElevenLabs JavaScript SDK](https://elevenlabs.io/doc
 
 ## Single-host experience
 
+The MVP uses the approved illustrated companion family, with minimal fur motion and quiet expressions for the active helper. Smaller portraits stay still. **Gentle companion movement** can be switched off in **Voice & company** or beside the quiet spaces and routine player; device reduced-motion preferences take precedence. Animation uses local assets and makes no AI or voice-generation requests. See [the companion animation guide](docs/mascot-animations.md) for assets, behaviour and verification.
+
 The saved MVP at `/` now opens with **Daywell**, one place for requests. Users
 never need to select or name a mascot. Tools and existing entries are available
 under **Your tools & saved day**, the bottom bar, and the sidebar in the classic layout.

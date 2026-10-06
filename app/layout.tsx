@@ -16,6 +16,7 @@ import "./audio-library.css";
 import "./meditation.css";
 import "./mic-states.css";
 import "./navigation.css";
+import "./companion-motion.css";
 
 export const metadata: Metadata = {
   title: "Daywell — Your day, in balance",

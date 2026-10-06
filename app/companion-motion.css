@@ -1,0 +1,20 @@
+.dw-companion-animated { width: var(--companion-size, 80px); aspect-ratio: 1; }
+.companion-surface { display: block; position: relative; width: 100%; aspect-ratio: 1; }
+.companion-surface > img, .companion-surface > canvas { display: block; width: 100%; height: 100%; object-fit: contain; }
+.companion-surface > canvas { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.companion-surface > canvas[data-ready="true"][data-enabled="true"] { opacity: 1; }
+.companion-surface:has(> canvas[data-ready="true"][data-enabled="true"]) > img { visibility: hidden; }
+label.companion-motion-control { display: grid; grid-template-columns: 16px minmax(0, 1fr); align-items: center; gap: 8px; width: fit-content; max-width: 100%; margin: 16px auto; color: var(--dw-muted, #725b6b); font-size: 12px; line-height: 1.5; text-align: left; cursor: pointer; }
+.companion-motion-control input { accent-color: var(--dw-accent, #826c86); width: 16px; height: 16px; }
+label.companion-motion-control > span { grid-column: 2; min-width: 0; margin: 0; font-size: 11px; }
+.host-settings .companion-motion-control { margin: 14px 0; }
+/* Layered poses supply the motion; preserve the composition without extra bobbing. */
+.nook-company .dw-companion-image { animation: none !important; rotate: none !important; translate: none !important; scale: none !important; }
+.companion-loved .dw-companion-animated { animation: none; }
+.host-activity-main > .dw-companion-animated { width: 122px; }
+.rest-library-link { display: block; width: fit-content; max-width: 100%; margin: 16px auto; }
+@media (max-width: 600px) { .host-activity-main > .dw-companion-animated { width: 83px; } }
+@media (prefers-reduced-motion: reduce) {
+  .companion-surface > canvas { display: none; }
+  .companion-surface:has(> canvas) > img { visibility: visible; }
+}

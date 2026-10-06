@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, Pause, Play, RotateCcw, SkipForward } from "lucide-react";
 import { CompanionPortrait } from "@/components/daywell-companions";
+import { CompanionMotionControl } from "@/components/companion-motion-preference";
 import { companions } from "@/lib/companions";
 import type { WorkoutSet } from "@/lib/wellbeing";
 import { completedSets, elapsedMinutes, levelLabels, routineSteps, routines, swapStep, whereLabels, type Routine, type RoutineStep, type Where } from "@/lib/workouts";
@@ -65,8 +66,9 @@ function RoutinePlayer({ routine, onClose, onLog }: { routine: Routine; onClose:
     const minutes = elapsedMinutes((finishedAt ?? started) - started);
     const sets = completedSets(done);
     return <section className="well-card routine-player" aria-labelledby="routine-done">
-      <div className="routine-helper"><CompanionPortrait id={routine.companion} size={96} decorative /><p>{done.length ? "You moved! That counts. Every bit." : "Starting is enough for today."}</p></div>
+      <div className="routine-helper"><CompanionPortrait id={routine.companion} size={96} motion="happy" decorative /><p>{done.length ? "You moved! That counts. Every bit." : "Starting is enough for today."}</p></div>
       <h2 id="routine-done">{routine.name}: {done.length ? "done" : "ended"}</h2>
+      <CompanionMotionControl />
       <p>{done.length} of {steps.length} steps · about {minutes} {minutes === 1 ? "minute" : "minutes"}. Check the reps and add any weights before saving.</p>
       <div className="well-actions">
         {sets.length > 0 && <button type="button" className="well-button" onClick={() => onLog(minutes, sets)}>Review and save</button>}
@@ -80,7 +82,7 @@ function RoutinePlayer({ routine, onClose, onLog }: { routine: Routine; onClose:
   return <section className="well-card routine-player" aria-labelledby="routine-step">
     <div className="routine-progress"><span>{routine.name}{step.rounds > 1 ? ` · round ${step.round} of ${step.rounds}` : ""}</span><span>Step {index + 1} of {steps.length}</span></div>
     <progress max={steps.length} value={index} aria-label="Routine progress" />
-    <div className="routine-helper"><CompanionPortrait id={routine.companion} size={96} decorative /><p><strong>{helper.name}:</strong> {ex.cue}</p></div>
+    <div className="routine-helper"><CompanionPortrait id={routine.companion} size={96} motion={endAt ? "encouraging" : "idle"} decorative /><p><strong>{helper.name}:</strong> {ex.cue}</p></div>
     <h2 id="routine-step" aria-live="polite">{ex.name}</h2>
     <p className="routine-amount">{step.amount.text}{step.amount.sets > 1 ? ` · set ${setNo} of ${step.amount.sets}` : ""}</p>
     {ex.kit && <small>Needs: {ex.kit}</small>}
@@ -99,5 +101,6 @@ function RoutinePlayer({ routine, onClose, onLog }: { routine: Routine; onClose:
       {harder && <button type="button" className="well-text-button" onClick={() => swap(ex.harder)}><ArrowUp size={16} />Harder: {harder}</button>}
     </div>
     <button type="button" className="well-text-button routine-end" onClick={() => setFinishedAt(Date.now())}>End routine</button>
+    <CompanionMotionControl />
   </section>;
 }

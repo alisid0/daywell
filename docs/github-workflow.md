@@ -30,7 +30,7 @@ A feature can be saved on GitHub without being merged into `main`. Always make t
 3. Commit and push the session's work to its GitHub branch. Complete work goes into a normal PR; incomplete or failing work goes into a clearly labelled draft PR with its limitations. Do not misrepresent a failing checkpoint as release-ready.
 4. Update the PR description or a handover document committed on that branch. Record the change, tests, missing verification and next steps using the template below. Do not require access to a particular chat or machine to continue.
 5. Fetch and compare `HEAD` with the published remote branch. They must match before saying that this machine is synced. Check the worktree as well and disclose any deliberately remaining local work.
-6. Give the owner the GitHub branch or PR link, the pushed commit, check results and next step. After an authorised merge, update clean local checkouts from GitHub before the next preview.
+6. Give the owner the GitHub branch or PR link, the pushed commit, check results and next step. Distinguish local checks from GitHub checks; if GitHub checks are pending, missing or failing, say so and leave the PR unmerged. After an authorised merge with passing checks, update clean local checkouts from GitHub before the next preview.
 
 When ending a session with no changes, verify the branch state and report that there was nothing new to publish. Never create an empty commit just to satisfy this workflow.
 

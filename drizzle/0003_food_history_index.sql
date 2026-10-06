@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `food_operations_user_revision` ON `food_operations` (`user_id`,`revision`);

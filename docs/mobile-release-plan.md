@@ -20,6 +20,8 @@ GitHub is authoritative. The integrated baseline was `main` at `8473aa8` when th
 | Personal data | Per-user records and some exports; no complete account deletion flow | Published privacy information, explicit AI sharing consent, export and account/data deletion |
 | Release operations | Web CI exists | Mobile CI, device evidence, store metadata, reviewer access and rollback procedure |
 
+Implementation checkpoint, 6 October: the [food inventory foundation](food-inventory.md) adds the persistent model/API, reviewed planning windows, transactional purchase/cooking history and retry/undo protection. Frontend wiring, recipe/photo review and mobile verification remain open; do not mark the complete food-cycle milestone done from this checkpoint.
+
 ## Decisions required by 8 October
 
 - Confirm the exact November deadline and whether it is for submission or public availability.

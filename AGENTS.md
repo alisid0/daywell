@@ -2,6 +2,8 @@
 
 Read [the shared session workflow](docs/github-workflow.md) before changing this repository.
 
+Also read [the Android and iPhone release plan](docs/mobile-release-plan.md). The current objective is early-November store review on both platforms, not a standalone personal-APK demo. Confirm the working deadline and unresolved owner decisions, prioritise its launch scope, and keep release status tied to GitHub evidence. Do not represent target dates or passing web checks as store approval.
+
 ## GitHub is the source of truth
 
 - The canonical repository is **https://github.com/alisid0/daywell**. This rule applies to both machines, Codex, Claude and other contributors.

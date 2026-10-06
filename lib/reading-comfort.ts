@@ -17,7 +17,7 @@ export const readingFontOptions: Record<ReadingFont, { label: string; note: stri
   classic: { label: "Daywell classic", note: "Bricolage Grotesque headings with DM Sans text." },
   lexend: { label: "Lexend", note: "Wide, evenly spaced letters." },
   opendyslexic: { label: "OpenDyslexic", note: "Weighted letters that some people with dyslexia prefer." },
-  system: { label: "My device's font", note: "The font your phone or computer already uses." },
+  system: { label: "My device’s font", note: "The font your phone or computer already uses." },
 };
 export const readingSizeLabels: Record<ReadingSize, string> = { standard: "Standard", large: "Large", larger: "Larger" };
 export const readingSpacingLabels: Record<ReadingSpacing, string> = { standard: "Standard", roomy: "Roomy" };

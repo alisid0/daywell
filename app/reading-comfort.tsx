@@ -30,10 +30,10 @@ export function ReadingComfortSettings() {
       <label key={option}><input type="radio" name={`${id}-${key}`} value={option} checked={value[key] === option} onChange={() => change({ ...value, [key]: option })} /><span><strong>{label(option)}</strong>{note && <small>{note(option)}</small>}</span></label>)}</div></fieldset>;
   return <section className="reading-comfort" aria-labelledby={`${id}-title`}>
     <h3 id={`${id}-title`}>Reading comfort</h3>
-    <p>Choose what's easiest for you to read. It's saved on this device and doesn't change anything else.</p>
+    <p>Choose what’s easiest for you to read. It’s saved on this device and doesn’t change anything else.</p>
     {group("font", "Font", readingFonts, option => readingFontOptions[option].label, option => readingFontOptions[option].note)}
     {group("size", "Text size", readingSizes, option => readingSizeLabels[option])}
     {group("spacing", "Spacing", readingSpacings, option => readingSpacingLabels[option])}
-    {!saved && <p role="status">Your browser isn't saving settings, so this choice lasts until you close Daywell.</p>}
+    {!saved && <p role="status">Your browser isn’t saving settings, so this choice lasts until you close Daywell.</p>}
   </section>;
 }

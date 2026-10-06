@@ -4,6 +4,8 @@ A cosy home for Move, Relax, Eat and Sleep, with one host and a quiet place to p
 
 Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 
+**Working on either machine? GitHub is the source of truth.** Read [the shared session workflow](docs/github-workflow.md): fetch before starting, then commit, push and verify the GitHub handover before ending each session. A local preview is not a saved or merged version. Coding assistants must also read [AGENTS.md](AGENTS.md); [CLAUDE.md](CLAUDE.md) points to the same rules.
+
 ## Four-area MVP
 
 The selected **Cosy cove** is the default for new browsers; existing appearance selections are preserved. The bottom bar holds **Today · Move · Eat · Sleep · Relax**, each one tap away. Today offers **Talk to Daywell**, **Just rest** and **Just listen**, a last-7-days calendar strip and the everyday extras.
@@ -310,10 +312,13 @@ To change content, edit the file on a branch and open a pull request. `npm test`
 
 ## Working on Daywell
 
+Follow [the two-machine GitHub workflow](docs/github-workflow.md) at the start and end of every session. GitHub `main` is the integrated baseline; a named GitHub feature branch and PR carry work in progress between machines.
+
 1. **Preview first.** Visible changes start as an interactive before/after preview. Nothing is built until it's approved.
 2. **One branch and pull request per change.** Fill in the template: what's new, testing, and anything not yet verified.
 3. **Checks must pass.** The GitHub check runs the type check, tests and build, lints the files the pull request changes, and fails on high-severity advisories in production dependencies.
-4. **Merge, then update.** After merging, run `git pull` in your copy. If the pull request adds a database migration (a new file in `drizzle/`), also run `npm run setup` once.
+4. **Publish before ending the session.** Commit and push the work, update its PR and handover, then verify the pushed commit. Use a draft PR for unfinished work; do not leave its only copy in a local preview.
+5. **Merge, then update.** After an authorised merge, fetch and fast-forward clean local copies from GitHub. If the pull request adds a database migration (a new file in `drizzle/`), also run `npm run setup` once.
 
 Dependabot opens weekly pull requests for dependency updates; they go through the same checks.
 

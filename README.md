@@ -313,7 +313,7 @@ To change content, edit the file on a branch and open a pull request. `npm test`
 3. **Checks must pass.** The GitHub check runs the type check, tests and build, lints the files the pull request changes, and fails on high-severity advisories in production dependencies.
 4. **Merge, then update.** After merging, run `git pull` in your copy. If the pull request adds a database migration (a new file in `drizzle/`), also run `npm run setup` once.
 
-Dependabot opens weekly pull requests for dependency updates; they go through the same checks.
+Dependabot opens weekly pull requests for dependency updates; they go through the same checks. React's packages (`react`, `react-dom`, `react-server-dom-webpack` and their types) always arrive together in one pull request, because the server and the browser must run the same React. `@types/node` stays on the Node version the app runs on (22).
 
 ## Limits and allowances
 

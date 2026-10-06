@@ -7,7 +7,20 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    ignore:
+      # The type definitions follow the Node version the app runs on (22), not the newest Node.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
+      # React and the packages that draw React pages on the server must share one version, so they
+      # always update together in their own pull request. Each update joins the first group it matches.
+      react:
+        patterns:
+          - react
+          - react-dom
+          - react-server-dom-webpack
+          - "@types/react"
+          - "@types/react-dom"
       production:
         dependency-type: production
         update-types: [minor, patch]

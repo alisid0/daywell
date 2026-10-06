@@ -1,0 +1,22 @@
+/* Readable type for everyone, in every look: one clear font, comfortable line spacing, no squeezed or
+   capitalised text, and left-aligned paragraphs. Loaded last so it wins over the older per-look fonts.
+   Minimum sizes (14px small text, 16px body) are set in each stylesheet. */
+:root{--dw-reading-font:"Atkinson Hyperlegible Next Variable","Atkinson Hyperlegible Next","Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+
+/* One font everywhere. Each look used to choose its own heading and text fonts. */
+body,body *{font-family:var(--dw-reading-font)!important}
+
+/* Comfortable reading: 1.5 line spacing wherever a rule doesn't set its own. */
+body{line-height:1.5}
+:where(p,li,dd,dt,label,small,summary,blockquote,figcaption){line-height:1.5}
+
+/* Headings: bold rather than a separate display face, and never squeezed together. */
+:is(h1,h2,h3,h4,h5,h6){letter-spacing:normal!important;font-weight:700}
+html[data-appearance-lettering] .host-workspace :is(h1,h2,h3){font-weight:700}
+
+/* No capitals-only labels: sentence case reads more easily. */
+body *{text-transform:none!important}
+
+/* Paragraphs in content screens read from the left. Short headings and buttons can stay centred. */
+:where(.well-space,.calendar-workspace,.audio-library,.meditation-space,.voice-setup) p:not(.well-heading p){text-align:left}
+.well-footnote{text-align:left}

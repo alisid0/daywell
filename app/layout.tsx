@@ -1,4 +1,10 @@
 import type { Metadata } from "next";
+import "@fontsource-variable/atkinson-hyperlegible-next";
+// Reading comfort font options. Browsers only download a font's files when someone picks it.
+import "@fontsource-variable/lexend";
+import "@fontsource/opendyslexic/400.css";
+import "@fontsource/opendyslexic/700.css";
+import { readingComfortScript } from "@/lib/reading-comfort";
 import "./globals.css";
 import "./everyday.css";
 import "./welcome.css";
@@ -17,6 +23,7 @@ import "./meditation.css";
 import "./mic-states.css";
 import "./navigation.css";
 import "./companion-motion.css";
+import "./typography.css";
 
 export const metadata: Metadata = {
   title: "Daywell — Your day, in balance",
@@ -33,7 +40,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      {/* Applies the saved Reading comfort choice before the first paint. */}
+      <head><script dangerouslySetInnerHTML={{ __html: readingComfortScript }} /></head>
       <body className="antialiased">{children}</body>
     </html>
   );

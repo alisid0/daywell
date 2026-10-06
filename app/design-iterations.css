@@ -72,29 +72,29 @@ html[data-appearance-composition="beside"] .stillwater-shell .host-settings{grid
 html[data-appearance-composition="beside"] .stillwater-shell .host-help{grid-row:14}
 html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active):not(:has(.nook-company)){grid-template-columns:minmax(0,1fr);max-width:460px}
 html[data-appearance-composition] .stillwater-shell .host-is-active .host-talk-symbol{width:93px;height:93px}
-html[data-appearance-composition] .stillwater-shell .host-is-active .host-invitation h2{font-size:31px;max-width:22ch;margin:auto;text-align:center}
+html[data-appearance-composition] .stillwater-shell .host-is-active .host-invitation h2{font-size:calc(31px*var(--rc-scale,1));max-width:22ch;margin:auto;text-align:center}
 html[data-appearance-composition] .stillwater-shell .host-is-active .host-invitation p{margin:13px auto 0}
 
 /* Temporary review controls, shown only after choosing Try this design. */
-.iteration-review{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;max-width:950px;margin:0 auto;padding:10px 18px;border-block:1px solid var(--dw-line);color:var(--dw-muted);font:12px "DM Sans",sans-serif}
+.iteration-review{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;max-width:950px;margin:0 auto;padding:10px 18px;border-block:1px solid var(--dw-line);color:var(--dw-muted);font-size:calc(14px*var(--rc-scale,1))}
 .iteration-review-choices{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
 .iteration-review button{min-height:38px;padding:8px 12px;cursor:pointer;border-radius:13px}
 .iteration-review button[aria-pressed="true"]{background:var(--dw-surface);color:var(--dw-ink);box-shadow:inset 0 0 0 1px var(--dw-line)}
 .iteration-review-compare{text-decoration:underline;text-underline-offset:4px;color:var(--dw-accent)}
 .iteration-review .iteration-review-close{padding:8px;display:grid;place-items:center}
-.iteration-review p{flex-basis:100%;text-align:center;font-size:11px}
+.iteration-review p{flex-basis:100%;text-align:center;font-size:calc(14px*var(--rc-scale,1))}
 .iteration-review button:focus-visible{outline:3px solid var(--dw-accent);outline-offset:3px}
 @media(max-width:767px){
   html[data-appearance-composition] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active){padding-top:24px}
-  html[data-appearance-composition] .stillwater-shell .host-invitation h2{font-size:35px;max-width:16ch}
-  html[data-appearance-composition] .stillwater-shell .host-invitation p{font-size:13px;max-width:29ch;margin-top:12px}
+  html[data-appearance-composition] .stillwater-shell .host-invitation h2{font-size:calc(35px*var(--rc-scale,1));max-width:16ch}
+  html[data-appearance-composition] .stillwater-shell .host-invitation p{font-size:calc(14px*var(--rc-scale,1));max-width:29ch;margin-top:12px}
   html[data-appearance-composition="breathing"] .stillwater-shell .host-invitation{margin-bottom:33px}
   html[data-appearance-composition="breathing"] .stillwater-shell .nook-company{width:192px;height:90px;margin-top:19px}
   html[data-appearance-composition="cove"] .stillwater-shell .nook-company{width:270px;height:110px;margin-top:17px}
   html[data-appearance-composition="cove"] .stillwater-shell .host-input-actions{padding-top:12px}
   html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active){grid-template-columns:minmax(0,1fr);max-width:430px;padding-top:22px}
   html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-invitation{grid-row:1;margin-bottom:22px}
-  html[data-appearance-composition="beside"] .stillwater-shell .host-invitation h2{font-size:38px;max-width:13ch}
+  html[data-appearance-composition="beside"] .stillwater-shell .host-invitation h2{font-size:calc(38px*var(--rc-scale,1));max-width:13ch}
   html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .nook-company{grid-column:1;grid-row:2;width:230px;height:160px;justify-self:end;margin:-5px 5px -55px 0}
   html[data-appearance-composition="beside"] .stillwater-shell .nook-company:before{inset:0;border-radius:48% 45% 35% 35%}
   html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-pip{transform:translateY(20px)}
@@ -113,5 +113,5 @@ html[data-appearance-composition] .stillwater-shell .host-is-active .host-invita
   html[data-appearance-composition="beside"] .stillwater-shell .host-topline{grid-row:13;margin-top:25px}
   html[data-appearance-composition="beside"] .stillwater-shell .host-settings{grid-row:14}
   html[data-appearance-composition="beside"] .stillwater-shell .host-help{grid-row:15}
-  .iteration-review{font-size:10px;padding:8px 12px;gap:1px}.iteration-review-choices{width:100%;gap:2px}.iteration-review button{padding:8px 9px;min-height:36px}
+  .iteration-review{font-size:calc(14px*var(--rc-scale,1));padding:8px 12px;gap:1px}.iteration-review-choices{width:100%;gap:2px}.iteration-review button{padding:8px 9px;min-height:36px}
 }

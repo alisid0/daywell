@@ -8,13 +8,13 @@ import { companionArtworkRoot, type CompanionMotion } from "@/lib/companion-moti
 import { CompanionCanvas } from "./companion-canvas";
 import { CompanionMotionControl } from "./companion-motion-preference";
 
-export function CompanionPortrait({ id, size = 80, decorative = false, eager = false, motion, celebration }: { id: CompanionId; size?: number; decorative?: boolean; eager?: boolean; motion?: CompanionMotion; celebration?: number }) {
+export function CompanionPortrait({ id, size = 80, decorative = false, eager = false, motion, celebration, breath }: { id: CompanionId; size?: number; decorative?: boolean; eager?: boolean; motion?: CompanionMotion; celebration?: number; breath?: number }) {
   const helper = companions[id];
   const alt = decorative ? "" : `${helper.name}, your fluffy ${helper.job.toLowerCase()} helper`;
   // eslint-disable-next-line @next/next/no-img-element
   const portrait = <img className={motion ? undefined : `dw-companion-image companion-image-${id}`} src={`${companionArtworkRoot}/${id}/portrait.webp`} width={size} height={size} alt={motion ? "" : alt} loading={eager ? "eager" : "lazy"} decoding="async" draggable={false} />;
   if (!motion) return portrait;
-  return <span className={`dw-companion-image dw-companion-animated companion-image-${id}`} role={decorative ? undefined : "img"} aria-label={decorative ? undefined : alt} aria-hidden={decorative || undefined} style={{ "--companion-size": `${size}px` } as CSSProperties}><span className="companion-surface">{portrait}<CompanionCanvas id={id} size={size} motion={motion} celebration={celebration} /></span></span>;
+  return <span className={`dw-companion-image dw-companion-animated companion-image-${id}`} role={decorative ? undefined : "img"} aria-label={decorative ? undefined : alt} aria-hidden={decorative || undefined} style={{ "--companion-size": `${size}px` } as CSSProperties}><span className="companion-surface">{portrait}<CompanionCanvas id={id} size={size} motion={motion} celebration={celebration} breath={breath} /></span></span>;
 }
 
 export function CompanionWelcome() {

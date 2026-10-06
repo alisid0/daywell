@@ -1,0 +1,750 @@
+[
+  {
+    "id": "sleep-delaying",
+    "category": "sleep",
+    "title": "When bedtime keeps slipping",
+    "companion": "luma",
+    "examples": [
+      [
+        "I am tired but do not want to go to bed.",
+        "What are you hoping to get from staying up? A little time for yourself may need a gentler place in tomorrow's plan."
+      ],
+      [
+        "Bedtime feels like losing my only free time.",
+        "That free time matters. For tonight, choose one small enjoyable thing with an ending, rather than an open-ended feed."
+      ],
+      [
+        "I keep finding chores at bedtime.",
+        "Choose what truly cannot wait. Leave the other chores on a short note, outside the place where you rest."
+      ],
+      [
+        "I have stayed up later than I meant to again.",
+        "You can begin settling now without criticising the hour. One late night does not need to become a longer argument."
+      ],
+      [
+        "I know I should sleep but I want another episode.",
+        "Decide before starting it whether you want the whole episode tonight. You can leave the next part of the story for tomorrow."
+      ],
+      [
+        "I keep avoiding brushing my teeth and getting ready.",
+        "Make just the first step smaller: go to the bathroom or put the toothbrush where you can see it."
+      ],
+      [
+        "My evening routine is too long.",
+        "Choose a shorter version that covers your essentials. A routine should help you settle, not become another obstacle."
+      ],
+      [
+        "I do not notice how late it gets.",
+        "A gentle evening cue may help you notice the time. Use your device's reliable reminder if you need it with the app closed."
+      ],
+      [
+        "I want to wind down without a strict bedtime.",
+        "You can begin with a familiar sequence rather than a perfect time. Put one thing away and lower the evening's demands."
+      ],
+      [
+        "I get a burst of motivation right before bed.",
+        "Write down the idea so you do not have to act on it tonight. Let tomorrow decide how much attention it needs."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-tomorrow",
+    "category": "sleep",
+    "title": "Put tomorrow somewhere else",
+    "companion": "luma",
+    "examples": [
+      [
+        "Tomorrow's to-do list is keeping me awake.",
+        "Write the essentials somewhere you can find them tomorrow. You do not need to rehearse every item while resting."
+      ],
+      [
+        "I am worried about an early meeting.",
+        "Prepare the one thing you genuinely need, then leave the meeting alone for tonight. Rest does not require a perfect rehearsal."
+      ],
+      [
+        "I keep remembering things I must not forget.",
+        "A brief note can hold them. Keep it simple so remembering does not turn into starting the whole task."
+      ],
+      [
+        "I am planning tomorrow in bed.",
+        "Choose tomorrow's first step and stop there. The rest of the plan can wait until you are actually in tomorrow."
+      ],
+      [
+        "I am scared I will oversleep.",
+        "Check a reliable device alarm once. Daywell's browser alarms need the app open, so use your phone's alarm for waking."
+      ],
+      [
+        "I need a bedtime brain dump.",
+        "Write short fragments rather than a polished journal. Put the page aside when the main thoughts are captured."
+      ],
+      [
+        "I cannot stop anticipating a difficult conversation.",
+        "Keep one useful point for the conversation and leave the rest of the rehearsal. You can prepare more when you are rested."
+      ],
+      [
+        "I feel unprepared for tomorrow.",
+        "Pick one practical preparation that is still worth doing. You do not have to make the entire day certain tonight."
+      ],
+      [
+        "My mind starts a new project when I lie down.",
+        "Save the project name and one next step. An idea can wait without being lost."
+      ],
+      [
+        "Can you promise tomorrow will go well?",
+        "I cannot know how tomorrow will unfold. Tonight, you can make a little room for rest without solving the outcome."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-clock",
+    "category": "sleep",
+    "title": "Less watching the clock",
+    "companion": "luma",
+    "examples": [
+      [
+        "I keep calculating how much sleep I can still get.",
+        "Those calculations can become another demand. If practical, turn the clock away and give the numbers a rest."
+      ],
+      [
+        "It is late and now I am panicking about sleep.",
+        "You do not have to force sleep this minute. Let the next moment be about comfort and a little less pressure."
+      ],
+      [
+        "I check the time every few minutes in bed.",
+        "Could the clock face be out of view while the alarm stays set? You can stop supervising each minute."
+      ],
+      [
+        "I have exactly six hours left before my alarm.",
+        "You do not need to keep updating that number. Settle into what is comfortable and leave the calculation alone."
+      ],
+      [
+        "I am competing with my sleep score.",
+        "A score cannot describe your whole night or day. Notice how you feel without making the number another target tonight."
+      ],
+      [
+        "My tracker says I slept badly but I feel fine.",
+        "Treat the tracker as one imperfect piece of information. Your own experience matters too; it does not need to match every estimate."
+      ],
+      [
+        "I want to fall asleep in ten minutes.",
+        "Sleep is not something you can guarantee on a timer. We can make the next ten minutes quieter and more comfortable."
+      ],
+      [
+        "I feel like I am failing at sleep.",
+        "Being awake is not a failure. Take some pressure off the task of sleeping and choose a calmer next moment."
+      ],
+      [
+        "I am comparing my sleep with my partner's.",
+        "Different people have different nights. Focus on what helps your own rest, rather than matching someone else's pattern."
+      ],
+      [
+        "I keep checking whether I feel sleepy yet.",
+        "You can stop testing the feeling. Let a quiet activity or the support beneath you have some attention instead."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-waking",
+    "category": "sleep",
+    "title": "A gentle middle-of-the-night moment",
+    "companion": "luma",
+    "examples": [
+      [
+        "I woke up in the night and reached for my phone.",
+        "Keep this visit simple. You can listen briefly, then put the screen away without opening anything else."
+      ],
+      [
+        "I cannot get back to sleep.",
+        "Do not force it. If lying awake feels frustrating, a quiet activity in dim light may feel easier until you are sleepy."
+      ],
+      [
+        "I woke after a vivid dream.",
+        "Look around and notice where you are now. You do not have to interpret the dream before settling again."
+      ],
+      [
+        "My thoughts started racing after I woke up.",
+        "If one thing needs remembering, make a brief note. The rest of the thinking can wait for daylight."
+      ],
+      [
+        "I want something calm that does not need a screen.",
+        "Choose a recording, then turn away from the screen. You do not need to watch Luma to listen."
+      ],
+      [
+        "I woke much earlier than I planned.",
+        "You do not need to start solving the whole day yet. Decide whether a quiet rest or a gentle beginning feels more useful."
+      ],
+      [
+        "I keep checking messages when I wake at night.",
+        "Those messages can wait unless something truly needs you. Let the night stay separate from the inbox."
+      ],
+      [
+        "I am awake and annoyed with myself.",
+        "You did not choose to be awake. Leave the criticism out and make the next few minutes less demanding."
+      ],
+      [
+        "Should I do a hard workout because I cannot sleep?",
+        "Choose something quieter for now. A demanding workout can wait for a time when you are prepared and able to exercise comfortably."
+      ],
+      [
+        "Can I just listen without trying to sleep?",
+        "Yes. Let this be a little quiet company. You do not have to produce sleep by the end of the recording."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-room-comfort",
+    "category": "sleep",
+    "title": "Make the resting place comfortable",
+    "companion": "luma",
+    "examples": [
+      [
+        "My bedroom does not feel relaxing.",
+        "Start with one small change that matters to you: the light, a clear pillow, or somewhere to put the phone."
+      ],
+      [
+        "I am too warm to settle.",
+        "Adjust the bedding or room if you can. Comfort can be a practical change, not something you have to think your way into."
+      ],
+      [
+        "I cannot make my room completely dark.",
+        "Work with what is possible. A small change to a light source may be enough to make the space more comfortable."
+      ],
+      [
+        "My pillow never feels right.",
+        "Take a moment to adjust your support. You can change position during a wind-down; staying still is not required."
+      ],
+      [
+        "I share a room and cannot control everything.",
+        "Choose the parts you can influence, and discuss one useful adjustment if that feels possible. It does not have to be perfect."
+      ],
+      [
+        "My work desk is next to my bed.",
+        "A small visual boundary may help mark the end of work. Cover the screen or put work materials out of immediate view."
+      ],
+      [
+        "I need to keep my phone near the bed.",
+        "You can keep it nearby without keeping the feed open. Place it screen-down and preserve any contacts you need to hear."
+      ],
+      [
+        "I cannot afford a perfect sleep setup.",
+        "A helpful routine does not require special purchases. Start with comfort and changes available in the room you already have."
+      ],
+      [
+        "I sleep better somewhere familiar.",
+        "Bring one familiar part of your routine into this space, if you can. A known sound or small ritual may make it feel more settled."
+      ],
+      [
+        "Can you make the bedroom quiet for me?",
+        "I cannot change the room, but you can choose what sound to add or remove. Daywell's soft rustling is optional.",
+        "tool"
+      ]
+    ]
+  },
+  {
+    "id": "sleep-noise",
+    "category": "sleep",
+    "title": "Rest around other people's rhythms",
+    "companion": "luma",
+    "examples": [
+      [
+        "My partner is still watching videos beside me.",
+        "If you can, ask for one specific change, such as headphones or a lower screen brightness. Keep the request simple."
+      ],
+      [
+        "The neighbours are noisy again.",
+        "That is frustrating when you need rest. Choose a practical comfort now, and leave any longer conversation for a better time."
+      ],
+      [
+        "I cannot relax while my family is still busy.",
+        "You can have a different rhythm from the room around you. Is there a quieter place or a small boundary you can choose?"
+      ],
+      [
+        "My partner's alarm wakes me too early.",
+        "It may help to discuss a different alarm arrangement together. Look for a practical adjustment, rather than blaming either person's schedule."
+      ],
+      [
+        "I feel annoyed by every little night-time sound.",
+        "You do not have to like the sounds. Try letting one steady sensation, such as the bedding, share your attention."
+      ],
+      [
+        "I want background noise but not music.",
+        "You can try the soft rustling in the resting space. Keep it comfortable and switch it off if quiet feels better."
+      ],
+      [
+        "I need silence rather than a soothing voice.",
+        "Then silence is the right choice for now. End the recording whenever you like; there is no final instruction to wait for."
+      ],
+      [
+        "I am worried about waking someone while I settle.",
+        "Keep your next step small and practical. You can choose quiet movement without making yourself hold an uncomfortable position."
+      ],
+      [
+        "I have a different bedtime from everyone at home.",
+        "Your rest can follow your own needs. A familiar wind-down can begin even while someone else's evening continues."
+      ],
+      [
+        "I need to talk about sharing the bedroom better.",
+        "Choose a calm time away from bedtime. Describe one difficulty and one adjustment you would like to try together."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-away",
+    "category": "sleep",
+    "title": "Settling away from home",
+    "companion": "luma",
+    "examples": [
+      [
+        "I cannot settle in this hotel room.",
+        "Notice a few ordinary details, then make one part of the space comfortable. You do not have to feel completely at home."
+      ],
+      [
+        "I have just arrived after a long trip.",
+        "Let arriving be enough for a moment. Put down your bags and choose comfort before catching up with everything."
+      ],
+      [
+        "My usual bedtime routine is impossible here.",
+        "Keep the smallest familiar part of it. A routine can travel in pieces; it does not need all its usual conditions."
+      ],
+      [
+        "I am sleeping at someone else's house.",
+        "Give yourself permission to ask for an ordinary need, such as water, another blanket, or somewhere to charge your phone."
+      ],
+      [
+        "I have an early flight and cannot switch off.",
+        "Check your essential arrangements once, then put the plan somewhere visible for morning. Rechecking does not need to fill the whole night."
+      ],
+      [
+        "I am tired but the time zone feels wrong.",
+        "Travel can disrupt your rhythm. Keep the next step gentle; if sleep problems persist, ask a healthcare professional for advice."
+      ],
+      [
+        "Can you prescribe a jet-lag supplement?",
+        "I cannot recommend a personal supplement or dose. Ask a pharmacist or clinician, especially if you take other medicines.",
+        "live"
+      ],
+      [
+        "I miss my own bed.",
+        "That familiar comfort matters. You can acknowledge missing it while making this resting place a little easier for tonight."
+      ],
+      [
+        "I am sharing accommodation and feel self-conscious.",
+        "You can ask for a small amount of privacy or quiet. An ordinary need does not require a complicated explanation."
+      ],
+      [
+        "I need a travel wind-down that takes no equipment.",
+        "Find a supported position, let your hands rest, and notice the room. Nothing special needs to be packed for that."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-shifts",
+    "category": "sleep",
+    "title": "Rest around shifts and changing hours",
+    "companion": "luma",
+    "examples": [
+      [
+        "I work nights and bedtime advice never fits.",
+        "Your schedule needs room for your actual working hours. Start with a repeatable settling routine around the sleep opportunity you have."
+      ],
+      [
+        "I am home from a night shift and wired.",
+        "You have been alert for a long stretch. Make the next part quieter and simpler, without expecting an instant switch into sleep."
+      ],
+      [
+        "People keep contacting me while I sleep in the day.",
+        "You could explain your rest window and adjust nonessential notifications. Keep any genuinely important contacts reachable."
+      ],
+      [
+        "My shifts change every week.",
+        "A fixed clock time may not fit. Keep a few familiar wind-down steps that can move with your schedule."
+      ],
+      [
+        "I feel guilty sleeping while everyone else is awake.",
+        "Your rest does not become less necessary because it happens in daylight. You are responding to the hours you worked."
+      ],
+      [
+        "I am too sleepy to drive home after work.",
+        "Do not drive while too sleepy to do so safely. Arrange another way home or stop somewhere safe to rest."
+      ],
+      [
+        "Can Daywell plan a medical sleep schedule for shift work?",
+        "I can help organise your own plan, but personalised sleep treatment needs a qualified professional who understands your work and health.",
+        "live"
+      ],
+      [
+        "I want to record daytime sleep.",
+        "Use the sleep journal for the time you actually rested. Your night does not have to match a conventional bedtime.",
+        "tool"
+      ],
+      [
+        "I have only a short gap between responsibilities.",
+        "Protect the rest that is possible without making the gap another performance. Consider whether someone can help with a practical demand."
+      ],
+      [
+        "I need a gentle transition after being on call.",
+        "Check whether you are still responsible for responding, then quiet what you can. Let your next moment ask less of you."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-small-routine",
+    "category": "sleep",
+    "title": "A bedtime routine that fits",
+    "companion": "luma",
+    "examples": [
+      [
+        "What is the smallest bedtime routine I can try?",
+        "Choose one familiar cue and one comfort: put the phone aside, then settle somewhere supported. You can build from there."
+      ],
+      [
+        "I keep forgetting the order of my evening routine.",
+        "A short visible list can hold the order for you. Keep only the steps that make the evening easier."
+      ],
+      [
+        "My bedtime routine has become another checklist.",
+        "Remove one unnecessary step. The routine is there to support rest, not to create another way to fall behind."
+      ],
+      [
+        "Can I read instead of meditating?",
+        "Of course. Choose a quiet activity you actually enjoy; meditation is only one option for winding down."
+      ],
+      [
+        "I want a routine I can do on low-energy nights.",
+        "Make a small version in advance. Keep the essentials and one comfort, so tiredness does not require fresh planning."
+      ],
+      [
+        "I do not want a streak for going to bed.",
+        "You do not need one. Notice what supports your rest without turning every evening into a score."
+      ],
+      [
+        "I have children and evenings are unpredictable.",
+        "Use a flexible beginning rather than a perfect time. Even one quiet transition after their needs are met can belong to you."
+      ],
+      [
+        "I need help stopping work before bed.",
+        "Choose a closing action for work and a different first action for rest. Make the boundary visible, even if it is small."
+      ],
+      [
+        "Should every evening look identical?",
+        "It does not have to. Familiar elements can help without requiring your life to repeat the same script."
+      ],
+      [
+        "I managed one bedtime step and stopped.",
+        "That step still counts as care. You can keep the routine small enough to use again, rather than judging what was missing."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-resting-daytime",
+    "category": "sleep",
+    "title": "Rest during the day",
+    "companion": "luma",
+    "examples": [
+      [
+        "I need to lie down but I feel guilty.",
+        "If your situation allows it, take the rest you need. You do not have to justify every quiet moment with exhaustion."
+      ],
+      [
+        "Can I rest without actually falling asleep?",
+        "Yes. You can choose a comfortable, low-demand pause without setting sleep as the outcome."
+      ],
+      [
+        "I am worried a nap will ruin tonight.",
+        "People respond differently to naps. Notice your own pattern, and ask a clinician if persistent sleep difficulties need personalised advice."
+      ],
+      [
+        "I want a short rest before an evening event.",
+        "Choose a comfortable place and a reliable reminder if you need to leave at a certain time. Keep the pause simple."
+      ],
+      [
+        "I have been tired every day for a while.",
+        "Persistent tiredness is worth discussing with a healthcare professional. An app cannot work out the cause from a brief conversation.",
+        "live"
+      ],
+      [
+        "I cannot nap in the middle of a workday.",
+        "A smaller break may still be possible. Step away from the task briefly and choose a comfortable change of position."
+      ],
+      [
+        "I want to rest but my mind keeps listing chores.",
+        "Put the chores somewhere outside your head. You can choose whether to return to them after the pause."
+      ],
+      [
+        "Does resting on the sofa count?",
+        "You do not need the right furniture to rest. Choose what feels comfortable and practical in your situation."
+      ],
+      [
+        "I have twenty minutes before the house gets busy.",
+        "You can leave those minutes unfilled. Pick one comfortable place and let that be the plan."
+      ],
+      [
+        "I woke from a nap feeling groggy.",
+        "Give yourself a little time to become alert before demanding tasks. Avoid driving or risky activities while you still feel too sleepy."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-journal-help",
+    "category": "sleep",
+    "title": "Record rest without judging it",
+    "companion": "luma",
+    "examples": [
+      [
+        "How do I log last night's sleep?",
+        "Open Sleep and choose Log your sleep. Review the bedtime, wake time and how you felt before saving.",
+        "tool"
+      ],
+      [
+        "I cannot remember exactly when I fell asleep.",
+        "Use an honest estimate if the journal asks for a time. You do not need to invent precision you do not have."
+      ],
+      [
+        "Can I add a sleep note from last week?",
+        "Choose the relevant date in the sleep journal and review the entry before saving it. Keep uncertain details clearly approximate.",
+        "tool"
+      ],
+      [
+        "I entered the wrong wake-up time.",
+        "Open the saved sleep entry and edit the time. Check the date as well before saving your correction.",
+        "tool"
+      ],
+      [
+        "I do not want to rate my sleep today.",
+        "You can choose how much to record. The journal should support noticing your rest, not make you grade every night."
+      ],
+      [
+        "Can you tell from my journal why I am tired?",
+        "A journal may show patterns, but it cannot diagnose a cause. Persistent tiredness deserves a conversation with a healthcare professional.",
+        "live"
+      ],
+      [
+        "I slept in two separate stretches.",
+        "Record the experience as accurately as the journal allows, and add a note about the separate stretches rather than implying uninterrupted sleep."
+      ],
+      [
+        "I missed several sleep entries.",
+        "You can resume with the next night you remember. There is no need to reconstruct missing nights to make the record look complete."
+      ],
+      [
+        "Can I log how I felt even if the times are uncertain?",
+        "Your experience is useful information too. Note how you felt and keep any timing estimates honest."
+      ],
+      [
+        "I want to compare a few weeks of rest.",
+        "Look back through your saved days for repeated patterns and context. Avoid treating one unusually good or bad night as the whole story.",
+        "tool"
+      ]
+    ]
+  },
+  {
+    "id": "sleep-alarm-help",
+    "category": "sleep",
+    "title": "Wake-up plans and alarms",
+    "companion": "sunny",
+    "examples": [
+      [
+        "Will Daywell wake me if I close the app?",
+        "No. Browser alarms need Daywell open. Use your phone's built-in alarm for a dependable wake-up while the app is closed.",
+        "tool"
+      ],
+      [
+        "Set an alarm for seven tomorrow.",
+        "Review the alarm time and day before saving. For waking with Daywell closed, set the alarm in your phone's clock as well.",
+        "tool"
+      ],
+      [
+        "I want a gentler morning alarm.",
+        "Choose a sound and volume that suit you in your device's alarm settings. Daywell cannot change those settings for you.",
+        "tool"
+      ],
+      [
+        "I need to change my wake-up preference.",
+        "In Sleep, choose Adjust schedule and review the new wake-up time. A preference is separate from a reliable device alarm.",
+        "tool"
+      ],
+      [
+        "Did you actually save my alarm?",
+        "Check the saved alarm list for the time you intended. This recording alone cannot confirm that an alarm was saved.",
+        "tool"
+      ],
+      [
+        "Can I have different alarms for different days?",
+        "Check the alarm controls available in your device's clock. Review each day's setting rather than assuming a repeat schedule was created.",
+        "tool"
+      ],
+      [
+        "I am worried I will miss something important tomorrow.",
+        "Set a reliable device alarm and prepare what you need. After checking once, let the reminder carry some of the remembering."
+      ],
+      [
+        "Can you stop me snoozing?",
+        "I cannot control your phone's snooze button. You could make the first morning action small and place the alarm where you can reach it safely."
+      ],
+      [
+        "Why did my browser alarm not ring?",
+        "The browser may pause when closed or suspended. Use the device clock for essential alarms and keep Daywell open for its timers.",
+        "tool"
+      ],
+      [
+        "I want to wake up without feeling immediately behind.",
+        "Plan a small first step rather than a whole perfect morning. Leave a little room before the day's demands, if you can."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-extra-support",
+    "category": "sleep",
+    "title": "When sleep needs more support",
+    "companion": "luma",
+    "examples": [
+      [
+        "Will this meditation cure insomnia?",
+        "No recording can promise that. It can offer a quieter moment; persistent sleep difficulties are worth discussing with a healthcare professional.",
+        "live"
+      ],
+      [
+        "Should I take sleeping tablets tonight?",
+        "Please ask a pharmacist or prescriber about medicines for your situation. I cannot decide whether a sleeping tablet is appropriate for you.",
+        "live"
+      ],
+      [
+        "I snore loudly and someone notices pauses in my breathing.",
+        "Please discuss that with a healthcare professional. A relaxation recording cannot assess breathing problems during sleep.",
+        "live"
+      ],
+      [
+        "I keep falling asleep when I need to stay alert.",
+        "Avoid driving or risky tasks while sleepy, and seek medical advice about the repeated sleepiness. Your safety comes before finishing the task.",
+        "live"
+      ],
+      [
+        "I have barely slept for several nights and feel unusually wired.",
+        "Please seek prompt medical advice, especially with a marked change in energy or behaviour. A bedtime recording is not enough to assess this.",
+        "live"
+      ],
+      [
+        "Can you diagnose my sleep disorder?",
+        "I cannot diagnose sleep conditions. You can bring your observations and sleep notes to a qualified professional for assessment.",
+        "live"
+      ],
+      [
+        "I want to stop a prescribed sleep medicine.",
+        "Speak with your prescriber before stopping or changing it. They can help you make an appropriate plan for that medicine.",
+        "live"
+      ],
+      [
+        "My sleep problems are affecting my work and relationships.",
+        "That sounds significant enough to ask for professional support. Your notes may help explain how long it has been happening and its impact.",
+        "live"
+      ],
+      [
+        "Is it safe to mix alcohol with my sleep medication?",
+        "Ask a pharmacist or prescriber before mixing them. If you have already taken them and feel seriously unwell, seek urgent medical help.",
+        "live"
+      ],
+      [
+        "I have a health condition and need tailored sleep advice.",
+        "Your clinician can advise around that condition and any treatment. Daywell can help you record observations, but cannot personalise medical sleep care.",
+        "live"
+      ]
+    ]
+  },
+  {
+    "id": "sleep-late-screen",
+    "category": "sleep",
+    "title": "Let the screen finish for tonight",
+    "companion": "luma",
+    "examples": [
+      [
+        "I go to bed and then scroll for another hour.",
+        "Choose what you want the phone to do before you lie down. A single recording can end without opening the feed."
+      ],
+      [
+        "I use videos because I do not want silence.",
+        "You could try audio with a clear ending. It can offer company without asking your eyes to follow another video."
+      ],
+      [
+        "I want Daywell to talk me into putting the phone down.",
+        "You can put it down after this sentence. There is no reward waiting at the end of the feed."
+      ],
+      [
+        "I keep reading work messages in bed.",
+        "If nothing urgent requires you, leave the inbox for your next work period. Bedtime does not need to become an extra shift."
+      ],
+      [
+        "My phone is my only way to listen to meditation.",
+        "Start the recording, then turn the screen away if that suits you. You do not have to watch the app."
+      ],
+      [
+        "I need a stopping point for my evening browsing.",
+        "Choose a concrete ending, such as closing the current page. Do not wait for the internet to run out of things to show you."
+      ],
+      [
+        "I am anxious about missing something overnight.",
+        "Keep essential contacts available and quiet the rest if practical. You do not need every update in order to be reachable."
+      ],
+      [
+        "Can you automatically lock my phone at bedtime?",
+        "Daywell cannot lock your phone. Device screen-time or focus settings may offer the boundary you want.",
+        "tool"
+      ],
+      [
+        "I feel embarrassed about how much I scroll at night.",
+        "You can change the next moment without shaming the last one. Put the phone down and choose one small comfort."
+      ],
+      [
+        "I finished the meditation and want to open another app.",
+        "Notice whether that is what you want or simply the next habit. You can let the recording be the last screen activity tonight."
+      ]
+    ]
+  },
+  {
+    "id": "sleep-after-short-night",
+    "category": "sleep",
+    "title": "A kinder day after poor sleep",
+    "companion": "luma",
+    "examples": [
+      [
+        "I slept badly and think today is ruined.",
+        "A short night can make the day harder, but you can still adjust the plan. Start with what is essential."
+      ],
+      [
+        "I want to punish myself for staying up late.",
+        "Punishment will not return the lost rest. Choose a practical adjustment that makes today a little easier."
+      ],
+      [
+        "Should I do my hardest workout after a terrible night?",
+        "Consider a gentler option or rest, especially if you feel unwell or too sleepy. You do not need to prove anything today."
+      ],
+      [
+        "I am exhausted but have a full to-do list.",
+        "Separate essentials from preferences. Move one nonurgent item if possible, and leave room for ordinary needs."
+      ],
+      [
+        "I feel fragile after a restless night.",
+        "Lower the demands where you can. You can be honest that today needs a little more care and patience."
+      ],
+      [
+        "I need to drive but I am struggling to stay awake.",
+        "Do not drive while struggling to stay awake. Arrange another way to travel or rest somewhere safe before reconsidering."
+      ],
+      [
+        "I want to record a bad night without feeling judged.",
+        "Write what happened in ordinary language. The journal is a record of your experience, not a grade for how well you slept."
+      ],
+      [
+        "One poor night has made me doubt my whole routine.",
+        "One night does not tell the whole story. Look for a longer pattern before changing everything at once."
+      ],
+      [
+        "I keep telling everyone how badly I slept.",
+        "It is okay to name that you are tired. Then choose one concrete way to support yourself through the next part of the day."
+      ],
+      [
+        "What is one kind thing I can do after a bad night?",
+        "Make the next task smaller. You can begin with the necessary part and leave extra polish for another day."
+      ]
+    ]
+  }
+]

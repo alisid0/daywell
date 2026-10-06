@@ -99,6 +99,796 @@
           "end": 257.04
         }
       ]
+    },
+    "scroll-unwind--eric": {
+      "src": "/guided-audio/scroll-unwind-eric-0194de4c61ac.mp3",
+      "transcript": "There you are. You can leave the feed unfinished. Put the phone somewhere you do not have to hold it, and find a comfortable seat. For a little while, there is nothing new to keep up with.\n\nLet your hands rest. Notice the support beneath you. Your eyes can stay open. We will try a few gentle breaths, only if that feels comfortable. You can simply listen instead.\n\nThere is no breath to hold, and nothing to force. Let the little circle be an invitation, not a target. Follow your own comfortable pace, even if it is different from mine.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nNow let your breathing look after itself. If the exercise feels uncomfortable, stop and breathe normally. You can notice the chair, or a sound in the room. We will leave some quiet here.\n\nThe next post is still allowed to wait. You have not fallen behind by stepping away. Notice one thing around you that belongs to your own day.\n\nYou can stay a little longer, or leave the screen now. No catching up. Just one gentle next moment.",
+      "seconds": 180,
+      "bytes": 2160788,
+      "model": "eleven_v4",
+      "voice": "eric",
+      "segments": [
+        {
+          "at": 0,
+          "end": 11.76
+        },
+        {
+          "at": 28,
+          "end": 40.96
+        },
+        {
+          "at": 55,
+          "end": 66.84
+        },
+        {
+          "at": 82,
+          "end": 84.24
+        },
+        {
+          "at": 87,
+          "end": 89.08
+        },
+        {
+          "at": 92,
+          "end": 94.72
+        },
+        {
+          "at": 97,
+          "end": 99
+        },
+        {
+          "at": 102,
+          "end": 114.56
+        },
+        {
+          "at": 140,
+          "end": 149.84
+        },
+        {
+          "at": 163,
+          "end": 170.68
+        }
+      ]
+    },
+    "home-after-busy-day--eric": {
+      "src": "/guided-audio/home-after-busy-day-eric-7008b1d81593.mp3",
+      "transcript": "You have made it home. Before the next job, before the messages, let there be a little space. Put your bag down, if you have one. Find somewhere your body can feel supported.\n\nYou do not need to unpack the whole day in your mind. For now, just arrive. Adjust your clothes, your seat, or the cushion. Let one small thing become more comfortable.\n\nIf it feels comfortable, let your shoulders find an easier position. Uncurl your hands. There is nothing to prove with this pause, and no particular feeling you have to reach.\n\nWe can share a few easy breaths. No holding, no forcing. Follow your own pace, or leave your breathing alone and notice the room instead. Either is welcome.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breath return to its ordinary rhythm. If anything feels uncomfortable, stop the exercise. Notice the support underneath you. The day can be unfinished while you sit here.\n\nPerhaps there is something you have been carrying in your head. You do not have to solve it now. Let the thought be there, and let the room be here too.\n\nWhen you are ready, ask what would feel kind next. Something to eat. A change of clothes. A little more quiet. Only one thing. You are home; let yourself arrive at your own pace.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "eric",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.64
+        },
+        {
+          "at": 30,
+          "end": 42.16
+        },
+        {
+          "at": 60,
+          "end": 71.92
+        },
+        {
+          "at": 88,
+          "end": 99.52
+        },
+        {
+          "at": 115,
+          "end": 117.16
+        },
+        {
+          "at": 120,
+          "end": 122.08
+        },
+        {
+          "at": 125,
+          "end": 127.64
+        },
+        {
+          "at": 130,
+          "end": 132
+        },
+        {
+          "at": 135,
+          "end": 147.24
+        },
+        {
+          "at": 171,
+          "end": 180.28
+        },
+        {
+          "at": 205,
+          "end": 219.32
+        }
+      ]
+    },
+    "after-long-journey--eric": {
+      "src": "/guided-audio/after-long-journey-eric-54366fbc3eae.mp3",
+      "transcript": "Only begin when your journey is over and you are somewhere safe to rest. If you are still driving, save this for later. Now, if you have arrived, put down what you have been carrying.\n\nYou have spent a long time getting here. There may have been noise, waiting, or rushing. You do not need to keep that pace now. Choose a position that takes a little less effort.\n\nNotice your hands. Let them rest somewhere comfortable. Notice your feet, or whatever is supporting you. You can move and adjust; this is not a test of keeping still.\n\nIf you would like, follow a few gentle breaths with me. Keep your own comfortable rhythm. No breath holding, and no need to breathe deeply. You can simply listen to the room instead.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breathing carry on by itself. If you feel dizzy or uncomfortable, stop and breathe normally. We will leave a little quiet while you settle into being here.\n\nThe journey does not need another replay right now. Feel the support beneath you. Perhaps notice a familiar sound, or the light in this room. Let this place have your attention for a moment.\n\nThere is no rush to make this pause useful. When you are ready, choose a little comfort for the next part of your day. Let the journey end here.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "eric",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.32
+        },
+        {
+          "at": 32,
+          "end": 44.16
+        },
+        {
+          "at": 63,
+          "end": 74.52
+        },
+        {
+          "at": 92,
+          "end": 104.32
+        },
+        {
+          "at": 122,
+          "end": 124.24
+        },
+        {
+          "at": 127,
+          "end": 129.24
+        },
+        {
+          "at": 132,
+          "end": 134.64
+        },
+        {
+          "at": 137,
+          "end": 139.08
+        },
+        {
+          "at": 142,
+          "end": 153.04
+        },
+        {
+          "at": 176,
+          "end": 188.64
+        },
+        {
+          "at": 213,
+          "end": 222.6
+        }
+      ]
+    },
+    "scroll-unwind--lily": {
+      "src": "/guided-audio/scroll-unwind-lily-7db0a35ce19d.mp3",
+      "transcript": "There you are. You can leave the feed unfinished. Put the phone somewhere you do not have to hold it, and find a comfortable seat. For a little while, there is nothing new to keep up with.\n\nLet your hands rest. Notice the support beneath you. Your eyes can stay open. We will try a few gentle breaths, only if that feels comfortable. You can simply listen instead.\n\nThere is no breath to hold, and nothing to force. Let the little circle be an invitation, not a target. Follow your own comfortable pace, even if it is different from mine.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nNow let your breathing look after itself. If the exercise feels uncomfortable, stop and breathe normally. You can notice the chair, or a sound in the room. We will leave some quiet here.\n\nThe next post is still allowed to wait. You have not fallen behind by stepping away. Notice one thing around you that belongs to your own day.\n\nYou can stay a little longer, or leave the screen now. No catching up. Just one gentle next moment.",
+      "seconds": 180,
+      "bytes": 2160788,
+      "model": "eleven_v4",
+      "voice": "lily",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.24
+        },
+        {
+          "at": 28,
+          "end": 41.52
+        },
+        {
+          "at": 55,
+          "end": 67.88
+        },
+        {
+          "at": 82,
+          "end": 84.24
+        },
+        {
+          "at": 87,
+          "end": 89.32
+        },
+        {
+          "at": 92,
+          "end": 94.64
+        },
+        {
+          "at": 97,
+          "end": 99.32
+        },
+        {
+          "at": 102,
+          "end": 115.2
+        },
+        {
+          "at": 140,
+          "end": 150.56
+        },
+        {
+          "at": 163,
+          "end": 170.92
+        }
+      ]
+    },
+    "home-after-busy-day--lily": {
+      "src": "/guided-audio/home-after-busy-day-lily-23017899c47a.mp3",
+      "transcript": "You have made it home. Before the next job, before the messages, let there be a little space. Put your bag down, if you have one. Find somewhere your body can feel supported.\n\nYou do not need to unpack the whole day in your mind. For now, just arrive. Adjust your clothes, your seat, or the cushion. Let one small thing become more comfortable.\n\nIf it feels comfortable, let your shoulders find an easier position. Uncurl your hands. There is nothing to prove with this pause, and no particular feeling you have to reach.\n\nWe can share a few easy breaths. No holding, no forcing. Follow your own pace, or leave your breathing alone and notice the room instead. Either is welcome.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breath return to its ordinary rhythm. If anything feels uncomfortable, stop the exercise. Notice the support underneath you. The day can be unfinished while you sit here.\n\nPerhaps there is something you have been carrying in your head. You do not have to solve it now. Let the thought be there, and let the room be here too.\n\nWhen you are ready, ask what would feel kind next. Something to eat. A change of clothes. A little more quiet. Only one thing. You are home; let yourself arrive at your own pace.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "lily",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.96
+        },
+        {
+          "at": 30,
+          "end": 42.56
+        },
+        {
+          "at": 60,
+          "end": 72.32
+        },
+        {
+          "at": 88,
+          "end": 99.92
+        },
+        {
+          "at": 115,
+          "end": 117.24
+        },
+        {
+          "at": 120,
+          "end": 122.56
+        },
+        {
+          "at": 125,
+          "end": 127.48
+        },
+        {
+          "at": 130,
+          "end": 132.32
+        },
+        {
+          "at": 135,
+          "end": 147.8
+        },
+        {
+          "at": 171,
+          "end": 180.52
+        },
+        {
+          "at": 205,
+          "end": 220.44
+        }
+      ]
+    },
+    "after-long-journey--lily": {
+      "src": "/guided-audio/after-long-journey-lily-e1a623e10642.mp3",
+      "transcript": "Only begin when your journey is over and you are somewhere safe to rest. If you are still driving, save this for later. Now, if you have arrived, put down what you have been carrying.\n\nYou have spent a long time getting here. There may have been noise, waiting, or rushing. You do not need to keep that pace now. Choose a position that takes a little less effort.\n\nNotice your hands. Let them rest somewhere comfortable. Notice your feet, or whatever is supporting you. You can move and adjust; this is not a test of keeping still.\n\nIf you would like, follow a few gentle breaths with me. Keep your own comfortable rhythm. No breath holding, and no need to breathe deeply. You can simply listen to the room instead.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breathing carry on by itself. If you feel dizzy or uncomfortable, stop and breathe normally. We will leave a little quiet while you settle into being here.\n\nThe journey does not need another replay right now. Feel the support beneath you. Perhaps notice a familiar sound, or the light in this room. Let this place have your attention for a moment.\n\nThere is no rush to make this pause useful. When you are ready, choose a little comfort for the next part of your day. Let the journey end here.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "lily",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.64
+        },
+        {
+          "at": 32,
+          "end": 44.72
+        },
+        {
+          "at": 63,
+          "end": 75.4
+        },
+        {
+          "at": 92,
+          "end": 104.48
+        },
+        {
+          "at": 122,
+          "end": 124.4
+        },
+        {
+          "at": 127,
+          "end": 129.32
+        },
+        {
+          "at": 132,
+          "end": 134.8
+        },
+        {
+          "at": 137,
+          "end": 139.24
+        },
+        {
+          "at": 142,
+          "end": 153.52
+        },
+        {
+          "at": 176,
+          "end": 189.36
+        },
+        {
+          "at": 213,
+          "end": 222.92
+        }
+      ]
+    },
+    "scroll-unwind--george": {
+      "src": "/guided-audio/scroll-unwind-george-efd6895ab2c8.mp3",
+      "transcript": "There you are. You can leave the feed unfinished. Put the phone somewhere you do not have to hold it, and find a comfortable seat. For a little while, there is nothing new to keep up with.\n\nLet your hands rest. Notice the support beneath you. Your eyes can stay open. We will try a few gentle breaths, only if that feels comfortable. You can simply listen instead.\n\nThere is no breath to hold, and nothing to force. Let the little circle be an invitation, not a target. Follow your own comfortable pace, even if it is different from mine.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nNow let your breathing look after itself. If the exercise feels uncomfortable, stop and breathe normally. You can notice the chair, or a sound in the room. We will leave some quiet here.\n\nThe next post is still allowed to wait. You have not fallen behind by stepping away. Notice one thing around you that belongs to your own day.\n\nYou can stay a little longer, or leave the screen now. No catching up. Just one gentle next moment.",
+      "seconds": 180,
+      "bytes": 2160788,
+      "model": "eleven_v4",
+      "voice": "george",
+      "segments": [
+        {
+          "at": 0,
+          "end": 11.84
+        },
+        {
+          "at": 28,
+          "end": 41.12
+        },
+        {
+          "at": 55,
+          "end": 67.72
+        },
+        {
+          "at": 82,
+          "end": 83.76
+        },
+        {
+          "at": 87,
+          "end": 89.24
+        },
+        {
+          "at": 92,
+          "end": 94.4
+        },
+        {
+          "at": 97,
+          "end": 99.32
+        },
+        {
+          "at": 102,
+          "end": 115.68
+        },
+        {
+          "at": 140,
+          "end": 150.4
+        },
+        {
+          "at": 163,
+          "end": 170.76
+        }
+      ]
+    },
+    "home-after-busy-day--george": {
+      "src": "/guided-audio/home-after-busy-day-george-4b7155f6d27c.mp3",
+      "transcript": "You have made it home. Before the next job, before the messages, let there be a little space. Put your bag down, if you have one. Find somewhere your body can feel supported.\n\nYou do not need to unpack the whole day in your mind. For now, just arrive. Adjust your clothes, your seat, or the cushion. Let one small thing become more comfortable.\n\nIf it feels comfortable, let your shoulders find an easier position. Uncurl your hands. There is nothing to prove with this pause, and no particular feeling you have to reach.\n\nWe can share a few easy breaths. No holding, no forcing. Follow your own pace, or leave your breathing alone and notice the room instead. Either is welcome.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breath return to its ordinary rhythm. If anything feels uncomfortable, stop the exercise. Notice the support underneath you. The day can be unfinished while you sit here.\n\nPerhaps there is something you have been carrying in your head. You do not have to solve it now. Let the thought be there, and let the room be here too.\n\nWhen you are ready, ask what would feel kind next. Something to eat. A change of clothes. A little more quiet. Only one thing. You are home; let yourself arrive at your own pace.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "george",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.88
+        },
+        {
+          "at": 30,
+          "end": 42.48
+        },
+        {
+          "at": 60,
+          "end": 71.92
+        },
+        {
+          "at": 88,
+          "end": 100
+        },
+        {
+          "at": 115,
+          "end": 117.24
+        },
+        {
+          "at": 120,
+          "end": 122.24
+        },
+        {
+          "at": 125,
+          "end": 127.32
+        },
+        {
+          "at": 130,
+          "end": 132.08
+        },
+        {
+          "at": 135,
+          "end": 147.48
+        },
+        {
+          "at": 171,
+          "end": 180.44
+        },
+        {
+          "at": 205,
+          "end": 220.12
+        }
+      ]
+    },
+    "after-long-journey--george": {
+      "src": "/guided-audio/after-long-journey-george-4f930f056bd7.mp3",
+      "transcript": "Only begin when your journey is over and you are somewhere safe to rest. If you are still driving, save this for later. Now, if you have arrived, put down what you have been carrying.\n\nYou have spent a long time getting here. There may have been noise, waiting, or rushing. You do not need to keep that pace now. Choose a position that takes a little less effort.\n\nNotice your hands. Let them rest somewhere comfortable. Notice your feet, or whatever is supporting you. You can move and adjust; this is not a test of keeping still.\n\nIf you would like, follow a few gentle breaths with me. Keep your own comfortable rhythm. No breath holding, and no need to breathe deeply. You can simply listen to the room instead.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breathing carry on by itself. If you feel dizzy or uncomfortable, stop and breathe normally. We will leave a little quiet while you settle into being here.\n\nThe journey does not need another replay right now. Feel the support beneath you. Perhaps notice a familiar sound, or the light in this room. Let this place have your attention for a moment.\n\nThere is no rush to make this pause useful. When you are ready, choose a little comfort for the next part of your day. Let the journey end here.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "george",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.24
+        },
+        {
+          "at": 32,
+          "end": 44
+        },
+        {
+          "at": 63,
+          "end": 75.32
+        },
+        {
+          "at": 92,
+          "end": 104
+        },
+        {
+          "at": 122,
+          "end": 124.32
+        },
+        {
+          "at": 127,
+          "end": 129.16
+        },
+        {
+          "at": 132,
+          "end": 134.56
+        },
+        {
+          "at": 137,
+          "end": 139.32
+        },
+        {
+          "at": 142,
+          "end": 153.6
+        },
+        {
+          "at": 176,
+          "end": 189.12
+        },
+        {
+          "at": 213,
+          "end": 222.76
+        }
+      ]
+    },
+    "scroll-unwind--sarah": {
+      "src": "/guided-audio/scroll-unwind-sarah-72cf3112ab56.mp3",
+      "transcript": "There you are. You can leave the feed unfinished. Put the phone somewhere you do not have to hold it, and find a comfortable seat. For a little while, there is nothing new to keep up with.\n\nLet your hands rest. Notice the support beneath you. Your eyes can stay open. We will try a few gentle breaths, only if that feels comfortable. You can simply listen instead.\n\nThere is no breath to hold, and nothing to force. Let the little circle be an invitation, not a target. Follow your own comfortable pace, even if it is different from mine.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nNow let your breathing look after itself. If the exercise feels uncomfortable, stop and breathe normally. You can notice the chair, or a sound in the room. We will leave some quiet here.\n\nThe next post is still allowed to wait. You have not fallen behind by stepping away. Notice one thing around you that belongs to your own day.\n\nYou can stay a little longer, or leave the screen now. No catching up. Just one gentle next moment.",
+      "seconds": 180,
+      "bytes": 2160788,
+      "model": "eleven_v4",
+      "voice": "sarah",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.24
+        },
+        {
+          "at": 28,
+          "end": 41.12
+        },
+        {
+          "at": 55,
+          "end": 67.8
+        },
+        {
+          "at": 82,
+          "end": 83.92
+        },
+        {
+          "at": 87,
+          "end": 89.32
+        },
+        {
+          "at": 92,
+          "end": 94.4
+        },
+        {
+          "at": 97,
+          "end": 99.16
+        },
+        {
+          "at": 102,
+          "end": 114.96
+        },
+        {
+          "at": 140,
+          "end": 150.32
+        },
+        {
+          "at": 163,
+          "end": 170.92
+        }
+      ]
+    },
+    "home-after-busy-day--sarah": {
+      "src": "/guided-audio/home-after-busy-day-sarah-2f62f0553f2d.mp3",
+      "transcript": "You have made it home. Before the next job, before the messages, let there be a little space. Put your bag down, if you have one. Find somewhere your body can feel supported.\n\nYou do not need to unpack the whole day in your mind. For now, just arrive. Adjust your clothes, your seat, or the cushion. Let one small thing become more comfortable.\n\nIf it feels comfortable, let your shoulders find an easier position. Uncurl your hands. There is nothing to prove with this pause, and no particular feeling you have to reach.\n\nWe can share a few easy breaths. No holding, no forcing. Follow your own pace, or leave your breathing alone and notice the room instead. Either is welcome.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breath return to its ordinary rhythm. If anything feels uncomfortable, stop the exercise. Notice the support underneath you. The day can be unfinished while you sit here.\n\nPerhaps there is something you have been carrying in your head. You do not have to solve it now. Let the thought be there, and let the room be here too.\n\nWhen you are ready, ask what would feel kind next. Something to eat. A change of clothes. A little more quiet. Only one thing. You are home; let yourself arrive at your own pace.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "sarah",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.96
+        },
+        {
+          "at": 30,
+          "end": 42.56
+        },
+        {
+          "at": 60,
+          "end": 71.6
+        },
+        {
+          "at": 88,
+          "end": 99.84
+        },
+        {
+          "at": 115,
+          "end": 117.16
+        },
+        {
+          "at": 120,
+          "end": 122.32
+        },
+        {
+          "at": 125,
+          "end": 127.48
+        },
+        {
+          "at": 130,
+          "end": 132.16
+        },
+        {
+          "at": 135,
+          "end": 147.72
+        },
+        {
+          "at": 171,
+          "end": 180.44
+        },
+        {
+          "at": 205,
+          "end": 219.8
+        }
+      ]
+    },
+    "after-long-journey--sarah": {
+      "src": "/guided-audio/after-long-journey-sarah-5b30d5857d2d.mp3",
+      "transcript": "Only begin when your journey is over and you are somewhere safe to rest. If you are still driving, save this for later. Now, if you have arrived, put down what you have been carrying.\n\nYou have spent a long time getting here. There may have been noise, waiting, or rushing. You do not need to keep that pace now. Choose a position that takes a little less effort.\n\nNotice your hands. Let them rest somewhere comfortable. Notice your feet, or whatever is supporting you. You can move and adjust; this is not a test of keeping still.\n\nIf you would like, follow a few gentle breaths with me. Keep your own comfortable rhythm. No breath holding, and no need to breathe deeply. You can simply listen to the room instead.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breathing carry on by itself. If you feel dizzy or uncomfortable, stop and breathe normally. We will leave a little quiet while you settle into being here.\n\nThe journey does not need another replay right now. Feel the support beneath you. Perhaps notice a familiar sound, or the light in this room. Let this place have your attention for a moment.\n\nThere is no rush to make this pause useful. When you are ready, choose a little comfort for the next part of your day. Let the journey end here.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "sarah",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.56
+        },
+        {
+          "at": 32,
+          "end": 44.08
+        },
+        {
+          "at": 63,
+          "end": 75.16
+        },
+        {
+          "at": 92,
+          "end": 104.32
+        },
+        {
+          "at": 122,
+          "end": 123.84
+        },
+        {
+          "at": 127,
+          "end": 129.4
+        },
+        {
+          "at": 132,
+          "end": 134.48
+        },
+        {
+          "at": 137,
+          "end": 139.16
+        },
+        {
+          "at": 142,
+          "end": 153.36
+        },
+        {
+          "at": 176,
+          "end": 189.2
+        },
+        {
+          "at": 213,
+          "end": 223
+        }
+      ]
+    },
+    "scroll-unwind--river": {
+      "src": "/guided-audio/scroll-unwind-river-2cd1d0c7496f.mp3",
+      "transcript": "There you are. You can leave the feed unfinished. Put the phone somewhere you do not have to hold it, and find a comfortable seat. For a little while, there is nothing new to keep up with.\n\nLet your hands rest. Notice the support beneath you. Your eyes can stay open. We will try a few gentle breaths, only if that feels comfortable. You can simply listen instead.\n\nThere is no breath to hold, and nothing to force. Let the little circle be an invitation, not a target. Follow your own comfortable pace, even if it is different from mine.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nNow let your breathing look after itself. If the exercise feels uncomfortable, stop and breathe normally. You can notice the chair, or a sound in the room. We will leave some quiet here.\n\nThe next post is still allowed to wait. You have not fallen behind by stepping away. Notice one thing around you that belongs to your own day.\n\nYou can stay a little longer, or leave the screen now. No catching up. Just one gentle next moment.",
+      "seconds": 180,
+      "bytes": 2160788,
+      "model": "eleven_v4",
+      "voice": "river",
+      "segments": [
+        {
+          "at": 0,
+          "end": 11.76
+        },
+        {
+          "at": 28,
+          "end": 40.32
+        },
+        {
+          "at": 55,
+          "end": 67.32
+        },
+        {
+          "at": 82,
+          "end": 84.32
+        },
+        {
+          "at": 87,
+          "end": 89.08
+        },
+        {
+          "at": 92,
+          "end": 94.8
+        },
+        {
+          "at": 97,
+          "end": 99.16
+        },
+        {
+          "at": 102,
+          "end": 114.4
+        },
+        {
+          "at": 140,
+          "end": 149.76
+        },
+        {
+          "at": 163,
+          "end": 170.68
+        }
+      ]
+    },
+    "home-after-busy-day--river": {
+      "src": "/guided-audio/home-after-busy-day-river-b93b0968f395.mp3",
+      "transcript": "You have made it home. Before the next job, before the messages, let there be a little space. Put your bag down, if you have one. Find somewhere your body can feel supported.\n\nYou do not need to unpack the whole day in your mind. For now, just arrive. Adjust your clothes, your seat, or the cushion. Let one small thing become more comfortable.\n\nIf it feels comfortable, let your shoulders find an easier position. Uncurl your hands. There is nothing to prove with this pause, and no particular feeling you have to reach.\n\nWe can share a few easy breaths. No holding, no forcing. Follow your own pace, or leave your breathing alone and notice the room instead. Either is welcome.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breath return to its ordinary rhythm. If anything feels uncomfortable, stop the exercise. Notice the support underneath you. The day can be unfinished while you sit here.\n\nPerhaps there is something you have been carrying in your head. You do not have to solve it now. Let the thought be there, and let the room be here too.\n\nWhen you are ready, ask what would feel kind next. Something to eat. A change of clothes. A little more quiet. Only one thing. You are home; let yourself arrive at your own pace.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "river",
+      "segments": [
+        {
+          "at": 0,
+          "end": 12.32
+        },
+        {
+          "at": 30,
+          "end": 42.16
+        },
+        {
+          "at": 60,
+          "end": 71.6
+        },
+        {
+          "at": 88,
+          "end": 99.52
+        },
+        {
+          "at": 115,
+          "end": 117.4
+        },
+        {
+          "at": 120,
+          "end": 122.24
+        },
+        {
+          "at": 125,
+          "end": 127.8
+        },
+        {
+          "at": 130,
+          "end": 132.16
+        },
+        {
+          "at": 135,
+          "end": 147.16
+        },
+        {
+          "at": 171,
+          "end": 180.2
+        },
+        {
+          "at": 205,
+          "end": 219.48
+        }
+      ]
+    },
+    "after-long-journey--river": {
+      "src": "/guided-audio/after-long-journey-river-271290877071.mp3",
+      "transcript": "Only begin when your journey is over and you are somewhere safe to rest. If you are still driving, save this for later. Now, if you have arrived, put down what you have been carrying.\n\nYou have spent a long time getting here. There may have been noise, waiting, or rushing. You do not need to keep that pace now. Choose a position that takes a little less effort.\n\nNotice your hands. Let them rest somewhere comfortable. Notice your feet, or whatever is supporting you. You can move and adjust; this is not a test of keeping still.\n\nIf you would like, follow a few gentle breaths with me. Keep your own comfortable rhythm. No breath holding, and no need to breathe deeply. You can simply listen to the room instead.\n\nGently in...\n\nAnd out...\n\nIn, gently...\n\nLet it go...\n\nLet the breathing carry on by itself. If you feel dizzy or uncomfortable, stop and breathe normally. We will leave a little quiet while you settle into being here.\n\nThe journey does not need another replay right now. Feel the support beneath you. Perhaps notice a familiar sound, or the light in this room. Let this place have your attention for a moment.\n\nThere is no rush to make this pause useful. When you are ready, choose a little comfort for the next part of your day. Let the journey end here.",
+      "seconds": 240,
+      "bytes": 2880827,
+      "model": "eleven_v4",
+      "voice": "river",
+      "segments": [
+        {
+          "at": 0,
+          "end": 11.84
+        },
+        {
+          "at": 32,
+          "end": 43.84
+        },
+        {
+          "at": 63,
+          "end": 74.68
+        },
+        {
+          "at": 92,
+          "end": 103.68
+        },
+        {
+          "at": 122,
+          "end": 124.4
+        },
+        {
+          "at": 127,
+          "end": 129.16
+        },
+        {
+          "at": 132,
+          "end": 134.88
+        },
+        {
+          "at": 137,
+          "end": 139.24
+        },
+        {
+          "at": 142,
+          "end": 152.8
+        },
+        {
+          "at": 176,
+          "end": 188.72
+        },
+        {
+          "at": 213,
+          "end": 222.6
+        }
+      ]
     }
   }
 }

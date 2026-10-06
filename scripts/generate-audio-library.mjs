@@ -18,6 +18,7 @@ const voice = config.voiceId;
 if (!/^[a-zA-Z0-9_-]+$/.test(voice)) throw Error('Invalid configured voice.');
 const settingsFor = entry => ({ stability: .65, similarity_boost: .75, style: 0, use_speaker_boost: false, speed: ['sleep', 'relax'].includes(entry.category) ? .9 : .97 });
 const filename = entry => `${entry.id}-${createHash('sha256').update(JSON.stringify([entry.text, voice, model, settingsFor(entry)])).digest('hex').slice(0,12)}.mp3`;
+if (new Set(audioResponses.map(entry => entry.id)).size !== audioResponses.length) throw Error('Response IDs must be unique before generating any audio.');
 let manifest = { version: 1, recordings: {} };
 try { const saved = JSON.parse(await readFile(manifestPath, 'utf8')); if (saved.version === 1 && saved.recordings) manifest = saved; } catch (error) { if (error.code !== 'ENOENT') throw error; }
 const pending = [];

@@ -22,7 +22,9 @@
     "audio:plan": "node --experimental-strip-types scripts/generate-audio-library.mjs",
     "audio:generate": "node --experimental-strip-types scripts/generate-audio-library.mjs --generate",
     "meditation:plan": "node --experimental-strip-types scripts/generate-guided-audio.mjs",
-    "meditation:generate": "node --experimental-strip-types scripts/generate-guided-audio.mjs --generate"
+    "meditation:generate": "node --experimental-strip-types scripts/generate-guided-audio.mjs --generate",
+    "unwind:plan": "node --experimental-strip-types scripts/generate-unwind-audio.mjs",
+    "unwind:generate": "node --experimental-strip-types scripts/generate-unwind-audio.mjs --generate"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

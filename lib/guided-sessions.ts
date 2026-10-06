@@ -1,5 +1,9 @@
-export type GuidedSegment = { at: number; text: string; delivery: string };
-export type GuidedSession = { id: string; title: string; description: string; seconds: number; category: 'relax' | 'sleep'; segments: GuidedSegment[] };
+import { unwindSessions } from './unwind-sessions.ts';
+import voiceConfig from '../config/unwind-voices.json' with { type: 'json' };
+export const guidedVoices = voiceConfig.voices;
+export const defaultGuidedVoice = 'eric';
+export type GuidedSegment = { at: number; text: string; delivery: string; gesture?: 'in' | 'out' };
+export type GuidedSession = { id: string; title: string; description: string; seconds: number; category: 'relax' | 'sleep'; voices?: boolean; segments: GuidedSegment[] };
 const soft = '[Soft, warm voice] [slow, unhurried delivery]';
 const sleepy = '[Soft, low voice] [gentle, unhurried delivery]';
 
@@ -37,13 +41,16 @@ export const guidedSessions: GuidedSession[] = [
       { at: 244, delivery: sleepy, text: 'There is nothing to report, and no score for how restful this feels. You can simply lie here. After these last words, the recording will end quietly. Let the rest of the night unfold in its own time.' },
     ],
   },
+  ...unwindSessions,
 ];
 
 export function sessionTranscript(session: GuidedSession) { return session.segments.map(segment => segment.text).join('\n\n'); }
-export type GuidedRecording = { src: string; transcript: string; seconds: number; bytes: number; model: string; segments: { at: number; end: number }[] };
+export type GuidedRecording = { src: string; transcript: string; seconds: number; bytes: number; model: string; voice?: string; segments: { at: number; end: number }[] };
 export type GuidedManifest = { version: 1; recordings: Record<string, GuidedRecording> };
-export function guidedRecordingFor(session: GuidedSession, manifest: GuidedManifest | null): GuidedRecording | undefined {
-  const recording = manifest?.recordings?.[session.id];
+export function guidedRecordingKey(session: GuidedSession, voice = defaultGuidedVoice) { return session.voices ? `${session.id}--${voice}` : session.id; }
+export function guidedRecordingFor(session: GuidedSession, manifest: GuidedManifest | null, voice = defaultGuidedVoice): GuidedRecording | undefined {
+  const recording = manifest?.recordings?.[guidedRecordingKey(session, voice)];
+  if (session.voices && recording?.voice !== voice) return undefined;
   if (!recording || recording.transcript !== sessionTranscript(session) || !/^\/guided-audio\/[a-z0-9-]+\.mp3$/.test(recording.src) || recording.bytes < 1000 || Math.abs(recording.seconds - session.seconds) > .2 || !Array.isArray(recording.segments) || recording.segments.length !== session.segments.length) return undefined;
   return recording.segments.every((part,index) => part.at === session.segments[index].at && Number.isFinite(part.end) && part.end > part.at && part.end <= (session.segments[index+1]?.at ?? session.seconds)) ? recording : undefined;
 }
@@ -52,4 +59,12 @@ export function guidedMoment(session: GuidedSession, seconds: number) {
   let index = 0;
   while (index + 1 < session.segments.length && session.segments[index+1].at <= time) index++;
   return { index, segment:session.segments[index], complete:time >= session.seconds };
+}
+export function guidedBreath(session: GuidedSession, seconds: number) {
+  const moment = guidedMoment(session, seconds);
+  const phase = moment.segment.gesture;
+  if (!phase || moment.complete) return undefined;
+  const end = session.segments[moment.index + 1]?.at ?? session.seconds;
+  const progress = Math.max(0, Math.min(1, (seconds - moment.segment.at) / (end - moment.segment.at)));
+  return { phase, amount: phase === 'in' ? progress : 1 - progress };
 }

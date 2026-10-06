@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import "@fontsource-variable/atkinson-hyperlegible-next";
+// Reading comfort font options. Browsers only download a font's files when someone picks it.
+import "@fontsource-variable/lexend";
+import "@fontsource/opendyslexic/400.css";
+import "@fontsource/opendyslexic/700.css";
+import { readingComfortScript } from "@/lib/reading-comfort";
 import "./globals.css";
 import "./everyday.css";
 import "./welcome.css";
@@ -35,7 +40,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      {/* Applies the saved Reading comfort choice before the first paint. */}
+      <head><script dangerouslySetInnerHTML={{ __html: readingComfortScript }} /></head>
       <body className="antialiased">{children}</body>
     </html>
   );

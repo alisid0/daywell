@@ -4,15 +4,15 @@
 .stillwater-dock[data-tabs="5"] button{min-width:96px;padding:10px 14px;gap:8px}
 @media(max-width:767px){
   .stillwater-dock[data-tabs="5"]{left:12px;right:12px;transform:none;max-width:none;justify-content:space-between;gap:2px;padding:5px}
-  .stillwater-dock[data-tabs="5"] button{flex:1;min-width:0;min-height:52px;padding:7px 2px;gap:3px;flex-direction:column;font-size:14px}
+  .stillwater-dock[data-tabs="5"] button{flex:1;min-width:0;min-height:52px;padding:7px 2px;gap:3px;flex-direction:column;font-size:calc(14px*var(--rc-scale,1))}
   .stillwater-dock[data-tabs="5"] button svg{width:19px;height:19px}
 }
 
 /* Today: the everyday extras below the host */
 .today-extras{display:grid;justify-items:center;gap:8px;margin:20px auto 120px}
-.today-extras>span{font-size:14px;font-weight:700;color:var(--dw-muted,#86607a)}
+.today-extras>span{font-size:calc(14px*var(--rc-scale,1));font-weight:700;color:var(--dw-muted,#86607a)}
 .today-extras>div{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
-.today-extras button{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:10px 16px;border-radius:999px;background:var(--dw-surface,#fff8fb);border:1px solid var(--dw-line,#ebd3e1);color:var(--dw-ink,#522d46);font-size:14px}
+.today-extras button{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:10px 16px;border-radius:999px;background:var(--dw-surface,#fff8fb);border:1px solid var(--dw-line,#ebd3e1);color:var(--dw-ink,#522d46);font-size:calc(14px*var(--rc-scale,1))}
 .today-extras button svg{color:var(--dw-accent,#803c65)}
 .today-extras button:hover{background:var(--dw-soft,#f3dce8)}
 .today-extras button:focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:3px}
@@ -26,21 +26,21 @@
 .well-space .calendar-strip{margin:0 0 22px}
 .rest-space .calendar-strip{margin:26px auto 8px}
 .calendar-strip-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.calendar-strip-head b{font-size:14px}
-.calendar-strip-head>span{display:inline-flex;align-items:center;gap:2px;color:var(--dw-accent,#803c65);font-weight:700;font-size:14px}
+.calendar-strip-head b{font-size:calc(14px*var(--rc-scale,1))}
+.calendar-strip-head>span{display:inline-flex;align-items:center;gap:2px;color:var(--dw-accent,#803c65);font-weight:700;font-size:calc(14px*var(--rc-scale,1))}
 .calendar-strip-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
 .calendar-strip-days>span{display:grid;justify-items:center;gap:2px;padding:5px 0;border-radius:12px}
-.calendar-strip-days small{font-size:14px;color:var(--dw-muted,#86607a)}
-.calendar-strip-days b{font-size:14px;font-variant-numeric:tabular-nums}
+.calendar-strip-days small{font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#86607a)}
+.calendar-strip-days b{font-size:calc(14px*var(--rc-scale,1));font-variant-numeric:tabular-nums}
 .calendar-strip-days .calendar-strip-today{background:var(--dw-soft,#f3dce8)}
 .calendar-strip-dots{display:flex;gap:2px;justify-content:center;min-height:6px}
 .calendar-strip:hover{border-color:var(--dw-accent,#803c65)}
 .calendar-strip:focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:3px}
 
 /* Calendar: back to the area it was opened from, and the area filter */
-.calendar-back{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:8px 0;color:var(--dw-accent,#803c65);font-weight:700;font-size:14px}
+.calendar-back{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:8px 0;color:var(--dw-accent,#803c65);font-weight:700;font-size:calc(14px*var(--rc-scale,1))}
 .calendar-areas{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
-.calendar-areas button{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--dw-line,#ebd3e1);background:var(--dw-surface,#fff8fb);color:var(--dw-ink,#522d46);font-size:14px}
+.calendar-areas button{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--dw-line,#ebd3e1);background:var(--dw-surface,#fff8fb);color:var(--dw-ink,#522d46);font-size:calc(14px*var(--rc-scale,1))}
 .calendar-areas button[aria-pressed="true"]{background:var(--dw-accent,#803c65);border-color:var(--dw-accent,#803c65);color:var(--dw-on-accent,#fff7fb);font-weight:700}
 .calendar-areas button[aria-pressed="true"] .area-dot{box-shadow:0 0 0 2px var(--dw-on-accent,#fff7fb)}
 .calendar-legend{flex-wrap:wrap}

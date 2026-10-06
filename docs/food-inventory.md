@@ -53,7 +53,7 @@ The test suite runs the actual queries against SQLite with transactional batches
 
 ## Frontend handoff
 
-Keep the selected Cosy cove style. The proposed Eat structure is **My kitchen · Next meals · Shopping**, with the meal journal/calendar retained. Build and approve an interactive before/after preview under the repository's existing preview-first workflow before replacing the visible screen.
+Keep the selected Cosy cove style. The proposed Eat structure is **Food basket · Next meals · Shopping**, with the meal journal/calendar retained. The owner chose **Food basket** as the user-facing name on 6 October 2026; use that label consistently in future screens. Build and approve an interactive before/after preview under the repository's existing preview-first workflow before replacing the visible screen.
 
 The UI must review ingredient recognition and uncertain quantities before saving; show actual purchased packs and actual cooking usage; explicitly confirm using another meal's reserved stock; preserve drafts on failure; and never infer calorie values from a stock deduction. Expand the curated recipe collection and store reviewed quantity snapshots when creating plans. The main Daywell host can propose these actions later, but it must not bypass confirmation.
 

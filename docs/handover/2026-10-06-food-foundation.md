@@ -10,4 +10,6 @@ Not verified: production hosting and identity, Android/iPhone devices, food-scre
 
 Next: review the proposed Eat screens, connect them to this API, add quantity-reviewed recipe plans and ingredient capture, and exercise failure/retry flows in the UI. Resolve the hosting/developer-account/Mac access decisions in the mobile release plan alongside this work. Native and production identity work must not be marked complete from passing web tests.
 
+Owner naming correction: the inventory tab is **Food basket**. The proposed navigation is **Food basket · Next meals · Shopping**. The naming update changes preview copy and design notes only; the backend behaviour is unchanged.
+
 After merging: update from GitHub and run `npm run setup` on each machine to apply migrations 0002/0003. Source sync does not carry local food records. The existing audio changes are still in PR 17; merge the food foundation deliberately rather than overwriting that branch. Use the PR's head commit as the published checkpoint; the PR description records its final lint/CI results and any missing checks.

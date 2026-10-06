@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, Play, Square, Volume2, VolumeX } from "lucide-react";
 import Link from "next/link";
 import { CompanionPortrait } from "@/components/daywell-companions";
+import { CompanionMotionControl } from "@/components/companion-motion-preference";
 import { responseInGroup } from "@/lib/audio-library";
 import { useLibraryAudio } from "./use-library-audio";
 import type { AppState } from "./use-daywell";
@@ -49,8 +50,8 @@ export function RestSpace({ a, bedtime = false, onLeave }: { a: AppState; bedtim
   return <section className={`rest-space ${bedtime ? "rest-bedtime" : ""}`} aria-labelledby="rest-heading">
     <button className="well-text-button rest-leave" onClick={() => { silence(); if (onLeave) onLeave(); else a.setActive("today"); }}><ArrowLeft size={17} />{bedtime ? "Back to sleep" : "Back to my day"}</button>
     <div className="rest-intro"><span>{bedtime ? "A softer end to the day" : "Your quiet corner"}</span><h1 id="rest-heading">{bedtime ? "You can leave the day here." : "Nothing to do. Just be."}</h1><p>{bedtime ? "Settle somewhere comfortable. Let the next thing wait." : "A little distance from the feed. No timer. No catching up."}</p></div>
-    <div className="rest-nest"><CompanionPortrait id="luma" size={270} decorative eager /></div>
-    <p className="rest-words" aria-live="polite">{guided ? moments[step].text : "Luma is here with you. Stay as long as you like."}</p>
+    <div className="rest-nest"><CompanionPortrait id="luma" size={270} motion={bedtime ? "sleepy" : "idle"} decorative eager /></div>
+    <CompanionMotionControl /><p className="rest-words" aria-live="polite">{guided ? moments[step].text : "Luma is here with you. Stay as long as you like."}</p>
     <div className="well-actions rest-controls"><button className="well-button" aria-pressed={guided} onClick={() => { recording.stop(); setGuided(!guided); setStep(0); }}>{guided ? "Return to quiet" : "A little guidance"}</button><button className="well-button well-secondary" aria-pressed={sound} onClick={() => void toggleSound()}>{sound ? <VolumeX size={17} /> : <Volume2 size={17} />}{sound ? "Turn sound off" : "Soft rustling sound"}</button></div>
     {guided && <div className="well-actions"><button className="well-button well-secondary" disabled={!recording.ready(moments[step])} onClick={() => recording.status !== "idle" ? recording.stop() : void recording.play(moments[step])}>{recording.status !== "idle" ? <Square size={16} /> : <Play size={16} />}{recording.status !== "idle" ? "Stop listening" : "Listen to these words"}</button><button className="well-text-button" onClick={() => { recording.stop(); if (step === moments.length - 1) { setGuided(false); setStep(0); } else setStep(step + 1); }}>{step === moments.length - 1 ? "Stay quietly" : "Next, when I’m ready"}</button></div>}
     {recording.error && <p role="alert">{recording.error}</p>}

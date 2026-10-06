@@ -12,6 +12,14 @@ Preview:
 ## Not yet verified
 <!-- Anything you couldn't check, so it isn't mistaken for done. -->
 
+## Session handover
+<!-- Both machines follow docs/github-workflow.md. The current PR head is the published checkpoint. -->
+- Branch:
+- Next step / remaining work:
+- Setup needed on the other machine:
+- Any work still local, and why:
+- [ ] Session changes pushed and remote commit verified
+
 ## After merging
 <!-- Delete what doesn't apply. -->
 - Run `npm run setup` once: this adds a database migration.

@@ -22,6 +22,7 @@ import "./audio-library.css";
 import "./meditation.css";
 import "./mic-states.css";
 import "./navigation.css";
+import "./bottom-menu.css";
 import "./companion-motion.css";
 import "./typography.css";
 

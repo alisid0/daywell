@@ -4,6 +4,8 @@ A cosy home for Move, Relax, Eat and Sleep, with one host and a quiet place to p
 
 Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 
+**Private phone hosting:** the [Cloudflare hosting guide](docs/cloudflare-hosting.md) prepares an owned Workers/D1 deployment behind verified Cloudflare Access sign-in. `npm run cloudflare:check` validates packaging without deploying; `npm run cloudflare:build` requires the account's completed local profile. Hosted sign-in, records and real-device voice must still be verified after connection.
+
 **Current release direction:** prepare Android and iPhone versions for early-November store review. See the [mobile release plan](docs/mobile-release-plan.md) for the working 5 November 2026 deadline, launch scope, account dependencies and acceptance checks. These are release targets; the current local MVP is not yet a store-ready build.
 
 **Working on either machine? GitHub is the source of truth.** Read [the shared session workflow](docs/github-workflow.md): fetch before starting, then commit, push and verify the GitHub handover before ending each session. A local preview is not a saved or merged version. Coding assistants must also read [AGENTS.md](AGENTS.md); [CLAUDE.md](CLAUDE.md) points to the same rules.

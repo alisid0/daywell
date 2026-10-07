@@ -6,6 +6,7 @@ import { readExecutionProfile } from "./scripts/execution-profile.mjs";
 import { sites } from "./build/sites-vite-plugin";
 import { connectorPreview } from "./build/connector-preview-plugin.mjs";
 import { localVoiceSetup } from "./build/local-voice-setup";
+import { readCloudflareConfig } from "./scripts/cloudflare-config.mjs";
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
   "00000000-0000-4000-8000-000000000000";
@@ -40,6 +41,8 @@ const localBindingConfig = {
 };
 
 export default defineConfig(async ({ command }) => {
+  const ownedHosting = process.env.DAYWELL_CLOUDFLARE_PROFILE;
+  if (ownedHosting && command !== "build") throw new Error("Use cloudflare:build for owned hosting; npm run dev remains local only.");
   // Use Miniflare's local Request.cf placeholder unless fetching is requested.
   process.env.CLOUDFLARE_CF_FETCH_ENABLED ??= "false";
   process.env.WRANGLER_SEND_METRICS ??= "false";
@@ -65,14 +68,12 @@ export default defineConfig(async ({ command }) => {
     },
     plugins: [
       vinext(),
-      sites({ mockAuth: !managedLinux }),
-      localVoiceSetup({ enabled: !managedLinux }),
-      connectorPreview(),
+      ...(!ownedHosting ? [sites({ mockAuth: !managedLinux }), localVoiceSetup({ enabled: !managedLinux }), connectorPreview()] : []),
       cloudflare({
         viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
         inspectorPort: false,
         config: {
-          ...localBindingConfig,
+          ...(ownedHosting ? readCloudflareConfig(ownedHosting) : localBindingConfig),
           ...(command === "serve"
             ? {
                 services: [

@@ -14,13 +14,13 @@ GitHub is authoritative. The integrated baseline was `main` at `8473aa8` when th
 | --- | --- | --- |
 | Android and iOS | No native projects or signed release builds in the repository | Reproducible builds, Android test APK and store AAB, signed iOS build and TestFlight distribution |
 | Hosting and identity | Local Cloudflare database and development identity; old Sites reference returned not found for the connected account | Confirm hosting ownership, deploy an authenticated online backend and test with separate users |
-| Eat | Three ingredient-ranked recipes, shopping entries and manual meal journal | Persistent inventory, quantities, meal plans, purchasing and cooking updates, reviewed photo assistance |
+| Eat | Connected Food basket, editable plans, actual purchases, partial cooking/leftovers, journal and undo on PR 26; local browser verified | Review/integrate PR 26; add reviewed ingredient-photo assistance and verify the complete flow on hosted accounts and both phones |
 | Audio and voice | Existing guided recordings and live voice integration; guided audio pauses when the page is hidden | Real-device microphone tests, appropriate audio interruptions, guided screen-off playback and bounded live usage |
 | Payments | Prices discussed, but no store billing implementation | Verified store purchases, restore, cancellations, refunds and server-side entitlements |
 | Personal data | Per-user records and some exports; no complete account deletion flow | Published privacy information, explicit AI sharing consent, export and account/data deletion |
 | Release operations | Web CI exists | Mobile CI, device evidence, store metadata, reviewer access and rollback procedure |
 
-Implementation checkpoint, 6 October: the [food inventory foundation](food-inventory.md) adds the persistent model/API, reviewed planning windows, transactional purchase/cooking history and retry/undo protection. Frontend wiring, recipe/photo review and mobile verification remain open; do not mark the complete food-cycle milestone done from this checkpoint.
+Implementation checkpoint, 6 October: the [food inventory foundation](food-inventory.md) adds the persistent model/API, reviewed planning windows, transactional purchase/cooking history and retry/undo protection. The 7 October frontend checkpoint connects Food basket, Next meals and Shopping with quantity-reviewed recipe drafts, safe network retry and explicit conflict review. The real local D1/browser journey passed, including partial cooking, leftovers and undo. Ingredient-photo review, broader recipe/content review, hosted identity and mobile verification remain open; do not mark the complete food-cycle or launch milestone done from this checkpoint.
 
 ## Decisions required by 8 October
 

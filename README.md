@@ -324,7 +324,7 @@ Dependabot opens weekly pull requests for dependency updates; they go through th
 
 ## Limits and allowances
 
-The connected food backend now supports persistent stock, reviewed two/three/seven-day plans, shopping calculations, purchases, partial cooking, leftovers and undo through `/api/food`. **The Eat screen is not connected to it yet.** See [the food inventory contract](docs/food-inventory.md) for integration, migrations 0002/0003 and verification limits.
+The Eat screen at `/eat` now connects **Food basket · Next meals · Shopping** to `/api/food`: persistent ingredient amounts, editable meal plans over two/three/seven days, derived shopping, actual bought packs, partial cooking, leftovers, meal history and guarded undo. It retains drafts when switching areas and requires review after a conflicting save. Three editable recipe starting ideas are included; ingredient-photo assistance, online identity and native builds remain open. See [the food inventory contract](docs/food-inventory.md) for migrations 0002/0003 and verification limits.
 
 - Live voice: 6 conversation starts per person per 10 minutes.
 - Photo and voice capture: 20 checks per person per day.

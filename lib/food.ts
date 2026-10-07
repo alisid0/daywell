@@ -49,6 +49,13 @@ export type Stock = Omit<z.infer<typeof stockInput>, "unit"> & { unit: Unit; cha
 export type Plan = Omit<z.infer<typeof planInput>, "ingredients"> & { ingredients: IngredientAmount[]; changedBy: string };
 export type Shopping = z.infer<typeof shoppingInput> & { changedBy: string };
 export type FoodState = { version: 1; stock: Stock[]; plans: Plan[]; shopping: Shopping[] };
+const storedUnit = z.enum(["g", "ml", "each", "portion"]);
+export const foodStateSchema = z.object({
+  version: z.literal(1),
+  stock: z.array(stockInput.extend({ unit: storedUnit, quantity: z.number().finite().min(0).max(1_000_000_000).nullable(), changedBy: id })),
+  plans: z.array(planInput.extend({ ingredients: z.array(requirement.extend({ unit: storedUnit, quantity: z.number().finite().min(0).max(1_000_000_000) })), changedBy: id })),
+  shopping: z.array(shoppingInput.extend({ changedBy: id })),
+});
 type Change<T> = { id: string; before: T | null; after: T | null };
 export type MealRecord = { id: string; data: { title: string; date: string; meal: "Breakfast" | "Lunch" | "Dinner" | "Snack"; calories: number; protein: number; carbs: number; fat: number; nutritionKnown: boolean } };
 export type FoodEffect = {
@@ -171,9 +178,9 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
     for (const used of action.consumed) {
       const lot = state.stock.find(item => item.id === used.stockId);
       const quantity = measured(used.quantity, used.unit);
-      if (!lot || lot.quantity === null) throw new FoodError("Confirm the amount in your kitchen before recording what you used.");
+      if (!lot || lot.quantity === null) throw new FoodError("Confirm the amount in your food basket before recording what you used.");
       if (lot.unit !== quantity.unit) throw new FoodError("Use a matching unit for the amount you cooked.", 400);
-      if (quantity.quantity > lot.quantity) throw new FoodError("There is less in your recorded kitchen than that. Check the amount first.");
+      if (quantity.quantity > lot.quantity) throw new FoodError("There is less in your recorded food basket than that. Check the amount first.");
       put(state.stock, { ...lot, quantity: round(lot.quantity - quantity.quantity), changedBy: operationId });
     }
     if (plan) {

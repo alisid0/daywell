@@ -77,7 +77,7 @@ under **Your tools & saved day**, the bottom bar, and the sidebar in the classic
 - Saved activities survive reload; encouragement does not replay missed cues.
   Keep Daywell open for timers, alarms and spoken guidance.
 
-Without credentials, Daywell uses bounded everyday commands. Connecting an ElevenLabs agent enables open voice and AI text conversations.
+Without credentials, Daywell uses bounded everyday commands plus friendly replies to greetings, thanks and help requests. “Hello”, “Hi Daywell” and “What can you do?” need no AI call, and do not save anything or dismiss a pending plan. A greeting can precede a supported command, such as “Hello Daywell, focus for ten minutes”. New local replies and browser speech errors scroll into view above the phone menu. Connecting an ElevenLabs agent enables open voice and AI text conversations. Credentials belong to each checkout's ignored local setup; switching previews does not copy them through GitHub.
 Use **Things you can say** for supported phrases. Examples include “Add milk
 and focus on my email for ten minutes”, “Help me wind down”, “Start a walk for
 fifteen minutes”, “Set an alarm for 7 am”, “Log a meal”, and “Undo that”.

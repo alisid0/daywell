@@ -12,6 +12,8 @@ Unverified: hosted identity/D1, separate real accounts, Android/iPhone devices, 
 
 Next: establish production identity/hosting and first signed device builds as the release plan's critical path; obtain the owner's developer-account/hosting choices. Add reviewed ingredient-photo capture as the next food increment. Complete account export/deletion for food state and receipts, and expand reviewed recipe content. Do not represent this as a finished launch build.
 
+Owner account update later on 7 October: Google account reported ready; Apple account not ready. Confirmation that Google means a registered, verified Play Console developer account is still pending. Keep Apple enrolment and hosting ownership open, and continue Android preparation without removing iPhone from the release target. This follow-up changes documentation only; reviewed the diff and enrolment link, with no app tests rerun.
+
 Other machine: fetch this branch; use the pinned install workflow only if dependencies differ, then `npm run setup` to apply the existing migrations, followed by `npm run check`. Start the preview from this branch and open `/eat`. Local credentials and saved data are not transferred by Git. PR 17's extra audio work remains separate and must be reviewed/integrated deliberately.
 
 No deployment, store purchase, paid audio generation or live agent update was performed. The isolated preview runs on port 5184; the original audio checkout and its private records were not changed. Ignored local browser screenshots/test helpers and local test storage are not project source or release evidence for real devices.

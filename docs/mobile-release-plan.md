@@ -24,8 +24,9 @@ Implementation checkpoint, 6 October: the [food inventory foundation](food-inven
 
 ## Decisions required by 8 October
 
+- Owner update, 7 October: **Google account reported ready; Apple account not yet ready.** Clarification is pending on whether Google means a registered, verified Google Play Console developer account. Do not mark Play publishing access or production eligibility verified from this statement alone. Apple enrolment remains an owner dependency; Android preparation can progress while the shared iPhone release target remains in scope.
 - Confirm the exact November deadline and whether it is for submission or public availability.
-- Confirm Apple Developer and Google Play Console enrolment, account type, verification and access. The owner completes identity, agreements and payment steps; credentials stay out of GitHub and chat.
+- Complete [Apple Developer Program enrolment](https://developer.apple.com/programs/enroll/) and confirm Google Play Console account type, verification and access. The owner completes identity, agreements and payment steps; credentials stay out of GitHub and chat.
 - Confirm a Mac with supported Xcode or an approved macOS build service, an iPhone and an Android phone for testing. Windows alone cannot produce an Xcode archive.
 - Confirm the hosting account, production address and staging address. The inaccessible legacy Sites reference is not evidence of a working production service.
 - Confirm launch countries and audience. The planning assumption is a UK, English-language adult wellbeing launch; it is not an approved age rating or a promise of worldwide availability.
@@ -38,7 +39,7 @@ Keep the selected Cosy cove direction, one Daywell host and the Move, Relax, Eat
 
 ### A complete food cycle
 
-- Save a kitchen inventory with canonical ingredient names, quantity, unit and a clear unknown-quantity state. Store optional user-confirmed dates; do not infer expiry or allergen safety from appearance.
+- Save a Food basket inventory with canonical ingredient names, quantity, unit and a clear unknown-quantity state. Store optional user-confirmed dates; do not infer expiry or allergen safety from appearance.
 - Let the user photograph, speak or type ingredients. Show a review before creating or changing inventory. Ask only the quantities needed for the selected recipe or plan.
 - Support two-, three- and seven-day plans with household servings, dietary exclusions, preparation time, confirmed inventory and a curated recipe collection. Swapping, moving, repeating or removing meals must update ingredient demand.
 - Distinguish stock on hand, stock reserved for future meals and stock available for other meals. Planning reserves ingredients without consuming them.

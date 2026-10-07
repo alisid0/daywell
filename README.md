@@ -324,6 +324,8 @@ Dependabot opens weekly pull requests for dependency updates; they go through th
 
 ## Limits and allowances
 
+The Eat screen at `/eat` now connects **Food basket · Next meals · Shopping** to `/api/food`: persistent ingredient amounts, editable meal plans over two/three/seven days, derived shopping, actual bought packs, partial cooking, leftovers, meal history and guarded undo. It retains drafts when switching areas and requires review after a conflicting save. Three editable recipe starting ideas are included; ingredient-photo assistance, online identity and native builds remain open. See [the food inventory contract](docs/food-inventory.md) for migrations 0002/0003 and verification limits.
+
 - Live voice: 6 conversation starts per person per 10 minutes.
 - Photo and voice capture: 20 checks per person per day.
 - Saved entries: up to 20,000 per person; edits to existing entries always fit.

@@ -319,11 +319,6 @@
         "Travel can disrupt your rhythm. Keep the next step gentle; if sleep problems persist, ask a healthcare professional for advice."
       ],
       [
-        "Can you prescribe a jet-lag supplement?",
-        "I cannot recommend a personal supplement or dose. Ask a pharmacist or clinician, especially if you take other medicines.",
-        "live"
-      ],
-      [
         "I miss my own bed.",
         "That familiar comfort matters. You can acknowledge missing it while making this resting place a little easier for tonight."
       ],
@@ -335,6 +330,17 @@
         "I need a travel wind-down that takes no equipment.",
         "Find a supported position, let your hands rest, and notice the room. Nothing special needs to be packed for that."
       ]
+    ],
+    "responseIds": [
+      "sleep-away-01",
+      "sleep-away-02",
+      "sleep-away-03",
+      "sleep-away-04",
+      "sleep-away-05",
+      "sleep-away-06",
+      "sleep-away-08",
+      "sleep-away-09",
+      "sleep-away-10"
     ]
   },
   {
@@ -368,11 +374,6 @@
         "Do not drive while too sleepy to do so safely. Arrange another way home or stop somewhere safe to rest."
       ],
       [
-        "Can Daywell plan a medical sleep schedule for shift work?",
-        "I can help organise your own plan, but personalised sleep treatment needs a qualified professional who understands your work and health.",
-        "live"
-      ],
-      [
         "I want to record daytime sleep.",
         "Use the sleep journal for the time you actually rested. Your night does not have to match a conventional bedtime.",
         "tool"
@@ -385,6 +386,17 @@
         "I need a gentle transition after being on call.",
         "Check whether you are still responsible for responding, then quiet what you can. Let your next moment ask less of you."
       ]
+    ],
+    "responseIds": [
+      "sleep-shifts-01",
+      "sleep-shifts-02",
+      "sleep-shifts-03",
+      "sleep-shifts-04",
+      "sleep-shifts-05",
+      "sleep-shifts-06",
+      "sleep-shifts-08",
+      "sleep-shifts-09",
+      "sleep-shifts-10"
     ]
   },
   {
@@ -450,10 +462,6 @@
         "Yes. You can choose a comfortable, low-demand pause without setting sleep as the outcome."
       ],
       [
-        "I am worried a nap will ruin tonight.",
-        "People respond differently to naps. Notice your own pattern, and ask a clinician if persistent sleep difficulties need personalised advice."
-      ],
-      [
         "I want a short rest before an evening event.",
         "Choose a comfortable place and a reliable reminder if you need to leave at a certain time. Keep the pause simple."
       ],
@@ -482,6 +490,17 @@
         "I woke from a nap feeling groggy.",
         "Give yourself a little time to become alert before demanding tasks. Avoid driving or risky activities while you still feel too sleepy."
       ]
+    ],
+    "responseIds": [
+      "sleep-resting-daytime-01",
+      "sleep-resting-daytime-02",
+      "sleep-resting-daytime-04",
+      "sleep-resting-daytime-05",
+      "sleep-resting-daytime-06",
+      "sleep-resting-daytime-07",
+      "sleep-resting-daytime-08",
+      "sleep-resting-daytime-09",
+      "sleep-resting-daytime-10"
     ]
   },
   {
@@ -514,11 +533,6 @@
         "You can choose how much to record. The journal should support noticing your rest, not make you grade every night."
       ],
       [
-        "Can you tell from my journal why I am tired?",
-        "A journal may show patterns, but it cannot diagnose a cause. Persistent tiredness deserves a conversation with a healthcare professional.",
-        "live"
-      ],
-      [
         "I slept in two separate stretches.",
         "Record the experience as accurately as the journal allows, and add a note about the separate stretches rather than implying uninterrupted sleep."
       ],
@@ -535,6 +549,17 @@
         "Look back through your saved days for repeated patterns and context. Avoid treating one unusually good or bad night as the whole story.",
         "tool"
       ]
+    ],
+    "responseIds": [
+      "sleep-journal-help-01",
+      "sleep-journal-help-02",
+      "sleep-journal-help-03",
+      "sleep-journal-help-04",
+      "sleep-journal-help-05",
+      "sleep-journal-help-07",
+      "sleep-journal-help-08",
+      "sleep-journal-help-09",
+      "sleep-journal-help-10"
     ]
   },
   {
@@ -589,64 +614,6 @@
       [
         "I want to wake up without feeling immediately behind.",
         "Plan a small first step rather than a whole perfect morning. Leave a little room before the day's demands, if you can."
-      ]
-    ]
-  },
-  {
-    "id": "sleep-extra-support",
-    "category": "sleep",
-    "title": "When sleep needs more support",
-    "companion": "luma",
-    "examples": [
-      [
-        "Will this meditation cure insomnia?",
-        "No recording can promise that. It can offer a quieter moment; persistent sleep difficulties are worth discussing with a healthcare professional.",
-        "live"
-      ],
-      [
-        "Should I take sleeping tablets tonight?",
-        "Please ask a pharmacist or prescriber about medicines for your situation. I cannot decide whether a sleeping tablet is appropriate for you.",
-        "live"
-      ],
-      [
-        "I snore loudly and someone notices pauses in my breathing.",
-        "Please discuss that with a healthcare professional. A relaxation recording cannot assess breathing problems during sleep.",
-        "live"
-      ],
-      [
-        "I keep falling asleep when I need to stay alert.",
-        "Avoid driving or risky tasks while sleepy, and seek medical advice about the repeated sleepiness. Your safety comes before finishing the task.",
-        "live"
-      ],
-      [
-        "I have barely slept for several nights and feel unusually wired.",
-        "Please seek prompt medical advice, especially with a marked change in energy or behaviour. A bedtime recording is not enough to assess this.",
-        "live"
-      ],
-      [
-        "Can you diagnose my sleep disorder?",
-        "I cannot diagnose sleep conditions. You can bring your observations and sleep notes to a qualified professional for assessment.",
-        "live"
-      ],
-      [
-        "I want to stop a prescribed sleep medicine.",
-        "Speak with your prescriber before stopping or changing it. They can help you make an appropriate plan for that medicine.",
-        "live"
-      ],
-      [
-        "My sleep problems are affecting my work and relationships.",
-        "That sounds significant enough to ask for professional support. Your notes may help explain how long it has been happening and its impact.",
-        "live"
-      ],
-      [
-        "Is it safe to mix alcohol with my sleep medication?",
-        "Ask a pharmacist or prescriber before mixing them. If you have already taken them and feel seriously unwell, seek urgent medical help.",
-        "live"
-      ],
-      [
-        "I have a health condition and need tailored sleep advice.",
-        "Your clinician can advise around that condition and any treatment. Daywell can help you record observations, but cannot personalise medical sleep care.",
-        "live"
       ]
     ]
   },

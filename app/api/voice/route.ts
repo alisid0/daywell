@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   const giveBack = async () => { if (counted) await returnAllowances(counted, uses, now).catch(() => {}); };
   try {
     const db = database(), full = await takeAllowances(db, uses, now); if(full) return json({error:usedUp[full]},429); counted = db;
-    const response = await fetch(`https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(env.ELEVENLABS_AGENT_ID!)}`, {headers:{"xi-api-key":env.ELEVENLABS_API_KEY!},signal:AbortSignal.timeout(12000)});
+    const response = await fetch(`https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(env.ELEVENLABS_AGENT_ID!)}&include_conversation_id=true`, {headers:{"xi-api-key":env.ELEVENLABS_API_KEY!},signal:AbortSignal.timeout(12000)});
     if(!response.ok) { await giveBack(); return json({error:response.status===401||response.status===403?"ElevenLabs couldn’t authorise this connection. Check your key permissions and agent settings.":response.status===429?"ElevenLabs is at its conversation limit. Please try again shortly.":"ElevenLabs couldn’t start this conversation. Please try again."},502); }
     const result = await response.json() as { signed_url?: unknown };
     if(!safeSignedUrl(result.signed_url)) { await giveBack(); return json({error:"The voice service returned an invalid connection. Please try again."},502); }

@@ -3,7 +3,7 @@ import {useState} from "react";
 import {Sun,Palette,CalendarDays,LayoutGrid,Timer,AlarmClock,ListChecks,Moon,ShoppingBasket,Utensils,Footprints,SlidersHorizontal,Plus,Sparkles,ChevronRight,LoaderCircle,CloudCheck,AlertCircle} from "lucide-react";
 import {Sidebar,SidebarProvider,SidebarHeader,SidebarContent,SidebarFooter,SidebarMenu,SidebarMenuItem,SidebarMenuButton,SidebarTrigger,useSidebar} from "@/components/ui/sidebar";
 import {Button} from "@/components/ui/button";
-import {Toaster} from "sonner";
+import {Toaster,toast} from "sonner";
 import {today,displayTime,type Entry} from "@/lib/daywell";
 import {useDaywell} from "./use-daywell";
 import {FocusCard,FoodCard,TaskRows,Empty} from "./parts";
@@ -13,6 +13,7 @@ import {WelcomeFlow} from "./wellbeing-welcome";
 import {FirstSteps} from "./first-steps";
 import {DaySnapshot,QuickEntry} from "./everyday";
 import {filterTasks} from "@/lib/routines";
+import {CaptureHub} from "./capture-hub";
 import {DaywellHost} from "./daywell-host";
 import {CalendarWorkspace} from "./calendar-workspace";
 import {CalendarStrip} from "./calendar-strip";
@@ -33,15 +34,16 @@ export default function Daywell({showWelcome=false,initialView="today"}:{showWel
  {a.loadError&&<div className="error-banner" role="alert"><AlertCircle/><span>{a.loadError}</span><Button variant="outline" onClick={()=>void a.load()}>Try again</Button></div>}
  <div className="page-heading"><div><div className="eyebrow">{active==="today"?dateLabel:"Your everyday tools"}</div><h1>{active==="today"?(settings.name==="You"?"Make today feel good":`Your day, ${settings.name}`):active==="calendar"?"Calendar & history":modules.find(m=>m.id===active)?.name}<span>.</span></h1><p>{active==="today"?"Take it one thing at a time.":active==="calendar"?"Make plans. Remember your progress.":modules.find(m=>m.id===active)?.desc}</p></div>{active==="today"&&<span className="date-pill"><Sun size={18}/>Your own pace</span>}</div>
  {!a.loaded&&!a.loadError&&<div className="loading-state"><LoaderCircle className="spin"/>Opening your space…</div>}
- {a.loaded&&showStyles&&<AppearanceStudio look={look} name={settings.name} onDone={()=>setChoosingStyle(false)} onTry={()=>{setReviewingDesigns(true);setChoosingStyle(false);a.setActive("today");requestAnimationFrame(()=>window.scrollTo({top:0,behavior:"instant"}))}}/>}
+ {a.loaded&&showStyles&&<AppearanceStudio look={look} name={settings.name} onDone={()=>setChoosingStyle(false)} onUse={(name,saved)=>{setReviewingDesigns(true);setChoosingStyle(false);a.setActive("today");if(saved)toast.success(`${name} is now your design.`,{description:"Saved in this browser. You can change it any time."});else toast.warning(`${name} is applied for this visit.`,{description:"This browser couldn’t save your choice."});requestAnimationFrame(()=>window.scrollTo({top:0,behavior:"instant"}))}}/>}
  {a.loaded&&reviewingDesigns&&active==="today"&&<IterationReview look={look} onCompare={()=>setChoosingStyle(true)} onClose={()=>setReviewingDesigns(false)}/>}
+ {a.loaded&&active!=="eat"&&a.food.recovered&&<section className="well-card" role="status"><p>Your unfinished food details are waiting.</p><button className="well-button well-secondary" onClick={()=>a.setActive("eat")}>Return to my draft</button></section>}
  {a.loaded&&immersive&&active==="today"&&<CalendarStrip a={a} area="all"/>}
  {a.loaded&&<details className={active==="calendar"||(immersive&&active!=="today")?"calendar-host-disclosure":"calendar-host-always"} open={active!=="calendar"&&(!immersive||active==="today")}><summary>Talk or type to Daywell<span>One host, wherever you are</span></summary><DaywellHost a={a} immersive={immersive} cozy={cozy} company={look.current.company}/></details>}
  {a.loaded&&immersive&&active==="today"&&<nav className="today-extras" aria-label="Everyday extras"><span>Everyday extras</span><div>{EXTRAS.map(x=><button key={x.id} onClick={()=>a.setActive(x.id)}><x.icon size={16}/>{x.name}</button>)}</div></nav>}
  {a.loaded&&active==="calendar"&&<CalendarWorkspace a={a}/>}
  {a.loaded&&active==="today"&&<button className="calendar-home-link" onClick={()=>{a.setCalendarArea("all");a.setActive("calendar")}}><CalendarDays size={19}/><span>Calendar & history<small>What’s next, and how far you’ve come</small></span><ChevronRight size={17}/></button>}
  {a.loaded&&active==="today"&&<details className="host-tools"><summary>Your tools & saved day<span>Here whenever you need them</span></summary><TodayTools a={a}/></details>}
- {a.loaded&&active!=="today"&&active!=="calendar"&&<PillarWorkspace key={active} a={a}/>}<footer className="page-footer"><Sun size={15}/>Small steps. Better days.</footer></div></main><Dialogs a={a} modules={modules}/><Toaster position="bottom-right" richColors/></SidebarProvider>;
+ {a.loaded&&active!=="today"&&active!=="calendar"&&<PillarWorkspace key={active} a={a}/>}<footer className="page-footer"><Sun size={15}/>Small steps. Better days.</footer></div></main><Dialogs a={a} modules={modules}/>{a.loaded&&<CaptureHub a={a}/>}<Toaster position="bottom-right" richColors/></SidebarProvider>;
 }
 
 function TodayTools({a}:{a:ReturnType<typeof useDaywell>}){const {enabled,settings}=a,selected=modules.filter(m=>enabled(m.id)),tasks=filterTasks(a.entries,"today",today()),sleep=a.dayEntries("sleep").at(-1),movement=a.dayEntries("move").reduce((n,e)=>n+e.data.minutes,0),focused=a.dayEntries("session").reduce((n,e)=>n+e.data.minutes,0); function buildPlan(){const suggestions:Entry[]=[];if(!tasks.some(e=>!e.data.done))suggestions.push({id:crypto.randomUUID(),kind:"task",data:{title:"Choose and finish one meaningful priority",done:false,date:today(),minutes:25}});if(enabled("move"))suggestions.push({id:crypto.randomUUID(),kind:"task",data:{title:"Take a 15-minute walk",done:false,date:today(),minutes:15}});if(enabled("sleep"))suggestions.push({id:crypto.randomUUID(),kind:"task",data:{title:`Start winding down at ${displayTime(settings.bedtime)}`,done:false,date:today(),minutes:15}});a.setPlan(suggestions.filter(s=>!a.dayEntries("task").some(e=>e.data.title===s.data.title)))}

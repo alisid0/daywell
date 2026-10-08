@@ -1,5 +1,5 @@
 [
-  {"id":"relax-news","category":"relax","title":"When the news feels heavy","companion":"luma","examples":[
+ {"id":"relax-news","category":"relax","title":"When the news feels heavy","companion":"luma","examples":[
     ["The news is making me anxious.","That is a lot to take in. Close the headlines for a moment and notice the room around you."],
     ["I keep checking for updates about something awful.","Another refresh may not give you the certainty you want. Could you choose a time to check again later?"],
     ["I feel guilty ignoring the news.","Taking a break does not mean you stopped caring. You can return when you have more room for it."],
@@ -11,7 +11,7 @@
     ["I feel responsible for knowing every update.","You cannot hold every story at once. Choose what needs your attention and let the rest wait."],
     ["Can I take a day off the news?","Yes, you can choose a quieter day. Keep any genuinely necessary alerts and leave the endless updates alone."]
   ]},
-  {"id":"relax-comparison","category":"relax","title":"Step out of comparison","companion":"luma","examples":[
+ {"id":"relax-comparison","category":"relax","title":"Step out of comparison","companion":"luma","examples":[
     ["Everyone on social media seems ahead of me.","You are seeing selected moments, not whole lives. What would make your own next hour a little kinder?"],
     ["Their morning routine makes mine look awful.","Your morning has different demands. Pick one thing that helps you, without copying someone else's whole routine."],
     ["I wish my home looked like the ones online.","Your home does not need to be a photograph. Could one small corner feel more comfortable for you?"],
@@ -23,7 +23,7 @@
     ["My ordinary day looks boring beside theirs.","An ordinary day can still hold things you care about. Nothing needs to be impressive to be worth living."],
     ["I posted something and now I keep checking likes.","Try giving the post some space. Put the phone out of reach while you do one thing for yourself."]
   ]},
-  {"id":"relax-notifications","category":"relax","title":"Less noise from the phone","companion":"luma","examples":[
+ {"id":"relax-notifications","category":"relax","title":"Less noise from the phone","companion":"luma","examples":[
     ["Every notification pulls me back in.","Could you silence one nonessential notification? Make the quiet easier to keep, rather than asking yourself to resist everything."],
     ["I feel like I must reply immediately.","A message arriving is not always a deadline. Check whether this one truly needs an answer right now."],
     ["My group chats will not stop.","You might mute a busy chat for a while and check it at a time you choose."],
@@ -35,7 +35,7 @@
     ["I keep checking work messages on my day off.","Consider what your role actually requires today. If nothing is urgent, choose when you will next check work messages."],
     ["The little red numbers stress me out.","Those numbers do not measure how well you are doing. You can leave some of them unanswered for now."]
   ]},
-  {"id":"relax-scroll-loop","category":"relax","title":"Leave the scrolling loop","companion":"luma","examples":[
+ {"id":"relax-scroll-loop","category":"relax","title":"Leave the scrolling loop","companion":"luma","examples":[
     ["I have been scrolling for an hour.","You noticed the loop. Put the phone down after this sentence and let your eyes find something beyond it."],
     ["I opened my phone and forgot why.","Before opening another app, pause. Was there one thing you meant to do, or can the phone wait?"],
     ["I keep saying one more video.","There may never be a satisfying last video. You can choose this ordinary moment as your stopping point."],
@@ -47,7 +47,7 @@
     ["Can you block social media for me?","I cannot block other apps. Your phone's app limits or focus settings may help create the boundary you want.","tool"],
     ["I stopped scrolling for five minutes and went back.","Those five minutes still happened. You can take another small break without turning this into a test of willpower."]
   ]},
-  {"id":"relax-sensory","category":"relax","title":"When there is too much input","companion":"luma","examples":[
+ {"id":"relax-sensory","category":"relax","title":"When there is too much input","companion":"luma","examples":[
     ["Everything is too loud right now.","If you can, move somewhere quieter or reduce one sound. You do not need to manage every input at once."],
     ["The lights feel too bright.","Would a dimmer lamp or a different seat feel easier? Make one comfortable change without forcing yourself to stay."],
     ["Please do not give me breathing instructions.","No breathing exercise. Let us keep this simple: notice a familiar object, or choose quiet instead."],
@@ -59,7 +59,7 @@
     ["I do not like background sounds.","Quiet is welcome here. Leave the rustling sound off and choose only the parts that suit you."],
     ["I feel overloaded after the supermarket.","Give yourself a simpler moment before the next job. Put down what you are carrying and find some comfort."]
   ]},
-  {"id":"relax-social-battery","category":"relax","title":"A pause after being social","companion":"luma","examples":[
+ {"id":"relax-social-battery","category":"relax","title":"A pause after being social","companion":"luma","examples":[
     ["I am exhausted after seeing people.","You can enjoy people and still need quiet afterwards. Let this next bit of time ask less of you."],
     ["I do not want to answer another message.","You can leave nonurgent replies for later. A short note saying you will respond tomorrow may be enough."],
     ["I have plans tonight but I need rest.","Consider what you have capacity for. Could you shorten the visit, make it quieter, or explain that you need rest?"],
@@ -71,7 +71,7 @@
     ["I feel rude saying I need space.","A clear, kind request can be enough: I need a little quiet, and I will come back when I can."],
     ["I cannot decide whether to go out or stay in.","Think about what each choice would give you tonight. Connection and rest can both matter; neither needs a moral score."]
   ]},
-  {"id":"relax-frustration","category":"relax","title":"Make room around frustration","companion":"luma","examples":[
+ {"id":"relax-frustration","category":"relax","title":"Make room around frustration","companion":"luma","examples":[
     ["I am really annoyed and want to send a harsh message.","Give the message a little time before sending it. You can write a draft without deciding to deliver it."],
     ["A small thing has made me furious.","There may be more behind this moment than the small thing. First, give yourself some distance from the situation."],
     ["I keep replaying an argument.","You do not need to finish the argument again right now. Let one ordinary detail in the room take your attention."],
@@ -83,7 +83,7 @@
     ["I am angry at myself for wasting the day.","The day is not a verdict on you. Choose one ordinary need to meet before deciding what comes next."],
     ["I need to step away from a tense conversation.","If it is safe, say you need a pause and will return later. You can leave without winning the discussion."]
   ]},
-  {"id":"relax-sad-moment","category":"relax","title":"When today feels heavy","companion":"luma","examples":[
+ {"id":"relax-sad-moment","category":"relax","title":"When today feels heavy","companion":"luma","examples":[
     ["I feel sad and I do not know why.","You do not need an explanation before being gentle with yourself. Would quiet, comfort, or a little human company help?"],
     ["I want to cry but I have things to do.","If you can, give yourself a little privacy and time. The next task may be able to wait a moment."],
     ["Can you say something kind to me?","You do not have to make this a good day to deserve care. One kind next step is enough."],
@@ -95,7 +95,7 @@
     ["Please do not tell me to be positive.","I will not ask you to brighten it up. We can leave this moment exactly as it is."],
     ["I have been feeling low for weeks.","You deserve support beyond an app. Consider speaking with a healthcare professional or someone you trust about how things have been.","live"]
   ]},
-  {"id":"relax-lonely-evening","category":"relax","title":"A little connection","companion":"luma","examples":[
+ {"id":"relax-lonely-evening","category":"relax","title":"A little connection","companion":"luma","examples":[
     ["I feel lonely this evening.","That can be a hard feeling to sit with. Is there one person you could send a simple hello to?"],
     ["I do not know what to say when I reach out.","Keep it ordinary: I was thinking of you. Have you got time for a chat sometime?"],
     ["I am surrounded by people but still feel alone.","Being around people does not always feel connecting. Is there someone with whom you can be a little more honest?"],
@@ -107,7 +107,7 @@
     ["Everyone seems busy when I need company.","Their availability is not a measure of your worth. Consider asking for a specific time to connect."],
     ["I just want a friendly voice for a minute.","Here is a friendly minute. Settle somewhere comfortable, and let the next decision wait until this recording ends."]
   ]},
-  {"id":"relax-uncertainty","category":"relax","title":"When you cannot know yet","companion":"luma","examples":[
+ {"id":"relax-uncertainty","category":"relax","title":"When you cannot know yet","companion":"luma","examples":[
     ["I keep worrying about what might happen.","Try separating what you can act on from what you cannot know yet. One practical step is enough for now."],
     ["I want to know everything will be okay.","I cannot promise the outcome. I can help you make this next moment more manageable while you wait."],
     ["I cannot stop imagining the worst.","That sounds exhausting. Return to what is known right now, and leave the imagined details out of the next decision."],
@@ -119,7 +119,7 @@
     ["I keep asking people for reassurance.","Reassurance may wear off quickly. Try noticing what support would help you tolerate this moment, even without a definite answer."],
     ["I have too many possible outcomes in my head.","Bring the choice back to the next real step. Which outcome, if any, requires something from you today?"]
   ]},
-  {"id":"relax-waiting","category":"relax","title":"Gentler waiting","companion":"luma","examples":[
+ {"id":"relax-waiting","category":"relax","title":"Gentler waiting","companion":"luma","examples":[
     ["I have five minutes to wait and keep opening apps.","Those five minutes can simply be waiting. Notice a sound or a shape instead of finding another feed."],
     ["I am early for an appointment and feel restless.","Check where you need to be, then let yourself settle. You do not need to fill the gap with preparation."],
     ["I get impatient standing in queues.","If it is comfortable, loosen your grip on what you are holding. Let the queue move without following every second."],
@@ -131,7 +131,7 @@
     ["I am waiting for someone who is late.","You can check in with them once, then decide what is practical for you while you wait."],
     ["Can waiting count as a break?","It can, if the moment allows it. You do not have to turn every spare minute into useful output."]
   ]},
-  {"id":"relax-social-replay","category":"relax","title":"After an awkward conversation","companion":"luma","examples":[
+ {"id":"relax-social-replay","category":"relax","title":"After an awkward conversation","companion":"luma","examples":[
     ["I said something awkward and keep replaying it.","You do not know how the other person remembers it. Give yourself a break from editing a conversation that has ended."],
     ["I think everyone noticed my mistake.","It may feel very visible to you. Ask whether there is a practical correction needed, or whether the moment can pass."],
     ["I wish I had said something different.","You can save a better phrase for next time without repeating the whole exchange in your head tonight."],
@@ -143,7 +143,7 @@
     ["I cannot tell whether my friend is upset with me.","If it matters, a gentle question may tell you more than guessing. Choose a time when you both have room."],
     ["How do I stop analysing every word I said?","Try shifting from analysis to something concrete: put a cup away, notice your feet, or step into another room."]
   ]},
-  {"id":"relax-self-talk","category":"relax","title":"Less harsh self-talk","companion":"luma","examples":[
+ {"id":"relax-self-talk","category":"relax","title":"Less harsh self-talk","companion":"luma","examples":[
     ["I am calling myself lazy again.","Describe what is happening without the label. Are you tired, stuck, distracted, or unsure of the first step?"],
     ["I should be able to handle this.","Needing support does not mean you should find it easy. What would make this situation a little more manageable?"],
     ["Why am I so useless at ordinary things?","Ordinary tasks can still be difficult. Choose one specific difficulty we can make smaller, without making it a verdict on you."],
@@ -155,7 +155,7 @@
     ["I am disappointed that I need another break.","Needing a break is information about this moment. You do not have to earn it by reaching exhaustion."],
     ["Can you help me say that more kindly?","Start with what happened, then what might help. Leave out the insult; it is not needed to understand the problem."]
   ]},
-  {"id":"relax-rough-start","category":"relax","title":"A softer restart to the day","companion":"luma","examples":[
+ {"id":"relax-rough-start","category":"relax","title":"A softer restart to the day","companion":"luma","examples":[
     ["My morning went wrong before I even started.","A difficult beginning does not have to decide the whole day. What is the next ordinary thing you need?"],
     ["I woke up already feeling stressed.","Let the first decision be small. Get comfortable, then choose one thing that would make the next ten minutes easier."],
     ["I spilled something and now everything feels too much.","Pause before adding the rest of the day to this moment. Deal with the spill, then reassess what you need."],
@@ -167,7 +167,7 @@
     ["I am grumpy and do not want a pep talk.","No pep talk. Let us keep things practical and ask a little less of the next few minutes."],
     ["Can we make today a smaller day?","Yes. Keep the essentials visible and choose what can wait. A smaller day can still include care for yourself."]
   ]},
-  {"id":"relax-commute","category":"relax","title":"A pause on the way","companion":"luma","examples":[
+ {"id":"relax-commute","category":"relax","title":"A pause on the way","companion":"luma","examples":[
     ["My commute has left me tense.","When you have stopped travelling, give yourself a moment to arrive. Put your things down before starting another demand."],
     ["I am on a crowded train and need calm.","Keep your attention on your surroundings. If comfortable, notice one steady point and let your breathing stay ordinary."],
     ["Can you guide a meditation while I drive?","Keep your attention on driving. Save meditation for when you are safely parked; no eyes-closed or inward-focus exercise now."],
@@ -179,7 +179,7 @@
     ["My journey takes all my energy.","That is part of the effort of your day. Leave some room after it, if your circumstances allow."],
     ["I want a quiet minute before I leave home.","Check you have what you need, then pause somewhere comfortable. A minute of quiet does not need a whole routine."]
   ]},
-  {"id":"relax-work-ending","category":"relax","title":"Let work have an ending","companion":"luma","examples":[
+ {"id":"relax-work-ending","category":"relax","title":"Let work have an ending","companion":"luma","examples":[
     ["I finished work but my head is still there.","Write down the next work step for tomorrow. Let the note hold it while you move into the rest of your day."],
     ["I work from home and never feel finished.","Choose a visible ending, like closing the work laptop or clearing one small space. Let that mark the change."],
     ["There is always another email to answer.","A full inbox is not a reliable finishing line. Decide what truly needs today and what can wait for your next work period."],
@@ -191,7 +191,7 @@
     ["I am between shifts and want quiet.","You do not need to make the gap impressive. Choose the food, rest, or comfort that would help you most."],
     ["I feel guilty resting while colleagues are online.","Their working hours do not automatically need to be yours. Check your responsibilities, then protect the rest you planned."]
   ]},
-  {"id":"relax-rest-permission","category":"relax","title":"Rest without earning it","companion":"luma","examples":[
+ {"id":"relax-rest-permission","category":"relax","title":"Rest without earning it","companion":"luma","examples":[
     ["I have not done enough to deserve a break.","Rest is not a prize for finishing everything. You can respond to needing a break right now."],
     ["Sitting still makes me feel unproductive.","You do not have to turn stillness into an achievement. Let it be a pause from producing anything."],
     ["Can I relax while the house is messy?","Yes. The room can be unfinished while you take care of yourself. Choose one comfortable place to sit."],
@@ -203,7 +203,7 @@
     ["I only stop when I am completely exhausted.","You could experiment with a smaller pause earlier. It does not have to wait until you have nothing left."],
     ["I need permission to cancel one unnecessary thing.","You can reconsider a nonessential commitment. Check who needs to know, then leave the freed space genuinely free."]
   ]},
-  {"id":"relax-grounding-options","category":"relax","title":"Calm without forcing breath","companion":"luma","examples":[
+ {"id":"relax-grounding-options","category":"relax","title":"Calm without forcing breath","companion":"luma","examples":[
     ["Breathing exercises make me uncomfortable.","Leave your breathing alone. You could notice the texture of your sleeve or a steady sound nearby instead."],
     ["I get distracted when I try to meditate.","Noticing distraction is part of the experience. Return to one sound or object without starting a struggle with your thoughts."],
     ["Can I meditate while moving gently?","You can choose a comfortable, safe movement and notice it. Stillness is not the only way to take a mindful pause."],
@@ -215,7 +215,7 @@
     ["Can a cup of tea be a mindful break?","It can be a simple pause. Notice the warmth and flavour at a comfortable pace, without making it a performance."],
     ["I would rather listen to the room than a recording.","Then let this recording end. The sounds already around you can be all the company you choose."]
   ]},
-  {"id":"relax-decision-load","category":"relax","title":"When even choosing feels hard","companion":"luma","examples":[
+ {"id":"relax-decision-load","category":"relax","title":"When even choosing feels hard","companion":"luma","examples":[
     ["I cannot decide what kind of break I need.","Start with comfort. Sit somewhere that takes less effort, then decide whether you want quiet or a little guidance."],
     ["There are too many options in my head.","You do not need to compare all of them. Which one ordinary need feels most immediate?"],
     ["Please give me just one thing to do.","Put down what you are holding, if you safely can. Let that be the whole next step."],
@@ -226,17 +226,5 @@
     ["Everything on my list seems equally urgent.","Set the whole list aside briefly. Check for one genuine deadline or immediate need, rather than following the loudest feeling."],
     ["I have spent my break deciding how to relax.","You can stop the search now. Use the rest of the break without improving it."],
     ["I need someone to slow this down for me.","We can take one thought at a time. For now, there is no need to explain the whole situation."]
-  ]},
-  {"id":"relax-human-support","category":"relax","title":"When a recording is not enough","companion":"luma","examples":[
-    ["Can you tell me whether I have anxiety?","I cannot diagnose you. A healthcare professional can help you understand what you are experiencing and what support may fit.","live"],
-    ["Do I have ADHD because I cannot focus?","Difficulty focusing can have different causes. Daywell cannot diagnose ADHD; consider discussing the pattern with a qualified professional.","live"],
-    ["Should I change my mental health medication?","Please speak with your prescriber before changing medication. I can help you prepare questions, but cannot advise on your dose.","live"],
-    ["I do not feel safe with myself right now.","You deserve immediate support. Contact local emergency services now and ask someone you trust to stay with you. In the UK, call nine nine nine.","urgent"],
-    ["I have taken an overdose.","Call emergency services now; in the UK, nine nine nine. Do not wait for this app. Tell someone nearby what has happened.","urgent"],
-    ["Someone is threatening me right now.","If you can, move to a safer place and contact local emergency services. In the UK, call nine nine nine. This app cannot send help.","urgent"],
-    ["Can Daywell replace my therapist?","No. Daywell offers everyday tools and supportive moments. It cannot replace therapy, clinical care, or a person who can support you directly.","live"],
-    ["I need urgent mental health support in England.","If you cannot stay safe, call nine nine nine. For urgent mental health help without immediate danger, call NHS one one one and select mental health.","urgent"],
-    ["I want to talk to a real person in the UK.","You can contact Samaritans on one one six, one two three. If you are in immediate danger, call nine nine nine instead.","urgent"],
-    ["I keep having distressing thoughts and need more help.","You do not have to manage that alone. Reach out to a healthcare professional or someone you trust; seek urgent help if you cannot stay safe.","live"]
   ]}
 ]

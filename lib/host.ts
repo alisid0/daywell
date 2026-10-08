@@ -1,4 +1,5 @@
 import type { Entry, Kind } from "./daywell";
+import { wellnessBoundary } from "./wellness-scope.ts";
 
 export type SupportLevel = "quiet" | "occasional" | "guided";
 export type ActivityCompanion = "pip" | "luma" | "bounce" | "tock";
@@ -11,6 +12,7 @@ export type HostRequest =
   | { type: "plan"; actions: HostAction[] }
   | { type: "control"; command: "confirm" | "cancel" | "undo" | "changes" | "pause" | "resume" | "end" }
   | { type: "support"; level: SupportLevel }
+  | { type: "reply"; message: string }
   | { type: "open"; module: string; kind?: Kind; view?: "plan" | "history" }
   | { type: "unknown"; message: string };
 
@@ -19,8 +21,18 @@ const unknown = (message = 'Try “Add milk to my list”, “Focus on my email 
 
 // Intentionally bounded commands: an unsupported clause never silently becomes a saved task.
 export function parseHostRequest(input: string): HostRequest {
-  let text = input.trim().replace(/[.!?]+$/, "").replace(/^(?:hey |hi )?daywell[, ]+/i, "").replace(/^please /i, "").replace(/ please$/i, "");
+  let text = input.trim().replace(/\s+/g, " ").replace(/[.!?]+$/, "").trim();
   if (!text || text.length > 600) return unknown("Use a short request of up to 600 characters. Nothing has changed.");
+  const boundary = wellnessBoundary(text);
+  if (boundary) return { type: "reply", message: boundary };
+  // Only complete social phrases are replies. Never swallow an accompanying task.
+  if (/^(?:(?:hello|hi|hey)(?:[ ,]+(?:there|daywell))?|good (?:morning|afternoon|evening)(?:[ ,]+daywell)?|daywell)$/i.test(text)) {
+    return { type: "reply", message: "Hello! I’m here. Would you like a quiet moment, or a little help with your day? You can say “Help me wind down” or choose Just rest." };
+  }
+  text = text.replace(/^(?:(?:hello|hi|hey)(?:[ ,]+daywell)?[ ,]+|daywell[ ,]+)/i, "").replace(/^please /i, "").replace(/ please$/i, "");
+  if (/^(?:thanks|thank you)(?:[ ,]+daywell| so much)?$/i.test(text)) return { type: "reply", message: "You’re welcome. Take your time—I’m here when you need a hand." };
+  if (/^(?:are you there|can you hear me|is this working)$/i.test(text)) return { type: "reply", message: "I received your message. You can type here, or tap Talk to Daywell to try voice." };
+  if (/^(?:help|what can you do|how (?:do i|can i) (?:start|use (?:this|daywell)))$/i.test(text)) return { type: "reply", message: "We can start small: try “Help me wind down”, “Focus for ten minutes”, or “Show my calendar”. Move, Eat, Sleep and Relax are below. Choose Just rest if you only need a pause." };
   const controls: [RegExp, "confirm" | "cancel" | "undo" | "changes" | "pause" | "resume" | "end"][] = [
     [/^(yes|yes please|confirm|do it|do this|go ahead|save it)$/i, "confirm"],
     [/^(no|cancel|never mind|nevermind)$/i, "cancel"], [/^undo(?: that| last change)?$/i, "undo"],

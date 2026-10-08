@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Conversation, Mode, Status } from "@elevenlabs/client";
+import { wellnessBoundary } from "@/lib/wellness-scope";
 
 type Options = { onMessage: (role: "user" | "agent", message: string) => void; onRequest: (parameters: unknown) => Promise<string> };
 export function useElevenAgent(options: Options) {
@@ -9,11 +10,12 @@ export function useElevenAgent(options: Options) {
   useEffect(() => { current.current = options; }, [options]);
   const session = useRef<Conversation | null>(null), generation = useRef(0), controller = useRef<AbortController | null>(null), mounted = useRef(true), connecting = useRef(false);
   const duration = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [muted, setMuted] = useState(false);
   const stop = useCallback(async () => {
     generation.current++; connecting.current = false; controller.current?.abort(); controller.current = null;
     if(duration.current) clearTimeout(duration.current); duration.current = null;
     const running = session.current; session.current = null;
-    if(mounted.current) setStatus("disconnected");
+    if(mounted.current) { setStatus("disconnected"); setMuted(false); }
     try { await running?.endSession(); } catch { /* A dropped connection is already stopped. */ }
   }, []);
   useEffect(() => {
@@ -31,7 +33,7 @@ export function useElevenAgent(options: Options) {
     window.dispatchEvent(new Event("daywell-stop-guided-audio"));
     connecting.current = true; const attempt = ++generation.current;
     const valid = () => mounted.current && generation.current === attempt;
-    setError(""); setStatus("connecting");
+    setError(""); setMuted(false); setStatus("connecting");
     controller.current = new AbortController();
     const timeout = setTimeout(()=>{if(valid()){setError("The conversation took too long to connect. Please try again.");void stop();}},30000);
     try {
@@ -48,8 +50,13 @@ export function useElevenAgent(options: Options) {
         onConversationCreated: conversation => { if(valid()) session.current=conversation; else void conversation.endSession(); },
         onStatusChange: ({status:next})=>{if(valid())setStatus(next);},
         onModeChange: ({mode:next})=>{if(valid())setMode(next);},
-        onMessage: ({role,message})=>{if(valid())current.current.onMessage(role,message);},
-        onDisconnect: ()=>{if(valid()) void stop();},
+        onMessage: ({role,message})=>{
+          if (!valid()) return;
+          current.current.onMessage(role,message);
+          const boundary = role === "user" ? wellnessBoundary(message) : undefined;
+          if (boundary) { void stop(); current.current.onMessage("agent",boundary); }
+        },
+        onDisconnect: details=>{if(valid()){if(details.reason === "error") setError("The connection ended. Your unsent message is still here. Reconnect when you’re ready."); void stop();}},
         onError: ()=>{if(valid()){setError("The conversation was interrupted. Check microphone access and your connection, then try again.");void stop();}},
         onUnhandledClientToolCall: ()=>{if(valid())setError("This agent requested a tool Daywell doesn’t support. Check the Daywell agent setup.");},
         onMCPToolApprovalRequest: async()=>false,
@@ -63,9 +70,17 @@ export function useElevenAgent(options: Options) {
     } finally { clearTimeout(timeout); if(valid())connecting.current=false; }
   }
   function send(text: string) {
-    if(!text.trim() || !session.current) return;
-    try { session.current.sendUserMessage(text.trim().slice(0,600)); current.current.onMessage("user",text.trim()); }
-    catch { setError("That message didn’t send. Please reconnect and try again."); }
+    if(!text.trim()) return false;
+    const boundary = wellnessBoundary(text);
+    if (boundary) { current.current.onMessage("user",text.trim()); void stop(); current.current.onMessage("agent",boundary); return true; }
+    if(!session.current?.isOpen()) { setError("The conversation has ended. Your message is still here; reconnect to send it."); void stop(); return false; }
+    try { session.current.sendUserMessage(text.trim().slice(0,600)); current.current.onMessage("user",text.trim()); return true; }
+    catch { setError("That message didn’t send. Please reconnect and try again."); return false; }
   }
-  return {configured,checking,status,mode,error,start,stop,send};
+  function toggleMuted() {
+    if(!session.current?.isOpen()) return;
+    try { session.current.setMicMuted(!muted); setMuted(!muted); }
+    catch { setError("Couldn’t change the microphone. End the conversation to stop sharing audio."); }
+  }
+  return {configured,checking,status,mode,error,muted,toggleMuted,start,stop,send};
 }

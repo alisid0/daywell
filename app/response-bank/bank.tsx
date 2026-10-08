@@ -18,11 +18,11 @@ export default function ResponseBank() {
   return <main className="audio-library response-bank">
     <header className="audio-library-top"><Link href="/audio-library" onClick={audio.stop}><ArrowLeft size={17}/>Back to Just listen</Link><span>A library to explore</span></header>
     <div className="audio-library-intro"><h1>In your own words.</h1><p>{examples.length.toLocaleString('en-GB')} things someone might say to Daywell, with a prepared reply for each.</p></div>
-    <p className="response-bank-note">These are examples you can listen to. Playing a reply does not set an alarm, save a task, or read your personal history. Requests that need an action or further support are labelled.</p>
+    <p className="response-bank-note">These are examples you can listen to. Playing a reply does not set an alarm, save a task, or read your personal history. Requests that need an app action or an ordinary conversation are labelled. Medical and crisis examples are excluded from this collection.</p>
     <div className="response-bank-filters">
       <label className="audio-search"><Search size={18}/><span className="sr-only">Search questions and replies</span><input type="search" placeholder="Try “long journey” or “dinner”…" value={query} onChange={event=>{audio.stop();setQuery(event.target.value);setPage(0);}}/></label>
       <label><span className="sr-only">Filter by area</span><select aria-label="Filter by area" value={category} onChange={event=>{audio.stop();setCategory(event.target.value as AudioCategory | '');setPage(0);}}><option value="">Every area</option>{audioCategories.map(item=><option key={item.id} value={item.id}>{item.label}</option>)}</select></label>
-      <a href="/audio-library/response-catalogue.json" download="daywell-1500-responses.json"><Download size={16}/>Download all 1,500 scripts</a>
+      <a href="/audio-library/response-catalogue.json" download="daywell-wellness-responses.json"><Download size={16}/>Download {audioResponses.length.toLocaleString("en-GB")} scripts</a>
     </div>
     <p className="response-bank-count" role="status">{results.length ? `${results.length.toLocaleString('en-GB')} examples · showing ${page*40+1}–${Math.min((page+1)*40,results.length)}` : 'No examples found. Try another phrase or area.'}</p>
     {audio.error && <p className="audio-error" role="alert">{audio.error}</p>}

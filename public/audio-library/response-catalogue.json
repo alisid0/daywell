@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "description": "Daywell prepared audio catalogue. 500 original comfort scripts and 1,000 new user-utterance / reply pairs.",
-  "note": "Examples are not an automatic intent router. Tool actions, personal answers and urgent requests need appropriate handling; playback must not imply an action has happened.",
+  "description": "Daywell general-wellness audio catalogue: 1417 published recordings.",
+  "note": "Examples are not an automatic intent router. Medical and crisis examples are excluded. App actions require explicit confirmation; playback must not imply an action has happened.",
   "entries": [
     {
       "id": "relax-arrive-01",
@@ -6594,116 +6594,6 @@
       "recording": "/audio-library/relax-decision-load-10-9d0f91ebde99.mp3"
     },
     {
-      "id": "relax-human-support-01",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "Can you tell me whether I have anxiety?",
-      "text": "I cannot diagnose you. A healthcare professional can help you understand what you are experiencing and what support may fit.",
-      "handling": "live",
-      "recording": "/audio-library/relax-human-support-01-0cdfc1d91186.mp3"
-    },
-    {
-      "id": "relax-human-support-02",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "Do I have ADHD because I cannot focus?",
-      "text": "Difficulty focusing can have different causes. Daywell cannot diagnose ADHD; consider discussing the pattern with a qualified professional.",
-      "handling": "live",
-      "recording": "/audio-library/relax-human-support-02-e84350819e60.mp3"
-    },
-    {
-      "id": "relax-human-support-03",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "Should I change my mental health medication?",
-      "text": "Please speak with your prescriber before changing medication. I can help you prepare questions, but cannot advise on your dose.",
-      "handling": "live",
-      "recording": "/audio-library/relax-human-support-03-b9e22f350c86.mp3"
-    },
-    {
-      "id": "relax-human-support-04",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "I do not feel safe with myself right now.",
-      "text": "You deserve immediate support. Contact local emergency services now and ask someone you trust to stay with you. In the UK, call nine nine nine.",
-      "handling": "urgent",
-      "recording": "/audio-library/relax-human-support-04-2a76c7f850ca.mp3"
-    },
-    {
-      "id": "relax-human-support-05",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "I have taken an overdose.",
-      "text": "Call emergency services now; in the UK, nine nine nine. Do not wait for this app. Tell someone nearby what has happened.",
-      "handling": "urgent",
-      "recording": "/audio-library/relax-human-support-05-7e06fbd026b9.mp3"
-    },
-    {
-      "id": "relax-human-support-06",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "Someone is threatening me right now.",
-      "text": "If you can, move to a safer place and contact local emergency services. In the UK, call nine nine nine. This app cannot send help.",
-      "handling": "urgent",
-      "recording": "/audio-library/relax-human-support-06-ee6b84f92af3.mp3"
-    },
-    {
-      "id": "relax-human-support-07",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "Can Daywell replace my therapist?",
-      "text": "No. Daywell offers everyday tools and supportive moments. It cannot replace therapy, clinical care, or a person who can support you directly.",
-      "handling": "live",
-      "recording": "/audio-library/relax-human-support-07-779469e9c279.mp3"
-    },
-    {
-      "id": "relax-human-support-08",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "I need urgent mental health support in England.",
-      "text": "If you cannot stay safe, call nine nine nine. For urgent mental health help without immediate danger, call NHS one one one and select mental health.",
-      "handling": "urgent",
-      "recording": "/audio-library/relax-human-support-08-d630f45797b3.mp3"
-    },
-    {
-      "id": "relax-human-support-09",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "I want to talk to a real person in the UK.",
-      "text": "You can contact Samaritans on one one six, one two three. If you are in immediate danger, call nine nine nine instead.",
-      "handling": "urgent",
-      "recording": "/audio-library/relax-human-support-09-415ed8aefa81.mp3"
-    },
-    {
-      "id": "relax-human-support-10",
-      "groupId": "relax-human-support",
-      "category": "relax",
-      "title": "When a recording is not enough",
-      "companion": "luma",
-      "prompt": "I keep having distressing thoughts and need more help.",
-      "text": "You do not have to manage that alone. Reach out to a healthcare professional or someone you trust; seek urgent help if you cannot stay safe.",
-      "handling": "live",
-      "recording": "/audio-library/relax-human-support-10-822e75a54fc4.mp3"
-    },
-    {
       "id": "sleep-delaying-01",
       "groupId": "sleep-delaying",
       "category": "sleep",
@@ -7430,17 +7320,6 @@
       "recording": "/audio-library/sleep-away-06-9af29035134c.mp3"
     },
     {
-      "id": "sleep-away-07",
-      "groupId": "sleep-away",
-      "category": "sleep",
-      "title": "Settling away from home",
-      "companion": "luma",
-      "prompt": "Can you prescribe a jet-lag supplement?",
-      "text": "I cannot recommend a personal supplement or dose. Ask a pharmacist or clinician, especially if you take other medicines.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-away-07-67551bec68b0.mp3"
-    },
-    {
       "id": "sleep-away-08",
       "groupId": "sleep-away",
       "category": "sleep",
@@ -7538,17 +7417,6 @@
       "text": "Do not drive while too sleepy to do so safely. Arrange another way home or stop somewhere safe to rest.",
       "handling": "recorded",
       "recording": "/audio-library/sleep-shifts-06-2415361deadd.mp3"
-    },
-    {
-      "id": "sleep-shifts-07",
-      "groupId": "sleep-shifts",
-      "category": "sleep",
-      "title": "Rest around shifts and changing hours",
-      "companion": "luma",
-      "prompt": "Can Daywell plan a medical sleep schedule for shift work?",
-      "text": "I can help organise your own plan, but personalised sleep treatment needs a qualified professional who understands your work and health.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-shifts-07-890b0b508901.mp3"
     },
     {
       "id": "sleep-shifts-08",
@@ -7716,17 +7584,6 @@
       "recording": "/audio-library/sleep-resting-daytime-02-5e00fc94ba49.mp3"
     },
     {
-      "id": "sleep-resting-daytime-03",
-      "groupId": "sleep-resting-daytime",
-      "category": "sleep",
-      "title": "Rest during the day",
-      "companion": "luma",
-      "prompt": "I am worried a nap will ruin tonight.",
-      "text": "People respond differently to naps. Notice your own pattern, and ask a clinician if persistent sleep difficulties need personalised advice.",
-      "handling": "recorded",
-      "recording": "/audio-library/sleep-resting-daytime-03-c13948b502c2.mp3"
-    },
-    {
       "id": "sleep-resting-daytime-04",
       "groupId": "sleep-resting-daytime",
       "category": "sleep",
@@ -7857,17 +7714,6 @@
       "text": "You can choose how much to record. The journal should support noticing your rest, not make you grade every night.",
       "handling": "recorded",
       "recording": "/audio-library/sleep-journal-help-05-b59c30ce4feb.mp3"
-    },
-    {
-      "id": "sleep-journal-help-06",
-      "groupId": "sleep-journal-help",
-      "category": "sleep",
-      "title": "Record rest without judging it",
-      "companion": "luma",
-      "prompt": "Can you tell from my journal why I am tired?",
-      "text": "A journal may show patterns, but it cannot diagnose a cause. Persistent tiredness deserves a conversation with a healthcare professional.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-journal-help-06-9c35a81e9f76.mp3"
     },
     {
       "id": "sleep-journal-help-07",
@@ -8022,116 +7868,6 @@
       "text": "Plan a small first step rather than a whole perfect morning. Leave a little room before the day's demands, if you can.",
       "handling": "recorded",
       "recording": "/audio-library/sleep-alarm-help-10-e01e391c5596.mp3"
-    },
-    {
-      "id": "sleep-extra-support-01",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "Will this meditation cure insomnia?",
-      "text": "No recording can promise that. It can offer a quieter moment; persistent sleep difficulties are worth discussing with a healthcare professional.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-01-6345fae20839.mp3"
-    },
-    {
-      "id": "sleep-extra-support-02",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "Should I take sleeping tablets tonight?",
-      "text": "Please ask a pharmacist or prescriber about medicines for your situation. I cannot decide whether a sleeping tablet is appropriate for you.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-02-3e5e6c28c1bd.mp3"
-    },
-    {
-      "id": "sleep-extra-support-03",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "I snore loudly and someone notices pauses in my breathing.",
-      "text": "Please discuss that with a healthcare professional. A relaxation recording cannot assess breathing problems during sleep.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-03-056d7ebc3681.mp3"
-    },
-    {
-      "id": "sleep-extra-support-04",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "I keep falling asleep when I need to stay alert.",
-      "text": "Avoid driving or risky tasks while sleepy, and seek medical advice about the repeated sleepiness. Your safety comes before finishing the task.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-04-1b871fda1804.mp3"
-    },
-    {
-      "id": "sleep-extra-support-05",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "I have barely slept for several nights and feel unusually wired.",
-      "text": "Please seek prompt medical advice, especially with a marked change in energy or behaviour. A bedtime recording is not enough to assess this.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-05-59aaa396fdd3.mp3"
-    },
-    {
-      "id": "sleep-extra-support-06",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "Can you diagnose my sleep disorder?",
-      "text": "I cannot diagnose sleep conditions. You can bring your observations and sleep notes to a qualified professional for assessment.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-06-ea9057f382e5.mp3"
-    },
-    {
-      "id": "sleep-extra-support-07",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "I want to stop a prescribed sleep medicine.",
-      "text": "Speak with your prescriber before stopping or changing it. They can help you make an appropriate plan for that medicine.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-07-c6a344437228.mp3"
-    },
-    {
-      "id": "sleep-extra-support-08",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "My sleep problems are affecting my work and relationships.",
-      "text": "That sounds significant enough to ask for professional support. Your notes may help explain how long it has been happening and its impact.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-08-06cd5cf036fd.mp3"
-    },
-    {
-      "id": "sleep-extra-support-09",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "Is it safe to mix alcohol with my sleep medication?",
-      "text": "Ask a pharmacist or prescriber before mixing them. If you have already taken them and feel seriously unwell, seek urgent medical help.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-09-3ca0555b6a31.mp3"
-    },
-    {
-      "id": "sleep-extra-support-10",
-      "groupId": "sleep-extra-support",
-      "category": "sleep",
-      "title": "When sleep needs more support",
-      "companion": "luma",
-      "prompt": "I have a health condition and need tailored sleep advice.",
-      "text": "Your clinician can advise around that condition and any treatment. Daywell can help you record observations, but cannot personalise medical sleep care.",
-      "handling": "live",
-      "recording": "/audio-library/sleep-extra-support-10-53c1a8219c87.mp3"
     },
     {
       "id": "sleep-late-screen-01",
@@ -8660,17 +8396,6 @@
       "text": "Start with a gentle change of position. Give yourself room to move without trying to undo the whole day at once.",
       "handling": "recorded",
       "recording": "/audio-library/move-desk-pause-08-56da7ee81493.mp3"
-    },
-    {
-      "id": "move-desk-pause-09",
-      "groupId": "move-desk-pause",
-      "category": "move",
-      "title": "A break from the desk",
-      "companion": "bounce",
-      "prompt": "Can I stretch through the pain in my neck?",
-      "text": "Do not push through pain. Stop the movement and seek appropriate professional advice if the pain persists or concerns you.",
-      "handling": "live",
-      "recording": "/audio-library/move-desk-pause-09-a7d44f1630ad.mp3"
     },
     {
       "id": "move-desk-pause-10",
@@ -9498,17 +9223,6 @@
       "recording": "/audio-library/move-recovery-day-04-03ed5bb8b6db.mp3"
     },
     {
-      "id": "move-recovery-day-05",
-      "groupId": "move-recovery-day",
-      "category": "move",
-      "title": "Recovery belongs in the plan",
-      "companion": "bounce",
-      "prompt": "I am recovering from an illness.",
-      "text": "Return gradually and follow any medical advice you have. If symptoms persist or you are unsure, ask a healthcare professional before exercising.",
-      "handling": "recorded",
-      "recording": "/audio-library/move-recovery-day-05-6596cafa0025.mp3"
-    },
-    {
       "id": "move-recovery-day-06",
       "groupId": "move-recovery-day",
       "category": "move",
@@ -9562,116 +9276,6 @@
       "text": "Give rest its own place in the plan. You can describe it as recovery, or simply leave that space unfilled.",
       "handling": "recorded",
       "recording": "/audio-library/move-recovery-day-10-39bfa8daa3c2.mp3"
-    },
-    {
-      "id": "move-discomfort-01",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "This exercise hurts sharply.",
-      "text": "Stop that movement. Do not push through sharp pain; seek appropriate medical advice, especially if pain is severe or persistent.",
-      "handling": "live",
-      "recording": "/audio-library/move-discomfort-01-201ea6603fb1.mp3"
-    },
-    {
-      "id": "move-discomfort-02",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "I feel dizzy during my workout.",
-      "text": "Stop exercising and get somewhere safe to rest. Seek urgent help if symptoms are severe, persistent, or accompanied by other concerning symptoms.",
-      "handling": "live",
-      "recording": "/audio-library/move-discomfort-02-9377b89e638f.mp3"
-    },
-    {
-      "id": "move-discomfort-03",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "I have chest pain and feel short of breath while exercising.",
-      "text": "Stop and call emergency services now. In the UK, call nine nine nine. Do not continue the workout or wait for this app.",
-      "handling": "urgent",
-      "recording": "/audio-library/move-discomfort-03-ad014be42c6a.mp3"
-    },
-    {
-      "id": "move-discomfort-04",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "My knee hurts in this squat.",
-      "text": "Stop the squat rather than forcing the range. A qualified professional can help assess the pain and suggest a suitable alternative.",
-      "handling": "live",
-      "recording": "/audio-library/move-discomfort-04-e11c5bf05297.mp3"
-    },
-    {
-      "id": "move-discomfort-05",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "Should I push through because the routine says so?",
-      "text": "No. A routine is not more important than pain or feeling unwell. Stop and choose appropriate support.",
-      "handling": "recorded",
-      "recording": "/audio-library/move-discomfort-05-9d9b46957a25.mp3"
-    },
-    {
-      "id": "move-discomfort-06",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "I am sore after trying something new.",
-      "text": "Keep the next activity gentle and avoid forcing painful movement. Seek professional advice if the soreness is severe, unusual or does not improve.",
-      "handling": "recorded",
-      "recording": "/audio-library/move-discomfort-06-29d93116ee9c.mp3"
-    },
-    {
-      "id": "move-discomfort-07",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "Can you tell whether I have pulled a muscle?",
-      "text": "I cannot assess an injury from this recording. Stop the painful activity and seek appropriate professional advice.",
-      "handling": "live",
-      "recording": "/audio-library/move-discomfort-07-d556d61a28b6.mp3"
-    },
-    {
-      "id": "move-discomfort-08",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "My joint is swollen after exercise.",
-      "text": "Avoid pushing the affected area and get medical advice. This needs assessment rather than a motivational message to continue.",
-      "handling": "live",
-      "recording": "/audio-library/move-discomfort-08-b47638d4ed68.mp3"
-    },
-    {
-      "id": "move-discomfort-09",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "I do not know the difference between effort and pain.",
-      "text": "If you are unsure, stop and ask a qualified professional. You do not need to discover the limit by forcing through discomfort.",
-      "handling": "recorded",
-      "recording": "/audio-library/move-discomfort-09-4722b418d7d9.mp3"
-    },
-    {
-      "id": "move-discomfort-10",
-      "groupId": "move-discomfort",
-      "category": "move",
-      "title": "Listen when movement feels wrong",
-      "companion": "bounce",
-      "prompt": "I feel unwell but want to finish the last set.",
-      "text": "End the set and attend to how you feel. Finishing the number is not worth ignoring a possible health problem.",
-      "handling": "recorded",
-      "recording": "/audio-library/move-discomfort-10-f497d1709533.mp3"
     },
     {
       "id": "move-accessible-01",
@@ -10191,17 +9795,6 @@
       "recording": "/audio-library/move-learning-form-07-25acaf1045dd.mp3"
     },
     {
-      "id": "move-learning-form-08",
-      "groupId": "move-learning-form",
-      "category": "move",
-      "title": "Understand before increasing effort",
-      "companion": "bounce",
-      "prompt": "Can you correct my posture from what I tell you?",
-      "text": "I cannot reliably assess your movement from a short description. A qualified coach or clinician can observe and guide you.",
-      "handling": "live",
-      "recording": "/audio-library/move-learning-form-08-99f3141343a6.mp3"
-    },
-    {
       "id": "move-learning-form-09",
       "groupId": "move-learning-form",
       "category": "move",
@@ -10442,116 +10035,6 @@
       "text": "Returning is worth noticing. Keep the celebration gentle and let the next session stay manageable.",
       "handling": "recorded",
       "recording": "/audio-library/move-returning-10-29042a6dc87a.mp3"
-    },
-    {
-      "id": "move-personal-limits-01",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "I have a heart condition; which workout is safe?",
-      "text": "Please ask your healthcare team for exercise guidance specific to your condition. A generic routine cannot establish what is safe for you.",
-      "handling": "live",
-      "recording": "/audio-library/move-personal-limits-01-9ccc30995ce8.mp3"
-    },
-    {
-      "id": "move-personal-limits-02",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "I am pregnant and want a new workout plan.",
-      "text": "Ask your maternity team or a qualified pregnancy exercise professional about suitable activity. This recording cannot tailor a plan to your pregnancy.",
-      "handling": "live",
-      "recording": "/audio-library/move-personal-limits-02-24a9facdc093.mp3"
-    },
-    {
-      "id": "move-personal-limits-03",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "I have just had surgery and want to exercise.",
-      "text": "Follow your surgical team's recovery instructions and ask before adding exercise. Daywell cannot clear you to train.",
-      "handling": "live",
-      "recording": "/audio-library/move-personal-limits-03-82cc7bd01def.mp3"
-    },
-    {
-      "id": "move-personal-limits-04",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "I am returning after an injury.",
-      "text": "Use the return-to-activity advice from your clinician or physiotherapist. Do not treat a generic app routine as rehabilitation.",
-      "handling": "live",
-      "recording": "/audio-library/move-personal-limits-04-cf9b26f4ff3f.mp3"
-    },
-    {
-      "id": "move-personal-limits-05",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "Can you guarantee these exercises will prevent disease?",
-      "text": "No. Movement can support wellbeing, but Daywell cannot promise disease prevention or a particular medical outcome.",
-      "handling": "live",
-      "recording": "/audio-library/move-personal-limits-05-c9f2f178d20a.mp3"
-    },
-    {
-      "id": "move-personal-limits-06",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "I want to exercise to punish myself for eating.",
-      "text": "You do not need to earn or undo food through exercise. Choose care over punishment, and seek support if this pattern is hard to interrupt.",
-      "handling": "live",
-      "recording": "/audio-library/move-personal-limits-06-a34ebcb0cd70.mp3"
-    },
-    {
-      "id": "move-personal-limits-07",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "I want to train through a fever.",
-      "text": "Do not use this app to push through illness. Rest and seek medical advice if you are unwell or unsure about returning to exercise.",
-      "handling": "live",
-      "recording": "/audio-library/move-personal-limits-07-6bb73f84591d.mp3"
-    },
-    {
-      "id": "move-personal-limits-08",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "Can you design rehabilitation for my back pain?",
-      "text": "Rehabilitation needs a qualified assessment. I can help you organise an existing professional plan, but cannot diagnose or prescribe one.",
-      "handling": "live",
-      "recording": "/audio-library/move-personal-limits-08-9ab7897d862a.mp3"
-    },
-    {
-      "id": "move-personal-limits-09",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "I feel faint and have collapsed during exercise.",
-      "text": "Get urgent medical help now. If someone is unconscious or seriously unwell, call local emergency services; in the UK, nine nine nine.",
-      "handling": "urgent",
-      "recording": "/audio-library/move-personal-limits-09-ddcb294c5587.mp3"
-    },
-    {
-      "id": "move-personal-limits-10",
-      "groupId": "move-personal-limits",
-      "category": "move",
-      "title": "When movement needs tailored advice",
-      "companion": "bounce",
-      "prompt": "Is this routine suitable for my child?",
-      "text": "These routines are not a personalised children's programme. Seek age-appropriate guidance from a qualified professional rather than adapting an adult routine blindly.",
-      "handling": "live",
-      "recording": "/audio-library/move-personal-limits-10-1af76af2152d.mp3"
     },
     {
       "id": "eat-choosing-meal-01",
@@ -11071,17 +10554,6 @@
       "recording": "/audio-library/eat-flexible-planning-07-75554e443720.mp3"
     },
     {
-      "id": "eat-flexible-planning-08",
-      "groupId": "eat-flexible-planning",
-      "category": "eat",
-      "title": "A flexible meal plan",
-      "companion": "nori",
-      "prompt": "Can you make my entire meal plan personal to me?",
-      "text": "I would need your preferences, budget, schedule, and dietary needs. Medical nutrition plans should involve a qualified professional.",
-      "handling": "live",
-      "recording": "/audio-library/eat-flexible-planning-08-97cb15f74360.mp3"
-    },
-    {
       "id": "eat-flexible-planning-09",
       "groupId": "eat-flexible-planning",
       "category": "eat",
@@ -11533,17 +11005,6 @@
       "recording": "/audio-library/eat-snack-options-09-02536196fca2.mp3"
     },
     {
-      "id": "eat-snack-options-10",
-      "groupId": "eat-snack-options",
-      "category": "eat",
-      "title": "Something between meals",
-      "companion": "momo",
-      "prompt": "I want to stop using exercise to earn snacks.",
-      "text": "Food does not need to be earned through movement. If that rule feels hard to let go of, consider talking with an eating disorder professional.",
-      "handling": "live",
-      "recording": "/audio-library/eat-snack-options-10-24150ade84d1.mp3"
-    },
-    {
       "id": "eat-protein-options-01",
       "groupId": "eat-protein-options",
       "category": "eat",
@@ -11566,17 +11027,6 @@
       "recording": "/audio-library/eat-protein-options-02-69629859f44f.mp3"
     },
     {
-      "id": "eat-protein-options-03",
-      "groupId": "eat-protein-options",
-      "category": "eat",
-      "title": "Food alongside strength training",
-      "companion": "nori",
-      "prompt": "Do I have to buy protein powder?",
-      "text": "Protein powder is not essential for everyone. Ordinary food can provide protein, and personal needs are worth discussing with a qualified dietitian.",
-      "handling": "recorded",
-      "recording": "/audio-library/eat-protein-options-03-18dc5b746bec.mp3"
-    },
-    {
       "id": "eat-protein-options-04",
       "groupId": "eat-protein-options",
       "category": "eat",
@@ -11588,17 +11038,6 @@
       "recording": "/audio-library/eat-protein-options-04-238ddddf6bab.mp3"
     },
     {
-      "id": "eat-protein-options-05",
-      "groupId": "eat-protein-options",
-      "category": "eat",
-      "title": "Food alongside strength training",
-      "companion": "nori",
-      "prompt": "How much protein should I eat for my body?",
-      "text": "That depends on factors including your health and activity. A registered dietitian can help work out an appropriate amount.",
-      "handling": "live",
-      "recording": "/audio-library/eat-protein-options-05-90ceeee0ec18.mp3"
-    },
-    {
       "id": "eat-protein-options-06",
       "groupId": "eat-protein-options",
       "category": "eat",
@@ -11608,17 +11047,6 @@
       "text": "You could add beans, tofu, egg, fish, or another suitable food you enjoy to a familiar lunch.",
       "handling": "recorded",
       "recording": "/audio-library/eat-protein-options-06-445d78032efd.mp3"
-    },
-    {
-      "id": "eat-protein-options-07",
-      "groupId": "eat-protein-options",
-      "category": "eat",
-      "title": "Food alongside strength training",
-      "companion": "nori",
-      "prompt": "Can you tell me which supplement to buy?",
-      "text": "I cannot choose supplements safely without your health context. A pharmacist or qualified clinician can help check suitability and interactions.",
-      "handling": "live",
-      "recording": "/audio-library/eat-protein-options-07-dcde69b19b2c.mp3"
     },
     {
       "id": "eat-protein-options-08",
@@ -11641,17 +11069,6 @@
       "text": "You do not need food marketed for the gym. Everyday ingredients can be useful, including beans, lentils, and other affordable options.",
       "handling": "recorded",
       "recording": "/audio-library/eat-protein-options-09-311ed656406a.mp3"
-    },
-    {
-      "id": "eat-protein-options-10",
-      "groupId": "eat-protein-options",
-      "category": "eat",
-      "title": "Food alongside strength training",
-      "companion": "nori",
-      "prompt": "Can you give me a muscle gain diet?",
-      "text": "A suitable plan needs more information about your health, preferences, and training. A qualified dietitian can help personalise it.",
-      "handling": "live",
-      "recording": "/audio-library/eat-protein-options-10-adca74ff8060.mp3"
     },
     {
       "id": "eat-regular-rhythm-01",
@@ -11685,17 +11102,6 @@
       "text": "Choose one supportive habit rather than a strict list of restrictions. Make it something you can adapt when life changes.",
       "handling": "recorded",
       "recording": "/audio-library/eat-regular-rhythm-03-c279aa10f664.mp3"
-    },
-    {
-      "id": "eat-regular-rhythm-04",
-      "groupId": "eat-regular-rhythm",
-      "category": "eat",
-      "title": "Finding an eating rhythm",
-      "companion": "sunny",
-      "prompt": "I cannot tell whether I am hungry anymore.",
-      "text": "That can be difficult to navigate alone. A qualified clinician or dietitian can help you find a safe eating routine.",
-      "handling": "live",
-      "recording": "/audio-library/eat-regular-rhythm-04-b2babb752bbf.mp3"
     },
     {
       "id": "eat-regular-rhythm-05",
@@ -11740,17 +11146,6 @@
       "text": "You can use a simple reminder such as, have I made room to eat? No calorie target is needed for that prompt.",
       "handling": "recorded",
       "recording": "/audio-library/eat-regular-rhythm-08-5d0f242e0c88.mp3"
-    },
-    {
-      "id": "eat-regular-rhythm-09",
-      "groupId": "eat-regular-rhythm",
-      "category": "eat",
-      "title": "Finding an eating rhythm",
-      "companion": "sunny",
-      "prompt": "I have hardly eaten for several days.",
-      "text": "Please speak to a healthcare professional promptly, especially if you feel weak or unwell. This needs more support than a food reminder.",
-      "handling": "live",
-      "recording": "/audio-library/eat-regular-rhythm-09-c1a1d23e0f0c.mp3"
     },
     {
       "id": "eat-regular-rhythm-10",
@@ -11839,39 +11234,6 @@
       "text": "I would rather help you describe what a meal offers and what you enjoy. Moral labels can make eating feel harder.",
       "handling": "recorded",
       "recording": "/audio-library/eat-less-judgement-07-65f32cb2f99e.mp3"
-    },
-    {
-      "id": "eat-less-judgement-08",
-      "groupId": "eat-less-judgement",
-      "category": "eat",
-      "title": "A kinder relationship with food",
-      "companion": "luma",
-      "prompt": "I think I need to work off what I ate.",
-      "text": "Movement does not need to repay food. If that pressure keeps coming back, consider support from an eating disorder professional.",
-      "handling": "live",
-      "recording": "/audio-library/eat-less-judgement-08-2ced709c36d0.mp3"
-    },
-    {
-      "id": "eat-less-judgement-09",
-      "groupId": "eat-less-judgement",
-      "category": "eat",
-      "title": "A kinder relationship with food",
-      "companion": "luma",
-      "prompt": "I am frightened of eating more foods.",
-      "text": "That sounds difficult. A qualified professional can help you work with that fear at a pace that is safe for you.",
-      "handling": "live",
-      "recording": "/audio-library/eat-less-judgement-09-dff1af5aafe5.mp3"
-    },
-    {
-      "id": "eat-less-judgement-10",
-      "groupId": "eat-less-judgement",
-      "category": "eat",
-      "title": "A kinder relationship with food",
-      "companion": "luma",
-      "prompt": "Can this app treat my eating disorder?",
-      "text": "Daywell cannot treat an eating disorder. Please seek professional care; gentle app tools can only sit alongside appropriate support.",
-      "handling": "live",
-      "recording": "/audio-library/eat-less-judgement-10-260421d74eb0.mp3"
     },
     {
       "id": "eat-budget-meals-01",
@@ -12092,116 +11454,6 @@
       "text": "Keep only the details that help you. You can pause logging when it stops feeling useful.",
       "handling": "recorded",
       "recording": "/audio-library/eat-notes-and-logs-10-53daf3ba73ab.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-01",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "I have a food allergy; can you choose something safe?",
-      "text": "Please check ingredient labels, allergen information, and your care advice. I cannot guarantee that a suggested meal is safe for your allergy.",
-      "handling": "live",
-      "recording": "/audio-library/eat-dietary-safety-01-23a43e43176f.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-02",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "Can I eat this if I have diabetes?",
-      "text": "Your own care plan and medication matter. A qualified clinician or dietitian can advise on food choices for your diabetes.",
-      "handling": "live",
-      "recording": "/audio-library/eat-dietary-safety-02-f1329b892ac2.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-03",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "I need food advice during pregnancy.",
-      "text": "Please use pregnancy specific guidance from a qualified clinician or trusted health service. General meal ideas cannot check every safety consideration.",
-      "handling": "live",
-      "recording": "/audio-library/eat-dietary-safety-03-f97a74e8573a.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-04",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "I am vegan; can you keep that in mind?",
-      "text": "Vegan meal ideas are possible. Share any other dietary needs too, so the suggestions can fit your preferences.",
-      "handling": "live",
-      "recording": "/audio-library/eat-dietary-safety-04-737af24d5ec3.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-05",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "My throat is swelling after eating something.",
-      "text": "Call emergency services now. In the UK, call nine nine nine. If you have a prescribed adrenaline auto injector, use it according to your emergency plan.",
-      "handling": "urgent",
-      "recording": "/audio-library/eat-dietary-safety-05-d77c3645a03d.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-06",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "Can you put my child on a diet?",
-      "text": "Children's nutrition and growth need qualified guidance. Please speak with an appropriate healthcare professional instead of using an adult diet plan.",
-      "handling": "live",
-      "recording": "/audio-library/eat-dietary-safety-06-fa4432052f47.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-07",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "Can food cure my medical condition?",
-      "text": "I cannot promise a cure through food. Speak with your healthcare team about nutrition that can support your treatment.",
-      "handling": "live",
-      "recording": "/audio-library/eat-dietary-safety-07-45d135749053.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-08",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "I need a diet for kidney disease.",
-      "text": "Kidney conditions can require specific nutritional advice. Please work with your kidney care team or a specialist dietitian.",
-      "handling": "live",
-      "recording": "/audio-library/eat-dietary-safety-08-d55128910440.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-09",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "The recipe says may contain my allergen; is a little okay?",
-      "text": "Do not rely on me to judge an allergy risk. Follow your allergy care advice and check with an appropriate professional.",
-      "handling": "live",
-      "recording": "/audio-library/eat-dietary-safety-09-911b47eefd58.mp3"
-    },
-    {
-      "id": "eat-dietary-safety-10",
-      "groupId": "eat-dietary-safety",
-      "category": "eat",
-      "title": "Dietary needs and limits",
-      "companion": "nori",
-      "prompt": "I have been vomiting and cannot keep fluids down.",
-      "text": "Please seek urgent medical advice, especially if you feel very unwell or dehydrated. In the UK, NHS one one one can guide you.",
-      "handling": "live",
-      "recording": "/audio-library/eat-dietary-safety-10-93ebefcdff0d.mp3"
     },
     {
       "id": "focus-starting-friction-01",
@@ -13656,17 +12908,6 @@
       "recording": "/audio-library/progress-notice-patterns-02-fc5bbabb1c66.mp3"
     },
     {
-      "id": "progress-notice-patterns-03",
-      "groupId": "progress-notice-patterns",
-      "category": "progress",
-      "title": "Get curious about patterns",
-      "companion": "sunny",
-      "prompt": "Can you tell what causes my bad sleep?",
-      "text": "A history can suggest questions, but it cannot establish the cause of poor sleep. Persistent difficulties are worth discussing with a clinician.",
-      "handling": "live",
-      "recording": "/audio-library/progress-notice-patterns-03-c494d416ab08.mp3"
-    },
-    {
       "id": "progress-notice-patterns-04",
       "groupId": "progress-notice-patterns",
       "category": "progress",
@@ -13698,17 +12939,6 @@
       "text": "Company may be a useful support. You can plan with that in mind instead of treating it as a weakness.",
       "handling": "recorded",
       "recording": "/audio-library/progress-notice-patterns-06-1bc820a63c66.mp3"
-    },
-    {
-      "id": "progress-notice-patterns-07",
-      "groupId": "progress-notice-patterns",
-      "category": "progress",
-      "title": "Get curious about patterns",
-      "companion": "sunny",
-      "prompt": "Can my records prove this habit is improving my health?",
-      "text": "Personal records can show what you logged, but they cannot prove medical benefits or explain every change in your health.",
-      "handling": "live",
-      "recording": "/audio-library/progress-notice-patterns-07-3585b9944d26.mp3"
     },
     {
       "id": "progress-notice-patterns-08",
@@ -14129,17 +13359,6 @@
       "recording": "/audio-library/progress-appointment-preparation-05-cef0b4d4f3cc.mp3"
     },
     {
-      "id": "progress-appointment-preparation-06",
-      "groupId": "progress-appointment-preparation",
-      "category": "progress",
-      "title": "Prepare for a commitment",
-      "companion": "tock",
-      "prompt": "Can you interpret my test results from a calendar note?",
-      "text": "Test results need clinical context. Please discuss them with the healthcare professional responsible for your care.",
-      "handling": "live",
-      "recording": "/audio-library/progress-appointment-preparation-06-e40a50929206.mp3"
-    },
-    {
       "id": "progress-appointment-preparation-07",
       "groupId": "progress-appointment-preparation",
       "category": "progress",
@@ -14204,17 +13423,6 @@
       "text": "Look at the circumstances around the change. You may need a different amount of support or a smaller plan right now.",
       "handling": "recorded",
       "recording": "/audio-library/progress-setbacks-context-02-59a1b4f26020.mp3"
-    },
-    {
-      "id": "progress-setbacks-context-03",
-      "groupId": "progress-setbacks-context",
-      "category": "progress",
-      "title": "Put a setback in context",
-      "companion": "luma",
-      "prompt": "I got ill and lost my routine.",
-      "text": "Recovery can become the priority. Return gradually when appropriate, following medical advice where you need it.",
-      "handling": "recorded",
-      "recording": "/audio-library/progress-setbacks-context-03-ccce74fc5024.mp3"
     },
     {
       "id": "progress-setbacks-context-04",
@@ -14347,17 +13555,6 @@
       "text": "Focus on activities and routines that matter to you. A score cannot capture your whole health or your life.",
       "handling": "recorded",
       "recording": "/audio-library/progress-long-view-05-9de19f22ad22.mp3"
-    },
-    {
-      "id": "progress-long-view-06",
-      "groupId": "progress-long-view",
-      "category": "progress",
-      "title": "Care for the longer term",
-      "companion": "sunny",
-      "prompt": "Can you calculate my biological age?",
-      "text": "Daywell cannot provide a clinically reliable biological age. Be cautious about treating a single score as a measure of your health.",
-      "handling": "live",
-      "recording": "/audio-library/progress-long-view-06-80ef40d67a55.mp3"
     },
     {
       "id": "progress-long-view-07",
@@ -14952,116 +14149,6 @@
       "text": "You can return to the appearance choices when you want. A design preference does not need to become a permanent decision.",
       "handling": "tool",
       "recording": "/audio-library/everyday-comfort-preferences-10-70d7aa92f9e8.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-01",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Are you a therapist?",
-      "text": "No. Daywell offers everyday tools and general wellbeing support. It cannot replace a therapist or other qualified professional.",
-      "handling": "recorded",
-      "recording": "/audio-library/everyday-app-boundaries-01-6cf54cf22ce3.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-02",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Can you diagnose ADHD?",
-      "text": "Daywell cannot diagnose ADHD. A qualified healthcare professional can assess your experiences and discuss suitable support.",
-      "handling": "live",
-      "recording": "/audio-library/everyday-app-boundaries-02-86132d3836e1.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-03",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Can this app cure my insomnia?",
-      "text": "Daywell cannot promise to cure insomnia. Persistent sleep problems deserve advice from a healthcare professional.",
-      "handling": "live",
-      "recording": "/audio-library/everyday-app-boundaries-03-008e0775f387.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-04",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Will a prerecorded response actually save a task?",
-      "text": "A recording only plays words. Saving or changing a task requires a real app action and a result you can check.",
-      "handling": "recorded",
-      "recording": "/audio-library/everyday-app-boundaries-04-3e0297182927.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-05",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Can you call emergency services for me?",
-      "text": "Daywell cannot make an emergency call. If you are in immediate danger, call your local emergency number directly.",
-      "handling": "urgent",
-      "recording": "/audio-library/everyday-app-boundaries-05-1a3be7c06f0d.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-06",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Can you guarantee I will feel better after meditation?",
-      "text": "No session can guarantee a particular feeling. You can try it gently and stop or choose something else if it does not help.",
-      "handling": "recorded",
-      "recording": "/audio-library/everyday-app-boundaries-06-6db89d3b9595.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-07",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Are you always listening in the background?",
-      "text": "Prerecorded listening does not use the microphone. Live voice requires a connection you choose to start; check its controls to end it.",
-      "handling": "recorded",
-      "recording": "/audio-library/everyday-app-boundaries-07-219abc58b3b4.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-08",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Can you prescribe something to help me sleep?",
-      "text": "Medication advice and prescribing belong with a qualified clinician. I can only offer general, nonmedical settling ideas.",
-      "handling": "live",
-      "recording": "/audio-library/everyday-app-boundaries-08-ac3b9256d537.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-09",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Will this replace my personal trainer?",
-      "text": "The app can offer general encouragement and tools. It cannot provide the same observation and individual assessment as a qualified trainer.",
-      "handling": "recorded",
-      "recording": "/audio-library/everyday-app-boundaries-09-91ca66b294a4.mp3"
-    },
-    {
-      "id": "everyday-app-boundaries-10",
-      "groupId": "everyday-app-boundaries",
-      "category": "everyday",
-      "title": "Know what the app can do",
-      "companion": "sunny",
-      "prompt": "Can I rely on you for important medical decisions?",
-      "text": "Please use qualified medical advice for those decisions. Daywell's general support and saved recordings cannot assess your health.",
-      "handling": "live",
-      "recording": "/audio-library/everyday-app-boundaries-10-5ce392ef3002.mp3"
     },
     {
       "id": "everyday-clarify-a-need-01",

@@ -1,3 +1,4 @@
+import {foodDetail, activityDetail} from "./food-tracking.ts";
 import type { Entry } from "./daywell";
 
 export function validDay(value: string) {
@@ -49,7 +50,7 @@ export function historyRecords(entries: Entry[], today: string): HistoryRecord[]
       if (date && date > today) continue;
       rows.push({ entry, date, title: data.title, detail: entry.kind === "task" ? "Priority completed" : entry.kind === "event" ? "Plan marked as done" : `Bought · ${data.quantity}`, minutes: 0 });
     } else if (["session", "move", "sleep", "food", "reflection"].includes(entry.kind) && validDay(data.date || "") && data.date <= today) {
-      rows.push({ entry, date: data.date, title: entry.kind === "sleep" ? "A night of rest" : entry.kind === "reflection" ? "A moment to remember" : data.title, detail: entry.kind === "session" ? `${data.minutes} minutes of focus` : entry.kind === "move" ? `${data.minutes} minutes of movement` : entry.kind === "sleep" ? `${Math.floor(data.minutes / 60)}h ${data.minutes % 60}m recorded · ${data.quality}` : entry.kind === "food" ? `${data.meal} recorded` : data.text, minutes: ["session", "move", "sleep"].includes(entry.kind) ? data.minutes : 0 });
+      rows.push({ entry, date: data.date, title: entry.kind === "sleep" ? "A night of rest" : entry.kind === "reflection" ? "A moment to remember" : data.title, detail: entry.kind === "session" ? `${data.minutes} minutes of focus` : entry.kind === "move" ? `${data.minutes} minutes of movement · ${activityDetail(data)}` : entry.kind === "sleep" ? `${Math.floor(data.minutes / 60)}h ${data.minutes % 60}m recorded · ${data.quality}` : entry.kind === "food" ? `${data.meal} · ${foodDetail(data)}` : data.text, minutes: ["session", "move", "sleep"].includes(entry.kind) ? data.minutes : 0 });
     }
   }
   return rows.sort((a, b) => (b.date || "").localeCompare(a.date || "") || a.title.localeCompare(b.title));

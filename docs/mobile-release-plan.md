@@ -37,6 +37,8 @@ Implementation checkpoint, 6 October: the [food inventory foundation](food-inven
 
 Keep the selected Cosy cove direction, one Daywell host and the Move, Relax, Eat and Sleep structure. Helpers accompany tasks without becoming separate assistants users must remember. Prioritise readable screens, captions, reduced motion and short decisions over additional design variations.
 
+Owner scope decision, 8 October: [general wellness only](general-wellness-scope.md). Keep relaxation and ordinary routines; exclude clinical care, mental-health improvement promises, medicines, supplements and alcohol recommendations, regardless of claimed age. This does not establish suitability for children.
+
 ### A complete food cycle
 
 - Save a Food basket inventory with canonical ingredient names, quantity, unit and a clear unknown-quantity state. Store optional user-confirmed dates; do not infer expiry or allergen safety from appearance.

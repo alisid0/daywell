@@ -49,3 +49,5 @@ next-env.d.ts
 .dev.vars*
 !.dev.vars.example
 *.local
+.cloudflare-private/
+cloudflare.local.json

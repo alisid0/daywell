@@ -4,6 +4,8 @@ A cosy home for Move, Relax, Eat and Sleep, with one host and a quiet place to p
 
 Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 
+**Private phone hosting:** the [Cloudflare hosting guide](docs/cloudflare-hosting.md) prepares an owned Workers/D1 deployment behind verified Cloudflare Access sign-in. `npm run cloudflare:check` validates packaging without deploying; `npm run cloudflare:build` requires the account's completed local profile. Hosted sign-in, records and real-device voice must still be verified after connection.
+
 **Current release direction:** prepare Android and iPhone versions for early-November store review. See the [mobile release plan](docs/mobile-release-plan.md) for the working 5 November 2026 deadline, launch scope, account dependencies and acceptance checks. These are release targets; the current local MVP is not yet a store-ready build.
 
 **Working on either machine? GitHub is the source of truth.** Read [the shared session workflow](docs/github-workflow.md): fetch before starting, then commit, push and verify the GitHub handover before ending each session. A local preview is not a saved or merged version. Coding assistants must also read [AGENTS.md](AGENTS.md); [CLAUDE.md](CLAUDE.md) points to the same rules.
@@ -79,7 +81,7 @@ under **Your tools & saved day**, the bottom bar, and the sidebar in the classic
 - Saved activities survive reload; encouragement does not replay missed cues.
   Keep Daywell open for timers, alarms and spoken guidance.
 
-Without credentials, Daywell uses bounded everyday commands. Connecting an ElevenLabs agent enables open voice and AI text conversations.
+Without credentials, Daywell uses bounded everyday commands plus friendly replies to greetings, thanks and help requests. “Hello”, “Hi Daywell” and “What can you do?” need no AI call, and do not save anything or dismiss a pending plan. A greeting can precede a supported command, such as “Hello Daywell, focus for ten minutes”. New local replies and browser speech errors scroll into view above the phone menu. Connecting an ElevenLabs agent enables open voice and AI text conversations. Credentials belong to each checkout's ignored local setup; switching previews does not copy them through GitHub.
 Use **Things you can say** for supported phrases. Examples include “Add milk
 and focus on my email for ten minutes”, “Help me wind down”, “Start a walk for
 fifteen minutes”, “Set an alarm for 7 am”, “Log a meal”, and “Undo that”.
@@ -269,6 +271,15 @@ Regression tests cover carried-over tasks, task filtering, long stopwatch
 sessions, timer titles, overnight sleep and entry validation. Manual browser
 checks cover onboarding, tasks, grocery quantities and completion, timer modes,
 stopwatch navigation, saved data and responsive layout.
+
+For repeatable HTTP integration checks, start a separate, migrated local QA
+checkout on port 5190, then run
+`node scripts/smoke-local.mjs http://localhost:5190 --allow-test-writes`.
+This opt-in test creates synthetic records, verifies saves, retries and conflicts,
+checks the audio assets, and removes only its own fixtures; food audit receipts
+remain. Never run it against the owner's everyday database. See the
+[8 October end-to-end report](docs/handover/2026-10-08-end-to-end-testing.md)
+for browser coverage and remaining hosted/device acceptance gates.
 
 ## Optional AI adapter
 

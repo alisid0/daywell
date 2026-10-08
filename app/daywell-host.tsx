@@ -48,6 +48,8 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   const input = useRef<HTMLTextAreaElement>(null);
   const region = useRef<HTMLElement>(null);
   const planRegion = useRef<HTMLDivElement>(null);
+  const replyRegion = useRef<HTMLDivElement>(null);
+  const voiceErrorRegion = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     if (!immersive || !pending) return;
     const frame = requestAnimationFrame(() => {
@@ -66,6 +68,14 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     return () => window.removeEventListener("daywell-stop-voice", stopVoice);
   }, [stopVoice]);
   const agentActive = agent.status !== "disconnected";
+  useEffect(() => {
+    if (!immersive || pending || agentActive || (!heard && !voice.error)) return;
+    const frame = requestAnimationFrame(() => {
+      const target = voice.error ? voiceErrorRegion.current : replyRegion.current;
+      target?.scrollIntoView({ block: "nearest", behavior: "instant" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [immersive, pending, agentActive, heard, reply, voice.error]);
   const agentSession = useRef(agentActive); agentSession.current = agentActive;
   const stopAgent = agent.stop;
   const previousView = useRef(a.active);
@@ -149,6 +159,8 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     if (/^(?:just rest|take a break|stop scrolling|help me stop scrolling|open relax)$/i.test(value.trim())) { goRest(); return; }
     if (/^(?:open |show )?(?:explore|move|eat|sleep)$/i.test(value.trim())) { a.setActive(value.trim().toLowerCase().replace(/^(open |show )/, "")); return; }
     const request = parseHostRequest(value);
+    // Conversation must not approve or clear a plan that is waiting for review.
+    if (request.type === "reply") { say(request.message); return; }
     if (request.type === "control") {
       if (request.command === "confirm") { if (!pending) { say("Tell me what you’d like to do first."); return; } return applyPlan(); }
       if (request.command === "undo") return undo();
@@ -169,7 +181,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     setPending(request.actions);
     say(`Here’s what I understood. ${request.actions.map(describeAction).join(". ")}. ${request.actions.some(action => action.type === "activity") && hasActivity && !finished ? "This will replace your current activity. " : ""}${agentActive ? "Press Do this to confirm." : "Say yes or press Do this."}`);
   }
-  function sendText() { if(agent.status === "connected") { agent.send(text); setText(""); } else void receive(text); }
+  function sendText() { voice.clearError(); if(agent.status === "connected") { agent.send(text); setText(""); } else void receive(text); }
   function submit(event: FormEvent) { event.preventDefault(); sendText(); }
 
   useEffect(() => {
@@ -253,8 +265,8 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     {typed && <form className="host-form" onSubmit={submit}><label htmlFor="host-request">Tell Daywell what you need</label><div><textarea id="host-request" ref={input} value={text} maxLength={600} rows={2} placeholder="Add milk and focus on my email for 10 minutes" onChange={event => setText(event.target.value)} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); sendText(); } }} /><button type="submit" disabled={!text.trim() || busy} aria-label="Send request"><Send size={19} /></button></div></form>}
     {!hasActivity && !pending && <div className="host-suggestions" aria-label="A place to begin"><button className="rest-entry" onClick={goRest}>Just rest</button><button onClick={()=>a.setActive("explore")}>Explore</button></div>}
     {!hasActivity && !pending && <Link className="host-library-link" href="/audio-library" onClick={() => { voice.stop(); void agent.stop(); }}>Just listen · little words of comfort</Link>}
-    <div className="host-conversation" aria-live="polite" aria-atomic="true">{(voice.listening || heard) && <p className="host-heard">{voice.listening ? voice.transcript || "Listening…" : `You: ${heard}`}</p>}<p className="host-reply"><span>Daywell</span>{busy ? "Taking care of that…" : reply}</p></div>
-    {(error || voice.error) && <p className="host-error" role="alert">{error || voice.error}</p>}
+    <div className="host-conversation" ref={replyRegion} aria-live="polite" aria-atomic="true">{(voice.listening || heard) && <p className="host-heard">{voice.listening ? voice.transcript || "Listening…" : `You: ${heard}`}</p>}<p className="host-reply"><span>Daywell</span>{busy ? "Taking care of that…" : reply}</p></div>
+    {(error || voice.error) && <p className="host-error" ref={voiceErrorRegion} role="alert">{error || voice.error}</p>}
     {pending && <div className="host-plan" ref={planRegion} tabIndex={-1} aria-label="Review your request"><h3>Here’s the plan</h3><ul>{pending.map((action, index) => <li key={index}><Check size={16} />{describeAction(action)}</li>)}</ul>{pending.some(action => action.type === "activity") && hasActivity && !finished && <p className="host-replace-note">This replaces your current activity. Your lists stay saved.</p>}<div><button className="host-primary" disabled={busy} onClick={() => void applyPlan()}>{busy ? "Saving…" : "Do this"}</button><button className="host-text-button" disabled={busy} onClick={() => { setPending(null); voice.silence(); setReply("Request cleared. Your saved day stays as it is."); }}>Cancel request</button></div></div>}
     <div className="host-history-actions"><button disabled={busy || !undoable} onClick={() => void undo()}><Undo2 size={15} />Undo last change</button><button onClick={() => setShowChanges(!showChanges)} aria-expanded={showChanges}>What changed?<ChevronDown size={14} /></button>{spoken && <span><Volume2 size={14} />Replies aloud</span>}</div>
     {showChanges && <div className="host-change-summary">{lastChange ? `${lastChange.undone ? "Undone: " : "Last change: "}${lastChange.summary}` : "Nothing changed in this visit yet."}</div>}

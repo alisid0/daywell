@@ -60,6 +60,8 @@ Local logs and screenshots are ignored under `work/`; only synthetic exports wer
 
 ## Remaining release gaps / acceptance gates
 
+The [improvements report](2026-10-08-improvements-report.md) turns these findings and a follow-up source review into prioritised product work and release acceptance criteria. Its recommendations are not yet implemented.
+
 1. **Hosted service blocked:** Cloudflare still lacks the deployment permission the owner declined to add. No hosted Worker, mobile URL, real Access session, logout/expiry, separate hosted-user isolation or backup restoration test exists. Preserve the owner's permission choice.
 2. **Live voice and photos unverified:** the isolated preview intentionally has no provider secrets. Friendly typed requests and unconfigured-service fallbacks passed; actual microphone permission/denial, transcription, ElevenLabs conversation, interruption and usage limits still need a controlled device/provider test. The current Eat surface provides manual inventory and reviewed recipe planning; the old photo component is not mounted into that flow, so photo-to-basket acceptance is still open.
 3. **Audio integration pending:** this branch has 500 short recordings and three guided sessions. PR 17 contains the expanded responses and extra unwind/voice work; it remains separate. Do not describe 1,500 responses or selectable guided voices as integrated here.

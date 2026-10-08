@@ -24,6 +24,7 @@ import "./meditation.css";
 import "./mic-states.css";
 import "./navigation.css";
 import "./bottom-menu.css";
+import "./daywell-pages.css";
 import "./companion-motion.css";
 import "./typography.css";
 

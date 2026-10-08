@@ -1,0 +1,40 @@
+/* Standalone pages: Your data, Privacy, Help and support, and Account deleted. Left-aligned, one readable column. */
+.daywell-page{min-height:100svh;background:var(--dw-canvas,#fae7ef);color:var(--dw-ink,#522d46);padding:24px 20px 64px}
+.daywell-page-inner{max-width:720px;margin:0 auto}
+.daywell-page .well-heading{text-align:left;padding:16px 0 4px}
+.daywell-page .well-heading h1{font-size:calc(34px*var(--rc-scale,1));line-height:1.15;margin:10px 0 12px;overflow-wrap:anywhere}
+.daywell-page .well-heading p{font-size:calc(16px*var(--rc-scale,1));max-width:60ch}
+.daywell-page .well-card{margin-top:20px;padding:22px}
+.daywell-page .well-card h2,.daywell-legal h2{font-size:calc(20px*var(--rc-scale,1));line-height:1.3;margin:0 0 8px}
+.daywell-page .well-card p{font-size:calc(15px*var(--rc-scale,1));margin:0 0 12px}
+.daywell-page .well-card p[role=status]:empty{display:none}
+.daywell-page .well-card .well-button{margin-top:4px}
+.daywell-page-links{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.daywell-page :is(.daywell-page-links,.your-data-confirm,.daywell-legal) li{margin:0}
+.daywell-page :is(.your-data-confirm,.daywell-legal) ul{list-style:disc}
+.daywell-page-links a{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 0;font-size:calc(15px*var(--rc-scale,1));color:var(--well-ink,#522d46);text-decoration:underline;text-underline-offset:4px}
+.daywell-page-actions{margin-top:24px}
+.daywell-page-actions .well-button{margin-top:0;text-decoration:none}
+.your-data-confirm{display:grid;gap:4px;margin-top:6px;padding:18px;border:1.5px solid #a3324a;border-radius:20px;background:color-mix(in srgb,#a3324a 6%,var(--well-surface,#fff7fb))}
+.your-data-confirm h3{font-size:calc(18px*var(--rc-scale,1));margin:0 0 4px}
+.your-data-confirm h3:focus{outline:none}
+.your-data-confirm h3:focus-visible{outline:3px solid var(--well-accent,#803c65);outline-offset:3px}
+.your-data-confirm ul{margin:0 0 10px;padding-left:22px;display:grid;gap:4px;font-size:calc(15px*var(--rc-scale,1))}
+.your-data-confirm .well-actions .well-button{margin-top:4px}
+.daywell-page .your-data-danger{background:#a3324a;border-color:#a3324a;color:#fff}
+.daywell-page .your-data-danger:hover:not(:disabled){background:#8a2a3f}
+.daywell-page [role=alert]{color:#8a2a3f;font-weight:600;margin-top:12px}
+.daywell-legal section{margin-top:28px}
+.daywell-legal :is(section>p,li){font-size:calc(16px*var(--rc-scale,1));line-height:1.7;max-width:65ch;color:var(--well-ink,#522d46)}
+.daywell-legal ul{margin:0;padding-left:22px;display:grid;gap:8px}
+.daywell-legal h3{font-size:calc(17px*var(--rc-scale,1));margin:18px 0 4px}
+.daywell-legal a{text-decoration:underline;text-underline-offset:3px}
+.urgent-help{padding:18px 20px;border:2px solid var(--well-accent,#803c65);border-radius:20px;background:var(--well-surface,#fff7fb)}
+.urgent-help h2{margin-top:0}
+.urgent-help a{font-weight:700}
+.draft-gap{background:#fde68a;color:#3f2b00;padding:0 4px;border-radius:4px}
+@media(max-width:600px){.daywell-page{padding:16px 16px 48px}.daywell-page .well-card{padding:18px}.daywell-page .well-heading h1{font-size:calc(28px*var(--rc-scale,1))}}
+@media(max-width:400px){.daywell-page .well-card{padding:16px}.your-data-confirm{padding:14px}.your-data-confirm ul{padding-left:18px}}
+/* Links to these pages from the Nook sidebar. */
+.side-links{display:grid;gap:2px;margin:0 0 12px}
+.side-links a{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border-radius:12px;font-size:calc(14px*var(--rc-scale,1));color:inherit;text-decoration:underline;text-underline-offset:3px}

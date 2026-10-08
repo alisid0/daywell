@@ -18,7 +18,7 @@ export default function Privacy() {
     <section><h2>Services that help run Daywell</h2><ul>
       <li><strong>Cloudflare</strong> hosts Daywell and its database in Western Europe. It also handles signing in, using your email address.</li>
       <li><strong>ElevenLabs</strong> runs live voice and AI chat, only when you start a conversation. It receives what you say or type, and keeps written transcripts for <TranscriptDays />. Recordings of your voice aren’t kept.</li>
-      <li><strong>OpenAI</strong> reads a food photo or recording only when you press Understand. Daywell keeps the entries you confirm, not the original photo or recording.</li>
+      <li><strong>OpenAI</strong> reads a food photo or recording only when you press Understand. When you ask it to plan meals, it also sees the ingredients and amounts in your Food basket. Daywell keeps the entries you confirm, not the original photo or recording.</li>
       <li><strong>Your browser:</strong> speaking everyday commands uses your browser’s own speech recognition. Some browsers send that audio to the company that makes them, such as Google or Apple, to turn it into text.</li>
     </ul></section>
     <section><h2>How long it’s kept</h2><p>Until you delete it, or delete your account. Copies in our backups are cleared automatically within 30 days.</p></section>

@@ -26,7 +26,7 @@ Implementation checkpoint, 6 October: the [food inventory foundation](food-inven
 
 - Owner update, 7 October: **Cloudflare selected; account created.** The [private hosting path](cloudflare-hosting.md) adds an authenticated Worker entry point and repeatable build. Account authorization, Access policy, hosted D1/deployment and real-device verification remain prerequisites. Private tester sign-in does not complete consumer/native identity or store readiness.
 
-- Hosting checkpoint, 8 October: Wrangler is connected and the dedicated hosted D1 database has all four migrations applied. Zero Trust Free onboarding awaits the owner's billing/terms review. Access policy, Worker deployment and real-device verification are still pending; see the [hosting handover](handover/2026-10-08-cloudflare-connection.md).
+- Hosting checkpoint, 8 October: Wrangler is connected, the dedicated hosted D1 database has all four migrations applied, and the owner completed Zero Trust Free activation. The approved owner-only Access application/policy is saved. Worker deployment and real-device verification are still pending; see the [hosting handover](handover/2026-10-08-cloudflare-connection.md).
 
 - Owner update, 7 October: **Google account reported ready; Apple account not yet ready.** Clarification is pending on whether Google means a registered, verified Google Play Console developer account. Do not mark Play publishing access or production eligibility verified from this statement alone. Apple enrolment remains an owner dependency; Android preparation can progress while the shared iPhone release target remains in scope.
 - Confirm the exact November deadline and whether it is for submission or public availability.

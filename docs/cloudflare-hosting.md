@@ -80,9 +80,9 @@ No hosted or phone acceptance checks have passed merely because the build succee
 
 Wrangler authorization is complete. The dedicated `daywell-private-db` database was created in Western Europe and all four existing migrations (0000 through 0003) applied successfully. A subsequent remote migration listing reported no pending migrations. No local personal records were uploaded.
 
-Zero Trust Free onboarding reached its checkout, displaying a $0 monthly base price but requiring billing details, terms acceptance and authorization for charges above included limits. The owner must review and complete that step; selecting Free has not activated the plan. The partial ignored local profile contains the real account, database and planned origin, but leaves the Access issuer and audience empty. Its incomplete state intentionally prevents building a deployable private app.
+The owner completed Zero Trust Free onboarding; the account overview confirms the Free plan and a team name. Its checkout displayed a $0 monthly base price but required billing details, terms acceptance and authorization for charges above included limits. Following explicit approval, the exact-host `Daywell private` Access application and owner-only email rule were saved with Cloudflare sign-in and a 24-hour session. The ignored local profile now contains the real account, database, origin, team issuer and application audience.
 
-No Worker, Access application or policy has been deployed, and no provider secrets have been uploaded. Continue from the [session handover](handover/2026-10-08-cloudflare-connection.md); do not create another database or repeat successful account authorization unnecessarily.
+Worker deployment and hosted acceptance remain the next steps; no provider secrets have been uploaded. The greeting fix from PR 30 is included in the hosting branch, and the combined branch passed 110 tests, scoped lint, the standard build and the owned synthetic build/dry-run. Continue from the [session handover](handover/2026-10-08-cloudflare-connection.md); do not create another database or repeat successful account authorization unnecessarily.
 
 ## Updating and recovery
 

@@ -9,11 +9,11 @@ export default function Support() {
     <div className="well-heading"><span>Help and support</span><h1>How can we help?</h1></div>
     <section className="urgent-help" aria-labelledby="urgent-title">
       <h2 id="urgent-title">Need urgent help?</h2>
-      <p>Daywell can’t help in an emergency.</p>
+      <p>Daywell can’t help in an emergency, and it doesn’t give medical advice.</p>
       <ul>
-        <li>If you or someone else is in danger, call <a href="tel:999">999</a> in the UK, or your local emergency number.</li>
-        <li>For urgent mental health help in England, call <a href="tel:111">NHS 111</a> and choose the mental health option.</li>
-        <li>To talk to someone at any time, call Samaritans free on <a href="tel:116123">116 123</a> (UK and Ireland).</li>
+        <li>If you or someone else is in danger, or you can’t keep yourself safe, call your local emergency number now. In the UK, that’s <a href="tel:999">999</a>.</li>
+        <li>If you can, ask someone you trust to stay with you.</li>
+        <li>For a health question, speak to a doctor, pharmacist or other qualified professional.</li>
       </ul>
     </section>
     <section><h2>Contact us</h2><p>Email <ContactEmail />. We’ll reply as soon as we can.</p></section>

@@ -79,7 +79,7 @@ export default function YourData({ signOutHref }: { signOutHref: string }) {
           <h3 id="confirm-title" ref={confirmTitle} tabIndex={-1}>Delete everything?</h3>
           <p>These will be deleted for good:</p>
           <ul>
-            <li>your plans, tasks and history</li>
+            <li>your plans, tasks and history, including meals, movement and sleep</li>
             <li>your notes and reflections</li>
             <li>your food basket, meal plans and shopping list</li>
             <li>your name and settings</li>

@@ -45,3 +45,5 @@
 /* The reply library page controls wrap rather than overflow at larger reading sizes. */
 .response-bank-pagination{flex-wrap:wrap;row-gap:12px}
 @media(max-width:600px){.response-bank-pagination{column-gap:14px}}
+/* Handling labels sit on the soft tint, where plain muted text falls just short of 4.5:1. */
+html[data-appearance-palette] .response-bank-meta [data-handling]{color:color-mix(in srgb,var(--dw-muted) 75%,var(--dw-ink))}

@@ -85,3 +85,12 @@ test("captured basket drafts and pending saves survive recovery including unknow
   data.pending=prepareFoodCommand(data.draft,"capture-retry");writeFoodRecovery(store,ali,data);
   assert.deepEqual(readFoodRecovery(store,ali).pending,data.pending);
 });
+
+
+test("guided plan batches retain calories and cooking steps across reload and interrupted retry", () => {
+  const store=storage(), data=initial();data.view="meals";
+  data.draft.action={type:"plan.add",plans:[{id:"dinner",title:"Noodles",date:"2026-10-08",meal:"Dinner",servings:1,ingredients:[{ingredient:"dry noodles",quantity:75,unit:"g"}],guide:{steps:["Follow the pack."],caloriesPerServing:300,nutritionNote:"Test estimate"}}]};
+  writeFoodRecovery(store,ali,data);assert.deepEqual(readFoodRecovery(store,ali).draft,data.draft);
+  data.pending=prepareFoodCommand(data.draft,"plan-retry");writeFoodRecovery(store,ali,data);
+  assert.deepEqual(readFoodRecovery(store,ali).pending,data.pending);
+});

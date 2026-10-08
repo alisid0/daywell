@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { today, type schemas } from "@/lib/daywell";
 import type { z } from "zod";
-import { activitySources, intakeRecord, nutritionSources, nutritionSummary, sugarHistory, type Intake } from "@/lib/food-tracking";
+import { activitySources, resizeIntakePortions, intakeRecord, nutritionSources, nutritionSummary, sugarHistory, type Intake } from "@/lib/food-tracking";
 import type { AppState } from "./use-daywell";
 
 const kcal = (value: number) => value.toLocaleString("en-GB", { maximumFractionDigits: 1 });
@@ -37,8 +37,8 @@ export function DailyNutrition({ a, area }: { a: AppState; area: "eat" | "move" 
 }
 
 export function IntakeFields({ value, onChange, maximum = 24 }: { value: Intake; onChange: (value: Intake) => void; maximum?: number }) {
-  return <div className="intake-fields"><p>Just your portion(s), even when you prepared food for others. Leave any amount blank if you don’t know.</p><div className="food-form-grid">
-    <label>Portions I ate<input required type="number" min={0.125} max={maximum} step="any" value={value.portions || ""} onChange={e => onChange({ ...value, portions: Number(e.target.value) })}/></label>
+  return <div className="intake-fields"><p>Just your portion(s), even when you prepared food for others. Changing portions scales the amounts below; you can correct them. Leave unknown amounts blank.</p><div className="food-form-grid">
+    <label>Portions I ate<input required type="number" min={0.125} max={maximum} step="any" value={value.portions || ""} onChange={e => onChange(resizeIntakePortions(value, Number(e.target.value)))}/></label>
     <label>Total calories consumed (kcal, optional)<input type="number" min={0} max={10000} step="0.1" value={value.calories ?? ""} placeholder="Unknown" onChange={e => onChange({ ...value, calories: e.target.value === "" ? undefined : Number(e.target.value) })}/></label>
     <label>Total sugar consumed (g, optional)<input type="number" min={0} max={1000} step="0.1" value={value.sugarGrams ?? ""} placeholder="Unknown" onChange={e => onChange({ ...value, sugarGrams: e.target.value === "" ? undefined : Number(e.target.value) })}/></label>
     <label>Nutrition source<select value={value.source ?? "estimate"} onChange={e => onChange({ ...value, source: e.target.value as Intake["source"] })}>{Object.entries(nutritionSources).map(([key,label]) => <option key={key} value={key}>{label}</option>)}</select></label>

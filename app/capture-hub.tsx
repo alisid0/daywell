@@ -3,13 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import { Camera, Mic, Square, Volume2, Check, Keyboard, RotateCcw, ShoppingBasket } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { today, type Entry } from "@/lib/daywell";
-import { foodDetail } from "@/lib/food-tracking";
+import { foodDetail, mealOrigins, resizeCapturedMeal } from "@/lib/food-tracking";
 import type { FoodAction } from "@/lib/food-client";
 import type { AppState } from "./use-daywell";
+import type { MealProposal } from "@/lib/food-journey";
+import { PlanCoverage, PlanGuide } from "./food-plan-journey";
 
-type Mode = "meal" | "basket" | "grocery";
+type Mode = "meal" | "basket" | "grocery" | "plan";
+type CaptureStart = { mode?: string; intent?: string; planStart?: string; planCount?: number; planMeal?: string };
 type StockInput = Extract<FoodAction, { type: "stock.add" }>["items"][number];
-type Draft = { summary: string; question: string | null; entries: Entry[]; basket?: StockInput[]; transcript?: string };
+type Draft = { summary: string; question: string | null; entries: Entry[]; basket?: StockInput[]; plans?: MealProposal[]; transcript?: string };
 const choices: [Mode, string][] = [["meal", "Meal or drink"], ["basket", "Food basket"], ["grocery", "Shopping list"]];
 const capture = (mode: Mode, intent: "photo" | "voice") => window.dispatchEvent(new CustomEvent("daywell-capture", { detail: { mode, intent } }));
 
@@ -28,6 +31,8 @@ export function FoodCaptureCard({ a }: { a: AppState }) {
 
 export function CaptureHub({ a }: { a: AppState }) {
   const [open, setOpen] = useState(false), [mode, setMode] = useState<Mode>("meal");
+  const [planOptions, setPlanOptions] = useState({start:today(),count:2,meal:"Dinner"});
+  const [mealOrigin, setMealOrigin] = useState<keyof typeof mealOrigins>("home");
   const [connected, setConnected] = useState<boolean | null>(null);
   const [photo, setPhoto] = useState<File | null>(null), [preview, setPreview] = useState<string | null>(null);
   const [text, setText] = useState(""), [typed, setTyped] = useState(false), [result, setResult] = useState<Draft | null>(null);
@@ -37,7 +42,7 @@ export function CaptureHub({ a }: { a: AppState }) {
   const picker = useRef<HTMLInputElement>(null), upload = useRef<HTMLInputElement>(null);
   const recorder = useRef<MediaRecorder | null>(null), stream = useRef<MediaStream | null>(null), timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const abort = useRef<AbortController | null>(null), epoch = useRef(0), lock = useRef(false), micLock = useRef(false), micEpoch = useRef(0);
-  const beginRef = useRef<(detail: { mode?: string; intent?: string }) => void>(() => {});
+  const beginRef = useRef<(detail: CaptureStart) => void>(() => {});
 
   function stopRecording() {
     micEpoch.current++;
@@ -65,7 +70,8 @@ export function CaptureHub({ a }: { a: AppState }) {
   useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
   useEffect(() => { beginRef.current = detail => {
     if (lock.current) return;
-    close(); setOpen(true); setMode(detail.mode === "basket" || detail.mode === "grocery" ? detail.mode : "meal");
+    close(); setOpen(true); setMode(detail.mode === "basket" || detail.mode === "grocery" || detail.mode === "plan" ? detail.mode : "meal");
+    setMealOrigin("home"); setPlanOptions({ start: detail.planStart || today(), count: detail.planCount || 2, meal: detail.planMeal || "Dinner" });
     window.dispatchEvent(new Event("daywell-stop-voice"));
     if (detail.intent === "photo") picker.current?.click();
     // Voice begins on the labelled record button, after the sharing notice is visible.
@@ -91,12 +97,13 @@ export function CaptureHub({ a }: { a: AppState }) {
     const token = epoch.current; lock.current = true; setBusy(true); setError(""); setResult(null); setConsumed(false);
     abort.current = new AbortController();
     try {
-      const form = new FormData(); form.set("date", today()); form.set("time", new Date().toLocaleTimeString()); form.set("mode", mode); form.set("context", context); form.set("text", text);
+      const form = new FormData(); form.set("date", today()); form.set("time", new Date().toLocaleTimeString()); form.set("mode", mode); form.set("context", context); form.set("text", mode === "plan" ? text || "Suggest meals from my saved basket for the selected number of meals, one person." : `${text}\nMeal origin: ${mealOrigin}.`);
+      form.set("planStart",planOptions.start); form.set("planCount",String(planOptions.count)); form.set("planMeal",planOptions.meal);
       if (photo) form.set("image", photo); if (recorded) form.set("audio", recorded);
       const r = await fetch("/api/capture", { method: "POST", body: form, signal: abort.current.signal }); const value: Draft & { error?: string } = await r.json();
       if (!r.ok) throw Error(value.error || "Couldn’t understand that. Your capture is here to retry.");
       if (epoch.current !== token) return;
-      setResult(value); setContext(`${context}\nUser: ${value.transcript || text || "Photo"}\nDraft: ${JSON.stringify(value)}`.slice(-8000)); setText(""); setAudio(null); setTyped(false);
+      setResult({...value,entries:value.entries.map(entry=>entry.kind==="food"?{...entry,data:{...entry.data,mealOrigin}}:entry)}); setContext(`${context}\nUser: ${value.transcript || text || "Photo"}\nDraft: ${JSON.stringify(value)}`.slice(-8000)); setText(""); setAudio(null); setTyped(false);
     } catch (e) { if (epoch.current === token && !(e instanceof Error && e.name === "AbortError")) setError(e instanceof Error ? e.message : "Please try again."); }
     finally { if (epoch.current === token) { setBusy(false); lock.current = false; } }
   }
@@ -128,6 +135,10 @@ export function CaptureHub({ a }: { a: AppState }) {
   }
   async function confirm() {
     if (lock.current || !result || result.question) return;
+    if (result.plans?.length) {
+      if (!a.food.fresh || a.food.busy || a.food.pending || a.food.draft || a.food.recovered) { setError("Finish your current basket change first. Your proposed meals are still here."); return; }
+      const plans=result.plans; close(); a.setActive("eat"); a.food.setView("meals"); a.food.open({type:"plan.add",plans}); return;
+    }
     if (result.basket?.length) {
       if (!a.food.fresh || a.food.busy || a.food.pending || a.food.draft || a.food.recovered) { setError("Finish your current basket draft or refresh the basket first. This capture is still here."); return; }
       const items = result.basket; close(); a.setActive("eat"); a.food.setView("basket"); a.food.open({ type: "stock.add", items }); return;
@@ -145,32 +156,36 @@ export function CaptureHub({ a }: { a: AppState }) {
     window.dispatchEvent(new Event("daywell-stop-voice")); window.dispatchEvent(new Event("daywell-stop-library-audio")); window.dispatchEvent(new Event("daywell-stop-guided-audio"));
     speechSynthesis.cancel(); const line = new SpeechSynthesisUtterance(result.question || result.summary); line.rate = .95; speechSynthesis.speak(line);
   }
-  const hasDraft = !!result && !result.question && (result.entries.length > 0 || !!result.basket?.length);
+  const hasDraft = !!result && !result.question && (result.entries.length > 0 || !!result.basket?.length || !!result.plans?.length);
   const hasMeal = !!result?.entries.some(entry => entry.kind === "food");
   return <>
     <input ref={picker} hidden aria-label="Take a food photo" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={e => { const file = e.target.files?.[0]; if (file) void choosePhoto(file); e.target.value = ""; }}/>
     <input ref={upload} hidden aria-label="Choose a food photo" type="file" accept="image/jpeg,image/png,image/webp" onChange={e => { const file = e.target.files?.[0]; if (file) void choosePhoto(file); e.target.value = ""; }}/>
-    <Dialog open={open} onOpenChange={value => { if (!value) close(); }}><DialogContent className="food-capture-dialog"><DialogHeader><DialogTitle>{saved ? "A little less to remember." : result?.question ? "One quick question." : hasDraft ? "Does this look right?" : choices.find(([id]) => id === mode)?.[1]}</DialogTitle><DialogDescription>{saved ? "Your confirmed entries are saved." : "Show or tell Daywell, then review. Nothing is saved until you confirm."}</DialogDescription></DialogHeader>
-      {connected === false && <div className="capture-connection" role="status"><strong>Photo and voice understanding isn’t connected yet.</strong><p>You can choose a photo here. Understanding it needs the AI connection; manual entry is available now.</p><button className="well-text-button" onClick={() => void checkConnection()}><RotateCcw size={15}/>Check connection again</button><button className="well-text-button" onClick={() => { close(); if (mode === "basket") { a.setActive("eat"); a.food.open({ type: "stock.set", item: { id: crypto.randomUUID(), ingredient: "", quantity: null, unit: "g", bestBefore: null } }); } else a.openEditor(mode === "meal" ? "food" : "grocery"); }}>Add by hand</button></div>}
+    <Dialog open={open} onOpenChange={value => { if (!value) close(); }}><DialogContent className="food-capture-dialog"><DialogHeader><DialogTitle>{saved ? "A little less to remember." : result?.question ? "One quick question." : hasDraft ? "Does this look right?" : mode === "plan" ? "Let’s make a few meals." : choices.find(([id]) => id === mode)?.[1]}</DialogTitle><DialogDescription>{saved ? "Your confirmed entries are saved." : "Show or tell Daywell, then review. Nothing is saved until you confirm."}</DialogDescription></DialogHeader>
+      {connected === false && <div className="capture-connection" role="status"><strong>Photo and voice understanding isn’t connected yet.</strong><p>You can choose a photo here. Understanding it needs the AI connection; manual entry is available now.</p><button className="well-text-button" onClick={() => void checkConnection()}><RotateCcw size={15}/>Check connection again</button><button className="well-text-button" onClick={() => { close(); if (mode === "basket") { a.setActive("eat"); a.food.open({ type: "stock.set", item: { id: crypto.randomUUID(), ingredient: "", quantity: null, unit: "g", bestBefore: null } }); } else if(mode === "plan") { a.setActive("eat"); a.food.setView("meals"); } else a.openEditor(mode === "meal" ? "food" : "grocery"); }}>Add by hand</button></div>}
       {saved ? <div className="capture-finished"><Check size={34}/><button className="well-button" onClick={close}>Back to my day</button></div> : <>
+        {mode === "meal" && !hasDraft && !result?.question && <div className="capture-choices" role="group" aria-label="Where is your meal from?">{Object.entries(mealOrigins).map(([id,label])=><button type="button" key={id} disabled={busy || recording} aria-pressed={mealOrigin===id} onClick={()=>setMealOrigin(id as keyof typeof mealOrigins)}>{label}</button>)}</div>}
+        {mode === "plan" && !hasDraft && !result?.question && <><p>Up to {planOptions.count} {planOptions.meal.toLowerCase()} meals for one person, starting {planOptions.start}. Say any preferences or exclusions.</p><button className="well-button" disabled={busy || !connected} onClick={()=>void understand()}>Suggest from my saved basket</button></>}
         {preview && <figure className="food-photo-preview"><img src={preview} alt="Your food photo for review"/>{!busy && !recording && !uncertain && <button className="well-text-button" onClick={() => upload.current?.click()}>Choose another photo</button>}</figure>}
         {result && <section className="capture-review"><p aria-live="polite">{result.question || result.summary}</p><button className="well-text-button" onClick={readReply}><Volume2 size={16}/>Hear this</button>{result.transcript && <small>You said: “{result.transcript}”</small>}
           {result.entries.map(entry => <article className="capture-draft-item" key={entry.id}><strong>{entry.data.title}</strong><small>{entry.kind === "food" ? foodDetail(entry.data) : entry.data.quantity}</small>{entry.kind === "food" && <div className="capture-choices" role="group" aria-label={`Meal for ${entry.data.title}`}>{["Breakfast", "Lunch", "Dinner", "Snack"].map(meal => <button key={meal} disabled={busy || recording || uncertain} aria-pressed={entry.data.meal === meal} onClick={() => setResult({ ...result, entries: result.entries.map(old => old.id === entry.id ? { ...old, data: { ...old.data, meal } } : old) })}>{meal}</button>)}</div>}</article>)}
+          {result.plans?.map(plan=><article className="capture-draft-item" key={plan.id}><strong>{plan.title}</strong><small>{plan.date} · {plan.meal} · one person</small><small>{plan.ingredients.map(item=>`${item.quantity} ${item.unit} ${item.ingredient}`).join(" · ")}</small><PlanGuide plan={plan}/></article>)}
+          {!!result.plans?.length && a.food.snapshot && <PlanCoverage state={a.food.snapshot.state} plans={result.plans}/>}
           {result.basket?.map(item => <article className="capture-draft-item" key={item.id}><ShoppingBasket size={16}/><strong>{item.ingredient}</strong><small>{item.quantity === null ? "Amount to check" : `${item.quantity} ${item.unit}`}</small></article>)}
-          {hasMeal && <><p className="food-caption">Nutrition is approximate. Say what changed if the portion looks wrong. Sugar stays unknown without an amount from you or a readable label.</p><label className="food-checkbox"><input type="checkbox" checked={consumed} disabled={busy || recording || uncertain} onChange={e => setConsumed(e.target.checked)}/>I consumed this and checked the portion shown</label></>}
+          {hasMeal && <><div className="capture-choices" role="group" aria-label="Adjust the portion shown">{[.5,2].map(factor=><button type="button" key={factor} disabled={busy || recording || uncertain} onClick={()=>{try{setResult({...result,entries:result.entries.map(entry=>entry.kind==="food"?resizeCapturedMeal(entry,factor):entry)});setConsumed(false);}catch{setError("That portion is too small or large. Say a correction instead.");}}}>{factor===.5?"Half of the shown portion":"Twice the shown portion"}</button>)}</div><p className="food-caption">Nutrition is approximate. Say what changed if the portion looks wrong. Sugar stays unknown without an amount from you or a readable label.</p><label className="food-checkbox"><input type="checkbox" checked={consumed} disabled={busy || recording || uncertain} onChange={e => setConsumed(e.target.checked)}/>I consumed this and checked the portion shown</label></>}
         </section>}
         {busy && <p role="status">{uncertain ? "Checking your save…" : "One moment…"}</p>}
         {recording && <div className="capture-recording" role="status"><Mic/><span>Listening · {seconds}s / 30s</span><button className="well-button" onClick={() => recorder.current?.stop()}><Square size={16}/>Stop & understand</button></div>}
         {!busy && !recording && <>
-          {hasDraft && <button className="well-button capture-confirm" disabled={hasMeal && !consumed} onClick={() => void confirm()}><Check size={18}/>{uncertain ? "Retry save safely" : result.basket?.length ? "Review basket items" : hasMeal ? "Save food consumed" : "Add to shopping list"}</button>}
+          {hasDraft && <button className="well-button capture-confirm" disabled={hasMeal && !consumed} onClick={() => void confirm()}><Check size={18}/>{uncertain ? "Retry save safely" : result.plans?.length ? "Review meals & save" : result.basket?.length ? "Review basket items" : hasMeal ? "Save food consumed" : "Add to shopping list"}</button>}
           {!uncertain && <><div className="capture-primary-actions">{!preview && !hasDraft && <button className="well-button well-secondary" onClick={() => picker.current?.click()}><Camera size={22}/>Take a photo</button>}<button className="well-button well-secondary" onClick={() => void startRecording()} disabled={connected === null}><Mic size={22}/>{hasDraft ? "Say a correction" : result?.question ? "Say your answer" : "Record & understand"}</button></div>
           {preview && !result && <button className="well-button capture-confirm" onClick={() => void understand()}>Understand this photo</button>}
           <div className="capture-backups">{!hasDraft && <button className="well-text-button" onClick={() => upload.current?.click()}>Choose from photos</button>}<button className="well-text-button" onClick={() => { setTyped(!typed); if (hasDraft) setResult(null); }}><Keyboard size={15}/>Type instead</button>{audio && <button className="well-text-button" onClick={() => void understand(audio)}>Retry recording</button>}</div>
-          {typed && <form className="capture-text" onSubmit={e => { e.preventDefault(); void understand(); }}><label>Tell Daywell<input autoFocus maxLength={6000} value={text} onChange={e => setText(e.target.value)} placeholder={mode === "basket" ? "I have six eggs and a bag of rice…" : "I had half of this for lunch…"}/></label><button className="well-button" disabled={!text.trim()}>Understand</button></form>}</>}
+          {typed && <form className="capture-text" onSubmit={e => { e.preventDefault(); void understand(); }}><label>Tell Daywell<input autoFocus maxLength={6000} value={text} onChange={e => setText(e.target.value)} placeholder={mode === "plan" ? "Two dinners for me, no mushrooms…" : mode === "basket" ? "I have six eggs and a bag of rice…" : "I had half of this for lunch…"}/></label><button className="well-button" disabled={!text.trim()}>Understand</button></form>}</>}
         </>}
       </>}
       {error && <p className="form-error" role="alert">{error}</p>}
-      <p className="food-caption">“Understand” sends your photo or recording to the AI service. Recording stops after 30 seconds. Daywell keeps the entries you confirm; it doesn’t save your original photo or recording.</p>
+      <p className="food-caption">“Understand” sends your photo or recording to the AI service. Recording stops after 30 seconds. For meal planning, it also sends your saved basket and reserved quantities. Daywell keeps the entries you confirm; it doesn’t save your original photo or recording.</p>
     </DialogContent></Dialog>
   </>;
 }

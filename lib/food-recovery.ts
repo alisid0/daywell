@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { actionSchema, foodCommandSchema } from "./food.ts";
+import { actionSchema, foodCommandSchema, planGuideSchema } from "./food.ts";
 import type { FoodAction } from "./food-client.ts";
 
 // Drafts may be incomplete (blank names/zero quantities); API commands may not.
@@ -10,13 +10,14 @@ const date = z.string().max(10), unit = z.enum(["g", "kg", "ml", "l", "each", "p
 const stock = z.object({ id, ingredient: text, quantity: number.nullable(), unit, bestBefore: date.nullable() });
 const requirement = z.object({ ingredient: text, quantity: number, unit });
 const meal = z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]);
-const plan = z.object({ id, title: text, date, meal, servings: number, ingredients: z.array(requirement).max(40) });
+const plan = z.object({ id, title: text, date, meal, servings: number, ingredients: z.array(requirement).max(40), guide: planGuideSchema.optional() });
 const intake = z.object({ portions: number, calories: number.optional(), macros: z.object({ protein: number, carbs: number, fat: number }).optional(), source: z.enum(["label", "estimate", "app"]).optional(), sugarGrams: number.optional() });
 const consumption = { title: text, date, meal, consumed: z.array(z.object({ stockId: id, quantity: number, unit })).max(40), useReservedStock: z.boolean(), intake: intake.optional() };
 const draftAction = z.union([
   z.object({ type: z.literal("stock.set"), item: stock }),
   z.object({ type: z.literal("stock.add"), items: z.array(stock).min(1).max(20) }),
   z.object({ type: z.literal("plan.set"), plan }),
+  z.object({ type: z.literal("plan.add"), plans: z.array(plan).min(1).max(7) }),
   z.object({ type: z.literal("plan.window"), startDate: date, days: z.union([z.literal(2), z.literal(3), z.literal(7)]), plans: z.array(plan).max(28) }),
   z.object({ type: z.literal("shopping.set"), item: z.object({ id, title: text, quantity: z.string().max(80), done: z.boolean() }) }),
   z.object({ type: z.literal("purchase"), items: z.array(stock.extend({ quantity: number, shoppingId: id.optional() })).min(1).max(40) }),

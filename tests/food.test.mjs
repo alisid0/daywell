@@ -500,3 +500,30 @@ test("reviewed basket captures save atomically, retry once and undo without affe
   await assert.rejects(()=>save({type:"stock.add",items:[{id:"new-one",ingredient:"Milk",quantity:1,unit:"l"},{id:"old-rice",ingredient:"Rice",quantity:3,unit:"kg"}]}));
   const failed=await getFoodSpace(db,"ali");assert.equal(failed.revision,rev);assert.deepEqual(failed.state.stock,before.state.stock);
 });
+
+
+test("adding a guided meal batch retries without duplication and rejects a stale revision", async t => {
+  const {db,save,sqlite}=database(t);
+  await save(stock("eggs","Egg",4,"each")); await save(plan("existing",100,1));
+  const input={operationId:"planned-batch",expectedRevision:2,action:{type:"plan.add",plans:[{id:"new-meal",title:"Eggs",date:"2026-10-09",meal:"Dinner",servings:1,ingredients:[{ingredient:"Egg",quantity:2,unit:"each"}],guide:{steps:["Cook following pack instructions."],caloriesPerServing:140,nutritionNote:"Test estimate"}}]}};
+  await saveFoodCommand(db,"ali",input); assert.equal((await saveFoodCommand(db,"ali",input)).replayed,true);
+  const saved=await getFoodSpace(db,"ali");assert.equal(saved.state.plans.length,2);assert.equal(saved.state.stock[0].quantity,4);
+  assert.equal(saved.state.plans.find(x=>x.id==="new-meal").guide.caloriesPerServing,140);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n,0);
+  await assert.rejects(saveFoodCommand(db,"ali",{...input,operationId:"stale",action:{type:"plan.add",plans:[{...input.action.plans[0],id:"different"}]}}),/changed/);
+  assert.equal((await getFoodSpace(db,"sam")).state.plans.length,0);
+});
+
+test("one serving can be half consumed and half saved, without counting leftovers as intake", async t => {
+  const {db,save,sqlite}=database(t);
+  await save(stock("rice","Rice",100));
+  const action=cooking({servings:1,consumed:[{stockId:"rice",quantity:75,unit:"g"}],intake:{portions:.5,calories:210,source:"estimate"},leftovers:{id:"half-saved",title:"Half a rice bowl",portions:.5,bestBefore:null}});
+  await save(action);
+  const snapshot=await getFoodSpace(db,"ali");
+  assert.equal(snapshot.state.stock.find(x=>x.id==="half-saved").quantity,.5);
+  assert.equal(snapshot.state.stock.find(x=>x.id==="rice").quantity,25);
+  const note=JSON.parse(sqlite.prepare("SELECT data FROM entries WHERE user_id='ali'").get().data);
+  assert.equal(note.portions,.5);assert.equal(note.calories,210);
+  await assert.rejects(save({...action,consumed:[{stockId:"rice",quantity:10,unit:"g"}],leftovers:{...action.leftovers,id:"too-much",portions:.75}}),/exceed/);
+  assert.equal((await getFoodSpace(db,"ali")).revision,snapshot.revision);
+});

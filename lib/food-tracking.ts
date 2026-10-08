@@ -3,6 +3,7 @@ import type { Entry } from "./daywell.ts";
 
 export const nutritionSources = { label: "Food label", estimate: "My estimate", app: "Another app / source" } as const;
 export const activitySources = { estimate: "My estimate", watch: "Watch / tracker", machine: "Exercise machine", app: "Another app" } as const;
+export const mealOrigins = { home: "At home", takeaway: "Takeaway", restaurant: "Restaurant" } as const;
 const calories = z.number().finite().min(0).max(10000);
 const macro = z.number().finite().min(0).max(1000);
 export const intakeSchema = z.object({
@@ -15,12 +16,20 @@ export const intakeSchema = z.object({
   sugarGrams: macro.optional(),
 }).strict();
 export type Intake = z.infer<typeof intakeSchema>;
+export function resizeIntakePortions(value: Intake, portions: number): Intake {
+  if (!(portions > 0 && value.portions > 0)) return { portions, source: value.source };
+  const factor = portions / value.portions, scale = (n: number) => Math.round(n * factor * 10) / 10;
+  return { ...value, portions, calories: value.calories === undefined ? undefined : scale(value.calories),
+    sugarGrams: value.sugarGrams === undefined ? undefined : scale(value.sugarGrams),
+    macros: value.macros ? { protein: scale(value.macros.protein), carbs: scale(value.macros.carbs), fat: scale(value.macros.fat) } : undefined };
+}
 export const foodTrackingFields = {
   foodStatus: z.enum(["eaten", "prepared", "used"]).optional(),
   portions: z.number().finite().min(0.125).max(24).optional(),
   macrosKnown: z.boolean().optional(),
   nutritionSource: z.enum(["label", "estimate", "app"]).optional(),
   sugarGrams: macro.optional(),
+  mealOrigin: z.enum(["home", "takeaway", "restaurant"]).optional(),
 };
 export const activityTrackingFields = {
   caloriesBurned: calories.optional(),
@@ -75,7 +84,19 @@ export function foodDetail(data: Entry["data"]) {
   const energy = data.nutritionKnown === false ? "calories not added" : `${data.calories} kcal recorded`;
   const sugar = Number.isFinite(data.sugarGrams) ? ` · ${data.sugarGrams} g total sugar` : "";
   const source = data.nutritionSource ? ` · ${nutritionSources[data.nutritionSource as keyof typeof nutritionSources]}` : data.nutritionKnown === false && !sugar ? "" : " (estimate)";
-  return portions + energy + sugar + source;
+  return portions + energy + sugar + source + (data.mealOrigin ? ` · ${mealOrigins[data.mealOrigin as keyof typeof mealOrigins]}` : "");
+}
+// Apply a correction relative to the reviewed draft. Unknown nutrition stays
+// unknown; a smaller fraction must never turn an unknown value into zero.
+export function resizeCapturedMeal(entry: Entry, factor: number): Entry {
+  if (entry.kind !== "food" || !Number.isFinite(factor) || factor <= 0 || factor > 8) throw Error("Choose a valid portion.");
+  const data = { ...entry.data, portions: (entry.data.portions ?? 1) * factor };
+  if (data.portions < .125 || data.portions > 24) throw Error("Choose a portion between one eighth and 24.");
+  for (const field of ["calories", "protein", "carbs", "fat", "sugarGrams"]) {
+    if (typeof data[field] === "number") data[field] = Math.round(data[field] * factor * 10) / 10;
+    if (typeof data[field] === "number" && data[field] > (field === "calories" ? 10000 : 1000)) throw Error("That nutrition amount is too large. Say a correction instead.");
+  }
+  return { ...entry, data };
 }
 export function activityDetail(data: Entry["data"]) {
   return Number.isFinite(data.caloriesBurned) ? `${data.caloriesBurned} kcal activity estimate${data.calorieSource ? ` · ${activitySources[data.calorieSource as keyof typeof activitySources]}` : ""}` : "Activity calories not added";

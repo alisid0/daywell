@@ -14,6 +14,18 @@ Lead Eat with Take a photo and Tell Daywell. Choose Meal or drink, Food basket, 
 
 Typing stays available for correction, accessibility and service outages. AI estimates cannot verify ingredients, allergens or food safety. Preserve the general-wellness boundaries.
 
+### From basket to meals
+
+Next meals now offers a one-person plan for 1, 2, 3 or 7 individual meals. The capture flow can send the saved basket and reserved quantities to the AI service, with a sharing notice before the person requests suggestions. Spoken or written corrections and photos can clarify the request. Review every suggestion before adding it alongside existing plans.
+
+Coverage is calculated from recorded quantities locally, allocating each ingredient once after existing reservations. It does not mean days of complete nutrition, nutritional adequacy or a freshness guarantee. Unknown amounts and incompatible units require checking. Saving a plan updates missing shopping needs without using stock or recording consumption.
+
+The three existing recipe ideas also open the same review without AI. A quick egg-and-noodle option appears when matching ingredients are in the basket: the person chooses each meal's quantities, and calories stay unknown unless supplied. This is a fixed starting idea, not live recognition or a general offline recipe generator.
+
+After cooking, confirm the quantities actually used. Personal intake is optional and distinct from preparation and leftovers. A plan's calorie estimate can prefill personal intake only when the recorded ingredients match; portion changes scale the reviewed totals. Ingredient edits clear the old estimate. Half-portions of leftovers are supported.
+
+For meal captures, choose Home-prepared, Takeaway or Restaurant, then review the consumed fraction. A quick half/double correction scales calories, macros and known sugar together. There is no restaurant nutrition lookup integration: photo estimates cannot be presented as verified menu data, and restaurant meals never deduct home stock automatically.
+
 ## Movement
 
 Lead with a small selection of routines, optional spoken step cues and one-tap commands. Done records a completed step; Next/Skip moves on without recording it. Pause, Continue, Repeat, Easier and End have bounded meanings. Unrecognised or negated instructions change nothing. Review completed sets before saving. Never infer calories burned from an image or automatically record a full routine when someone ends early.

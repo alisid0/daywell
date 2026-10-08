@@ -12,11 +12,17 @@ const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value => {
 }, "Choose a valid date.");
 const unit = z.enum(["g", "kg", "ml", "l", "each", "portion"]);
 const requirement = z.object({ ingredient: label, quantity: positive, unit }).strict();
-const planInput = z.object({
+export const planGuideSchema = z.object({
+  steps: z.array(z.string().trim().min(1).max(400)).max(8),
+  caloriesPerServing: z.number().finite().min(0).max(10000).optional(),
+  nutritionNote: z.string().trim().max(240),
+}).strict();
+export const planInput = z.object({
   id, title: label, date, meal: z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]),
   servings: z.number().int().min(1).max(24),
   // Quantities cover all servings of this meal, not one serving.
   ingredients: z.array(requirement).min(1).max(40),
+  guide: planGuideSchema.optional(),
 }).strict();
 const stockInput = z.object({ id, ingredient: label, quantity: amount.nullable(), unit, bestBefore: date.nullable().default(null) }).strict();
 const shoppingInput = z.object({ id: shoppingId, title: z.string().trim().min(1).max(160), quantity: z.string().trim().min(1).max(80), done: z.boolean() }).strict();
@@ -30,6 +36,7 @@ export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("stock.remove"), id }).strict(),
   z.object({ type: z.literal("stock.add"), items: z.array(stockInput).min(1).max(20) }).strict(),
   z.object({ type: z.literal("plan.set"), plan: planInput }).strict(),
+  z.object({ type: z.literal("plan.add"), plans: z.array(planInput).min(1).max(7) }).strict(),
   z.object({ type: z.literal("plan.window"), startDate: date, days: z.union([z.literal(2), z.literal(3), z.literal(7)]), plans: z.array(planInput).max(28) }).strict(),
   z.object({ type: z.literal("plan.remove"), id }).strict(),
   z.object({ type: z.literal("shopping.set"), item: shoppingInput }).strict(),
@@ -45,7 +52,7 @@ export const actionSchema = z.discriminatedUnion("type", [
     type: z.literal("cook"), planId: id.optional(), title: label, date,
     meal: consumption.meal, servings: z.number().int().min(1).max(24),
     consumed: consumption.consumed, useReservedStock: consumption.useReservedStock,
-    leftovers: z.object({ id, title: label, portions: z.number().int().min(1).max(24), bestBefore: date.nullable().default(null) }).strict().optional(),
+    leftovers: z.object({ id, title: label, portions: positive.refine(n => n >= .125 && n <= 24), bestBefore: date.nullable().default(null) }).strict().optional(),
     intake: intakeSchema.optional(),
   }).strict(),
   z.object({ type: z.literal("undo"), operationId: id }).strict(),
@@ -169,6 +176,10 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
     const outside = state.plans.filter(item => !inWindow(item));
     if (action.plans.some(item => outside.some(other => other.id === item.id))) throw new FoodError("That meal belongs to another planning window. Review it before moving it.");
     state.plans = [...outside, ...action.plans.map(item => ({ ...item, ingredients: combine(item.ingredients.map(ingredient => ({ ingredient: ingredientName(ingredient.ingredient), ...measured(ingredient.quantity, ingredient.unit) }))), changedBy: operationId }))];
+  } else if (action.type === "plan.add") {
+    unique(action.plans.map(item => item.id));
+    if (action.plans.some(item => state.plans.some(saved => saved.id === item.id))) throw new FoodError("A proposed meal already exists. Refresh before adding it again.");
+    for (const item of action.plans) state.plans.push({ ...item, ingredients: combine(item.ingredients.map(ingredient => ({ ingredient: ingredientName(ingredient.ingredient), ...measured(ingredient.quantity, ingredient.unit) }))), changedBy: operationId });
   } else if (action.type === "plan.remove") remove(state.plans, action.id);
   else if (action.type === "shopping.set") put(state.shopping, { ...action.item, changedBy: operationId });
   else if (action.type === "shopping.remove") remove(state.shopping, action.id);

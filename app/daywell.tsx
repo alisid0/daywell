@@ -3,7 +3,7 @@ import {useState} from "react";
 import {Sun,Palette,CalendarDays,LayoutGrid,Timer,AlarmClock,ListChecks,Moon,ShoppingBasket,Utensils,Footprints,SlidersHorizontal,Plus,Sparkles,ChevronRight,LoaderCircle,CloudCheck,AlertCircle} from "lucide-react";
 import {Sidebar,SidebarProvider,SidebarHeader,SidebarContent,SidebarFooter,SidebarMenu,SidebarMenuItem,SidebarMenuButton,SidebarTrigger,useSidebar} from "@/components/ui/sidebar";
 import {Button} from "@/components/ui/button";
-import {Toaster} from "sonner";
+import {Toaster,toast} from "sonner";
 import {today,displayTime,type Entry} from "@/lib/daywell";
 import {useDaywell} from "./use-daywell";
 import {FocusCard,FoodCard,TaskRows,Empty} from "./parts";
@@ -33,7 +33,7 @@ export default function Daywell({showWelcome=false,initialView="today"}:{showWel
  {a.loadError&&<div className="error-banner" role="alert"><AlertCircle/><span>{a.loadError}</span><Button variant="outline" onClick={()=>void a.load()}>Try again</Button></div>}
  <div className="page-heading"><div><div className="eyebrow">{active==="today"?dateLabel:"Your everyday tools"}</div><h1>{active==="today"?(settings.name==="You"?"Make today feel good":`Your day, ${settings.name}`):active==="calendar"?"Calendar & history":modules.find(m=>m.id===active)?.name}<span>.</span></h1><p>{active==="today"?"Take it one thing at a time.":active==="calendar"?"Make plans. Remember your progress.":modules.find(m=>m.id===active)?.desc}</p></div>{active==="today"&&<span className="date-pill"><Sun size={18}/>Your own pace</span>}</div>
  {!a.loaded&&!a.loadError&&<div className="loading-state"><LoaderCircle className="spin"/>Opening your space…</div>}
- {a.loaded&&showStyles&&<AppearanceStudio look={look} name={settings.name} onDone={()=>setChoosingStyle(false)} onTry={()=>{setReviewingDesigns(true);setChoosingStyle(false);a.setActive("today");requestAnimationFrame(()=>window.scrollTo({top:0,behavior:"instant"}))}}/>}
+ {a.loaded&&showStyles&&<AppearanceStudio look={look} name={settings.name} onDone={()=>setChoosingStyle(false)} onUse={(name,saved)=>{setReviewingDesigns(true);setChoosingStyle(false);a.setActive("today");if(saved)toast.success(`${name} is now your design.`,{description:"Saved in this browser. You can change it any time."});else toast.warning(`${name} is applied for this visit.`,{description:"This browser couldn’t save your choice."});requestAnimationFrame(()=>window.scrollTo({top:0,behavior:"instant"}))}}/>}
  {a.loaded&&reviewingDesigns&&active==="today"&&<IterationReview look={look} onCompare={()=>setChoosingStyle(true)} onClose={()=>setReviewingDesigns(false)}/>}
  {a.loaded&&active!=="eat"&&a.food.recovered&&<section className="well-card" role="status"><p>Your unfinished food details are waiting.</p><button className="well-button well-secondary" onClick={()=>a.setActive("eat")}>Return to my draft</button></section>}
  {a.loaded&&immersive&&active==="today"&&<CalendarStrip a={a} area="all"/>}

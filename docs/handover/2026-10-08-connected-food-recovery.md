@@ -39,3 +39,11 @@ This closes the first product-connectivity batch from the [improvements report o
 No dependency/lockfile or database migration changes are required by this batch. Existing checkouts need migrations through `0003_food_history_index.sql` from main; a fresh checkout follows README setup. Do not regenerate the lockfile. Review integration with PR #30 and draft PR #31, both of which touch the host/state boundary, before merging. PR #17 audio work remains separate.
 
 The owner preview on port 5184 remains the PR #30 checkout. Port 5190 is this branch's QA preview. Publishing this branch does not merge it or deploy it. The other machine should fetch the PR branch and run the documented checks before continuing. All implementation and this handover are intended for the PR; only ignored runtime/test material remains local.
+
+## Preview follow-up: applying a design
+
+The owner reported that “Try this design” appeared to do nothing on this preview. Reproduction found that the appearance preference did change, but a finished focus timer left `host-is-active` on the home section. The iteration layouts excluded that state, so choosing a different composition looked the same.
+
+The button now reads **Use this design**, exposes the current selection and confirms whether the look was saved or applied only for this visit. The reference action uses the same path. Selection still updates the existing host without remounting or clearing its timer. Active/paused/finished activity layouts now retain their design: Cosy cove has a centred arched voice panel, Breathing room stays open and centred, and Gentle company places the activity beside the host on wide screens and stacks it on phones.
+
+Validation: 115 tests, typecheck, production build and changed-file lint passed. Browser reproduction and verification covered the actual finished-timer case, choosing designs through the studio, confirmation, selection after a full reload, preserved activity, distinct computed layouts, and 320/1280-pixel widths without horizontal overflow. Cosy cove was restored after testing. No journal, timer, microphone or account changes were made by design selection. Physical-device testing remains outstanding; appearance is still stored per browser rather than synced to an account.

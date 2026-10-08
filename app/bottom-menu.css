@@ -1,0 +1,21 @@
+/* Phone bottom menu: a soft gradient backdrop and a tinted menu, so the white tab buttons
+   don't blend into white content behind them. On shorter phones Today tightens so the
+   Talk button sits clear of the menu when the app opens. Loaded after navigation.css. */
+@media (max-width:767px){
+  /* A soft pink gradient rises behind the menu; content fades into it before reaching the menu. */
+  html[data-appearance-palette] .stillwater-shell::after{content:"";position:fixed;left:0;right:0;bottom:0;height:140px;pointer-events:none;z-index:29;background:linear-gradient(to top,color-mix(in srgb,var(--dw-soft) 92%,var(--dw-canvas)) 0%,color-mix(in srgb,var(--dw-soft) 70%,transparent) 45%,transparent 100%)}
+  /* The menu is tinted, so its white tab buttons read as buttons. The current tab stays plum. */
+  html[data-appearance-palette] .stillwater-dock{background:color-mix(in srgb,var(--dw-soft) 72%,var(--dw-surface));border-color:color-mix(in srgb,var(--dw-line) 70%,var(--dw-accent));box-shadow:0 10px 26px -14px color-mix(in srgb,var(--dw-ink) 55%,transparent)}
+  html[data-appearance-palette] .stillwater-dock button:not([aria-current="page"]){background:var(--dw-surface)}
+  /* Room at the end of each page so the last lines sit above the gradient, not in it. */
+  html[data-appearance-palette] .stillwater-shell .workspace{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:767px) and (max-height:720px){
+  .stillwater-shell .stillwater-header{padding-top:8px;padding-bottom:8px;min-height:60px}
+  .stillwater-shell .calendar-strip{margin-bottom:8px}
+  html[data-appearance-composition] .stillwater-shell .host-invitation{margin-bottom:6px}
+  html[data-appearance-composition] .stillwater-shell .host-invitation p{margin-top:6px}
+  html[data-appearance-company] .stillwater-shell .nook-company{margin-top:0;height:66px}
+  html[data-appearance-company] .stillwater-shell .nook-company .dw-companion-image{width:27%}
+  html[data-appearance-composition] .stillwater-shell .host-input-actions{padding-top:2px}
+}

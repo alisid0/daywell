@@ -15,6 +15,20 @@
       "when": 1791210454390,
       "tag": "0001_usage_limits",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791302581402,
+      "tag": "0002_food_inventory",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1791303542215,
+      "tag": "0003_food_history_index",
+      "breakpoints": true
     }
   ]
 }

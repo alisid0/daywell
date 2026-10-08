@@ -66,3 +66,5 @@ html[data-appearance-company="quiet"] .nook-shell .host-invitation :is(h2,p){mar
 html[data-appearance-company="quiet"] .nook-shell .host-input-actions{justify-content:center}
 html[data-appearance-company="quiet"] .nook-shell .host-voice-note{justify-self:center;text-align:center}
 @media(max-width:700px){html[data-appearance-company="quiet"] .nook-shell .host-input-actions{grid-row:2}html[data-appearance-company="quiet"] .nook-shell .host-voice-note{grid-row:3}.stillwater-shell .nook-company{width:240px;height:165px}}
+/* Stillwater's pale page subtitle was made for its dark backdrop; with a light palette it needs the palette's muted text colour to stay readable. */
+html[data-appearance-palette] .stillwater-shell .page-heading p{color:var(--dw-muted)}

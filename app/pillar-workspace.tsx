@@ -1,15 +1,15 @@
 "use client";
 import { useRef, useState, type FormEvent } from "react";
-import { ArrowUpRight, Plus, X, History, Check } from "lucide-react";
+import { ArrowUpRight, Plus, X, History } from "lucide-react";
 import { CompanionPortrait } from "@/components/daywell-companions";
 import { today, schemas } from "@/lib/daywell";
-import { describeSet, exerciseHistory, matchingRecipes, missingIngredients, pillars, type WorkoutSet } from "@/lib/wellbeing";
+import { describeSet, exerciseHistory, pillars, type WorkoutSet } from "@/lib/wellbeing";
 import { exercises } from "@/lib/workouts";
 import { MoveRoutines } from "./move-routines";
 import type { AppState } from "./use-daywell";
 import { ModuleView } from "./modules";
 import { EntryActions } from "./parts";
-import { GroceryWorkspace } from "./everyday";
+import { FoodSpace } from "./food-space";
 import { RestSpace } from "./rest-space";
 import { CalendarStrip } from "./calendar-strip";
 
@@ -22,7 +22,7 @@ export function PillarWorkspace({ a }: { a: AppState }) {
   if (a.active === "explore") return <ExploreSpace a={a}/>;
   if (a.active === "relax") return <RestSpace a={a}/>;
   if (a.active === "move") return <MoveSpace a={a}/>;
-  if (a.active === "eat") return <EatSpace a={a}/>;
+  if (a.active === "eat") return <FoodSpace a={a}/>;
   if (a.active === "sleep") return <SleepSpace a={a}/>;
   return <ModuleView a={a}/>;
 }
@@ -59,12 +59,6 @@ function MoveSpace({ a }: { a: AppState }) {
     <MoveRoutines onLog={logRoutine}/>
     <div className="well-card move-invitation"><h2>A little company while you move?</h2><p>Ask for a walk or workout timer. Bounce can offer gentle encouragement while you keep Daywell open.</p><button className="well-text-button" onClick={()=>window.dispatchEvent(new CustomEvent("daywell-host",{detail:{text:"Start a workout for 15 minutes"}}))}>Make time with Bounce<ArrowUpRight size={17}/></button></div>
     <div className="well-section-title"><h2>Your movement story</h2><LookBack a={a}/></div>{activities.length?<div className="well-records">{activities.slice(0,20).map(e=><article className="well-record" key={e.id}><div><strong>{e.data.title}</strong><small>{e.data.date} · {e.data.minutes} minutes</small>{Array.isArray(e.data.sets)&&<details><summary>{e.data.sets.length} recorded sets</summary><ul>{(e.data.sets as WorkoutSet[]).map((s,i)=><li key={i}>{s.exercise} · {describeSet(s)}</li>)}</ul></details>}</div>{Array.isArray(e.data.sets)?<div className="well-actions"><button className="well-text-button" aria-label={`Edit ${e.data.title}`} onClick={()=>{setEditId(e.id);setTitle(e.data.title);setDate(e.data.date);setMinutes(String(e.data.minutes));setSets(e.data.sets.map((s:WorkoutSet)=>({...s})));setError("");setForm(true);requestAnimationFrame(()=>document.querySelector(".workout-form")?.scrollIntoView({block:"center"}));}}>Edit</button><button className="well-text-button" aria-label={`Remove ${e.data.title}`} onClick={()=>void a.remove(e)}>Remove</button></div>:<EntryActions a={a} e={e}/>}</article>)}</div>:<p className="well-empty">Your first walk, workout or stretch can go here. No daily target to catch up with.</p>}<p className="well-footnote">Work within your comfort and experience. <a href="https://www.nhs.uk/live-well/exercise/how-to-improve-strength-flexibility/" target="_blank" rel="noreferrer">NHS strength & flexibility guidance</a></p></section>;
-}
-function EatSpace({ a }: { a: AppState }) {
-  const [view, setView] = useState("ideas"), [pantry, setPantry] = useState("");
-  const meals = [...a.by("food")].sort((x,y)=>y.data.date.localeCompare(x.data.date));
-  function ingredients(items: readonly string[]) { a.setPlan(missingIngredients(items, pantry, a.entries).map(title=>({id:crypto.randomUUID(),kind:"grocery",data:{title,quantity:"1",done:false}}))); }
-  return <section className="well-space"><Heading id="eat"/><CalendarStrip a={a} area="eat"/><div className="well-tabs" aria-label="Eat views">{[["ideas","Make something"],["list","Food shopping"],["journal","My meals"]].map(([id,label])=><button key={id} aria-pressed={view===id} onClick={()=>setView(id)}>{label}</button>)}</div>{view==="ideas"&&<><label className="well-pantry">What’s already in your kitchen?<input placeholder="e.g. oats, berries, milk" value={pantry} maxLength={500} onChange={e=>setPantry(e.target.value)}/><small>Separate ingredients with commas. We’ll bring matching ideas to the top.</small></label><div className="recipe-ideas">{matchingRecipes(pantry).map(recipe=><article key={recipe.id} className="well-card"><span className="well-recipe-time">{recipe.time}</span><h2>{recipe.title}</h2><p>{recipe.ingredients.join(" · ")}</p><details><summary>Let’s make it</summary><ol>{recipe.steps.map(step=><li key={step}>{step}</li>)}</ol><small>{recipe.note}</small></details><div className="well-actions"><button className="well-button well-secondary" onClick={()=>ingredients(recipe.ingredients)}>Review missing ingredients</button><button className="well-text-button" onClick={()=>{a.openEditor("food");a.setDraft({title:recipe.title,date:today(),meal:"Lunch",calories:0,protein:0,carbs:0,fat:0,nutritionKnown:false});}}>I ate this<Check size={16}/></button></div></article>)}</div></>}{view==="list"&&<GroceryWorkspace a={a}/ >}{view==="journal"&&<><div className="well-section-title"><h2>Meals to remember</h2><button className="well-button" onClick={()=>a.openEditor("food")}><Plus size={16}/>Log a meal</button></div><p>Food and portions are enough. Nutrition details are optional.</p>{meals.length?<div className="well-records">{meals.slice(0,30).map(e=><article className="well-record" key={e.id}><div><strong>{e.data.title}</strong><small>{e.data.date} · {e.data.meal}{e.data.nutritionKnown!==false?` · ${e.data.calories} kcal (estimate)`:""}</small></div><EntryActions a={a} e={e}/></article>)}</div>:<p className="well-empty">A bowl of oats, a shared dinner, something new. Start with your next meal.</p>}<LookBack a={a}/></>}</section>;
 }
 function SleepSpace({ a }: { a: AppState }) {
   const [resting, setResting] = useState(false);

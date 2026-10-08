@@ -45,3 +45,5 @@
 .calendar-areas button[aria-pressed="true"] .area-dot{box-shadow:0 0 0 2px var(--dw-on-accent,#fff7fb)}
 .calendar-legend{flex-wrap:wrap}
 .calendar-legend span{display:inline-flex;align-items:center;gap:6px}
+/* OpenDyslexic's wide letters can't fit five tab labels at Large or Larger text on a phone. Cap the label to fit, never below 14px; other fonts keep the chosen size. */
+@media(max-width:767px){html[data-reading-font=opendyslexic] .stillwater-dock[data-tabs="5"] button{font-size:min(calc(14px*var(--rc-scale,1)),max(14px,4vw))}}

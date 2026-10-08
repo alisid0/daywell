@@ -270,6 +270,15 @@ sessions, timer titles, overnight sleep and entry validation. Manual browser
 checks cover onboarding, tasks, grocery quantities and completion, timer modes,
 stopwatch navigation, saved data and responsive layout.
 
+For repeatable HTTP integration checks, start a separate, migrated local QA
+checkout on port 5190, then run
+`node scripts/smoke-local.mjs http://localhost:5190 --allow-test-writes`.
+This opt-in test creates synthetic records, verifies saves, retries and conflicts,
+checks the audio assets, and removes only its own fixtures; food audit receipts
+remain. Never run it against the owner's everyday database. See the
+[8 October end-to-end report](docs/handover/2026-10-08-end-to-end-testing.md)
+for browser coverage and remaining hosted/device acceptance gates.
+
 ## Optional AI adapter
 
 The current host uses browser speech and the bounded commands described above.

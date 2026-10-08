@@ -1,0 +1,122 @@
+[
+ {"id":"focus-starting-friction","category":"focus","title":"When starting is the hard part","companion":"pip","examples":[
+  ["I know what to do but cannot start.","Make the first action smaller than the task. Opening the document or finding one item can be the whole beginning."],
+  ["I have been staring at a blank document.","Write one rough sentence about what the document needs to do. It can be a note to yourself, not the finished opening."],
+  ["I need to start an email I am avoiding.","Begin with the recipient and a plain subject line. Then write the main point in words you can edit later."],
+  ["I cannot get myself away from the sofa.","Choose one small transition that feels possible, such as putting your feet on the floor. You can decide the next step after that."],
+  ["My task feels too big to even look at.","Name only the next visible action. You do not need to hold the whole project in mind to take that step."],
+  ["Can you sit with me while I start?","You can use a short focus timer for company. Pick one tiny action to try while it runs, with no need to impress anyone."],
+  ["I need to tidy but do not know where to begin.","Choose one small surface or one kind of item. Stop before the task spreads to the whole room."],
+  ["I have wasted the morning and cannot begin now.","The next few minutes are still available. Choose a small action that fits the time you have now."],
+  ["I need a tiny first step for studying.","Open the material and find the section you need. That is enough for the first step; reading can come next."],
+  ["Please make starting feel less serious.","Try a small experiment: give the task two minutes of imperfect attention. You can reassess when those minutes are over." ]
+ ]},
+ {"id":"focus-choose-priority","category":"focus","title":"Choose one priority","companion":"pip","examples":[
+  ["Everything on my list feels urgent.","Check which task has a real deadline or consequence today. Start there, and let the rest wait on the list."],
+  ["I have too many priorities.","Choose one thing that would make today more manageable. You can keep the other priorities visible without doing them together."],
+  ["Can you choose my next task from my list?","That needs your actual task list and deadlines. Open the list so you can compare what matters most today.","tool"],
+  ["I keep doing easy tasks instead of the important one.","Give the important task a very small opening, such as gathering its materials. You do not need to finish it in one go."],
+  ["How do I know what can wait?","Look for a real deadline, someone depending on it, or a practical consequence. Tasks without those may have more room."],
+  ["I want to finish ten things this evening.","Check how much time and energy the evening actually has. Choose a smaller set and leave some room to rest."],
+  ["My list is longer than the day.","The list can hold possibilities rather than demands. Pick what realistically fits today and move the rest out of view."],
+  ["Someone added another urgent task.","Before adding it, check what would need to move. You can ask which existing task should take lower priority."],
+  ["I cannot choose between two tasks.","Compare their deadlines and what each one would unblock. If they are genuinely equal, choose the easier starting point."],
+  ["Can you set my main priority for today?","Choose the task you want to prioritise and save it in the app. This recording cannot update the priority itself.","tool"]
+ ]},
+ {"id":"focus-distracted-again","category":"focus","title":"Returning after distraction","companion":"pip","examples":[
+  ["I opened my phone without noticing.","You noticed now. Put it somewhere a little less convenient, then return to one small part of what you were doing."],
+  ["I keep switching between browser tabs.","Choose the one tab needed for the next step. Save the others for later if you are worried about losing them."],
+  ["I got distracted five times already.","You can return five times too. Each return is a new chance to make the task smaller or the environment easier."],
+  ["My thoughts keep pulling me into other tasks.","Keep a small place to park those tasks. Write a few words, then come back to the action in front of you."],
+  ["I keep checking whether anyone has messaged me.","If your responsibilities allow it, choose a later check in time. Close the messages for one short focus period."],
+  ["The room is too noisy to concentrate.","Could you change location, reduce one sound, or choose a task that needs less concentration for now?"],
+  ["I am distracted by everything on my desk.","Move just the things that compete with the next task. You do not need a perfectly tidy desk to continue."],
+  ["I lost my place after scrolling.","Look for the last small thing you completed. Write a brief note about the next action, then begin there."],
+  ["Can you block all distracting apps for me?","Daywell does not automatically block other apps. Your device may have focus or screen time settings you can choose to use.","live"],
+  ["Remind me that I can come back after distraction.","A distraction does not cancel the work you have done. Take one gentle return to the next visible step." ]
+ ]},
+ {"id":"focus-break-it-down","category":"focus","title":"Make the task smaller","companion":"pip","examples":[
+  ["Help me break down cleaning my room.","Choose one category first, such as clothes. Put those in their places before deciding whether to take on anything else."],
+  ["How do I break down writing a report?","List the headings, put rough notes beneath them, then work on one section. Editing can be a separate pass."],
+  ["I need to prepare for an appointment.","Find the time and location, then gather what you need to bring. Add any questions you want to remember."],
+  ["Packing for my trip feels overwhelming.","Start with the essentials you cannot easily replace. Then choose clothing for the actual days and activities ahead."],
+  ["I need to make a difficult phone call.","Write why you are calling and one sentence to open with. Keep any details you might need beside you."],
+  ["My project has too many moving parts.","List the next action for each part, then choose one that unblocks something else. You can leave the full plan on paper."],
+  ["I do not know what done means for this task.","Describe a clear stopping point in one sentence. Aim for that version before adding extra work."],
+  ["Can you turn this whole project into saved tasks?","That needs the project details and a confirmed task list. Review the steps before saving them in your planning tools.","tool"],
+  ["I keep making the task bigger as I do it.","Keep a separate note for extra ideas. Return to the stopping point you originally chose."],
+  ["What is the next step after opening the document?","Read the heading or last note, then write one rough point. Keep the next action concrete and small." ]
+ ]},
+ {"id":"focus-timer-requests","category":"focus","title":"Use time gently","companion":"tock","examples":[
+  ["Start a five minute focus timer.","Open the focus timer, choose five minutes, and press start. Check that it is running before beginning.","tool"],
+  ["Pause my focus session.","Use the pause control on your current timer. This prepared reply cannot pause a running session for you.","tool"],
+  ["How much time is left on my timer?","The remaining time needs to be read from the active timer. Open it to check the current countdown.","tool"],
+  ["I want a shorter focus session than usual.","Choose a duration that fits your energy today. A short session can still create a useful beginning."],
+  ["The timer makes me feel rushed.","You can work without a countdown or choose a gentler stopping point. The tool should support you, not add pressure."],
+  ["Can I stop before the timer ends?","Yes. You can stop when you need to and record what helped. Finishing a countdown is not a test of your worth."],
+  ["Restart the timer from the beginning.","Use the reset control and confirm the duration before starting again. Make sure you intend to clear the current countdown.","tool"],
+  ["I finished my task before the timer.","You can end the session there. Take a small pause before deciding whether another task belongs in this block."],
+  ["The timer ended but I am in a good flow.","You can choose a little more time, while checking your other needs and commitments. The timer is a guide."],
+  ["Can you promise the timer alarm will wake me?","Do not rely on an in app timer as a guaranteed wake up alarm. Use and test a suitable device alarm for that.","live"]
+ ]},
+ {"id":"focus-interruption-plan","category":"focus","title":"Handle an interruption","companion":"pip","examples":[
+  ["Someone interrupted me and now I cannot restart.","Write the next small action you remember. If that is unclear, review the last thing you completed and start from there."],
+  ["I need to stop working suddenly.","Leave a brief note saying where you are and what comes next. That can make returning less demanding."],
+  ["I am being interrupted every few minutes.","Could you ask for one short protected period, or switch to work that tolerates interruptions for now?"],
+  ["I forgot what I was doing before the doorbell.","Take a moment to look at your workspace. The open material or last note may show the next step."],
+  ["I get angry when my focus is broken.","Pause before responding if you can. Then explain the practical thing you need, such as a few minutes to finish a step."],
+  ["I need a phrase to protect my focus time.","You could say, I am finishing one thing; can I come back to you in a few minutes?"],
+  ["My day is full of unpredictable caring duties.","Choose tasks that can be left safely at a clear stopping point. Your plan needs room for the responsibilities you have."],
+  ["Can you save where I got to?","Add a short note in the relevant task or journal entry, then check it saved. A recording cannot store that note itself.","tool"],
+  ["I cannot remember the idea I had before being interrupted.","Write any small part you still remember. If it does not return now, you can leave space and come back later."],
+  ["I need to return to work after a long break.","Start with a brief review of what is still relevant. Choose one current action instead of trying to catch up on everything." ]
+ ]},
+ {"id":"focus-task-transitions","category":"focus","title":"Move between parts of the day","companion":"pip","examples":[
+  ["I cannot switch from work mode to home mode.","Close one work item and leave a note for tomorrow. Then choose a small physical change, like putting your bag away."],
+  ["I keep working even when I meant to stop.","Choose a clear stopping action now. Save the work, note the next step, and close the tool if your responsibilities allow it."],
+  ["I find it hard to move from one task to another.","Give the first task a small ending. Then name only the first action of the next one."],
+  ["I have ten minutes between appointments.","You can use that gap to settle, prepare, or simply pause. It does not need to become another work session."],
+  ["I get stuck after finishing something.","Let there be a short pause. Then choose from a small set: rest, an ordinary need, or the next priority."],
+  ["I need to leave the house but keep adding tasks.","Return to the essentials for leaving. Extra tasks can go on a note instead of coming with you into this moment."],
+  ["How do I end a study session without losing my place?","Write the next question or page to return to. Leave a clear starting point for your next session."],
+  ["I want a small ritual before focusing.","Clear a little space, choose one task, and decide a stopping point. Keep the ritual short enough to be useful."],
+  ["My commute ended but my brain is still rushing.","Let arriving be a separate moment. Put down what you are carrying and notice that the journey has finished."],
+  ["Can you help me close the working day?","Note anything that genuinely needs carrying forward. Then choose one sign that work is finished for now." ]
+ ]},
+ {"id":"focus-imperfect-work","category":"focus","title":"Make room for imperfect work","companion":"pip","examples":[
+  ["I cannot submit this because it is not perfect.","Check it against the actual requirements. If those are met, choose one final review rather than an endless search for certainty."],
+  ["I keep rewriting the first sentence.","Leave a rough opening and move to the next point. The beginning may be easier to edit once the rest exists."],
+  ["I am afraid of making a mistake.","Look for a small, reversible next step. You can build in a check without needing certainty before every action."],
+  ["I cannot work unless my setup is perfect.","Choose the minimum setup the task needs. Let the first small action happen before making more improvements."],
+  ["I compare my work to everyone else's.","Return to what this task needs from you today. Other people's finished work does not show their drafts."],
+  ["I spent more time planning than doing.","Keep the plan you have and test one small step. What happens next can inform the next part of the plan."],
+  ["I need permission to make a rough draft.","A rough draft is a useful stage of work. Its job is to give you something to shape, not to impress."],
+  ["I have redone this task three times.","Check what still needs changing against a clear standard. If it meets the need, consider calling that version complete."],
+  ["Can you guarantee my work is good enough?","I cannot guarantee an outcome from a prepared reply. A review needs the work itself and the criteria it will be judged against.","live"],
+  ["I worry that taking longer means I am bad at this.","Time can reflect many things, including the task and your circumstances. Choose a useful next step without turning the clock into a judgement." ]
+ ]},
+ {"id":"focus-life-admin","category":"focus","title":"Make life admin manageable","companion":"tock","examples":[
+  ["I am avoiding opening my post.","Choose one envelope and a place to put it. You only need to find out what that one item needs next."],
+  ["I have forms to fill in and feel overwhelmed.","Read just the first section and gather what it asks for. Complete one part before looking at the whole form again."],
+  ["I keep forgetting to book an appointment.","Write down the booking details and choose a time to contact them. Verify any reminder you create."],
+  ["Can you book my medical appointment?","Daywell cannot make that booking through a saved audio reply. Contact your provider through its booking system.","live"],
+  ["I have a pile of small admin jobs.","Pick one with a real deadline. Put the others in one visible list so they do not all need to stay in your head."],
+  ["I am scared to check an overdue bill.","Open the information when you feel able, and note the actual amount and deadline. For debt advice, use a qualified support service.","live"],
+  ["I need to organise documents for tomorrow.","List only what tomorrow requires. Gather those items into one place and check the essentials before adding anything extra."],
+  ["Can you send that email for me?","Sending an email needs the message, recipient, and an actual sending tool. This recording cannot send it.","live"],
+  ["I forgot a deadline and feel ashamed.","Find out what action is still possible now. A practical message or next step may help more than replaying the mistake."],
+  ["I want to stop putting every small job off.","Choose one manageable job for today and make its first step obvious. You do not need to fix the whole backlog at once." ]
+ ]},
+ {"id":"focus-study-support","category":"focus","title":"A gentler study session","companion":"pip","examples":[
+  ["I keep reading the same paragraph.","Pause and ask what the paragraph is trying to say. Write one rough sentence in your own words, then check it against the text."],
+  ["I do not know how to start revising.","Choose one topic and one small question about it. Start by seeing what you can recall before checking your notes."],
+  ["I have an exam tomorrow and feel behind.","Choose the most useful topics for the time left, and leave room for ordinary needs and sleep. Avoid trying to cover everything perfectly."],
+  ["Studying feels lonely.","A quiet study group or a trusted person working nearby may help. You can also use a short timer to give the session a shape."],
+  ["I have too many study resources open.","Pick one resource for the next question. Keep the others available for a specific gap instead of moving between all of them."],
+  ["Can you explain this topic to me?","Tell me the topic and the part that is confusing. A useful explanation needs that context rather than a generic recording.","live"],
+  ["I am tired but have more to study.","Check whether a break or stopping for the day would be more useful. More time at the desk is not always more learning."],
+  ["I cannot remember anything I studied.","Try one small recall question and then check your notes. Begin with a narrow topic rather than testing yourself on everything."],
+  ["I want to end studying with a clear next step.","Write the next topic and one question to start with. That gives your next session a place to begin."],
+  ["Can you do my exam for me?","I can support practice and understanding, but I cannot take an exam on your behalf. We can work on the topic you need to learn.","live"]
+ ]}
+]

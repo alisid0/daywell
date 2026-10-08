@@ -21,10 +21,10 @@ function loadLayers(id: CompanionId) {
   return pending;
 }
 
-export function CompanionCanvas({ id, motion, size, celebration = 0 }: { id: CompanionId; motion: CompanionMotion; size: number; celebration?: number }) {
+export function CompanionCanvas({ id, motion, size, celebration = 0, breath }: { id: CompanionId; motion: CompanionMotion; size: number; celebration?: number; breath?: number }) {
   const canvas = useRef<HTMLCanvasElement>(null);
-  const current = useRef({ motion, celebration });
-  useEffect(() => { current.current = { motion, celebration }; }, [motion, celebration]);
+  const current = useRef({ motion, celebration, breath });
+  useEffect(() => { current.current = { motion, celebration, breath }; }, [motion, celebration, breath]);
   const enabled = useCompanionMotion();
 
   useEffect(() => {
@@ -67,6 +67,10 @@ export function CompanionCanvas({ id, motion, size, celebration = 0 }: { id: Com
           });
           render = () => {
             const pose = renderer.poseAt(id, state, motionTime(state, stateElapsed));
+            if (current.current.breath !== undefined) {
+              const amount = Math.max(0, Math.min(1, current.current.breath));
+              pose.sx = 1 + .015 * amount; pose.sy = 1 + .028 * amount;
+            }
             lastPose = fromPose && transitionElapsed < .4 ? renderer.blendPose(fromPose, pose, transitionElapsed / .4) : pose;
             renderer.draw(context, rig, id, state, motionTime(state, stateElapsed), { pose: lastPose, furTime: elapsed % 8 });
             element.dataset.ready = "true";

@@ -1,0 +1,122 @@
+[
+ {"id":"everyday-say-hello","category":"everyday","title":"An easy way to begin","companion":"sunny","examples":[
+  ["Hello, Daywell.","Hello. You can arrive just as you are. What would make this moment a little easier?"],
+  ["I am back after a very busy day.","Welcome back. You can put the day down for a moment. A quiet pause is a good enough place to start."],
+  ["I do not really know why I opened the app.","You do not need a clear reason. You can take a small pause and see what, if anything, would help."],
+  ["Is there anything I have to do here?","There is no task you have to complete. You can listen, use a tool, or simply leave when you are ready."],
+  ["I just want a gentle hello.","Hello there. Let this be one undemanding moment in the middle of your day."],
+  ["I am here but I do not want to explain everything.","You can keep the details to yourself. Choose a quiet recording if listening feels easier than talking."],
+  ["What can I say to start?","You can say what you need in ordinary words, such as help me unwind, or I want to move a little."],
+  ["I am trying this for the first time.","Start with one small need. You can explore a guided moment or a simple tool without setting up your whole life."],
+  ["Can I use this without having a goal?","Yes. A few quiet minutes can be a complete visit. You do not need to turn them into a goal."],
+  ["I am having a very ordinary day.","Ordinary days belong here too. You can make room for a small comfort without waiting for a difficult moment." ]
+ ]},
+ {"id":"everyday-one-host","category":"everyday","title":"One host, friendly company","companion":"sunny","examples":[
+  ["Do I need to remember all the mascot names?","No. You can ask Daywell in your own words. The companions are there to make the experience feel welcoming."],
+  ["Who should I ask for help sleeping?","Just ask Daywell for a gentle sleep or wind down moment. You do not need to call a separate companion."],
+  ["What does Luma do?","Luma accompanies quiet moments, rest, and settling down. You can simply choose the kind of support you want."],
+  ["What does Bounce do?","Bounce brings friendly company to movement. You can ask Daywell about moving without remembering a special command."],
+  ["What does Pip help with?","Pip accompanies focus and manageable next steps. The task can stay small, even when your thoughts feel busy."],
+  ["Why are Momo and Nori here?","They bring a little company to food and everyday care. You do not need to manage them or give them separate instructions."],
+  ["Do I have to look after the mascots?","No. The companions do not need feeding, attention, or a daily visit. They are here to support your experience."],
+  ["Will a mascot be disappointed if I skip a day?","No companion is keeping score or waiting for an explanation. You can return whenever the app is useful."],
+  ["Can I just talk to one main assistant?","That is the idea: use ordinary words with Daywell. You do not need to choose a different assistant for every need."],
+  ["Are these companions real people?","The companions are illustrated characters, and the voices are AI generated. They do not have human experiences or feelings." ]
+ ]},
+ {"id":"everyday-audio-controls","category":"everyday","title":"Choose how you listen","companion":"tock","examples":[
+  ["Can I hear a calmer voice?","In the new unwind sessions, choose a voice and use its preview button. The full session begins only when you press begin.","tool"],
+  ["Turn the volume down.","Use the voice volume control in the session or your device volume. This saved reply cannot change that setting.","tool"],
+  ["Stop talking for a moment.","Use the stop or pause control when you want quiet. You are free to end the audio at any time.","tool"],
+  ["Can you repeat the last bit?","Use the session position control to move back, or replay a short recording. Choose only as much as you want to hear.","tool"],
+  ["Do I need headphones for meditation?","Headphones are optional. Use a comfortable listening setup and volume, in a place where it is safe to settle."],
+  ["Can I listen without speaking?","Yes. Just listen contains prerecorded moments. Those recordings do not need microphone access."],
+  ["Will you start playing when I select a voice?","Selecting an unwind voice does not start audio. Use preview or begin when you are ready to listen."],
+  ["I want to read instead of listen.","The guidance is available as text. Open the full guidance if you would like to follow the session in writing."],
+  ["Can I keep the audio playing while I drive?","Use these settling exercises after you have arrived safely. Do not follow relaxation or breathing cues while driving."],
+  ["Can you speak in another language?","These saved recordings are in English. Other languages would need supported, separately prepared guidance or a live conversation.","live"]
+ ]},
+ {"id":"everyday-privacy-choices","category":"everyday","title":"Understand what you share","companion":"tock","examples":[
+  ["Is my microphone on while a recording plays?","Prerecorded listening does not require the microphone. Check the separate live voice control if you have started a conversation."],
+  ["Does a live voice conversation use an outside service?","Live voice uses ElevenLabs after you choose to connect. Review the consent and privacy information before starting."],
+  ["Should I say my password to Daywell?","Keep passwords, payment details, and private security codes out of conversations. They are not needed for a calming moment."],
+  ["Can you delete everything you know about me?","Data deletion needs the appropriate account or data controls. A prerecorded reply cannot delete stored information.","tool"],
+  ["Can other people using this device see my app?","That depends on the device and account session. Use appropriate device protection and check your sign in state when sharing a device.","live"],
+  ["Do you automatically send my journal to the voice service?","Daywell's live voice setup does not automatically include your journal. What you choose to say in a conversation is still shared with the voice service."],
+  ["Can I use a vague description instead of personal details?","Yes. You can say you had a difficult day without naming people or sharing private information."],
+  ["Where can I check the current privacy terms?","Use the privacy information provided for the app and its voice service. A saved reply may not reflect later changes to those terms.","live"],
+  ["Can you promise this conversation is completely confidential?","I cannot make that promise. Check how the app and its voice provider process data before sharing sensitive information.","live"],
+  ["I accidentally said something sensitive.","End the live conversation if you want to stop sharing. Check the service's data controls or support options for any stored information.","live"]
+ ]},
+ {"id":"everyday-comfort-preferences","category":"everyday","title":"Make the experience comfortable","companion":"luma","examples":[
+  ["The mascot movement is distracting me.","Use the gentle movement control to turn animation off. You can keep the companion still while you listen.","tool"],
+  ["I do not want to follow breathing instructions.","You can leave your breathing alone. Try the room based meditation, or simply notice the support beneath you."],
+  ["Closing my eyes makes me uncomfortable.","Keep them open. You can rest your gaze somewhere ordinary and stay aware of the room."],
+  ["I need fewer choices on screen.","Choose one moment to use for now and leave the rest. You do not need to explore every option during a visit."],
+  ["I cannot sit in the suggested position.","Use a position that is comfortable and safe for you. You do not need to match the illustration."],
+  ["I find breath sounds unpleasant.","You can choose a recording without breathing demonstrations, read the guidance, or pause the audio. Your comfort matters."],
+  ["I need a session that does not require standing.","Choose a resting or listening session that suits your position. Adapt the setup to your comfort and access needs."],
+  ["I do not want motivational cheering.","A quieter approach is okay. Choose a gentle listening moment and let the next step stay small."],
+  ["Can you make the text easier for me to read?","Your browser or device may offer text size and zoom controls. Use the written guidance at a size that feels comfortable.","tool"],
+  ["I want to change the look again later.","You can return to the appearance choices when you want. A design preference does not need to become a permanent decision.","tool"]
+ ]},
+ {"id":"everyday-app-boundaries","category":"everyday","title":"Know what the app can do","companion":"sunny","examples":[
+  ["Are you a therapist?","No. Daywell offers everyday tools and general wellbeing support. It cannot replace a therapist or other qualified professional."],
+  ["Can you diagnose ADHD?","Daywell cannot diagnose ADHD. A qualified healthcare professional can assess your experiences and discuss suitable support.","live"],
+  ["Can this app cure my insomnia?","Daywell cannot promise to cure insomnia. Persistent sleep problems deserve advice from a healthcare professional.","live"],
+  ["Will a prerecorded response actually save a task?","A recording only plays words. Saving or changing a task requires a real app action and a result you can check."],
+  ["Can you call emergency services for me?","Daywell cannot make an emergency call. If you are in immediate danger, call your local emergency number directly.","urgent"],
+  ["Can you guarantee I will feel better after meditation?","No session can guarantee a particular feeling. You can try it gently and stop or choose something else if it does not help."],
+  ["Are you always listening in the background?","Prerecorded listening does not use the microphone. Live voice requires a connection you choose to start; check its controls to end it."],
+  ["Can you prescribe something to help me sleep?","Medication advice and prescribing belong with a qualified clinician. I can only offer general, nonmedical settling ideas.","live"],
+  ["Will this replace my personal trainer?","The app can offer general encouragement and tools. It cannot provide the same observation and individual assessment as a qualified trainer."],
+  ["Can I rely on you for important medical decisions?","Please use qualified medical advice for those decisions. Daywell's general support and saved recordings cannot assess your health.","live"]
+ ]},
+ {"id":"everyday-clarify-a-need","category":"everyday","title":"Find the right words","companion":"sunny","examples":[
+  ["Help me with that thing.","Which thing would you like help with? A few ordinary words about the situation are enough to begin.","live"],
+  ["Do the usual one.","Which activity do you mean today? I do not want to choose or change something based on a guess.","live"],
+  ["Make it better.","What would you like to feel a little easier right now: your next task, your body, or finding a pause?","live"],
+  ["I need something but cannot name it.","Start with what you notice. Are you tired, hungry, restless, overwhelmed, or simply unsure? You can take your time."],
+  ["Change the time.","Which time would you like to change, and what should it be instead? The right entry needs to be clear before it is edited.","tool"],
+  ["Remind me later.","What should the reminder say, and when would later be useful? Check the reminder tool can deliver the notification you need.","tool"],
+  ["Play that voice again.","Choose the voice you mean in the unwind session, then use preview or begin. A saved recording cannot identify your previous choice.","tool"],
+  ["I do not know whether I need rest or movement.","Notice your energy and any discomfort. You could begin with a short pause, then decide whether gentle movement appeals."],
+  ["Never mind, that was not what I meant.","We can leave that idea there. Tell me what you meant in another way, without needing the perfect wording.","live"],
+  ["I said sleep, not a workout.","Thanks for correcting that. Choose a sleep or wind down moment so the support fits what you actually wanted.","live"]
+ ]},
+ {"id":"everyday-several-needs","category":"everyday","title":"When several things need attention","companion":"sunny","examples":[
+  ["I need dinner, a workout, and an early night.","Choose what needs attention first, and keep the evening realistic. You can make each part smaller or leave one for another day."],
+  ["I am tired and hungry and still have work to do.","Take care of an immediate ordinary need first if you can. Then reassess how much work reasonably fits the energy left."],
+  ["Can you plan my whole evening for me?","Tell me your fixed commitments and the time you have. A useful plan needs those details, with some room left open.","live"],
+  ["I want to calm down and then focus.","Begin with a brief settling pause. When you are ready, choose one small task instead of the whole list."],
+  ["I want to exercise but also really need rest.","You can choose rest, or a very gentle amount of movement if it suits you. The decision does not need to prove anything."],
+  ["I need to stop scrolling and go to bed.","Choose one ending for the scrolling, such as closing the feed. Then take the first small step of getting ready for bed."],
+  ["Set a timer and add food to my shopping list.","Those are two separate app actions. Check the timer is running, then add the food items and verify the list.","tool"],
+  ["I have so many habits to improve that I do nothing.","Choose one area for now. Making one ordinary action easier can be enough to begin."],
+  ["Can I combine a rest break with a calendar check?","You can, but it may be easier to let the rest break be a pause first. Check the calendar afterwards if you still want to."],
+  ["I want the app to decide everything for me.","I can help narrow choices, but your preferences and circumstances still matter. Let's begin with just the next decision." ]
+ ]},
+ {"id":"everyday-real-life","category":"everyday","title":"Fit the day you actually have","companion":"luma","examples":[
+  ["I got home after a long train journey.","Let arriving have a little space. Put your things down somewhere safe and settle before asking anything else of yourself."],
+  ["My house is busy and I cannot find quiet.","You do not need complete silence. Find the most comfortable spot available and let the surrounding sounds be part of the moment."],
+  ["I have children and cannot take a long break.","Use a brief pause when it is safe and practical. Even a small moment of support can fit inside a demanding day."],
+  ["I work shifts, so normal routines do not fit.","Build around your own work and rest periods. The clock on someone else's routine does not have to define yours."],
+  ["I am staying away from home this week.","Choose one familiar comfort you can bring into the new place. The rest of the routine can be simpler for now."],
+  ["I have very little energy today.","Make the next step smaller and include rest where you can. You do not need to use your best day as today's standard."],
+  ["I am caring for someone and forgetting my own needs.","Your needs still belong in the day. Consider one practical support you could ask for, alongside a small pause for yourself."],
+  ["My day changed unexpectedly.","Pause and look at what is still necessary. You can make a new, smaller plan without treating the old one as a failure."],
+  ["I do not have a cosy room like the app.","You do not need a special room. A supported seat, a familiar object, or a small comfortable corner can be enough."],
+  ["I just want to sit here after getting home.","Then sitting here can be the whole plan. Let yourself arrive without turning the pause into another task." ]
+ ]},
+ {"id":"everyday-finish-gently","category":"everyday","title":"Leave when you are ready","companion":"sunny","examples":[
+  ["That is enough for today, thank you.","You can leave it there. Take whatever was useful into the rest of your day."],
+  ["I feel ready to put my phone down now.","Let that be your next step. There is nothing else you need to finish in the app first."],
+  ["I do not feel any different after the session.","That can happen. You have not done it wrong, and you can choose another kind of support or simply move on."],
+  ["I want a little silence after this.","You can pause the audio and stay quietly. The silence does not need filling."],
+  ["Can I leave halfway through a session?","Yes. Use end for now whenever you want. You do not need to reach the final second to make the visit worthwhile."],
+  ["I am going to make myself some food now.","That sounds like a practical next step. Let the app wait while you take care of what you need."],
+  ["I want to come back to this exercise later.","You can find the session again in Just listen. There is no need to complete another session before returning to it."],
+  ["Can you end my live voice conversation?","Use the end conversation control to disconnect live voice. This saved reply cannot close the connection itself.","tool"],
+  ["I do not want a reminder to return.","You can visit when you choose. Review any reminders you have set if you no longer want them.","tool"],
+  ["Goodnight, Daywell.","Goodnight. Let the remaining tasks wait where they can. You can settle into the rest of your evening at your own pace." ]
+ ]}
+]

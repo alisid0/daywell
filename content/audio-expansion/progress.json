@@ -1,0 +1,122 @@
+[
+ {"id":"progress-gentle-review","category":"progress","title":"Look back without a score","companion":"sunny","examples":[
+  ["How has my week been?","Your saved history can help you look back. Choose one thing that supported you and one thing you would like to make easier.","tool"],
+  ["I want to review today without judging myself.","Describe what happened before deciding what it means. Include your circumstances, your effort, and any support you had."],
+  ["What went well for me today?","Think of one moment that felt useful, kind, or manageable. It can be ordinary and still belong in your reflection."],
+  ["Can you summarise my month?","A monthly summary needs your actual saved entries. Open your history and choose the period you want to review.","tool"],
+  ["I cannot remember what I achieved this week.","Look for small records: an appointment attended, a meal made, a walk, or a moment of rest. Progress can be quiet."],
+  ["I want a question to reflect on tonight.","Try this: what made today a little easier, and would I like to make room for it again?"],
+  ["My week was difficult; can I still record it?","Yes. Your history can include difficult days without needing a positive ending. A plain note is enough."],
+  ["I only remember the things I did not finish.","Take a second look at what you did carry through, including ordinary care and responsibilities that may be easy to overlook."],
+  ["Can we do a very short weekly check in?","Name one helpful thing, one difficult thing, and one small adjustment for next week. You can stop after those three."],
+  ["I want to remember how this part of my life felt.","Write a few words about the day as it was. Your record can hold experience as well as completed tasks." ]
+ ]},
+ {"id":"progress-gaps-return","category":"progress","title":"Return after a gap","companion":"sunny","examples":[
+  ["I have not used Daywell for two weeks.","You can start with today. There is no backlog of app visits you need to catch up on."],
+  ["My history has lots of empty days.","Empty spaces mean there is no entry, not that nothing happened. You can leave those spaces as they are."],
+  ["I broke my routine and feel like starting over is pointless.","The earlier effort still happened. Choose a version of the routine that fits where you are now."],
+  ["Do I need to fill in every missing day?","Only if it is useful to you. A record can be helpful without being complete."],
+  ["I am embarrassed to come back after disappearing.","There is no explanation you owe the app. Choose one thing that would help you today."],
+  ["Can you hide the days when I did nothing?","An empty day does not prove you did nothing. Review the available history controls if you want to change how entries are shown.","tool"],
+  ["I forgot my habit again.","Look at what got in the way this time. A smaller step or a different cue may fit better than a stronger promise."],
+  ["I used to do this regularly and now I do not.","Your circumstances may have changed. Begin with what is manageable now rather than demanding the old routine immediately."],
+  ["Can a restart count as progress?","A return can be useful in itself. You noticed a need and chose to respond to it again."],
+  ["I want a fresh start without deleting my past.","You can choose a new intention for today while keeping your earlier records. The past can stay without directing every next step." ]
+ ]},
+ {"id":"progress-small-wins","category":"progress","title":"Notice an ordinary win","companion":"sunny","examples":[
+  ["I finally did the small task I was avoiding.","Give that moment a little room. You took a step that had been difficult to begin."],
+  ["All I managed was getting dressed.","That was part of caring for yourself today. You can acknowledge it without comparing it with someone else's day."],
+  ["I took a break before I got completely overwhelmed.","You noticed what you needed and responded. That is a useful moment to remember."],
+  ["I went for a short walk instead of scrolling.","You made space for something different. Notice what the walk was like, without needing it to become a bigger achievement."],
+  ["I cooked once this week.","You made one meal happen. If it helped, note what made it manageable so you can return to it."],
+  ["I asked for help and that was hard.","Asking for support can take effort. You do not have to manage every difficulty on your own."],
+  ["I stopped working at a reasonable time.","You made an ending to the workday. Let the time you protected be available for what you need now."],
+  ["I chose rest instead of forcing another workout.","You paid attention to your circumstances. Recovery and rest can belong alongside movement."],
+  ["Can you save this as a win?","Add a note to your history or journal and check it saved. The recording itself cannot create that entry.","tool"],
+  ["I do not want a big celebration, just a little acknowledgement.","A quiet acknowledgement is enough: that took some effort, and you did it. Nothing more needs to be made of it." ]
+ ]},
+ {"id":"progress-notice-patterns","category":"progress","title":"Get curious about patterns","companion":"sunny","examples":[
+  ["I always struggle on Mondays.","Look at what Mondays ask of you. A smaller plan or a little preparation may help more than blaming yourself."],
+  ["My energy seems different every day.","A brief note about the day may help you notice patterns over time. Avoid treating one entry as the whole explanation."],
+  ["Can you tell what causes my bad sleep?","A history can suggest questions, but it cannot establish the cause of poor sleep. Persistent difficulties are worth discussing with a clinician.","live"],
+  ["I feel better on days I leave the house.","That is worth noticing. Think about what part of going out helps and whether a manageable version fits another day."],
+  ["I scroll most when I am exhausted.","The scrolling may be filling a need for a low effort pause. Try keeping another easy resting option available."],
+  ["I only exercise when a friend comes with me.","Company may be a useful support. You can plan with that in mind instead of treating it as a weakness."],
+  ["Can my records prove this habit is improving my health?","Personal records can show what you logged, but they cannot prove medical benefits or explain every change in your health.","live"],
+  ["I notice I miss meals when meetings run late.","That gives you a practical place to adjust. Could you protect a food break or keep an accessible backup option?"],
+  ["I want to compare two weeks without competing with myself.","Look for differences in circumstances as well as activities. Ask what helped, rather than which week deserves a higher score."],
+  ["Everything seems linked and I cannot find one cause.","You do not need one perfect explanation. Choose a small change you can observe, and seek professional help for persistent health concerns." ]
+ ]},
+ {"id":"progress-calendar-ahead","category":"progress","title":"Make space in the calendar","companion":"tock","examples":[
+  ["What is on my calendar tomorrow?","Open tomorrow in your calendar to see the saved plans. A prerecorded reply cannot read your current schedule.","tool"],
+  ["Add a walk to my calendar on Friday.","Choose Friday and add the walk with the time you want. Check the saved date so it appears where you expect.","tool"],
+  ["Move my workout to next week.","Open the scheduled workout and choose its new date. Review the change before saving it.","tool"],
+  ["I have planned too much for tomorrow.","Choose what genuinely needs to happen, then move or remove something that can wait. Leave space between commitments."],
+  ["Can you schedule time to do nothing?","You can add a rest block to your calendar. Give it enough room to feel like a pause, rather than another performance.","tool"],
+  ["Show me my next free evening.","That requires your actual calendar entries. Review the coming evenings and include commitments that may not be recorded.","tool"],
+  ["Can you remind me of my appointment next month?","Create and verify a reminder in a calendar or alarm service that supports notifications. A saved Daywell plan alone may not notify you.","tool"],
+  ["I want travel time around my appointment.","Add a little preparation and journey time around the appointment. A calendar is more useful when it includes getting there."],
+  ["Delete tomorrow's planned run.","Find the planned run on tomorrow's date and confirm it is the right entry before removing it.","tool"],
+  ["Can I plan a gentle week instead of a productive one?","Yes. Leave space for sleep, meals, movement you want, and rest. Your calendar can reflect care as well as commitments." ]
+ ]},
+ {"id":"progress-calendar-behind","category":"progress","title":"See how far you have come","companion":"sunny","examples":[
+  ["Show me the days I moved this month.","Open your history for the month and review the movement entries. Remember that unlogged activity will not appear there.","tool"],
+  ["When did I last take a proper rest day?","That needs your saved history and what rest means to you. Look back for a day with room to recover.","tool"],
+  ["Can I add something I did yesterday?","You can make a dated entry for yesterday where the app supports it. Check the date before saving.","tool"],
+  ["I want to remember my first workout here.","Look for the earliest movement entry in your history. You can add a reflection about what that beginning meant to you.","tool"],
+  ["I cannot see an activity I remember doing.","It may not have been logged, or it may be under another date. Check the records before assuming it was lost.","tool"],
+  ["Does an empty calendar day mean I failed?","No. A calendar shows recorded plans and entries. It cannot measure your effort or everything that mattered that day."],
+  ["I want to compare where I started with now.","Choose one meaningful change, such as an easier routine or asking for help sooner. Progress does not have to be a number."],
+  ["Can you mark a past task as completed?","Open the correct task and update its status. Check the date and details so your history remains accurate.","tool"],
+  ["I need to correct yesterday's activity record.","Find the entry in your history and edit the details available there. Review it after saving to confirm the correction.","tool"],
+  ["My calendar only shows tasks; I want memories too.","A short journal note can capture the experience around a day. Useful history can include how things felt, not only what got done." ]
+ ]},
+ {"id":"progress-calendar-connections","category":"progress","title":"Keep your plans connected","companion":"tock","examples":[
+  ["Can you connect directly to Google Calendar?","Daywell currently offers calendar file export, rather than live Google Calendar synchronisation. Check the export options in the calendar.","live"],
+  ["Can I put Daywell plans in Apple Calendar?","You can use the calendar export file with a compatible calendar app. Check the imported dates and times after adding it.","tool"],
+  ["Will my Apple Calendar changes update Daywell automatically?","A calendar file export is a snapshot. Changes in another calendar do not automatically update Daywell.","live"],
+  ["Export my upcoming plans.","Use the calendar export control, then check the dates included in the file before importing it elsewhere.","tool"],
+  ["I imported the same calendar file twice.","The receiving calendar may contain duplicates. Review those entries there before removing anything you want to keep.","live"],
+  ["Can you see all my Google events now?","A prepared reply cannot access your Google events. Daywell's file export does not grant access to that calendar.","live"],
+  ["My event has the wrong time after importing.","Check the time zone and event details in both places. Correct the event only after confirming which time you intended.","live"],
+  ["Can I share a calendar export with someone?","An export can contain personal plans. Review its contents and share it only with someone you intend to receive those details."],
+  ["Can Daywell keep a history without an external calendar?","You can use Daywell's own calendar and history. Connecting another calendar is not required to keep a record."],
+  ["I want one source of truth for my schedule.","Choose which calendar you will check regularly. With file exports, review changes carefully because the copies do not stay in sync." ]
+ ]},
+ {"id":"progress-appointment-preparation","category":"progress","title":"Prepare for a commitment","companion":"tock","examples":[
+  ["I have an appointment and feel scattered.","Check the time, place, and what you need to bring. Keep those details in one place you can find easily."],
+  ["What should I ask at my next health appointment?","Write down your main concern, how long it has been happening, and any questions you do not want to forget."],
+  ["Can you add my appointment details for me?","The calendar needs the date, time, and details you want saved. Review the entry before confirming it.","tool"],
+  ["I keep leaving too late for appointments.","Work backwards from arrival time and include getting ready. A separate leaving reminder may be more useful than the appointment time alone."],
+  ["I am worried I will forget what the clinician said.","You can take notes and ask for clarification or written instructions. Bring a trusted person if that is appropriate and you want support."],
+  ["Can you interpret my test results from a calendar note?","Test results need clinical context. Please discuss them with the healthcare professional responsible for your care.","live"],
+  ["I need to reschedule something I cannot manage.","Check how to contact the organiser and ask about the next available option. Update your calendar once the new time is confirmed."],
+  ["I want a little recovery time after a difficult meeting.","Leave a small gap after it if you can. A short pause can give you room before the next commitment."],
+  ["I missed an appointment and do not know what to do.","Contact the provider or organiser to find out the next step. Then update your plans with the confirmed information."],
+  ["Can you remind me what I wanted to discuss?","That needs your saved notes. Open the relevant entry and check the questions you recorded.","tool"]
+ ]},
+ {"id":"progress-setbacks-context","category":"progress","title":"Put a setback in context","companion":"luma","examples":[
+  ["I feel worse this week than last week.","A difficult week does not erase earlier helpful moments. Consider what changed, and seek support if you are struggling to cope."],
+  ["My progress has gone backwards.","Look at the circumstances around the change. You may need a different amount of support or a smaller plan right now."],
+  ["I got ill and lost my routine.","Recovery can become the priority. Return gradually when appropriate, following medical advice where you need it."],
+  ["I had one good week and then everything fell apart.","One difficult period does not make the good week unreal. Keep the useful parts and adjust what no longer fits."],
+  ["I am disappointed with my record.","A record is information, not a grade. Ask what would make the next few days more manageable."],
+  ["Other people improve faster than I do.","Their circumstances and starting points may be different. Choose a change that is meaningful in your own life."],
+  ["I want to delete my history because it makes me feel bad.","You can pause reviewing it and think about what information is useful to keep. Check what deletion removes before making that choice.","tool"],
+  ["I expected this app to fix everything quickly.","An app can offer tools and small supports, but change can take time and outside help. You do not have to do it all here."],
+  ["I am doing the habits but still struggling.","Habits are not a substitute for the support you may need. Consider speaking with a qualified professional or someone you trust.","live"],
+  ["Can we choose a smaller goal after this setback?","Choose something that fits the next day, not your most ambitious week. A manageable step can give you a place to return." ]
+ ]},
+ {"id":"progress-long-view","category":"progress","title":"Care for the longer term","companion":"sunny","examples":[
+  ["Can Daywell make me live longer?","Daywell cannot promise a longer life. It can support everyday routines around movement, food, rest, and sleep."],
+  ["I want to feel stronger as I get older.","A manageable movement routine may support that aim. Get appropriate guidance for your health and abilities as you build it."],
+  ["I want habits I can keep for years.","Choose a version that fits ordinary, busy weeks. A flexible routine is easier to return to when life changes."],
+  ["Should I optimise every part of my life?","You do not need to turn life into constant measurement. Choose a few supports that leave room for enjoyment and rest."],
+  ["I want health progress without chasing a perfect score.","Focus on activities and routines that matter to you. A score cannot capture your whole health or your life."],
+  ["Can you calculate my biological age?","Daywell cannot provide a clinically reliable biological age. Be cautious about treating a single score as a measure of your health.","live"],
+  ["What is one long term intention I could set?","Try an intention about how you want daily life to feel, such as having more room for rest or easier access to movement."],
+  ["I want to take care of myself without making it another job.","Let the routine remove friction. Choose fewer steps and make room for days when only the basics happen."],
+  ["How will I know whether this app is helping?","Notice whether it makes useful actions easier or gives you a welcome pause. You can keep what helps and drop what does not."],
+  ["Can I change what progress means to me?","Yes. Your priorities can change with your circumstances. Choose a definition that supports the life you are living now." ]
+ ]}
+]

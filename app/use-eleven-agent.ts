@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Conversation, Mode, Status } from "@elevenlabs/client";
+import { wellnessBoundary } from "@/lib/wellness-scope";
 
 type Options = { onMessage: (role: "user" | "agent", message: string) => void; onRequest: (parameters: unknown) => Promise<string> };
 export function useElevenAgent(options: Options) {
@@ -49,7 +50,12 @@ export function useElevenAgent(options: Options) {
         onConversationCreated: conversation => { if(valid()) session.current=conversation; else void conversation.endSession(); },
         onStatusChange: ({status:next})=>{if(valid())setStatus(next);},
         onModeChange: ({mode:next})=>{if(valid())setMode(next);},
-        onMessage: ({role,message})=>{if(valid())current.current.onMessage(role,message);},
+        onMessage: ({role,message})=>{
+          if (!valid()) return;
+          current.current.onMessage(role,message);
+          const boundary = role === "user" ? wellnessBoundary(message) : undefined;
+          if (boundary) { void stop(); current.current.onMessage("agent",boundary); }
+        },
         onDisconnect: details=>{if(valid()){if(details.reason === "error") setError("The connection ended. Your unsent message is still here. Reconnect when you’re ready."); void stop();}},
         onError: ()=>{if(valid()){setError("The conversation was interrupted. Check microphone access and your connection, then try again.");void stop();}},
         onUnhandledClientToolCall: ()=>{if(valid())setError("This agent requested a tool Daywell doesn’t support. Check the Daywell agent setup.");},
@@ -65,6 +71,8 @@ export function useElevenAgent(options: Options) {
   }
   function send(text: string) {
     if(!text.trim()) return false;
+    const boundary = wellnessBoundary(text);
+    if (boundary) { current.current.onMessage("user",text.trim()); void stop(); current.current.onMessage("agent",boundary); return true; }
     if(!session.current?.isOpen()) { setError("The conversation has ended. Your message is still here; reconnect to send it."); void stop(); return false; }
     try { session.current.sendUserMessage(text.trim().slice(0,600)); current.current.onMessage("user",text.trim()); return true; }
     catch { setError("That message didn’t send. Please reconnect and try again."); return false; }

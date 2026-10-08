@@ -16,7 +16,7 @@ test("greetings and help receive local replies without creating actions", () => 
 test("greeting prefixes keep the command and confirmation boundary intact", () => {
   assert.deepEqual(parseHostRequest("Hello Daywell, focus for ten minutes"), parseHostRequest("Focus for ten minutes"));
   assert.deepEqual(parseHostRequest("Hi, add milk to my list"), parseHostRequest("Add milk to my list"));
-  for (const phrase of ["Hello, don't add milk", "Hello Daywell, add milk then book a flight", "Hello and delete everything", "Thanks and start a workout", "Can you hear me and save everything", "Hi there, I have chest pain", "hello ".repeat(110)]) {
+  for (const phrase of ["Hello, don't add milk", "Hello Daywell, add milk then book a flight", "Hello and delete everything", "Thanks and start a workout", "Can you hear me and save everything", "hello ".repeat(110)]) {
     assert.equal(parseHostRequest(phrase).type, "unknown", phrase);
   }
 });

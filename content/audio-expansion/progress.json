@@ -35,17 +35,15 @@
   ["Can you save this as a win?","Add a note to your history or journal and check it saved. The recording itself cannot create that entry.","tool"],
   ["I do not want a big celebration, just a little acknowledgement.","A quiet acknowledgement is enough: that took some effort, and you did it. Nothing more needs to be made of it." ]
  ]},
- {"id":"progress-notice-patterns","category":"progress","title":"Get curious about patterns","companion":"sunny","examples":[
+ {"id":"progress-notice-patterns","category":"progress","title":"Get curious about patterns","companion":"sunny","responseIds":["progress-notice-patterns-01","progress-notice-patterns-02","progress-notice-patterns-04","progress-notice-patterns-05","progress-notice-patterns-06","progress-notice-patterns-08","progress-notice-patterns-09","progress-notice-patterns-10"],"examples":[
   ["I always struggle on Mondays.","Look at what Mondays ask of you. A smaller plan or a little preparation may help more than blaming yourself."],
   ["My energy seems different every day.","A brief note about the day may help you notice patterns over time. Avoid treating one entry as the whole explanation."],
-  ["Can you tell what causes my bad sleep?","A history can suggest questions, but it cannot establish the cause of poor sleep. Persistent difficulties are worth discussing with a clinician.","live"],
   ["I feel better on days I leave the house.","That is worth noticing. Think about what part of going out helps and whether a manageable version fits another day."],
   ["I scroll most when I am exhausted.","The scrolling may be filling a need for a low effort pause. Try keeping another easy resting option available."],
   ["I only exercise when a friend comes with me.","Company may be a useful support. You can plan with that in mind instead of treating it as a weakness."],
-  ["Can my records prove this habit is improving my health?","Personal records can show what you logged, but they cannot prove medical benefits or explain every change in your health.","live"],
   ["I notice I miss meals when meetings run late.","That gives you a practical place to adjust. Could you protect a food break or keep an accessible backup option?"],
   ["I want to compare two weeks without competing with myself.","Look for differences in circumstances as well as activities. Ask what helped, rather than which week deserves a higher score."],
-  ["Everything seems linked and I cannot find one cause.","You do not need one perfect explanation. Choose a small change you can observe, and seek professional help for persistent health concerns." ]
+  ["Everything seems linked and I cannot find one cause.","You do not need one perfect explanation. Choose a small change you can observe, and seek professional help for persistent health concerns."]
  ]},
  {"id":"progress-calendar-ahead","category":"progress","title":"Make space in the calendar","companion":"tock","examples":[
   ["What is on my calendar tomorrow?","Open tomorrow in your calendar to see the saved plans. A prerecorded reply cannot read your current schedule.","tool"],
@@ -83,40 +81,37 @@
   ["Can Daywell keep a history without an external calendar?","You can use Daywell's own calendar and history. Connecting another calendar is not required to keep a record."],
   ["I want one source of truth for my schedule.","Choose which calendar you will check regularly. With file exports, review changes carefully because the copies do not stay in sync." ]
  ]},
- {"id":"progress-appointment-preparation","category":"progress","title":"Prepare for a commitment","companion":"tock","examples":[
+ {"id":"progress-appointment-preparation","category":"progress","title":"Prepare for a commitment","companion":"tock","responseIds":["progress-appointment-preparation-01","progress-appointment-preparation-02","progress-appointment-preparation-03","progress-appointment-preparation-04","progress-appointment-preparation-05","progress-appointment-preparation-07","progress-appointment-preparation-08","progress-appointment-preparation-09","progress-appointment-preparation-10"],"examples":[
   ["I have an appointment and feel scattered.","Check the time, place, and what you need to bring. Keep those details in one place you can find easily."],
   ["What should I ask at my next health appointment?","Write down your main concern, how long it has been happening, and any questions you do not want to forget."],
   ["Can you add my appointment details for me?","The calendar needs the date, time, and details you want saved. Review the entry before confirming it.","tool"],
   ["I keep leaving too late for appointments.","Work backwards from arrival time and include getting ready. A separate leaving reminder may be more useful than the appointment time alone."],
   ["I am worried I will forget what the clinician said.","You can take notes and ask for clarification or written instructions. Bring a trusted person if that is appropriate and you want support."],
-  ["Can you interpret my test results from a calendar note?","Test results need clinical context. Please discuss them with the healthcare professional responsible for your care.","live"],
   ["I need to reschedule something I cannot manage.","Check how to contact the organiser and ask about the next available option. Update your calendar once the new time is confirmed."],
   ["I want a little recovery time after a difficult meeting.","Leave a small gap after it if you can. A short pause can give you room before the next commitment."],
   ["I missed an appointment and do not know what to do.","Contact the provider or organiser to find out the next step. Then update your plans with the confirmed information."],
   ["Can you remind me what I wanted to discuss?","That needs your saved notes. Open the relevant entry and check the questions you recorded.","tool"]
  ]},
- {"id":"progress-setbacks-context","category":"progress","title":"Put a setback in context","companion":"luma","examples":[
+ {"id":"progress-setbacks-context","category":"progress","title":"Put a setback in context","companion":"luma","responseIds":["progress-setbacks-context-01","progress-setbacks-context-02","progress-setbacks-context-04","progress-setbacks-context-05","progress-setbacks-context-06","progress-setbacks-context-07","progress-setbacks-context-08","progress-setbacks-context-09","progress-setbacks-context-10"],"examples":[
   ["I feel worse this week than last week.","A difficult week does not erase earlier helpful moments. Consider what changed, and seek support if you are struggling to cope."],
   ["My progress has gone backwards.","Look at the circumstances around the change. You may need a different amount of support or a smaller plan right now."],
-  ["I got ill and lost my routine.","Recovery can become the priority. Return gradually when appropriate, following medical advice where you need it."],
   ["I had one good week and then everything fell apart.","One difficult period does not make the good week unreal. Keep the useful parts and adjust what no longer fits."],
   ["I am disappointed with my record.","A record is information, not a grade. Ask what would make the next few days more manageable."],
   ["Other people improve faster than I do.","Their circumstances and starting points may be different. Choose a change that is meaningful in your own life."],
   ["I want to delete my history because it makes me feel bad.","You can pause reviewing it and think about what information is useful to keep. Check what deletion removes before making that choice.","tool"],
   ["I expected this app to fix everything quickly.","An app can offer tools and small supports, but change can take time and outside help. You do not have to do it all here."],
   ["I am doing the habits but still struggling.","Habits are not a substitute for the support you may need. Consider speaking with a qualified professional or someone you trust.","live"],
-  ["Can we choose a smaller goal after this setback?","Choose something that fits the next day, not your most ambitious week. A manageable step can give you a place to return." ]
+  ["Can we choose a smaller goal after this setback?","Choose something that fits the next day, not your most ambitious week. A manageable step can give you a place to return."]
  ]},
- {"id":"progress-long-view","category":"progress","title":"Care for the longer term","companion":"sunny","examples":[
+ {"id":"progress-long-view","category":"progress","title":"Care for the longer term","companion":"sunny","responseIds":["progress-long-view-01","progress-long-view-02","progress-long-view-03","progress-long-view-04","progress-long-view-05","progress-long-view-07","progress-long-view-08","progress-long-view-09","progress-long-view-10"],"examples":[
   ["Can Daywell make me live longer?","Daywell cannot promise a longer life. It can support everyday routines around movement, food, rest, and sleep."],
   ["I want to feel stronger as I get older.","A manageable movement routine may support that aim. Get appropriate guidance for your health and abilities as you build it."],
   ["I want habits I can keep for years.","Choose a version that fits ordinary, busy weeks. A flexible routine is easier to return to when life changes."],
   ["Should I optimise every part of my life?","You do not need to turn life into constant measurement. Choose a few supports that leave room for enjoyment and rest."],
   ["I want health progress without chasing a perfect score.","Focus on activities and routines that matter to you. A score cannot capture your whole health or your life."],
-  ["Can you calculate my biological age?","Daywell cannot provide a clinically reliable biological age. Be cautious about treating a single score as a measure of your health.","live"],
   ["What is one long term intention I could set?","Try an intention about how you want daily life to feel, such as having more room for rest or easier access to movement."],
   ["I want to take care of myself without making it another job.","Let the routine remove friction. Choose fewer steps and make room for days when only the basics happen."],
   ["How will I know whether this app is helping?","Notice whether it makes useful actions easier or gives you a welcome pause. You can keep what helps and drop what does not."],
-  ["Can I change what progress means to me?","Yes. Your priorities can change with your circumstances. Choose a definition that supports the life you are living now." ]
+  ["Can I change what progress means to me?","Yes. Your priorities can change with your circumstances. Choose a definition that supports the life you are living now."]
  ]}
 ]

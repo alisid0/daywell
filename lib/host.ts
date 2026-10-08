@@ -1,4 +1,5 @@
 import type { Entry, Kind } from "./daywell";
+import { wellnessBoundary } from "./wellness-scope.ts";
 
 export type SupportLevel = "quiet" | "occasional" | "guided";
 export type ActivityCompanion = "pip" | "luma" | "bounce" | "tock";
@@ -22,6 +23,8 @@ const unknown = (message = 'Try “Add milk to my list”, “Focus on my email 
 export function parseHostRequest(input: string): HostRequest {
   let text = input.trim().replace(/\s+/g, " ").replace(/[.!?]+$/, "").trim();
   if (!text || text.length > 600) return unknown("Use a short request of up to 600 characters. Nothing has changed.");
+  const boundary = wellnessBoundary(text);
+  if (boundary) return { type: "reply", message: boundary };
   // Only complete social phrases are replies. Never swallow an accompanying task.
   if (/^(?:(?:hello|hi|hey)(?:[ ,]+(?:there|daywell))?|good (?:morning|afternoon|evening)(?:[ ,]+daywell)?|daywell)$/i.test(text)) {
     return { type: "reply", message: "Hello! I’m here. Would you like a quiet moment, or a little help with your day? You can say “Help me wind down” or choose Just rest." };

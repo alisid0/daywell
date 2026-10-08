@@ -4,6 +4,8 @@ Read [the shared session workflow](docs/github-workflow.md) before changing this
 
 Also read [the Android and iPhone release plan](docs/mobile-release-plan.md). The current objective is early-November store review on both platforms, not a standalone personal-APK demo. Confirm the working deadline and unresolved owner decisions, prioritise its launch scope, and keep release status tied to GitHub evidence. Do not represent target dates or passing web checks as store approval.
 
+Read and preserve [the general-wellness scope](docs/general-wellness-scope.md). The owner explicitly excludes medical/clinical advice, mental-health treatment or improvement promises, and medicine, supplement or alcohol recommendations. Earlier clinical or longevity ideas do not override this decision.
+
 ## GitHub is the source of truth
 
 - The canonical repository is **https://github.com/alisid0/daywell**. This rule applies to both machines, Codex, Claude and other contributors.

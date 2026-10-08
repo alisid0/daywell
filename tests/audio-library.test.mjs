@@ -3,14 +3,14 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { audioCategories, audioGroups, audioResponses, audioResponseById, searchAudioResponses, responseInGroup, recordingFor } from '../lib/audio-library.ts';
 
-test('the library has 1500 distinct scripts across 150 situations', () => {
-  assert.equal(audioGroups.length, 150);
-  assert.equal(audioResponses.length, 1500);
-  assert.equal(audioResponseById.size, 1500);
-  assert.equal(new Set(audioResponses.map(item => item.text)).size, 1500);
-  assert.deepEqual(Object.fromEntries(audioCategories.map(category => [category.id, audioResponses.filter(item => item.category === category.id).length])), { relax:300, sleep:230, move:280, eat:210, focus:140, progress:140, everyday:200 });
+test('the library has 1417 distinct scripts across 144 situations', () => {
+  assert.equal(audioGroups.length, 144);
+  assert.equal(audioResponses.length, 1417);
+  assert.equal(audioResponseById.size, 1417);
+  assert.equal(new Set(audioResponses.map(item => item.text)).size, 1417);
+  assert.ok(audioCategories.every(category => audioResponses.some(item => item.category === category.id)));
   for (const group of audioGroups) {
-    assert.equal(group.responses.length, 10);
+    assert.ok(group.responses.length > 0 && group.responses.length <= 10);
     for (const response of group.responses) {
       assert.match(response.id, /^[a-z0-9-]+$/);
       assert.equal(response.groupId, group.id);
@@ -19,10 +19,10 @@ test('the library has 1500 distinct scripts across 150 situations', () => {
   }
 });
 
-test('1000 new examples have unique user utterances and explicit response handling', () => {
+test('917 published examples have unique user utterances and explicit response handling', () => {
   const examples = audioResponses.filter(item=>item.prompt);
-  assert.equal(examples.length,1000);
-  assert.equal(new Set(examples.map(item=>item.prompt.toLowerCase().replace(/[^a-z0-9]/g,''))).size,1000);
+  assert.equal(examples.length,917);
+  assert.equal(new Set(examples.map(item=>item.prompt.toLowerCase().replace(/[^a-z0-9]/g,''))).size,917);
   for(const entry of examples) assert.ok(['recorded','tool','live','urgent'].includes(entry.handling),entry.id);
   assert.equal(audioResponses.filter(item=>!item.prompt).length,500);
 });
@@ -54,11 +54,11 @@ test('only matching local recordings are playable', () => {
   for (const invalid of [{...clip,text:'An old script'}, {...clip,src:'https://example.com/voice.mp3'}, {...clip,src:'/audio-library/../private.mp3'}, {...clip,bytes:0}]) assert.equal(recordingFor(entry,manifest(invalid)),undefined);
 });
 
-test('all 1500 shipped MP3 assets match their scripts and manifest sizes', async () => {
+test('all 1417 shipped MP3 assets match their scripts and manifest sizes', async () => {
   const root = new URL('../public/',import.meta.url);
   const manifest = JSON.parse(await readFile(new URL('audio-library/manifest.json',root),'utf8'));
   assert.equal(manifest.version,1);
-  assert.equal(Object.keys(manifest.recordings).length,1500);
+  assert.equal(Object.keys(manifest.recordings).length,1417);
   for (const entry of audioResponses) {
     const clip = recordingFor(entry,manifest);
     assert.ok(clip,entry.id);
@@ -71,7 +71,7 @@ test('all 1500 shipped MP3 assets match their scripts and manifest sizes', async
 test('the downloadable complete catalogue stays aligned with the playable library', async () => {
   const catalogue = JSON.parse(await readFile(new URL('../public/audio-library/response-catalogue.json',import.meta.url),'utf8'));
   const manifest = JSON.parse(await readFile(new URL('../public/audio-library/manifest.json',import.meta.url),'utf8'));
-  assert.equal(catalogue.entries.length,1500);
+  assert.equal(catalogue.entries.length,1417);
   catalogue.entries.forEach((entry,index)=>{
     const {recording,...script} = entry;
     assert.deepEqual(script,audioResponses[index]);

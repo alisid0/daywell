@@ -59,18 +59,6 @@
   ["Can you make the text easier for me to read?","Your browser or device may offer text size and zoom controls. Use the written guidance at a size that feels comfortable.","tool"],
   ["I want to change the look again later.","You can return to the appearance choices when you want. A design preference does not need to become a permanent decision.","tool"]
  ]},
- {"id":"everyday-app-boundaries","category":"everyday","title":"Know what the app can do","companion":"sunny","examples":[
-  ["Are you a therapist?","No. Daywell offers everyday tools and general wellbeing support. It cannot replace a therapist or other qualified professional."],
-  ["Can you diagnose ADHD?","Daywell cannot diagnose ADHD. A qualified healthcare professional can assess your experiences and discuss suitable support.","live"],
-  ["Can this app cure my insomnia?","Daywell cannot promise to cure insomnia. Persistent sleep problems deserve advice from a healthcare professional.","live"],
-  ["Will a prerecorded response actually save a task?","A recording only plays words. Saving or changing a task requires a real app action and a result you can check."],
-  ["Can you call emergency services for me?","Daywell cannot make an emergency call. If you are in immediate danger, call your local emergency number directly.","urgent"],
-  ["Can you guarantee I will feel better after meditation?","No session can guarantee a particular feeling. You can try it gently and stop or choose something else if it does not help."],
-  ["Are you always listening in the background?","Prerecorded listening does not use the microphone. Live voice requires a connection you choose to start; check its controls to end it."],
-  ["Can you prescribe something to help me sleep?","Medication advice and prescribing belong with a qualified clinician. I can only offer general, nonmedical settling ideas.","live"],
-  ["Will this replace my personal trainer?","The app can offer general encouragement and tools. It cannot provide the same observation and individual assessment as a qualified trainer."],
-  ["Can I rely on you for important medical decisions?","Please use qualified medical advice for those decisions. Daywell's general support and saved recordings cannot assess your health.","live"]
- ]},
  {"id":"everyday-clarify-a-need","category":"everyday","title":"Find the right words","companion":"sunny","examples":[
   ["Help me with that thing.","Which thing would you like help with? A few ordinary words about the situation are enough to begin.","live"],
   ["Do the usual one.","Which activity do you mean today? I do not want to choose or change something based on a guess.","live"],

@@ -28,3 +28,11 @@ No new AI calls, audio generation, live-agent changes, deployment, clinical advi
 The original basket undo guard still refuses to overwrite a subsequently edited/deleted journal entry or changed stock. Review and correct the basket in that case. This protects later edits; deleting a note is not a basket undo.
 
 Fetch PR #32 on the other machine and follow README setup/checks. No additional migration, lockfile regeneration or credential sharing is needed. Review/merge remains separate from publication. No hosted or native release is claimed. Only ignored runtime data, test logs and screenshots remain local; implementation and this handover belong on the PR.
+
+## Wording and preview cleanup follow-up
+
+The owner requested **Calories consumed** in place of **Calories eaten**. The daily summary, calorie input and related helper copy now use consumed; the entry button reads **Log food or drink**. This is display wording only: stored status values and calculation/retry behaviour are unchanged.
+
+Removed the single leftover `qa connection-test lentils` stock fixture from the local 5190 preview through the normal revision-checked food API. It had no dependent meal plans. Verified all other stock, plans and shopping notes were unchanged; no user records or database files were cleared. Refreshed the browser and verified the item was absent and the new label visible. This local cleanup is separate from source publication and is not a migration of customer data.
+
+Validation: 135 tests, typecheck, production build and changed-file lint passed. No new tests or dependencies were needed for this text correction.

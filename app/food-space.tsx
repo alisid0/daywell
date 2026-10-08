@@ -189,7 +189,7 @@ function CookFields({ action, f }: { action: Extract<FoodAction, { type: "cook" 
 }
 
 function PersonalIntake<T extends Extract<FoodAction, { type: "cook" | "use" }>>({ action, onChange }: { action: T; onChange: (action: T) => void }) {
-  return <section className="personal-intake"><h3>What did you eat?</h3><label className="food-checkbox"><input type="checkbox" checked={!!action.intake} onChange={event => onChange({ ...action, intake: event.target.checked ? { portions: 1, source: "estimate" } : undefined })}/>I ate a portion — add it to my food record</label>{action.intake ? <IntakeFields value={action.intake} onChange={intake => onChange({ ...action, intake })} maximum={action.type === "cook" ? action.servings - (action.leftovers?.portions ?? 0) : 24}/> : <p className="food-caption">Your basket will update, without adding calories eaten. You can edit the meal note later.</p>}</section>;
+  return <section className="personal-intake"><h3>What did you eat?</h3><label className="food-checkbox"><input type="checkbox" checked={!!action.intake} onChange={event => onChange({ ...action, intake: event.target.checked ? { portions: 1, source: "estimate" } : undefined })}/>I ate a portion — add it to my food record</label>{action.intake ? <IntakeFields value={action.intake} onChange={intake => onChange({ ...action, intake })} maximum={action.type === "cook" ? action.servings - (action.leftovers?.portions ?? 0) : 24}/> : <p className="food-caption">Your basket will update, without adding calories consumed. You can edit the meal note later.</p>}</section>;
 }
 function UseFields({ action, f }: { action: Extract<FoodAction, { type: "use" }>; f: Food }) {
   const lot = f.snapshot!.state.stock.find(item => item.id === action.consumed[0]?.stockId);

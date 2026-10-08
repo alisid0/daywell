@@ -44,7 +44,7 @@ export function FoodSpace({ a }: { a: AppState }) {
   return <section className="well-space food-space">
     <header className="well-pillar-heading"><div><span>Eat · a little help from Nori</span><h1>Something good,<br/>made simple.</h1><p>Your food basket, your next meals, one little list.</p></div><CompanionPortrait id="nori" size={130} decorative/></header>
     <CalendarStrip a={a} area="eat"/>
-    <DailyNutrition a={a}/>
+    <DailyNutrition a={a} area="eat"/>
     <nav className="well-tabs" aria-label="Food views">{[["basket", "Food basket"], ["meals", "Next meals"], ["shopping", "Shopping"]].map(([id, label]) => <button key={id} aria-pressed={f.view === id} onClick={() => f.setView(id)}>{label}</button>)}</nav>
     <div className="food-toolbar"><button className="well-text-button" onClick={() => f.setView(f.view === "history" ? "basket" : "history")}><History size={16}/>{f.view === "history" ? "Back to food basket" : "Your meal story"}</button><button className="well-text-button" disabled={f.busy || !!f.pending} onClick={() => void f.refresh()}>Refresh saved details</button></div>
     {f.storageWarning && <p className="food-feedback" role="status">{f.storageWarning}</p>}

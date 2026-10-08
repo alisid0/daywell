@@ -65,12 +65,12 @@ test("a cooking receipt from before nutrition tracking still replays after upgra
 test("using basket food saves only personal intake, retries once and undoes stock and meal together", async t => {
   const { db, sqlite, save } = database(t);
   await save(stock("apples", "Apple", 4, "each"));
-  const input = { operationId:"snack", expectedRevision:1, action:{ type:"use", title:"Apple", date:"2026-10-08", meal:"Snack", consumed:[{stockId:"apples",quantity:1,unit:"each"}], intake:{portions:1,calories:80,source:"estimate"} } };
+  const input = { operationId:"snack", expectedRevision:1, action:{ type:"use", title:"Apple", date:"2026-10-08", meal:"Snack", consumed:[{stockId:"apples",quantity:1,unit:"each"}], intake:{portions:1,calories:80,source:"estimate",sugarGrams:15.2} } };
   await saveFoodCommand(db,"ali",input);
   assert.equal((await saveFoodCommand(db,"ali",input)).replayed,true);
   assert.equal((await getFoodSpace(db,"ali")).state.stock[0].quantity,3);
   const row = JSON.parse(sqlite.prepare("SELECT data FROM entries WHERE id='food-snack'").get().data);
-  assert.equal(row.calories,80); assert.equal(row.portions,1); assert.equal(row.foodStatus,"eaten"); assert.equal(row.macrosKnown,false);
+  assert.equal(row.sugarGrams,15.2); assert.equal(row.calories,80); assert.equal(row.portions,1); assert.equal(row.foodStatus,"eaten"); assert.equal(row.macrosKnown,false);
   assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n,1);
   await save({type:"undo",operationId:"snack"});
   assert.equal((await getFoodSpace(db,"ali")).state.stock[0].quantity,4);
@@ -80,8 +80,8 @@ test("prepared meals are not intake; cooking can separately save a personal port
   const state=applyFoodCommand(emptyFoodState(),command(stock("rice","Rice",1000))).state;
   const prepared=applyFoodCommand(state,command(cooking({}))).effect.meal.data;
   assert.equal(prepared.foodStatus,"prepared"); assert.equal(prepared.nutritionKnown,false);
-  const cooked=applyFoodCommand(state,command(cooking({servings:4,intake:{portions:1,calories:400},leftovers:{id:"leftovers",title:"Rice bowl",portions:2}})));
-  assert.equal(cooked.effect.meal.data.calories,400); assert.equal(cooked.effect.meal.data.portions,1);
+  const cooked=applyFoodCommand(state,command(cooking({servings:4,intake:{portions:1,calories:400,sugarGrams:2.5},leftovers:{id:"leftovers",title:"Rice bowl",portions:2}})));
+  assert.equal(cooked.effect.meal.data.sugarGrams,2.5); assert.equal(cooked.effect.meal.data.calories,400); assert.equal(cooked.effect.meal.data.portions,1);
   assert.equal(cooked.state.stock.find(x=>x.id==="leftovers").quantity,2);
   assert.throws(()=>applyFoodCommand(state,command(cooking({servings:2,intake:{portions:1},leftovers:{id:"leftovers",title:"Rice",portions:2}}))),/cannot exceed/);
   assert.throws(()=>applyFoodCommand(state,command(cooking({servings:1,leftovers:{id:"leftovers",title:"Rice",portions:2}}))),/cannot exceed/);
@@ -465,4 +465,22 @@ test("a restored draft cannot read or write after switching authenticated accoun
     assert.equal(response.status, 403);
   }
   assert.deepEqual((await getFoodSpace(db, "sam")).state.stock, []);
+});
+
+
+test("pre-sugar intake receipts keep their original hash and replay without a duplicate meal", async t => {
+  const { db, sqlite, save } = database(t);
+  await save(stock("rice", "Rice", 1000));
+  const old = { operationId: "before-sugar", expectedRevision: 1, action: {
+    type: "cook", title: "Rice bowl", date: "2026-10-07", meal: "Dinner", servings: 2,
+    consumed: [{ stockId: "rice", quantity: 300, unit: "g" }], useReservedStock: false,
+    intake: { portions: 1, calories: 400, macros: { protein: 10, carbs: 20, fat: 5 }, source: "label" }
+  } };
+  await saveFoodCommand(db, "ali", old);
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(JSON.stringify(old)));
+  const hash = Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, "0")).join("");
+  sqlite.prepare("UPDATE food_operations SET request_hash=? WHERE operation_id='before-sugar'").run(hash);
+  assert.equal((await saveFoodCommand(db, "ali", old)).replayed, true);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n, 1);
+  assert.equal((await getFoodSpace(db, "ali")).state.stock[0].quantity, 700);
 });

@@ -8,10 +8,10 @@ const ali = "a".repeat(64), sam = "b".repeat(64);
 function storage() { const rows = new Map(); return { rows, get length() { return rows.size; }, key: i => [...rows.keys()][i] ?? null, getItem: k => rows.get(k) ?? null, setItem: (k,v) => rows.set(k,v), removeItem: k => rows.delete(k) }; }
 const initial = () => ({ draft: { revision: 4, action: { type: "purchase", items: [{ id: "pack", ingredient: "milk", quantity: 2000, unit: "ml", bestBefore: null, shoppingId: "entry--milk" }] } }, pending: null, view: "shopping", start: "2026-10-08", days: 3 });
 
-test("personal portions, unknown nutrition and new basket-use drafts survive reopening and safe retry", () => {
+test("personal portions, sugar, unknown nutrition and new basket-use drafts survive reopening and safe retry", () => {
   for(const type of ["cook","use"]) {
     const store=storage(),data=initial();
-    data.draft.action={type,title:"Apple",date:"2026-10-08",meal:"Snack",consumed:[{stockId:"apple",quantity:1,unit:"each"}],useReservedStock:false,intake:{portions:0.5,calories:40,source:"label",macros:{protein:0,carbs:10,fat:0}},...(type==="cook"?{servings:2}:{})};
+    data.draft.action={type,title:"Apple",date:"2026-10-08",meal:"Snack",consumed:[{stockId:"apple",quantity:1,unit:"each"}],useReservedStock:false,intake:{portions:0.5,calories:40,source:"label",sugarGrams:0,macros:{protein:0,carbs:10,fat:0}},...(type==="cook"?{servings:2}:{})};
     writeFoodRecovery(store,ali,data);
     assert.deepEqual(readFoodRecovery(store,ali).draft.action,data.draft.action);
     data.pending=prepareFoodCommand(data.draft,"snack-retry");

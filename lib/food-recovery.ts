@@ -11,7 +11,7 @@ const stock = z.object({ id, ingredient: text, quantity: number.nullable(), unit
 const requirement = z.object({ ingredient: text, quantity: number, unit });
 const meal = z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]);
 const plan = z.object({ id, title: text, date, meal, servings: number, ingredients: z.array(requirement).max(40) });
-const intake = z.object({ portions: number, calories: number.optional(), macros: z.object({ protein: number, carbs: number, fat: number }).optional(), source: z.enum(["label", "estimate", "app"]).optional() });
+const intake = z.object({ portions: number, calories: number.optional(), macros: z.object({ protein: number, carbs: number, fat: number }).optional(), source: z.enum(["label", "estimate", "app"]).optional(), sugarGrams: number.optional() });
 const consumption = { title: text, date, meal, consumed: z.array(z.object({ stockId: id, quantity: number, unit })).max(40), useReservedStock: z.boolean(), intake: intake.optional() };
 const draftAction = z.union([
   z.object({ type: z.literal("stock.set"), item: stock }),

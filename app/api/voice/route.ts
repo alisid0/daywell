@@ -2,7 +2,7 @@ import { env } from "cloudflare:workers";
 import { getChatGPTUser } from "@/app/chatgpt-auth";
 import { database } from "@/db/store";
 import { allowedVoiceOrigin, safeSignedUrl, voiceConfig } from "@/lib/voice-tools";
-import { everyone, limits, takeAllowances, type LimitedFeature } from "@/lib/request-guards";
+import { everyone, limits, returnAllowances, takeAllowances, type LimitedFeature } from "@/lib/request-guards";
 
 export const dynamic = "force-dynamic";
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { "Cache-Control": "no-store", "Vary": "Cookie, Origin" } });
@@ -20,12 +20,16 @@ export async function POST(request: Request) {
   if(!user) return json({error:"Sign in to start a conversation."},401);
   if(!allowedVoiceOrigin(request)) return json({error:"Start your conversation from Daywell."},403);
   if(!voiceConfig(env.ELEVENLABS_API_KEY,env.ELEVENLABS_AGENT_ID)) return json({error:"Your ElevenLabs connection needs an API key and agent ID. Your other tools are ready to use."},503);
+  // A start counts only once ElevenLabs hands back a conversation; any failure before that gives the uses back.
+  const now = Date.now(), uses = [[user.userId, "voice"], [user.userId, "voice-day"], [everyone, "voice-all"]] as const;
+  let counted: ReturnType<typeof database> | null = null;
+  const giveBack = async () => { if (counted) await returnAllowances(counted, uses, now).catch(() => {}); };
   try {
-    const full = await takeAllowances(database(), [[user.userId, "voice"], [user.userId, "voice-day"], [everyone, "voice-all"]]); if(full) return json({error:usedUp[full]},429);
+    const db = database(), full = await takeAllowances(db, uses, now); if(full) return json({error:usedUp[full]},429); counted = db;
     const response = await fetch(`https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(env.ELEVENLABS_AGENT_ID!)}`, {headers:{"xi-api-key":env.ELEVENLABS_API_KEY!},signal:AbortSignal.timeout(12000)});
-    if(!response.ok) return json({error:response.status===401||response.status===403?"ElevenLabs couldn’t authorise this connection. Check your key permissions and agent settings.":response.status===429?"ElevenLabs is at its conversation limit. Please try again shortly.":"ElevenLabs couldn’t start this conversation. Please try again."},502);
+    if(!response.ok) { await giveBack(); return json({error:response.status===401||response.status===403?"ElevenLabs couldn’t authorise this connection. Check your key permissions and agent settings.":response.status===429?"ElevenLabs is at its conversation limit. Please try again shortly.":"ElevenLabs couldn’t start this conversation. Please try again."},502); }
     const result = await response.json() as { signed_url?: unknown };
-    if(!safeSignedUrl(result.signed_url)) return json({error:"The voice service returned an invalid connection. Please try again."},502);
+    if(!safeSignedUrl(result.signed_url)) { await giveBack(); return json({error:"The voice service returned an invalid connection. Please try again."},502); }
     return json({signedUrl:result.signed_url});
-  } catch { return json({error:"The voice connection is unavailable right now. You can still type an everyday command."},503); }
+  } catch { await giveBack(); return json({error:"The voice connection is unavailable right now. You can still type an everyday command."},503); }
 }

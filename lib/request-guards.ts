@@ -63,17 +63,24 @@ export async function takeAllowance(db: Database, userId: string, feature: Limit
   return row !== null;
 }
 
+type Uses = readonly (readonly [userId: string, feature: LimitedFeature])[];
 // Takes one use from each allowance in turn. At the first one that is used up, it gives back the
 // uses already taken, so a refused request never counts, and returns that allowance's feature.
-export async function takeAllowances(db: Database, uses: readonly (readonly [userId: string, feature: LimitedFeature])[], now = Date.now()): Promise<LimitedFeature | null> {
+export async function takeAllowances(db: Database, uses: Uses, now = Date.now()): Promise<LimitedFeature | null> {
   const taken: (readonly [string, LimitedFeature])[] = [];
   for (const [userId, feature] of uses) {
     if (await takeAllowance(db, userId, feature, now)) { taken.push([userId, feature]); continue; }
-    for (const [id, used] of taken) {
-      await db.prepare("UPDATE usage_limits SET count=count-1 WHERE user_id=? AND feature=? AND window=? AND count>0 RETURNING count")
-        .bind(id, used, limitWindow(used, now)).first();
-    }
+    await returnAllowances(db, taken, now);
     return feature;
   }
   return null;
+}
+
+// Gives uses back, for example when the paid service fails before any work is done.
+// Only paid API calls should count; see docs/usage-limits.md. Pass the same `now` used to take them.
+export async function returnAllowances(db: Database, uses: Uses, now = Date.now()) {
+  for (const [userId, feature] of uses) {
+    await db.prepare("UPDATE usage_limits SET count=count-1 WHERE user_id=? AND feature=? AND window=? AND count>0 RETURNING count")
+      .bind(userId, feature, limitWindow(feature, now)).first();
+  }
 }

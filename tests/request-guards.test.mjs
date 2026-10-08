@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
-import { everyone, limits, messageFor, readLimited, sameOrigin, takeAllowance, takeAllowances, UserFacingError } from "../lib/request-guards.ts";
+import { everyone, limits, messageFor, readLimited, returnAllowances, sameOrigin, takeAllowance, takeAllowances, UserFacingError } from "../lib/request-guards.ts";
 
 const post = headers => new Request("https://daywell.example/api/state", { method: "POST", headers, body: "{}" });
 
@@ -70,4 +70,26 @@ test("live conversations stop at the daily cap per person and for everyone, and 
   for (let use = 0; use < limits.voice.max; use++) await takeAllowance(db, "kim", "voice", morning);
   assert.equal(await start("kim", morning), "voice");
   assert.equal(count("kim", "voice-day"), 0);
+});
+
+test("a start that the paid service refuses is given back, so only real conversations count", async () => {
+  const sqlite = new DatabaseSync(":memory:");
+  sqlite.exec(readFileSync(new URL("../drizzle/0001_usage_limits.sql", import.meta.url), "utf8").replaceAll("--> statement-breakpoint", ""));
+  const db = { prepare: sql => ({ bind: (...values) => ({ first: async () => sqlite.prepare(sql).get(...values) ?? null }) }) };
+  const count = (user, feature) => sqlite.prepare("SELECT count FROM usage_limits WHERE user_id=? AND feature=?").get(user, feature)?.count ?? 0;
+  const uses = [["ali", "voice"], ["ali", "voice-day"], [everyone, "voice-all"]];
+  const now = Date.UTC(2026, 9, 8, 9);
+
+  assert.equal(await takeAllowances(db, uses, now), null);
+  assert.equal(await takeAllowances(db, uses, now), null);
+  await returnAllowances(db, uses, now); // the second start failed at the provider
+  assert.deepEqual(uses.map(([user, feature]) => count(user, feature)), [1, 1, 1]);
+
+  // Giving back never goes below zero, and never touches a later window.
+  await returnAllowances(db, uses, now);
+  await returnAllowances(db, uses, now);
+  assert.deepEqual(uses.map(([user, feature]) => count(user, feature)), [0, 0, 0]);
+  assert.equal(await takeAllowances(db, uses, Date.UTC(2026, 9, 9, 9)), null);
+  await returnAllowances(db, uses, now);
+  assert.equal(count("ali", "voice-day"), 1, "yesterday's give-back leaves today's count alone");
 });

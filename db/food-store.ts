@@ -1,7 +1,8 @@
 import { applyFoodCommand, emptyFoodState, FoodError, foodCommandSchema, foodOverview, type FoodEffect, type FoodState } from "../lib/food.ts";
+import { connectedShopping, shoppingEntryData, shoppingEntryId, type ShoppingEntry } from "../lib/shopping-bridge.ts";
 
 type Database = Pick<D1Database, "prepare" | "batch">;
-type SavedSpace = { revision: number; data: string };
+type SavedSpace = { revision: number; data: string; shopping: string };
 type Receipt = { operation_id: string; request_hash: string; revision: number; effect: string; created_at: string; undone_by: string | null };
 type History = { operation_id: string; revision: number; type: FoodEffect["type"]; meal_id: string | null; created_at: string; undone_by: string | null };
 
@@ -10,8 +11,11 @@ async function findReceipt(db: Database, userId: string, operationId: string) {
     .bind(userId, operationId).first<Receipt>();
 }
 async function findSpace(db: Database, userId: string) {
-  const row = await db.prepare("SELECT revision,data FROM food_spaces WHERE user_id=?").bind(userId).first<SavedSpace>();
-  return { revision: row?.revision ?? 0, state: row ? JSON.parse(row.data) as FoodState : emptyFoodState() };
+  // One SQLite snapshot: revision, food records and spoken shopping must agree.
+  const row = await db.prepare("SELECT COALESCE((SELECT revision FROM food_spaces WHERE user_id=?),0) AS revision, (SELECT data FROM food_spaces WHERE user_id=?) AS data, (SELECT json_group_array(json_object('id',id,'data',data)) FROM (SELECT id,data FROM entries WHERE user_id=? AND kind='grocery' ORDER BY id)) AS shopping")
+    .bind(userId, userId, userId).first<SavedSpace>();
+  const shopping = row?.shopping ?? "[]";
+  return { revision: row?.revision ?? 0, state: connectedShopping(row?.data ? JSON.parse(row.data) as FoodState : emptyFoodState(), JSON.parse(shopping) as ShoppingEntry[]), shopping };
 }
 export async function getFoodSpace(db: Database, userId: string) {
   const space = await findSpace(db, userId);
@@ -19,7 +23,7 @@ export async function getFoodSpace(db: Database, userId: string) {
   // actions visible at the snapshot's revision; refresh after every mutation.
   const history = await db.prepare("SELECT operation_id,revision,json_extract(effect,'$.type') AS type,json_extract(effect,'$.meal.id') AS meal_id,created_at,undone_by FROM food_operations WHERE user_id=? AND revision<=? ORDER BY revision DESC LIMIT 50")
     .bind(userId, space.revision).all<History>();
-  return { ...space, overview: foodOverview(space.state), recentActions: history.results.map(row => ({
+  return { revision: space.revision, state: space.state, overview: foodOverview(space.state), recentActions: history.results.map(row => ({
     operationId: row.operation_id, revision: row.revision, type: row.type, createdAt: row.created_at, undone: row.undone_by !== null, mealId: row.meal_id,
   })) };
 }
@@ -44,7 +48,12 @@ export async function saveFoodCommand(db: Database, userId: string, input: unkno
   if (command.action.type === "undo" && (!undoReceipt || undoReceipt.undone_by)) throw new FoodError("That action is unavailable or has already been undone.");
   const { state, effect } = applyFoodCommand(current.state, command, undoReceipt ? JSON.parse(undoReceipt.effect) as FoodEffect : undefined);
   const revision = current.revision + 1;
-  const stateJson = JSON.stringify(state);
+  const legacyRows = JSON.parse(current.shopping) as ShoppingEntry[];
+  for (const change of effect.shopping) {
+    const entryId = shoppingEntryId(change.id);
+    if (entryId && !legacyRows.some(row => row.id === entryId) && effect.type !== "undo") throw new FoodError("That shopping note has changed. Refresh your list before saving.");
+  }
+  const stateJson = JSON.stringify({ ...state, shopping: state.shopping.filter(item => !shoppingEntryId(item.id)) });
   if (new TextEncoder().encode(stateJson).byteLength > 1_500_000) throw new FoodError("Your food space is full. Remove older plans or shopping items before adding more.", 413);
 
   // D1 batch is a transaction. The compare-and-swap and its receipt, meal
@@ -52,10 +61,10 @@ export async function saveFoodCommand(db: Database, userId: string, input: unkno
   // A fresh write token prevents even an identical concurrent retry from
   // applying effects belonging to the request that won the revision check.
   const writeToken = crypto.randomUUID();
-  let condition = "";
-  const checks: (string | number)[] = [];
+  let condition = " AND (SELECT json_group_array(json_object('id',id,'data',data)) FROM (SELECT id,data FROM entries WHERE user_id=? AND kind='grocery' ORDER BY id))=?";
+  const checks: (string | number)[] = [userId, current.shopping];
   if (effect.meal && effect.type === "undo") {
-    condition = " AND EXISTS (SELECT 1 FROM entries WHERE user_id=? AND id=? AND kind='food' AND data=?)";
+    condition += " AND EXISTS (SELECT 1 FROM entries WHERE user_id=? AND id=? AND kind='food' AND data=?)";
     checks.push(userId, effect.meal.id, JSON.stringify(effect.meal.data));
   }
   const statements = [
@@ -66,6 +75,13 @@ export async function saveFoodCommand(db: Database, userId: string, input: unkno
       .bind(userId, command.operationId, hash, revision, JSON.stringify(effect), now.toISOString(), userId, revision, writeToken),
   ];
   const gate = "EXISTS (SELECT 1 FROM food_spaces WHERE user_id=? AND revision=? AND last_write_id=?)";
+  for (const change of effect.shopping) {
+    const entryId = shoppingEntryId(change.id);
+    if (!entryId) continue;
+    if (change.after) statements.push(db.prepare(`INSERT INTO entries(user_id,id,kind,data) SELECT ?,?,'grocery',? WHERE ${gate} ON CONFLICT(user_id,id) DO UPDATE SET data=excluded.data`)
+      .bind(userId, entryId, JSON.stringify(shoppingEntryData(change.after, legacyRows.find(row => row.id === entryId)?.data)), userId, revision, writeToken));
+    else statements.push(db.prepare(`DELETE FROM entries WHERE user_id=? AND id=? AND kind='grocery' AND ${gate}`).bind(userId, entryId, userId, revision, writeToken));
+  }
   if (effect.meal) {
     if (effect.type === "cook") {
       const count = await db.prepare("SELECT COUNT(*) AS n FROM entries WHERE user_id=?").bind(userId).first<{ n: number }>();

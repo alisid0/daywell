@@ -174,7 +174,7 @@ test("a receipt committed between the initial lookup and the snapshot still prev
   let injected = false;
   const interleaved = { ...db, prepare(sql) {
     const prepared = db.prepare(sql);
-    if (!sql.startsWith("SELECT revision,data")) return prepared;
+    if (!sql.startsWith("SELECT COALESCE((SELECT revision")) return prepared;
     return { bind(...values) {
       const bound = prepared.bind(...values);
       return { ...bound, first: async () => {
@@ -341,4 +341,79 @@ test("the API enforces authentication, origin, body limits and no-store response
   assert.equal(saved.headers.get("cache-control"), "no-store");
   const loaded = await foodResponse(new Request("https://daywell.example/api/food"), deps);
   assert.equal((await loaded.json()).state.stock[0].quantity, 500);
+});
+
+test("spoken and older shopping notes join Food basket without being copied or inventing stock", async t => {
+  const { db, sqlite } = database(t);
+  const { saveEntries } = await import("../db/entry-store.ts");
+  const milk = { id: "spoken-milk", kind: "grocery", data: { title: "milk", quantity: "check pack size", done: false } };
+  const timer = { id: "timer", kind: "timer", data: { title: "Focus", duration: 600, remaining: 600, endAt: 123456, mode: "Focus" } };
+  await saveEntries(db, "ali", [milk, timer]);
+  const snapshot = await getFoodSpace(db, "ali");
+  assert.equal(snapshot.revision, 1);
+  assert.equal(snapshot.state.shopping[0].id, "entry--spoken-milk");
+  assert.equal(snapshot.state.shopping[0].quantity, "check pack size");
+  assert.deepEqual(snapshot.state.stock, []);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries WHERE user_id='ali'").get().n, 2);
+  assert.deepEqual((await getFoodSpace(db, "another-user")).state.shopping, []);
+  assert.deepEqual(JSON.parse(sqlite.prepare("SELECT data FROM food_spaces WHERE user_id='ali'").get().data).shopping, []);
+});
+
+test("a spoken note purchase, lost-response retry and undo change stock and the original note together", async t => {
+  const { db, sqlite, save } = database(t);
+  const { saveEntries } = await import("../db/entry-store.ts");
+  await saveEntries(db, "ali", [{ id: "milk", kind: "grocery", data: { title: "milk", quantity: "a bottle", done: false } }]);
+  const purchase = { operationId: "same-purchase", expectedRevision: 1, action: { type: "purchase", items: [{ id: "milk-pack", ingredient: "milk", quantity: 2, unit: "l", shoppingId: "entry--milk" }] } };
+  await saveFoodCommand(db, "ali", purchase);
+  assert.equal((await saveFoodCommand(db, "ali", purchase)).replayed, true);
+  let snapshot = await getFoodSpace(db, "ali");
+  assert.equal(snapshot.state.stock[0].quantity, 2000);
+  assert.equal(snapshot.state.shopping[0].done, true);
+  assert.equal(JSON.parse(sqlite.prepare("SELECT data FROM entries WHERE id='milk'").get().data).done, true);
+  await save({ type: "undo", operationId: "same-purchase" });
+  snapshot = await getFoodSpace(db, "ali");
+  assert.deepEqual(snapshot.state.stock, []);
+  assert.equal(snapshot.state.shopping[0].done, false);
+  assert.equal(snapshot.state.shopping[0].quantity, "a bottle");
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries WHERE id='milk'").get().n, 1);
+});
+
+test("shopping edits invalidate an open food review and block undo over a newer note", async t => {
+  const { db, save } = database(t);
+  const { saveEntries } = await import("../db/entry-store.ts");
+  const note = { id: "milk", kind: "grocery", data: { title: "milk", quantity: "1", done: false } };
+  await saveEntries(db, "ali", [note]);
+  const purchase = { operationId: "buy-milk", expectedRevision: 1, action: { type: "purchase", items: [{ id: "pack", ingredient: "milk", quantity: 500, unit: "ml", shoppingId: "entry--milk" }] } };
+  await saveEntries(db, "ali", [{ ...note, data: { ...note.data, title: "oat drink" } }]);
+  await assert.rejects(saveFoodCommand(db, "ali", purchase), /changed/);
+  await saveFoodCommand(db, "ali", { ...purchase, expectedRevision: 2 });
+  await saveEntries(db, "ali", [{ ...note, data: { ...note.data, quantity: "two cartons", done: true } }]);
+  await assert.rejects(save({ type: "undo", operationId: "buy-milk" }), /changed/);
+  assert.equal((await getFoodSpace(db, "ali")).state.stock[0].quantity, 500);
+});
+
+test("editing and removing a connected note update the original; longest legacy IDs still work", async t => {
+  const { db, sqlite, save } = database(t);
+  const { saveEntries } = await import("../db/entry-store.ts");
+  const id = "a".repeat(80);
+  await saveEntries(db, "ali", [{ id, kind: "grocery", data: { title: "Bin bags", quantity: "1 roll", done: false } }]);
+  await save({ type: "shopping.set", item: { id: `entry--${id}`, title: "Bin bags", quantity: "2 rolls", done: true } });
+  assert.equal(JSON.parse(sqlite.prepare("SELECT data FROM entries WHERE id=?").get(id).data).quantity, "2 rolls");
+  assert.deepEqual((await getFoodSpace(db, "ali")).state.stock, []);
+  await save({ type: "shopping.remove", id: `entry--${id}` });
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n, 0);
+  assert.deepEqual((await getFoodSpace(db, "ali")).state.shopping, []);
+});
+
+
+test("a restored draft cannot read or write after switching authenticated accounts", async t => {
+  const { db } = database(t);
+  const { recoveryScopeForUser } = await import("../lib/recovery-scope.ts");
+  const scope = await recoveryScopeForUser("ali");
+  for (const method of ["GET", "POST"]) {
+    const request = new Request("http://localhost/api/food", { method, headers: { Origin: "http://localhost", "X-Daywell-Recovery-Scope": scope }, ...(method === "POST" ? { body: JSON.stringify(command(stock("rice", "rice", 100))) } : {}) });
+    const response = await foodResponse(request, { userId: "sam", database: () => db });
+    assert.equal(response.status, 403);
+  }
+  assert.deepEqual((await getFoodSpace(db, "sam")).state.stock, []);
 });

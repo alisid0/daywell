@@ -59,6 +59,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     return () => cancelAnimationFrame(frame);
   }, [immersive, pending]);
   const lock = useRef(false);
+  const preparedPlan = useRef<{ actions: HostAction[]; items: Entry[] } | null>(null);
   const mounted = useRef(true);
   const voice = useHostVoice(value => { setHeard(value); void receive(value); });
   const agent = useElevenAgent({ onMessage: (role, message) => { if(role === "user") setHeard(message); else setReply(message); }, onRequest: async value => { const allowed = safeAgentRequest(value); if (!allowed) return "Unsupported request. Ask the user to use the visible controls. Never claim a change was saved."; await receive(allowed); return "The request is shown in Daywell. Any record or timer change requires the user to press Do this. Nothing is saved by this tool."; } });
@@ -111,14 +112,15 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     const missing = pending.find(action => !a.enabled(actionModule(action)));
     if (missing) { say(`Enable ${moduleNames[actionModule(missing)]} in Customize tools first. Nothing has changed.`); return; }
     lock.current = true; setBusy(true); setError("");
-    const items = entriesForActions(pending, today(), Date.now(), () => crypto.randomUUID());
+    if (preparedPlan.current?.actions !== pending) preparedPlan.current = { actions: pending, items: entriesForActions(pending, today(), Date.now(), () => crypto.randomUUID()) };
+    const items = preparedPlan.current.items;
     const before = a.entries.filter(entry => items.some(item => item.id === entry.id));
     try {
       a.unlockAudio();
       const applied = await a.hostChange(items);
       if (!mounted.current) return;
       const summary = pending.map(describeAction).join(". ") + ".";
-      setLastChange({ before, applied, summary }); setPending(null); setShowChanges(false); setText(""); setTyped(false);
+      setLastChange({ before, applied, summary }); preparedPlan.current = null; setPending(null); setShowChanges(false); setText(""); setTyped(false);
       const activity = pending.find(action => action.type === "activity");
       setCue("");
       say(activity?.type === "activity" ? `${pending.length > 1 ? "Your other changes are saved. " : ""}${activity.minutes} minutes are yours. ${activityMessages[activity.companion]}` : "Done. Your changes are saved. You can undo them below.");

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { schemas, type Kind } from "./daywell";
+import { schemas, type Kind } from "./daywell.ts";
 
 export function validateHostChange(body: unknown) {
   const input = z.object({

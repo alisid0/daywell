@@ -49,3 +49,5 @@ next-env.d.ts
 .dev.vars*
 !.dev.vars.example
 *.local
+# Private, checkout-local hosting configuration.
+/cloudflare.local.json

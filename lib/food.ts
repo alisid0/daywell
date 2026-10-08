@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const id = z.string().regex(/^[a-zA-Z0-9-]{1,60}$/);
+const shoppingId = z.string().regex(/^[a-zA-Z0-9-]{1,87}$/);
 const label = z.string().trim().min(1).max(120);
 const amount = z.number().finite().min(0).max(1_000_000).refine(n => Math.abs(n * 1000 - Math.round(n * 1000)) < 0.00001, "Use at most three decimal places.");
 const positive = amount.refine(n => n > 0, "Enter an amount greater than zero.");
@@ -17,18 +18,18 @@ const planInput = z.object({
   ingredients: z.array(requirement).min(1).max(40),
 }).strict();
 const stockInput = z.object({ id, ingredient: label, quantity: amount.nullable(), unit, bestBefore: date.nullable().default(null) }).strict();
-const shoppingInput = z.object({ id, title: label, quantity: z.string().trim().min(1).max(80), done: z.boolean() }).strict();
-const actionSchema = z.discriminatedUnion("type", [
+const shoppingInput = z.object({ id: shoppingId, title: z.string().trim().min(1).max(160), quantity: z.string().trim().min(1).max(80), done: z.boolean() }).strict();
+export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("stock.set"), item: stockInput }).strict(),
   z.object({ type: z.literal("stock.remove"), id }).strict(),
   z.object({ type: z.literal("plan.set"), plan: planInput }).strict(),
   z.object({ type: z.literal("plan.window"), startDate: date, days: z.union([z.literal(2), z.literal(3), z.literal(7)]), plans: z.array(planInput).max(28) }).strict(),
   z.object({ type: z.literal("plan.remove"), id }).strict(),
   z.object({ type: z.literal("shopping.set"), item: shoppingInput }).strict(),
-  z.object({ type: z.literal("shopping.remove"), id }).strict(),
+  z.object({ type: z.literal("shopping.remove"), id: shoppingId }).strict(),
   z.object({
     type: z.literal("purchase"),
-    items: z.array(stockInput.extend({ quantity: positive, shoppingId: id.optional() }).strict()).min(1).max(40),
+    items: z.array(stockInput.extend({ quantity: positive, shoppingId: shoppingId.optional() }).strict()).min(1).max(40),
   }).strict(),
   z.object({
     type: z.literal("cook"), planId: id.optional(), title: label, date,

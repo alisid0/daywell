@@ -6,7 +6,7 @@ export const defaults = {name:"You", modules:[...moduleIds],calorieGoal:2000,bed
 const title=z.string().trim().min(1).max(160), date=z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value=>{const [year,month,day]=value.split("-").map(Number);const parsed=new Date(Date.UTC(year,month-1,day));return year>=1900&&year<=9999&&parsed.getUTCFullYear()===year&&parsed.getUTCMonth()===month-1&&parsed.getUTCDate()===day},"Choose a valid calendar date"), time=z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/);
 export const schemas = {
  task:z.object({title,done:z.boolean(),date,completedDate:date.nullable().optional(),completedAt:z.string().datetime().nullable().optional(),minutes:z.number().int().min(1).max(240)}),
- grocery:z.object({title,completedDate:date.nullable().optional(),completedAt:z.string().datetime().nullable().optional(),quantity:z.string().trim().min(1).max(40),done:z.boolean()}),
+ grocery:z.object({title,completedDate:date.nullable().optional(),completedAt:z.string().datetime().nullable().optional(),quantity:z.string().trim().min(1).max(80),done:z.boolean(),foodChangedBy:z.string().regex(/^[a-zA-Z0-9-]{1,87}$/).optional()}),
  food:z.object({title,date,calories:z.number().min(0).max(10000),protein:z.number().min(0).max(1000),carbs:z.number().min(0).max(1000),fat:z.number().min(0).max(1000),nutritionKnown:z.boolean().optional(),meal:z.enum(["Breakfast","Lunch","Dinner","Snack"])}),
  sleep:z.object({date,bedtime:time,wakeTime:time,minutes:z.number().min(1).max(960),quality:z.enum(["Rested","Okay","Tired"])}),
  move:z.object({title,date,minutes:z.number().int().min(1).max(600),sets:z.array(workoutSetSchema).min(1).max(20).optional()}),

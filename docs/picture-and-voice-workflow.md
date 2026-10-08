@@ -32,6 +32,8 @@ Lead with a small selection of routines, optional spoken step cues and one-tap c
 
 No workout photos or camera permissions are part of this flow. Device speech is the current routine implementation and is labelled as such. ElevenLabs live chat remains separate; expressive live coaching tied to routine state is still an integration task, not a delivered feature.
 
+The one-kettlebell routine includes setup cues, separate left/right carries and optional rest phases. A rest timer does not complete a movement: the person chooses when to continue. Ending during rest preserves only already-completed exercises. Enter the actual bell weight once before reviewing; unweighted alternatives do not inherit it. See the [Food and Move checkpoint](handover/2026-10-08-food-move-kettlebell.md) for scope, checks and remaining launch gaps.
+
 ## Current connection and verification
 
 The capture endpoint uses server-side OpenAI credentials; never put keys in frontend code. On the development machine at this checkpoint, ElevenLabs configuration exists but OPENAI_API_KEY is absent. Choosing photos, review logic and failure handling can be tested, but real image interpretation and recorded-speech transcription require that separate connection. Do not represent samples or tests as live recognition.

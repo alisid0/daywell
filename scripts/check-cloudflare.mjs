@@ -12,6 +12,7 @@ run(["scripts/build-cloudflare.mjs", "tests/fixtures/cloudflare-profile.json"]);
 const config = JSON.parse(readFileSync("dist/server/wrangler.json", "utf8"));
 assert.equal(config.name, "daywell-build-test");
 assert.equal(config.assets.run_worker_first, true);
+assert.equal(config.assets.binding, "ASSETS");
 assert.equal(config.preview_urls, false);
 assert.equal(config.vars.DAYWELL_APP_ORIGIN, "https://daywell-build-test.test");
 assert.equal(config.d1_databases[0].database_id, "11111111-1111-4111-8111-111111111111");

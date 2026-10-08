@@ -16,6 +16,7 @@ test("owned build routes assets through authentication and excludes preview and 
   const config = readCloudflareConfig(fixturePath);
   assert.equal(config.main, "./build/cloudflare-worker.ts");
   assert.equal(config.assets.run_worker_first, true);
+  assert.equal(config.assets.binding, "ASSETS");
   assert.equal(config.preview_urls, false);
   assert.equal(config.observability.enabled, false);
   assert.deepEqual(config.services, []);

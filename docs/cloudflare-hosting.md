@@ -13,10 +13,12 @@ Configure an **Allow policy for the owner's exact email**, then explicitly invit
 ## First setup
 
 1. Finish Cloudflare account setup. The owner reviews any terms or payment requirements. Do not buy a plan or domain without their decision. Use a Workers address for the private test; choose a custom domain before business launch.
-2. Authorize the repository's installed Wrangler. The prepared scope set is `account:read user:read workers:write d1:write`; Wrangler also asks for renewable background access. The browser approval belongs to the owner. Do not paste tokens or passwords into chat or source code.
+2. Authorize the repository's installed Wrangler. The required scope set is `account:read user:read workers:write workers_scripts:write d1:write`; Wrangler also asks for renewable background access. The browser approval belongs to the owner. `workers:write` alone did not permit the deployment API with the pinned CLI; the separate script scope is required. Do not paste tokens or passwords into chat or source code.
+
+   **Current owner decision, 8 October:** keep the existing permissions. Do not start this expanded login or retry deployment unless the owner changes that decision. Existing account/D1 authorization remains valid; the deployment permission is the outstanding blocker.
 
    ```sh
-   npx wrangler login --callback-host=127.0.0.1 --scopes account:read user:read workers:write d1:write
+   npx wrangler login --callback-host=127.0.0.1 --scopes account:read user:read workers:write workers_scripts:write d1:write
    npx wrangler whoami
    ```
 
@@ -82,7 +84,7 @@ Wrangler authorization is complete. The dedicated `daywell-private-db` database 
 
 The owner completed Zero Trust Free onboarding; the account overview confirms the Free plan and a team name. Its checkout displayed a $0 monthly base price but required billing details, terms acceptance and authorization for charges above included limits. Following explicit approval, the exact-host `Daywell private` Access application and owner-only email rule were saved with Cloudflare sign-in and a 24-hour session. The ignored local profile now contains the real account, database, origin, team issuer and application audience.
 
-Worker deployment and hosted acceptance remain the next steps; no provider secrets have been uploaded. The greeting fix from PR 30 is included in the hosting branch, and the combined branch passed 110 tests, scoped lint, the standard build and the owned synthetic build/dry-run. Continue from the [session handover](handover/2026-10-08-cloudflare-connection.md); do not create another database or repeat successful account authorization unnecessarily.
+The first deployment attempt was rejected at Cloudflare's deployments API with `No access to the specified resource` before any app upload. The owner chose to retain the current permissions, so deployment is blocked. No provider secrets have been uploaded. The attempt also exposed a missing `ASSETS` binding; that is now configured and checked so the authenticated Worker can serve static files through Vinext. The greeting fix from PR 30 is included in the hosting branch. Continue from the [session handover](handover/2026-10-08-cloudflare-connection.md); do not create another database or repeat successful account authorization unnecessarily.
 
 ## Updating and recovery
 

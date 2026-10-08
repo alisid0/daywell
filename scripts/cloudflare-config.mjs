@@ -35,7 +35,7 @@ export function readCloudflareConfig(path) {
     compatibility_flags: ["nodejs_compat"],
     workers_dev: true,
     preview_urls: false,
-    assets: { run_worker_first: true },
+    assets: { binding: "ASSETS", run_worker_first: true },
     observability: { enabled: false },
     vars: {
       DAYWELL_APP_ORIGIN: p.appOrigin,

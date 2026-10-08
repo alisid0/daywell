@@ -28,6 +28,7 @@ const consumption = {
 export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("stock.set"), item: stockInput }).strict(),
   z.object({ type: z.literal("stock.remove"), id }).strict(),
+  z.object({ type: z.literal("stock.add"), items: z.array(stockInput).min(1).max(20) }).strict(),
   z.object({ type: z.literal("plan.set"), plan: planInput }).strict(),
   z.object({ type: z.literal("plan.window"), startDate: date, days: z.union([z.literal(2), z.literal(3), z.literal(7)]), plans: z.array(planInput).max(28) }).strict(),
   z.object({ type: z.literal("plan.remove"), id }).strict(),
@@ -149,6 +150,13 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
   if (action.type === "stock.set") {
     const item = action.item;
     put(state.stock, { ...item, ingredient: ingredientName(item.ingredient), ...measured(item.quantity ?? 0, item.unit), quantity: item.quantity === null ? null : measured(item.quantity, item.unit).quantity, changedBy: operationId });
+  } else if (action.type === "stock.add") {
+    const seen = new Set(state.stock.map(item => item.id));
+    for (const item of action.items) {
+      if (seen.has(item.id)) throw new FoodError("A captured item already exists. Review your basket before adding it again.");
+      seen.add(item.id);
+      state.stock.push({ ...item, ingredient: ingredientName(item.ingredient), ...measured(item.quantity ?? 0, item.unit), quantity: item.quantity === null ? null : measured(item.quantity, item.unit).quantity, changedBy: operationId });
+    }
   } else if (action.type === "stock.remove") remove(state.stock, action.id);
   else if (action.type === "plan.set") {
     put(state.plans, { ...action.plan, ingredients: combine(action.plan.ingredients.map(item => ({ ingredient: ingredientName(item.ingredient), ...measured(item.quantity, item.unit) }))), changedBy: operationId });
@@ -216,7 +224,7 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
     }
     meal = { id: `food-${operationId}`, data: { title: action.title, date: action.date, meal: action.meal, ...intakeRecord(action.intake, action.type === "cook" ? "prepared" : "used") } };
   } else if (action.type === "undo") {
-    if (!undoEffect || !["purchase", "cook", "use"].includes(undoEffect.type)) throw new FoodError("Only a recorded purchase, cooking or food-use action can be undone here.", 400);
+    if (!undoEffect || !["purchase", "cook", "use", "stock.add"].includes(undoEffect.type)) throw new FoodError("Only a recorded capture, purchase, cooking or food-use action can be undone here.", 400);
     undoChanges(state.stock, undoEffect.stock, operationId);
     undoChanges(state.plans, undoEffect.plans, operationId);
     undoChanges(state.shopping, undoEffect.shopping, operationId);

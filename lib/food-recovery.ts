@@ -15,6 +15,7 @@ const intake = z.object({ portions: number, calories: number.optional(), macros:
 const consumption = { title: text, date, meal, consumed: z.array(z.object({ stockId: id, quantity: number, unit })).max(40), useReservedStock: z.boolean(), intake: intake.optional() };
 const draftAction = z.union([
   z.object({ type: z.literal("stock.set"), item: stock }),
+  z.object({ type: z.literal("stock.add"), items: z.array(stock).min(1).max(20) }),
   z.object({ type: z.literal("plan.set"), plan }),
   z.object({ type: z.literal("plan.window"), startDate: date, days: z.union([z.literal(2), z.literal(3), z.literal(7)]), plans: z.array(plan).max(28) }),
   z.object({ type: z.literal("shopping.set"), item: z.object({ id, title: text, quantity: z.string().max(80), done: z.boolean() }) }),

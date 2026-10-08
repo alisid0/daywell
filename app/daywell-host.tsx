@@ -219,8 +219,8 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
       typeRequest(request);
     };
     window.addEventListener("daywell-host", openHost);
-    window.addEventListener("daywell-capture", openHost);
-    return () => { mounted.current = false; window.removeEventListener("daywell-host", openHost); window.removeEventListener("daywell-capture", openHost); };
+
+    return () => { mounted.current = false; window.removeEventListener("daywell-host", openHost); };
   }, [typeRequest]);
 
   // Notice persisted changes, including ones made through the ordinary tools.

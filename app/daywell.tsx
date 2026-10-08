@@ -13,6 +13,7 @@ import {WelcomeFlow} from "./wellbeing-welcome";
 import {FirstSteps} from "./first-steps";
 import {DaySnapshot,QuickEntry} from "./everyday";
 import {filterTasks} from "@/lib/routines";
+import {CaptureHub} from "./capture-hub";
 import {DaywellHost} from "./daywell-host";
 import {CalendarWorkspace} from "./calendar-workspace";
 import {CalendarStrip} from "./calendar-strip";
@@ -42,7 +43,7 @@ export default function Daywell({showWelcome=false,initialView="today"}:{showWel
  {a.loaded&&active==="calendar"&&<CalendarWorkspace a={a}/>}
  {a.loaded&&active==="today"&&<button className="calendar-home-link" onClick={()=>{a.setCalendarArea("all");a.setActive("calendar")}}><CalendarDays size={19}/><span>Calendar & history<small>What’s next, and how far you’ve come</small></span><ChevronRight size={17}/></button>}
  {a.loaded&&active==="today"&&<details className="host-tools"><summary>Your tools & saved day<span>Here whenever you need them</span></summary><TodayTools a={a}/></details>}
- {a.loaded&&active!=="today"&&active!=="calendar"&&<PillarWorkspace key={active} a={a}/>}<footer className="page-footer"><Sun size={15}/>Small steps. Better days.</footer></div></main><Dialogs a={a} modules={modules}/><Toaster position="bottom-right" richColors/></SidebarProvider>;
+ {a.loaded&&active!=="today"&&active!=="calendar"&&<PillarWorkspace key={active} a={a}/>}<footer className="page-footer"><Sun size={15}/>Small steps. Better days.</footer></div></main><Dialogs a={a} modules={modules}/>{a.loaded&&<CaptureHub a={a}/>}<Toaster position="bottom-right" richColors/></SidebarProvider>;
 }
 
 function TodayTools({a}:{a:ReturnType<typeof useDaywell>}){const {enabled,settings}=a,selected=modules.filter(m=>enabled(m.id)),tasks=filterTasks(a.entries,"today",today()),sleep=a.dayEntries("sleep").at(-1),movement=a.dayEntries("move").reduce((n,e)=>n+e.data.minutes,0),focused=a.dayEntries("session").reduce((n,e)=>n+e.data.minutes,0); function buildPlan(){const suggestions:Entry[]=[];if(!tasks.some(e=>!e.data.done))suggestions.push({id:crypto.randomUUID(),kind:"task",data:{title:"Choose and finish one meaningful priority",done:false,date:today(),minutes:25}});if(enabled("move"))suggestions.push({id:crypto.randomUUID(),kind:"task",data:{title:"Take a 15-minute walk",done:false,date:today(),minutes:15}});if(enabled("sleep"))suggestions.push({id:crypto.randomUUID(),kind:"task",data:{title:`Start winding down at ${displayTime(settings.bedtime)}`,done:false,date:today(),minutes:15}});a.setPlan(suggestions.filter(s=>!a.dayEntries("task").some(e=>e.data.title===s.data.title)))}

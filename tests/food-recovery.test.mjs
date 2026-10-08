@@ -77,3 +77,11 @@ test("a stale tab cannot overwrite or clear a newer recovery copy", () => {
   writeFoodRecovery(store,ali,{...data,draft:null},newer);
   assert.equal(readFoodRecovery(store,ali),null);
 });
+
+test("captured basket drafts and pending saves survive recovery including unknown amounts",()=>{
+  const store=storage(),data=initial();
+  data.draft.action={type:"stock.add",items:[{id:"captured",ingredient:"rice",quantity:null,unit:"g",bestBefore:null}]};
+  writeFoodRecovery(store,ali,data);assert.deepEqual(readFoodRecovery(store,ali).draft,data.draft);
+  data.pending=prepareFoodCommand(data.draft,"capture-retry");writeFoodRecovery(store,ali,data);
+  assert.deepEqual(readFoodRecovery(store,ali).pending,data.pending);
+});

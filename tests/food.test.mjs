@@ -484,3 +484,19 @@ test("pre-sugar intake receipts keep their original hash and replay without a du
   assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n, 1);
   assert.equal((await getFoodSpace(db, "ali")).state.stock[0].quantity, 700);
 });
+
+test("reviewed basket captures save atomically, retry once and undo without affecting existing stock",async t=>{
+  const {db,save,sqlite}=database(t);
+  await save(stock("old-rice","rice",200));
+  const before=await getFoodSpace(db,"ali");
+  const action={type:"stock.add",items:[{id:"photo-eggs",ingredient:"Eggs",quantity:6,unit:"each"},{id:"photo-rice",ingredient:"Rice",quantity:null,unit:"g"}]};
+  const cmd=foodCommandSchema.parse({operationId:"photo-once",expectedRevision:before.revision,action});
+  await saveFoodCommand(db,"ali",cmd);const again=await saveFoodCommand(db,"ali",cmd);assert.equal(again.replayed,true);
+  const after=await getFoodSpace(db,"ali");assert.equal(after.state.stock.length,3);assert.equal(after.state.stock.find(x=>x.id==="photo-rice").quantity,null);
+  assert.equal(sqlite.prepare("SELECT count(*) AS n FROM entries WHERE user_id='ali' AND kind='food'").get().n,0);
+  await save({type:"undo",operationId:"photo-once"});
+  assert.deepEqual((await getFoodSpace(db,"ali")).state.stock,before.state.stock);
+  const rev=(await getFoodSpace(db,"ali")).revision;
+  await assert.rejects(()=>save({type:"stock.add",items:[{id:"new-one",ingredient:"Milk",quantity:1,unit:"l"},{id:"old-rice",ingredient:"Rice",quantity:3,unit:"kg"}]}));
+  const failed=await getFoodSpace(db,"ali");assert.equal(failed.revision,rev);assert.deepEqual(failed.state.stock,before.state.stock);
+});

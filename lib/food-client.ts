@@ -13,7 +13,7 @@ export type SaveResult = { kind: "saved" } | { kind: "conflict" | "rejected" | "
 const errorResponse = z.object({ error: z.string() });
 const savedResponse = z.object({ ok: z.literal(true), revision: z.number().int().nonnegative(), replayed: z.boolean() });
 const snapshotSchema = z.object({ revision: z.number().int().nonnegative(), state: foodStateSchema,
-  recentActions: z.array(z.object({ operationId: z.string(), revision: z.number().int(), type: z.enum(["stock.set", "stock.remove", "plan.set", "plan.remove", "plan.window", "shopping.set", "shopping.remove", "purchase", "cook", "use", "undo"]), createdAt: z.string(), undone: z.boolean(), mealId: z.string().nullable() })),
+  recentActions: z.array(z.object({ operationId: z.string(), revision: z.number().int(), type: z.enum(["stock.set", "stock.add", "stock.remove", "plan.set", "plan.remove", "plan.window", "shopping.set", "shopping.remove", "purchase", "cook", "use", "undo"]), createdAt: z.string(), undone: z.boolean(), mealId: z.string().nullable() })),
 });
 export async function readFoodSnapshot(request: typeof fetch = fetch, scope?: string): Promise<FoodSnapshot> {
   const response = await request("/api/food", { cache: "no-store", headers: scope ? { "X-Daywell-Recovery-Scope": scope } : undefined, signal: AbortSignal.timeout(20_000) });

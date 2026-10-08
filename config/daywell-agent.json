@@ -23,7 +23,8 @@
         "built_in_tools": { "end_call": { "type": "system", "name": "end_call", "description": "End the conversation when the user asks to stop or says goodbye.", "params": { "system_tool_type": "end_call" } } }
       }
     },
+    "tts": { "model_id": "eleven_v4_turbo", "expressive_mode": true },
     "conversation": { "max_duration_seconds": 900, "client_events": ["audio", "interruption", "user_transcript", "agent_response", "client_tool_call"] }
   },
-  "platform_settings": { "auth": { "enable_auth": true }, "privacy": { "record_voice": false } }
+  "platform_settings": { "auth": { "enable_auth": true }, "privacy": { "record_voice": false }, "overrides": { "conversation_config_override": { "conversation": { "text_only": true } } } }
 }

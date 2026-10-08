@@ -83,7 +83,7 @@ export async function saveFoodCommand(db: Database, userId: string, input: unkno
     else statements.push(db.prepare(`DELETE FROM entries WHERE user_id=? AND id=? AND kind='grocery' AND ${gate}`).bind(userId, entryId, userId, revision, writeToken));
   }
   if (effect.meal) {
-    if (effect.type === "cook") {
+    if (effect.type === "cook" || effect.type === "use") {
       const count = await db.prepare("SELECT COUNT(*) AS n FROM entries WHERE user_id=?").bind(userId).first<{ n: number }>();
       if ((count?.n ?? 0) >= 20_000) throw new FoodError("Your saved day is full. Remove a few older entries before recording a meal.", 413);
       // A collision deliberately fails the entire transaction. Never overwrite

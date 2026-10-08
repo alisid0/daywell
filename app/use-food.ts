@@ -114,7 +114,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
       persist({ pending: null }); setPending(null);
       if (result.kind === "saved") {
         persist({ draft: null }); setDraft(null); setReview(false);
-        setNotice(command.action.type === "cook" ? "Meal remembered. Your food basket is updated." : command.action.type === "undo" ? "That change has been undone." : "Saved to your food basket.");
+        setNotice(["cook", "use"].includes(command.action.type) ? "Meal remembered. Your food basket is updated." : command.action.type === "undo" ? "That change has been undone." : "Saved to your food basket.");
         await reload();
         await journal.current();
       } else {

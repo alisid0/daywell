@@ -11,14 +11,16 @@ const stock = z.object({ id, ingredient: text, quantity: number.nullable(), unit
 const requirement = z.object({ ingredient: text, quantity: number, unit });
 const meal = z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]);
 const plan = z.object({ id, title: text, date, meal, servings: number, ingredients: z.array(requirement).max(40) });
+const intake = z.object({ portions: number, calories: number.optional(), macros: z.object({ protein: number, carbs: number, fat: number }).optional(), source: z.enum(["label", "estimate", "app"]).optional() });
+const consumption = { title: text, date, meal, consumed: z.array(z.object({ stockId: id, quantity: number, unit })).max(40), useReservedStock: z.boolean(), intake: intake.optional() };
 const draftAction = z.union([
   z.object({ type: z.literal("stock.set"), item: stock }),
   z.object({ type: z.literal("plan.set"), plan }),
   z.object({ type: z.literal("plan.window"), startDate: date, days: z.union([z.literal(2), z.literal(3), z.literal(7)]), plans: z.array(plan).max(28) }),
   z.object({ type: z.literal("shopping.set"), item: z.object({ id, title: text, quantity: z.string().max(80), done: z.boolean() }) }),
   z.object({ type: z.literal("purchase"), items: z.array(stock.extend({ quantity: number, shoppingId: id.optional() })).min(1).max(40) }),
-  z.object({ type: z.literal("cook"), planId: id.optional(), title: text, date, meal, servings: number,
-    consumed: z.array(z.object({ stockId: id, quantity: number, unit })).max(40), useReservedStock: z.boolean(),
+  z.object({ type: z.literal("use"), ...consumption }),
+  z.object({ type: z.literal("cook"), planId: id.optional(), ...consumption, servings: number,
     leftovers: z.object({ id, title: text, portions: number, bestBefore: date.nullable() }).optional() }),
   actionSchema,
 ]) as z.ZodType<FoodAction>;

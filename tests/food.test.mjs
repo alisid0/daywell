@@ -49,6 +49,55 @@ const cooking = extra => ({ type: "cook", title: "Rice bowl", date: "2026-10-07"
   consumed: [{ stockId: "rice", quantity: 300, unit: "g" }], ...extra });
 const command = (action, operationId = "test") => foodCommandSchema.parse({ operationId, expectedRevision: 0, action });
 
+test("a cooking receipt from before nutrition tracking still replays after upgrading", async t => {
+  const {db,sqlite,save}=database(t);
+  await save(stock("rice","Rice",500)); await save(plan());
+  // Exact JSON shape produced by the former schema, including its defaults.
+  const old={operationId:"old-cook",expectedRevision:2,action:{type:"cook",planId:"dinner",title:"Rice bowl",date:"2026-10-07",meal:"Dinner",servings:2,consumed:[{stockId:"rice",quantity:300,unit:"g"}],useReservedStock:false,leftovers:{id:"saved",title:"Rice bowl",portions:1,bestBefore:null}}};
+  await saveFoodCommand(db,"ali",old);
+  const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(JSON.stringify(old)));
+  const oldHash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("");
+  sqlite.prepare("UPDATE food_operations SET request_hash=? WHERE operation_id='old-cook'").run(oldHash);
+  assert.equal((await saveFoodCommand(db,"ali",old)).replayed,true);
+  assert.equal((await getFoodSpace(db,"ali")).revision,3);
+});
+
+test("using basket food saves only personal intake, retries once and undoes stock and meal together", async t => {
+  const { db, sqlite, save } = database(t);
+  await save(stock("apples", "Apple", 4, "each"));
+  const input = { operationId:"snack", expectedRevision:1, action:{ type:"use", title:"Apple", date:"2026-10-08", meal:"Snack", consumed:[{stockId:"apples",quantity:1,unit:"each"}], intake:{portions:1,calories:80,source:"estimate"} } };
+  await saveFoodCommand(db,"ali",input);
+  assert.equal((await saveFoodCommand(db,"ali",input)).replayed,true);
+  assert.equal((await getFoodSpace(db,"ali")).state.stock[0].quantity,3);
+  const row = JSON.parse(sqlite.prepare("SELECT data FROM entries WHERE id='food-snack'").get().data);
+  assert.equal(row.calories,80); assert.equal(row.portions,1); assert.equal(row.foodStatus,"eaten"); assert.equal(row.macrosKnown,false);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n,1);
+  await save({type:"undo",operationId:"snack"});
+  assert.equal((await getFoodSpace(db,"ali")).state.stock[0].quantity,4);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n,0);
+});
+test("prepared meals are not intake; cooking can separately save a personal portion and leftovers", () => {
+  const state=applyFoodCommand(emptyFoodState(),command(stock("rice","Rice",1000))).state;
+  const prepared=applyFoodCommand(state,command(cooking({}))).effect.meal.data;
+  assert.equal(prepared.foodStatus,"prepared"); assert.equal(prepared.nutritionKnown,false);
+  const cooked=applyFoodCommand(state,command(cooking({servings:4,intake:{portions:1,calories:400},leftovers:{id:"leftovers",title:"Rice bowl",portions:2}})));
+  assert.equal(cooked.effect.meal.data.calories,400); assert.equal(cooked.effect.meal.data.portions,1);
+  assert.equal(cooked.state.stock.find(x=>x.id==="leftovers").quantity,2);
+  assert.throws(()=>applyFoodCommand(state,command(cooking({servings:2,intake:{portions:1},leftovers:{id:"leftovers",title:"Rice",portions:2}}))),/cannot exceed/);
+  assert.throws(()=>applyFoodCommand(state,command(cooking({servings:1,leftovers:{id:"leftovers",title:"Rice",portions:2}}))),/cannot exceed/);
+  assert.equal(state.stock[0].quantity,1000);
+});
+test("basket use preserves other plans, rejects overspending and records used-only without intake", () => {
+  let state=applyFoodCommand(emptyFoodState(),command(stock("rice","Rice",500))).state;
+  state=applyFoodCommand(state,command(plan())).state;
+  const used={type:"use",title:"Rice used",date:"2026-10-08",meal:"Dinner",consumed:[{stockId:"rice",quantity:250,unit:"g"}]};
+  assert.throws(()=>applyFoodCommand(state,command(used)),/reserved/);
+  assert.throws(()=>applyFoodCommand(state,command({...used,consumed:[{stockId:"rice",quantity:501,unit:"g"}],useReservedStock:true})),/less in/);
+  const result=applyFoodCommand(state,command({...used,useReservedStock:true}));
+  assert.equal(result.effect.meal.data.foodStatus,"used"); assert.equal(result.effect.meal.data.nutritionKnown,false);
+  assert.equal(result.state.plans.length,1); assert.equal(foodOverview(result.state).toBuy[0].toBuy,50);
+});
+
 test("plans reserve compatible amounts without consuming stock; swaps and removals recalculate shopping", () => {
   let state = applyFoodCommand(emptyFoodState(), command(stock("rice", "Rice", 0.5, "kg"))).state;
   state = applyFoodCommand(state, command(plan("monday", 300))).state;

@@ -4,6 +4,8 @@ Read [the shared session workflow](docs/github-workflow.md) before changing this
 
 Also read [the Android and iPhone release plan](docs/mobile-release-plan.md). The current objective is early-November store review on both platforms, not a standalone personal-APK demo. Confirm the working deadline and unresolved owner decisions, prioritise its launch scope, and keep release status tied to GitHub evidence. Do not represent target dates or passing web checks as store approval.
 
+For account data, uploads or safety work, read the [Your data proposal](docs/your-data-proposal.md), [draft image upload policy](docs/image-upload-policy.md), and [safeguarding and data request requirements](docs/safeguarding-and-data-requests.md). These are proposed launch requirements, not implemented guarantees or legal sign-off. Preserve the owner's general-wellness and minimal-typing boundaries stated there. Keep real incident records, evidence and private operational details out of this public repository; do not automate agency disclosure through the AI host.
+
 ## GitHub is the source of truth
 
 - The canonical repository is **https://github.com/alisid0/daywell**. This rule applies to both machines, Codex, Claude and other contributors.

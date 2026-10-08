@@ -8,6 +8,8 @@ Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 
 **Working on either machine? GitHub is the source of truth.** Read [the shared session workflow](docs/github-workflow.md): fetch before starting, then commit, push and verify the GitHub handover before ending each session. A local preview is not a saved or merged version. Coding assistants must also read [AGENTS.md](AGENTS.md); [CLAUDE.md](CLAUDE.md) points to the same rules.
 
+**Your data and safety launch proposal:** [data controls](docs/your-data-proposal.md), [image upload rules](docs/image-upload-policy.md), and [safeguarding and investigation requests](docs/safeguarding-and-data-requests.md) extend [PR 34](https://github.com/alisid0/daywell/pull/34). They identify implementation and legal-review work still needed; they are not deployed guarantees. See the [8 October handover](docs/handover/2026-10-08-data-and-safety-proposals.md).
+
 ## Four-area MVP
 
 The selected **Cosy cove** is the default for new browsers; existing appearance selections are preserved. The bottom bar holds **Today · Move · Eat · Sleep · Relax**, each one tap away. Today offers **Talk to Daywell**, **Just rest** and **Just listen**, a last-7-days calendar strip and the everyday extras.

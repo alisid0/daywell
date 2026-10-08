@@ -94,6 +94,8 @@ If the owner means public availability by 5 November, aim to submit earlier and 
 
 ## Store submission checks
 
+**8 October data and safety checkpoint:** [PR 34](https://github.com/alisid0/daywell/pull/34) provides an initial account export/deletion UI and privacy/help pages. Before treating it as launch-ready, complete the [Your data requirements](your-data-proposal.md), [image upload controls](image-upload-policy.md), and [safeguarding and investigation procedures](safeguarding-and-data-requests.md). Their acceptance lists remain open. Publishing these documents does not activate moderation, provider deletion or legal holds, and filling the three existing owner placeholders is not sufficient for release.
+
 - [ ] Google production eligibility confirmed, including applicable testing and verification.
 - [ ] Android AAB and signed iOS archive built from the documented GitHub release commit. Keep the Android APK for direct testing; it does not replace the store bundle.
 - [ ] Current target SDK and toolchain requirements verified for the submission date. Apple's current notice requires Xcode 26 or later with the applicable version 26 SDK; recheck before upload. [Apple requirements](https://developer.apple.com/news/upcoming-requirements/), [Google target API policy](https://support.google.com/googleplay/android-developer/answer/11926878).

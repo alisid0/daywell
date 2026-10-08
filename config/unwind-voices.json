@@ -1,0 +1,11 @@
+{
+  "modelId": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.75 },
+  "voices": [
+    { "id": "eric", "voiceId": "cjVigY5qzO86Huf0OWal", "name": "Eric", "description": "Smooth & familiar · American" },
+    { "id": "lily", "voiceId": "pFZP5JQG7iQjIQuC4Bku", "name": "Lily", "description": "Soft & velvety · British" },
+    { "id": "george", "voiceId": "JBFqnCBsd6RMkjVDRZzb", "name": "George", "description": "Warm & grounded · British" },
+    { "id": "sarah", "voiceId": "EXAVITQu4vr4xnSDxMaL", "name": "Sarah", "description": "Gentle & reassuring · American" },
+    { "id": "river", "voiceId": "SAz9YHcvj6GT2YYXdXww", "name": "River", "description": "Relaxed & even · American" }
+  ]
+}

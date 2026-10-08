@@ -1,4 +1,5 @@
 import type { CompanionId } from './companions.ts';
+import { expandedAudioGroups } from './audio-expansion.ts';
 
 export const audioCategories = [
   { id: 'relax', label: 'A little calm' }, { id: 'sleep', label: 'Wind down' },
@@ -7,7 +8,8 @@ export const audioCategories = [
   { id: 'everyday', label: 'Everyday company' },
 ] as const;
 export type AudioCategory = typeof audioCategories[number]['id'];
-export type AudioResponse = { id: string; groupId: string; category: AudioCategory; title: string; companion: CompanionId; text: string };
+export type AudioHandling = 'recorded' | 'tool' | 'live' | 'urgent';
+export type AudioResponse = { id: string; groupId: string; category: AudioCategory; title: string; companion: CompanionId; text: string; prompt?: string; handling?: AudioHandling };
 export type AudioGroup = { id: string; category: AudioCategory; title: string; companion: CompanionId; responses: AudioResponse[] };
 function group(id: string, category: AudioCategory, title: string, companion: CompanionId, lines: string[]): AudioGroup {
   return { id, category, title, companion, responses: lines.map((text, index) => ({ id: `${id}-${String(index + 1).padStart(2, '0')}`, groupId: id, category, title, companion, text })) };
@@ -618,11 +620,12 @@ export const audioGroups: AudioGroup[] = [
   ]),
 ];
 
+audioGroups.push(...expandedAudioGroups);
 export const audioResponses = audioGroups.flatMap(item => item.responses);
 export const audioResponseById = new Map(audioResponses.map(item => [item.id, item]));
 export function searchAudioResponses(query: string, category?: AudioCategory): AudioResponse[] {
   const terms = query.toLocaleLowerCase('en-GB').trim().split(/\s+/).filter(Boolean);
-  return audioResponses.filter(item => (!category || item.category === category) && terms.every(term => `${item.title} ${item.text}`.toLocaleLowerCase('en-GB').includes(term)));
+  return audioResponses.filter(item => (!category || item.category === category) && terms.every(term => `${item.title} ${item.prompt ?? ''} ${item.text}`.toLocaleLowerCase('en-GB').includes(term)));
 }
 export function responseInGroup(id: string, variation = 0): AudioResponse | undefined {
   const selected = audioGroups.find(item => item.id === id);

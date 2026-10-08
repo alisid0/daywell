@@ -11,7 +11,7 @@ const config = JSON.parse(await readFile(join(root,'config/guided-audio-generati
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex').slice(0,12);
 const output = join(root,'public/guided-audio'), cache = join(root,'work/guided-audio'), manifestPath = join(output,'manifest.json');
 const args = process.argv.slice(2), selectedId = args.includes('--session') ? args[args.indexOf('--session')+1] : null;
-const sessions = selectedId ? guidedSessions.filter(session=>session.id===selectedId) : guidedSessions;
+const sessions = selectedId ? guidedSessions.filter(session=>!session.voices && session.id===selectedId) : guidedSessions.filter(session=>!session.voices);
 if(!sessions.length) throw Error('Unknown session.');
 let manifest = {version:1, recordings:{}};
 try { manifest=JSON.parse(await readFile(manifestPath,'utf8')); } catch(error) { if(error.code!=='ENOENT') throw error; }

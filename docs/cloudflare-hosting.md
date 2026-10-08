@@ -16,9 +16,11 @@ Configure an **Allow policy for the owner's exact email**, then explicitly invit
 2. Authorize the repository's installed Wrangler. The prepared scope set is `account:read user:read workers:write d1:write`; Wrangler also asks for renewable background access. The browser approval belongs to the owner. Do not paste tokens or passwords into chat or source code.
 
    ```sh
-   npx wrangler login --scopes account:read user:read workers:write d1:write
+   npx wrangler login --callback-host=127.0.0.1 --scopes account:read user:read workers:write d1:write
    npx wrangler whoami
    ```
+
+   Keep the login process running while approving the browser prompt. The pinned Wrangler version waits two minutes for its local callback, then closes the listener. If the browser says the callback site cannot be reached, check whether that process timed out. Start a fresh login and use its new link promptly; do not replay or share an old callback URL, which contains an authorization code. Binding explicitly to `127.0.0.1` avoids a localhost IPv4/IPv6 mismatch. Confirm success with `whoami` before creating resources.
 
 3. Establish the account's Workers subdomain. Create a dedicated D1 database, `daywell-private-db`, and record its returned ID. Start with new storage; do not upload the development database or the owner's local records.
 
@@ -73,6 +75,14 @@ Configure optional OpenAI secrets only when that feature is being enabled. The s
 - Recheck API allowance limits and provider retention settings before inviting others.
 
 No hosted or phone acceptance checks have passed merely because the build succeeds. Keep the rollout private until these are recorded.
+
+## Setup checkpoint, 8 October 2026
+
+Wrangler authorization is complete. The dedicated `daywell-private-db` database was created in Western Europe and all four existing migrations (0000 through 0003) applied successfully. A subsequent remote migration listing reported no pending migrations. No local personal records were uploaded.
+
+Zero Trust Free onboarding reached its checkout, displaying a $0 monthly base price but requiring billing details, terms acceptance and authorization for charges above included limits. The owner must review and complete that step; selecting Free has not activated the plan. The partial ignored local profile contains the real account, database and planned origin, but leaves the Access issuer and audience empty. Its incomplete state intentionally prevents building a deployable private app.
+
+No Worker, Access application or policy has been deployed, and no provider secrets have been uploaded. Continue from the [session handover](handover/2026-10-08-cloudflare-connection.md); do not create another database or repeat successful account authorization unnecessarily.
 
 ## Updating and recovery
 

@@ -39,12 +39,18 @@ export function messageFor(error: unknown, fallback: string) {
   return error instanceof UserFacingError ? error.message : fallback;
 }
 
-// Per-user allowances, counted in fixed windows in the usage_limits table.
+// Per-user allowances, counted in fixed windows in the usage_limits table. Daily windows reset at midnight UTC.
+const day = 24 * 60 * 60 * 1000;
 export const limits = {
   voice: { windowMs: 10 * 60 * 1000, max: 6 },
-  capture: { windowMs: 24 * 60 * 60 * 1000, max: 20 },
+  // Live conversations are paid by the minute, so each person, and everyone together, also has a daily cap.
+  "voice-day": { windowMs: day, max: 10 },
+  "voice-all": { windowMs: day, max: 100 },
+  capture: { windowMs: day, max: 20 },
 } as const;
 export type LimitedFeature = keyof typeof limits;
+// The usage_limits row shared by everyone. No real sign-in ID is "*".
+export const everyone = "*";
 export function limitWindow(feature: LimitedFeature, now = Date.now()) { return Math.floor(now / limits[feature].windowMs); }
 
 type Database = { prepare(query: string): { bind(...values: unknown[]): { first<T = unknown>(): Promise<T | null> } } };
@@ -55,4 +61,26 @@ export async function takeAllowance(db: Database, userId: string, feature: Limit
     "INSERT INTO usage_limits(user_id,feature,window,count) VALUES(?,?,?,1) ON CONFLICT(user_id,feature) DO UPDATE SET window=excluded.window, count=CASE WHEN usage_limits.window=excluded.window THEN usage_limits.count+1 ELSE 1 END WHERE usage_limits.window<>excluded.window OR usage_limits.count<? RETURNING count"
   ).bind(userId, feature, limitWindow(feature, now), limits[feature].max).first<{ count: number }>();
   return row !== null;
+}
+
+type Uses = readonly (readonly [userId: string, feature: LimitedFeature])[];
+// Takes one use from each allowance in turn. At the first one that is used up, it gives back the
+// uses already taken, so a refused request never counts, and returns that allowance's feature.
+export async function takeAllowances(db: Database, uses: Uses, now = Date.now()): Promise<LimitedFeature | null> {
+  const taken: (readonly [string, LimitedFeature])[] = [];
+  for (const [userId, feature] of uses) {
+    if (await takeAllowance(db, userId, feature, now)) { taken.push([userId, feature]); continue; }
+    await returnAllowances(db, taken, now);
+    return feature;
+  }
+  return null;
+}
+
+// Gives uses back, for example when the paid service fails before any work is done.
+// Only paid API calls should count; see docs/usage-limits.md. Pass the same `now` used to take them.
+export async function returnAllowances(db: Database, uses: Uses, now = Date.now()) {
+  for (const [userId, feature] of uses) {
+    await db.prepare("UPDATE usage_limits SET count=count-1 WHERE user_id=? AND feature=? AND window=? AND count>0 RETURNING count")
+      .bind(userId, feature, limitWindow(feature, now)).first();
+  }
 }

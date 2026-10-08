@@ -34,3 +34,7 @@ Read [the picture and voice workflow](docs/picture-and-voice-workflow.md). Food 
 Never commit keys, `.dev.vars`, private `.env` files, personal records, local databases, dependencies, build output or tool caches. Review the staged diff instead of blindly staging everything. Source-code sync does not sync browser preferences, journal entries or credentials between machines.
 
 Background sync may fetch and safely fast-forward a clean checkout. It must not publish unfinished work, force changes, merge PRs or overwrite edits. End-of-session publication is part of the active development session.
+
+## Paid API usage
+
+Only requests that reach a paid API count towards usage limits. Pre-recorded audio and on-device features never count. Follow [the usage limits design](docs/usage-limits.md) when adding or changing any paid API call.

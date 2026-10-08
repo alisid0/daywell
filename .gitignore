@@ -51,3 +51,4 @@ next-env.d.ts
 *.local
 # Private, checkout-local hosting configuration.
 /cloudflare.local.json
+.cloudflare-private/

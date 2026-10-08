@@ -39,7 +39,7 @@ test('local key entry preserves settings and never returns saved credentials', a
     await writeFile(join(root, '.dev.vars'), 'UNRELATED=keep-this\nELEVENLABS_AGENT_ID=agent_existing123\n');
     const saved = await post({ apiKey: fixtureKey });
     assert.equal(saved.status, 200);
-    assert.deepEqual(await saved.json(), { available: true, keySaved: true, agentSaved: true, saved: true });
+    assert.deepEqual(await saved.json(), { available: true, keySaved: true, agentSaved: true, foodKeySaved: false, saved: true });
     assert.equal(await readFile(join(root, '.dev.vars'), 'utf8'), `UNRELATED=keep-this\nELEVENLABS_AGENT_ID=agent_existing123\nELEVENLABS_API_KEY=${fixtureKey}\n`);
     assert.equal((await post({ agentId: 'agent_replacement' })).status, 200);
     const contents = await readFile(join(root, '.dev.vars'), 'utf8');
@@ -48,7 +48,25 @@ test('local key entry preserves settings and never returns saved credentials', a
     assert.ok(!contents.includes('agent_existing123'));
     const status = await fetch(url, { headers });
     assert.equal(status.headers.get('cache-control'), 'no-store');
-    assert.deepEqual(await status.json(), { available: true, keySaved: true, agentSaved: true });
+    assert.deepEqual(await status.json(), { available: true, keySaved: true, agentSaved: true, foodKeySaved: false });
+    const foodKey = 'sk-synthetic_food_fixture_not_real';
+    assert.equal((await post({ openaiKey: foodKey }, { origin: 'https://untrusted.example' })).status, 403);
+    assert.equal((await post({ openaiKey: 'bad\nINJECTED=true' })).status, 400);
+    assert.equal((await post({ openaiKey: 'x'.repeat(513) })).status, 400);
+    assert.equal((await post({})).status, 400);
+    assert.equal(await readFile(join(root, '.dev.vars'), 'utf8'), contents);
+    const foodSaved = await post({ openaiKey: foodKey });
+    assert.equal(foodSaved.status, 200);
+    assert.deepEqual(await foodSaved.json(), { available: true, keySaved: true, agentSaved: true, foodKeySaved: true, saved: true });
+    assert.equal(await readFile(join(root, '.dev.vars'), 'utf8'), `${contents}OPENAI_API_KEY=${foodKey}\n`);
+    assert.equal((await post({ openaiKey: 'sk-replacement_food_fixture_not_real' })).status, 200);
+    const replaced = await readFile(join(root, '.dev.vars'), 'utf8');
+    assert.ok(!replaced.includes(foodKey));
+    assert.equal(replaced.match(/OPENAI_API_KEY=/g).length, 1);
+    assert.ok(replaced.includes(`ELEVENLABS_API_KEY=${fixtureKey}`));
+    assert.ok(replaced.includes('UNRELATED=keep-this'));
+    const after = await (await fetch(url, { headers })).text();
+    assert.ok(!after.includes('sk-replacement') && !after.includes(fixtureKey));
     assert.equal(localVoiceSetup().apply, 'serve');
     assert.ok(localVoiceSetup().config().server.fs.deny.includes('**/.dev.vars*'));
   } finally {

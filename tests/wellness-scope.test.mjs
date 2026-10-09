@@ -38,6 +38,25 @@ test('ordinary requests still work without a medical conversation', () => {
   assert.equal(parseHostRequest('Focus for ten minutes').type, 'plan');
 });
 
+test('everyday phrases that share a clinical word are not refused', () => {
+  for (const request of [
+    'Show me some medicine ball exercises', 'Start a medicine ball workout for 10 minutes', 'Tidy the medicine cabinet',
+    'Add alcohol-free beer to my shopping list', 'Add alcohol‑free gin to my list', 'Add non-alcoholic wine to my list',
+    'Add rubbing alcohol and alcohol wipes to the list',
+    'I got my exam test results today, help me unwind', 'My driving test results came back, help me relax',
+    'I need to diagnose why my bike is squeaking', 'Help me diagnose what’s wrong with my car',
+  ]) assert.equal(wellnessBoundary(request), undefined, request);
+  assert.equal(parseHostRequest('Add alcohol-free beer to my shopping list').type, 'plan');
+});
+
+test('the same words still meet the boundary in a health context', () => {
+  for (const request of [
+    'Which medicine should I take for my back?', 'Is alcohol-free beer OK with my medication?', 'Recommend alcohol so I can sleep',
+    'What do my blood test results mean?', 'My exam stress gave me a rash, explain my test results',
+    'Diagnose me', 'Can you diagnose my rash?', 'Diagnose why my knee hurts when I ride my bike',
+  ]) assert.match(wellnessBoundary(request), /cannot give medical or clinical advice/, request);
+});
+
 test('retired recordings cannot be searched, downloaded or served from public assets', async () => {
   const retired = await read('../archive/medical-audio/manifest.json');
   const published = await read('../public/audio-library/manifest.json');

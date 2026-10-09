@@ -6,6 +6,8 @@ Also read [the Android and iPhone release plan](docs/mobile-release-plan.md). Th
 
 Read and preserve [the general-wellness scope](docs/general-wellness-scope.md). The owner explicitly excludes medical/clinical advice, mental-health treatment or improvement promises, and medicine, supplement or alcohol recommendations. Earlier clinical or longevity ideas do not override this decision.
 
+Read [what Move, Eat, Sleep and Relax are for](docs/product-areas.md) before changing any area. It holds the owner-approved purposes, principles and end-to-end journeys each change must keep working.
+
 Read [the picture and voice workflow](docs/picture-and-voice-workflow.md). Food starts with a picture or spoken description, followed by a short review; typing is a fallback. Movement is a guided training partner with spoken cues and commands, never a workout-camera requirement. Preserve the owner’s preference for minimal data entry.
 
 ## GitHub is the source of truth

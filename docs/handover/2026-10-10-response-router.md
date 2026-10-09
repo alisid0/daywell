@@ -21,7 +21,7 @@ Session: 9–10 October 2026, Europe/London. Branch: `codex/private-tester-build
 - Food review preserved input after a provider refusal. The separate QA copy still contained an old synthetic invalid OpenAI fixture; that attempted request was rejected. No successful paid food/voice/JEV generation or real credential use occurred in this test. Do not describe it as real food recognition.
 - Warm local benchmark: 1,281 eligible recordings, 1,860 decisions; p50 **0.714 ms**, p95 **0.899 ms**, max **2.915 ms** on this Windows runtime. These are decision-only timings, not speech/network/generation or phone latency. JEV was not called.
 
-## Connection blocker and next steps
+## Initial connection blocker (resolved for OpenAI below)
 
 The owner now asks to connect food AI, superseding the earlier “leave disconnected” choice, and reports having saved only the OpenAI key. The active local setup still reports no OpenAI or TypeSafe key; the existing hosted `/voice-setup` also explicitly reports food understanding awaiting setup. A pending question asks for the form's save-status message only. Never ask for or paste a key in chat.
 
@@ -31,3 +31,21 @@ The owner now asks to connect food AI, superseding the earlier “leave disconne
 4. Verify real phone microphone/camera, browser speech support, first audio and interruptions, live seed-message delivery, food accuracy and provider retention before launch claims. The current Google Play account is owner-reported verified organisation; this does not prove store readiness.
 
 The existing private deployment remains code `0f6ffed`, version `5b88dad3-5c36-4142-9811-3bc68f54811e`. No provider secrets, Access settings, live agent, database migrations or hosted code were changed. Local development remains `localhost:5190`; the isolated QA preview is stopped after checks. Keep all separate greeting/audio checkouts intact. Other machine: fetch this branch, use the locked dependencies and ignored local keys, run checks, then follow the activation gates; no new migration is required.
+
+## Food AI connected and router deployed, 10 October 2026
+
+This checkpoint supersedes the preceding OpenAI/deployment blocker. The owner saved the new OpenAI key through the masked local form and said it was done. The active session followed the existing approval to connect food AI and update the private test app. The key stays in ignored local `.dev.vars` and the existing Worker's `OPENAI_API_KEY` secret; it was supplied to Wrangler through stdin, never a command-line argument or committed file.
+
+- Deployed source: **`ccfdcd328c295800907ccd6ee1f26004727d7e30`**, PR #36, with passing GitHub checks. The following documentation commit does not alter that app build.
+- Worker version: **`bd0bf3a4-1c6a-4a16-b330-02c70c0f40c9`**, at 100%, deployed **2026-10-09 23:13:31 UTC / 10 October 00:13:31 London**.
+- URL: [Daywell private test](https://daywell-private.alisid1994.workers.dev/). Existing account, D1 database, Access settings, ElevenLabs secrets and live agent preserved. No new migration was pending; no database records were copied or deleted.
+- Real-profile Cloudflare build and Wrangler dry-run passed. Verified exact Worker/account/D1/origin/Access settings, authenticated assets and disabled preview URLs before remote commands. No key was baked into the bundle.
+- The saved key accessed `gpt-4.1-mini`. One paid local synthetic photo request returned an AI draft in **4,138 ms**: 180 g fictional noodles, 310 kcal, 8 g protein, 52 g carbs, 7 g fat, 4 g sugar, all matching the printed label. This is whole food interpretation timing, separate from the local recording-selection benchmark.
+- The initial helper asserted an internal `sugarSource` field on the public entry and failed after the successful response. Inspection confirmed that field intentionally gates input but is not persisted. Offline assertions against the returned public draft passed; no duplicate provider request was made to repair the test.
+- A second paid photo test through the hosted browser UI returned the same label values. Half portion displayed **155 kcal / 2 g sugar**; twice restored **310 kcal / 4 g**. Save remained disabled until explicit consumption confirmation. The draft was closed without saving; the food record remained at zero test entries.
+- Hosted setup reports food/live voice configured and broader matching awaiting testing. **14 anonymous/forged-development-identity probes** across the app, setup and five APIs all redirected to Cloudflare Access. The newly deployed shared host is visible online.
+- Hosted Eat's shared chat selected the authored news-overload reply as **Recorded reply**; Listen changed to Stop playback, and Stop returned to Listen. This exercised existing audio without a new AI generation request.
+
+TypeSafe/JEV is still absent and disabled. Follow its existing benchmark/acceptance gates before enabling it. No audio was generated or purchased and no live ElevenLabs conversation was started during this activation. Actual food accuracy across varied meals, recorded-speech transcription, physical-phone permissions and live seed-message delivery remain unverified. This is a working private food-photo connection, not public or store launch approval.
+
+Ignored local evidence: `work/food-ai-photo-result.json`, `work/food-hosted-protection-result.json`, and `work/hosted-food-ai-proof.png`; these contain synthetic test material only and are not source-of-truth assets. Local preview remains on `localhost:5190` with the saved key. Other machine: fetch PR #36; it needs its own ignored credentials for local AI, but the private hosted app already has the server connection. Do not upload keys to GitHub.

@@ -2,7 +2,7 @@
 
 This is a private browser test of Daywell's current Food, Move, Relax and Sleep features. It is not a Play Store or App Store release.
 
-**Open [Daywell private test](https://daywell-private.alisid1994.workers.dev/) on your phone.** This is hosted on Cloudflare and does not depend on the development computer staying on. As of 9 October, access is owner-only; a tester must be added explicitly before they can enter. Food-photo AI is disconnected at the owner's request. Saved ElevenLabs credentials are connected, but live voice still needs a real-phone conversation test.
+**Open [Daywell private test](https://daywell-private.alisid1994.workers.dev/) on your phone.** This is hosted on Cloudflare and does not depend on the development computer staying on. Access remains owner-only; a tester must be added explicitly before they can enter. Food-photo AI is now connected and passed a synthetic-label browser test on 10 October. Saved ElevenLabs credentials are connected, but live voice still needs a real-phone conversation test.
 
 ## Start here
 
@@ -18,10 +18,10 @@ Start with non-sensitive test entries. Daywell offers general wellness routines 
 | Area | What to try | Expected result |
 | --- | --- | --- |
 | Talk | Say or type “Hello”; ask to add something to your list | A response and a review before a saved change. End or mute a live call and check the microphone stops. |
-| Food photo | Leave AI recognition off for this test; use the manual food controls | Recognition and recorded-description transcription are intentionally disconnected. Do not expect automatic food or nutrition estimates from a photo. |
+| Food photo | Choose Take a photo, show a meal or readable food label, and specify your portion | Understand sends the photo/description to OpenAI and produces a draft. Review or adjust the portion, then explicitly confirm consumption before saving. Sugar stays unknown without an amount you supply or a readable label. |
 | Food basket | Add four eggs and a known amount of dry noodles; plan a meal | Review quantities and portions, see the plan, and confirm what was used. Preparing food and consuming it are separate actions. |
 | Food record | Log a meal, calories consumed and sugar if known | The day's record updates and survives reload. Unknown nutrition stays unknown; check the label or correct the estimate. |
-| Takeaway | Enter the meal and known nutrition manually, then select the portion consumed | Review before saving. Automatic AI estimates are unavailable in this test; restaurant portions, sauces and preparation can change the result. |
+| Takeaway | Choose Takeaway or Restaurant, show or describe the food, then confirm how much you consumed | Review the draft before saving. Restaurant portions, sauces and preparation can change estimates; these are not verified restaurant nutrition lookups. |
 | Move | Select the one-kettlebell routine | Read the setup, follow warm-up, exercises and rest, pause or skip, then review completed work before saving. No workout camera is required. |
 | Relax | Open an unwind or breathing session | Available recorded narration and breathing cues play; pause, resume and stop work. |
 | Sleep and history | Add a sleep entry and look back in the calendar | The saved entry appears on the correct date after reload. |
@@ -29,7 +29,8 @@ Start with non-sensitive test entries. Daywell offers general wellness routines 
 
 ## Known boundaries
 
-- Food photos and recorded descriptions need the owner's OpenAI connection. It was deliberately disconnected for the initial private test. The owner now asks to connect it, but the saved-key/verification step is outstanding; see the [latest source handover](handover/2026-10-10-response-router.md). Hosted setup still reports the missing connection.
+- Food-photo analysis now works through the owner's OpenAI connection. A fictional label returned the printed calories, macros and sugar; halving its portion halved calories and sugar. This is a connection/review test, not proof of accuracy for arbitrary meals. Recorded-description transcription and camera/microphone behaviour still need a physical-phone test. See the [current handover](handover/2026-10-10-response-router.md).
+- Exact recorded replies and everyday commands are available across the shared host. Broader JEV matching remains off until its separate key and acceptance test are available. Explicit continuous live conversations use ElevenLabs for subsequent turns.
 - Live ElevenLabs conversations need configured credentials, permission to use the microphone, and a real-device test. The web browser may suspend background audio. This release does not claim reliable lock-screen coaching or alarms.
 - Pre-recorded sessions do not need a live AI conversation. Their playback still needs testing on the actual phone.
 - Personalisation stored only in the browser does not automatically transfer between devices. Saved account records should be checked on a second browser signed into the same account.

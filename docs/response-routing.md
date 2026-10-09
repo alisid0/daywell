@@ -25,7 +25,7 @@ Use the masked forms at the local `/voice-setup` page. Keys are saved only in ig
 
 For the private Worker, follow [Cloudflare hosting](cloudflare-hosting.md): rebuild with the real ignored profile after any ordinary or synthetic build; verify the Worker/account/database before secret prompts or deployment. Store provider keys as Worker secrets. The enable marker can also be a Worker secret so it survives the strict hosting profile without putting secrets in generated configuration. Do not use the synthetic `cloudflare:check` output for deployment. A source push does not update the phone app.
 
-At this checkpoint neither OpenAI nor TypeSafe was detected in the active local setup, and the hosted connection page still showed food understanding awaiting setup. The owner reported saving OpenAI; a follow-up asks for the masked form's status message, not the key. Food AI and real JEV activation therefore remain unverified. This new request supersedes the earlier choice to leave food AI disconnected once the key is actually available.
+On 10 October the owner saved OpenAI through the masked local form. Model access and one synthetic photo request passed locally; the key was then stored as a secret on the existing private Worker. The deployed build passed a second synthetic-label test through the hosted review and portion controls. No test food was saved. The shared router is also deployed. TypeSafe is still absent, so JEV remains disabled and unverified; see the [deployment evidence](handover/2026-10-10-response-router.md).
 
 ## Data and costs
 

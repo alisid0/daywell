@@ -15,7 +15,7 @@ Configure an **Allow policy for the owner's exact email**, then explicitly invit
 1. Finish Cloudflare account setup. The owner reviews any terms or payment requirements. Do not buy a plan or domain without their decision. Use a Workers address for the private test; choose a custom domain before business launch.
 2. Authorize the repository's installed Wrangler. The required scope set is `account:read user:read workers:write workers_scripts:write d1:write`; Wrangler also asks for renewable background access. The browser approval belongs to the owner. `workers:write` alone did not permit the deployment API with the pinned CLI; the separate script scope is required. Do not paste tokens or passwords into chat or source code.
 
-   **Current owner decision, 8 October:** keep the existing permissions. Do not start this expanded login or retry deployment unless the owner changes that decision. Existing account/D1 authorization remains valid; the deployment permission is the outstanding blocker.
+   **Historical owner decision, 8 October:** keep the existing permissions. This was superseded on 9 October by explicit approval for Worker scripts permission and private deployment. Authorization is complete; do not repeat login unless the existing authorization expires or fails.
 
    ```sh
    npx wrangler login --callback-host=127.0.0.1 --scopes account:read user:read workers:write workers_scripts:write d1:write
@@ -88,7 +88,7 @@ The first deployment attempt was rejected at Cloudflare's deployments API with `
 
 ## Published private test, 9 October 2026
 
-The owner subsequently approved the missing Worker scripts permission and private deployment. The current app is hosted at [Daywell private test](https://daywell-private.alisid1994.workers.dev/), with the existing owner-only Access policy. Approved ElevenLabs secrets are connected; OpenAI remains disconnected at the owner's request. See the [9 October handover](handover/2026-10-09-private-tester-build.md) for the exact code/version, production fixes, successful checks and remaining phone/tester acceptance. The earlier blocked checkpoint above is historical.
+The owner subsequently approved the missing Worker scripts permission and private deployment. The app is hosted at [Daywell private test](https://daywell-private.alisid1994.workers.dev/), with the existing owner-only Access policy. Approved ElevenLabs secrets are connected. OpenAI was initially left disconnected by request, then connected on 10 October after the owner saved a key and requested activation. See the [initial deployment handover](handover/2026-10-09-private-tester-build.md) and [current food AI/router deployment](handover/2026-10-10-response-router.md) for exact code/versions, successful checks and remaining phone/tester acceptance. The earlier blocked checkpoint above is historical.
 
 ## Updating and recovery
 

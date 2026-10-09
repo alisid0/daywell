@@ -86,6 +86,10 @@ The owner completed Zero Trust Free onboarding; the account overview confirms th
 
 The first deployment attempt was rejected at Cloudflare's deployments API with `No access to the specified resource` before any app upload. The owner chose to retain the current permissions, so deployment is blocked. No provider secrets have been uploaded. The attempt also exposed a missing `ASSETS` binding; that is now configured and checked so the authenticated Worker can serve static files through Vinext. The greeting fix from PR 30 is included in the hosting branch. Continue from the [session handover](handover/2026-10-08-cloudflare-connection.md); do not create another database or repeat successful account authorization unnecessarily.
 
+## Published private test, 9 October 2026
+
+The owner subsequently approved the missing Worker scripts permission and private deployment. The current app is hosted at [Daywell private test](https://daywell-private.alisid1994.workers.dev/), with the existing owner-only Access policy. Approved ElevenLabs secrets are connected; OpenAI remains disconnected at the owner's request. See the [9 October handover](handover/2026-10-09-private-tester-build.md) for the exact code/version, production fixes, successful checks and remaining phone/tester acceptance. The earlier blocked checkpoint above is historical.
+
 ## Updating and recovery
 
 Fetch the reviewed GitHub revision, check it, rebuild with the real profile, and inspect/apply additive migrations before deployment. Keep prior Worker version IDs for rollback. Code rollback does not undo a database migration; use forward-compatible changes. D1 Time Travel is available for recovery, but a restore can overwrite later records. Before launch, exercise backup/restore on a separate test database and document the procedure. Never restore the live database casually or delete records to make migrations pass.

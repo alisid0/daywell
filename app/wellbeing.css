@@ -31,3 +31,6 @@ html[data-appearance-composition] .stillwater-shell .host-help{grid-row:16}
 @media(max-width:400px){.well-pillar-heading h1{font-size:min(calc(32px*var(--rc-scale,1)),11vw)}}
 /* The evening card is always dark, so its caption keeps its own light colour instead of the general muted text colour. */
 .well-space .sleep-hero>p{color:#b3abcd}
+
+/* Record a move: one button, then a choice of what to record. */
+.record-choice{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px;margin:4px 0 18px}.record-choice button{display:grid;gap:4px;text-align:start;padding:16px 18px;border-radius:20px;border:1px solid var(--well-line,#d8b7cc);background:var(--well-surface,#fff7fb);color:var(--well-ink,#522d46);cursor:pointer;min-height:64px}.record-choice strong{font-size:calc(16px*var(--rc-scale,1))}.record-choice small{font-size:calc(14px*var(--rc-scale,1));color:var(--well-muted,#7d536e)}.record-choice button:hover{border-color:var(--well-accent,#803c65)}.record-choice button:focus-visible{outline:3px solid var(--well-accent,#803c65);outline-offset:2px}

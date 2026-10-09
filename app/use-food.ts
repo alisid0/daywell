@@ -11,6 +11,8 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
   const [pending, setPending] = useState<FoodCommand | null>(null);
   const [busy, setBusy] = useState(false), [fresh, setFresh] = useState(false);
   const [error, setError] = useState(""), [notice, setNotice] = useState("");
+  // The basket change just saved, so the notice can offer Undo straight away.
+  const [undoable, setUndoable] = useState<string | null>(null);
   const [review, setReview] = useState(false), [recovered, setRecovered] = useState(false);
   const [storageWarning, setStorageWarning] = useState("");
   const [hydratedScope, setHydratedScope] = useState<string | null>(null);
@@ -41,7 +43,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
     let cancelled = false;
     queueMicrotask(() => {
       if (cancelled) return;
-      setSnapshot(null); setFresh(false); setBusy(false); setDraft(null); setPending(null); setRecovered(false); setReview(false); setError(""); setNotice("");
+      setSnapshot(null); setFresh(false); setBusy(false); setDraft(null); setPending(null); setRecovered(false); setReview(false); setError(""); setNotice(""); setUndoable(null);
       working.current = { draft: null, pending: null, view: "basket", start: today(), days: 3 };
       try {
         if (scope || previousScope) clearOtherFoodRecovery(localStorage, scope);
@@ -91,7 +93,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
     if (!snapshot || !fresh || guard.current || pending || recovered) return;
     if (draft) { setError("Finish or cancel your open change first. Your details are still here."); return; }
     const next = { revision: snapshot.revision, action };
-    persist({ draft: next }); setDraft(next); setError(""); setNotice(""); setReview(false);
+    persist({ draft: next }); setDraft(next); setError(""); setNotice(""); setUndoable(null); setReview(false);
   }
   function change(action: FoodAction) {
     if (guard.current || pending || !draft) return;
@@ -105,7 +107,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
     if (guard.current || !scope || scope !== hydrated.current) return;
     // Persist the exact authorised command BEFORE the request can reach the server.
     if (!persist({ pending: command })) return;
-    guard.current = true; ++readSequence.current; setBusy(true); setError(""); setNotice("");
+    guard.current = true; ++readSequence.current; setBusy(true); setError(""); setNotice(""); setUndoable(null);
     setPending(command); setRecovered(false);
     try {
       const result = await sendFoodCommand(command, fetch, scope);
@@ -115,6 +117,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
       if (result.kind === "saved") {
         persist({ draft: null }); setDraft(null); setReview(false);
         setNotice(["cook", "use"].includes(command.action.type) ? "Meal remembered. Your food basket is updated." : command.action.type === "undo" ? "That change has been undone." : command.action.type.startsWith("plan.") ? "Meal plans saved. Your shopping needs are updated; nothing has been consumed." : "Saved to your food basket.");
+        setUndoable(["purchase", "cook", "use", "stock.add"].includes(command.action.type) ? command.operationId : null);
         await reload();
         await journal.current();
       } else {
@@ -139,8 +142,8 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
     const next = { ...draft, revision: snapshot.revision }; persist({ draft: next }); setDraft(next);
     setReview(false); setError("");
   }
-  function resume() { setRecovered(false); setNotice(pending ? "Check this save using its original reference. It won’t be added twice." : "Your unfinished details are back. Review them before saving."); }
+  function resume() { setRecovered(false); setUndoable(null); setNotice(pending ? "Check this save using its original reference. It won’t be added twice." : "Your unfinished details are back. Review them before saving."); }
   const ready = hydratedScope === scope;
-  return { snapshot: ready ? snapshot : null, draft: ready ? draft : null, pending: ready ? pending : null, busy, fresh: ready && fresh, error, notice, review, recovered: ready && recovered, storageWarning, resume,
+  return { snapshot: ready ? snapshot : null, draft: ready ? draft : null, pending: ready ? pending : null, busy, fresh: ready && fresh, error, notice, undoable, review, recovered: ready && recovered, storageWarning, resume,
     view, setView, start, setStart, days, setDays, open, change, cancel, save, refresh, acceptReview, retry: () => pending ? send(pending) : Promise.resolve() };
 }

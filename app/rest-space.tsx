@@ -49,7 +49,7 @@ export function RestSpace({ a, bedtime = false, onLeave }: { a: AppState; bedtim
     } catch { silence(); setSoundError("Sound couldn’t start. You can still stay here quietly."); }
   }
   return <section className={`rest-space ${bedtime ? "rest-bedtime" : ""}`} aria-labelledby="rest-heading">
-    <button className="well-text-button rest-leave" onClick={() => { silence(); if (onLeave) onLeave(); else a.setActive("today"); }}><ArrowLeft size={17} />{bedtime ? "Back to sleep" : "Back to my day"}</button>
+    {(bedtime || onLeave || a.restReturn) && <button className="well-text-button rest-leave" onClick={() => { silence(); if (onLeave) onLeave(); else a.setActive("today"); }}><ArrowLeft size={17} />{bedtime ? "Back to sleep" : "Back to my day"}</button>}
     <div className="rest-intro"><span>{bedtime ? "A softer end to the day" : "Your quiet corner"}</span><h1 id="rest-heading">{bedtime ? "You can leave the day here." : "Nothing to do. Just be."}</h1><p>{bedtime ? "Settle somewhere comfortable. Let the next thing wait." : "A little distance from the feed. No timer. No catching up."}</p></div>
     <div className="rest-nest"><CompanionPortrait id="luma" size={270} motion={bedtime ? "sleepy" : "idle"} decorative eager /></div>
     <CompanionMotionControl /><p className="rest-words" aria-live="polite">{guided ? moments[step].text : "Luma is here with you. Stay as long as you like."}</p>

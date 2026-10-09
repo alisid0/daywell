@@ -11,7 +11,7 @@ export function CalendarStrip({ a, area }: { a: AppState; area: CalendarArea }) 
   const records = historyRecords(a.entries, now);
   const plans = plannedEntries(a.entries, days[0], now);
   const label = areaLabels[area];
-  function open() { a.setCalendarArea(area); a.setCalendarView("plan"); a.setActive("calendar"); }
+  function open() { a.setCalendarArea(area); a.setCalendarView("history"); a.setActive("calendar"); }
   return <button type="button" className="calendar-strip" onClick={open} aria-label={area === "all" ? "Open your calendar and history" : `Open your ${label} history`}>
     <span className="calendar-strip-head"><b>{area === "all" ? "Last 7 days" : `${label}, last 7 days`}</b><span>Calendar<ChevronRight size={14} aria-hidden="true" /></span></span>
     <span className="calendar-strip-days" aria-hidden="true">{days.map(date => <span key={date} className={date === now ? "calendar-strip-today" : undefined}>

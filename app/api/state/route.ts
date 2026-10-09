@@ -2,7 +2,7 @@ import { validateHostChange } from "@/lib/host-change";
 import { getChatGPTUser } from "@/app/chatgpt-auth";
 import { database } from "@/db/store";
 import { saveEntries } from "@/db/entry-store";
-import { defaults, settingsSchema } from "@/lib/daywell";
+import { defaults, normalizeSettings, settingsSchema } from "@/lib/daywell";
 import { readLimited, sameOrigin } from "@/lib/request-guards";
 import { stateBodySchema, validateSavedEntries } from "@/lib/state-input";
 import { recoveryScopeForUser } from "@/lib/recovery-scope";
@@ -29,7 +29,7 @@ export async function GET() {
       db.prepare("SELECT id,kind,data FROM entries WHERE user_id=? ORDER BY rowid").bind(user.userId).all<{ id: string; kind: string; data: string }>(),
       recoveryScopeForUser(user.userId),
     ]);
-    return json({ recoveryScope, settings: prefs ? JSON.parse(prefs.data) : defaults, entries: rows.results.map(row => ({ ...row, data: JSON.parse(row.data) })) });
+    return json({ recoveryScope, settings: prefs ? normalizeSettings(JSON.parse(prefs.data)) : defaults, entries: rows.results.map(row => ({ ...row, data: JSON.parse(row.data) })) });
   } catch {
     console.error("Load failed");
     return json({ error: "Your saved day is unavailable. Please try again." }, 503);
@@ -45,7 +45,11 @@ export async function POST(req: Request) {
     const body = stateBodySchema.parse(JSON.parse(new TextDecoder().decode(raw)));
     const db = database();
     if (body.action === "settings") {
-      const data = settingsSchema.parse(body.data);
+      const incoming = body.data && typeof body.data === "object" && !Array.isArray(body.data) ? body.data : null;
+      if (!incoming) return json({ error: "Please check the entry and try again." }, 400);
+      // Start from what's stored, so a tab still running an older version can't wipe details it doesn't know about.
+      const stored = await db.prepare("SELECT data FROM settings WHERE user_id=?").bind(user.userId).first<{ data: string }>();
+      const data = settingsSchema.parse({ ...normalizeSettings(stored ? JSON.parse(stored.data) : defaults), ...incoming });
       await db.prepare("INSERT INTO settings(user_id,data) VALUES(?,?) ON CONFLICT(user_id) DO UPDATE SET data=excluded.data").bind(user.userId, JSON.stringify(data)).run();
       return json({ ok: true, data });
     }

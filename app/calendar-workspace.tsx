@@ -33,7 +33,7 @@ export function CalendarWorkspace({ a }: { a: AppState }) {
   const dayPlans = plannedEntries(a.entries, selected, selected);
   const comingUp = plannedEntries(a.entries, now, shiftDay(now, 30)).filter(entry => !entry.data.done);
   const area = a.calendarArea;
-  const history = historyRecords(a.entries, now, { activityCalories: a.settings.activityCalories });
+  const history = historyRecords(a.entries, now, { activityCalories: a.settings.calorieTracking });
   const dated = history.filter(row => row.date);
   const undated = history.filter(row => !row.date);
   const period = dated.filter(row => inArea(row.entry.kind, area) && (range === "all" || (range === "day" ? row.date === selected : row.date!.startsWith(month.slice(0, 7)))));

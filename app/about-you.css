@@ -1,0 +1,64 @@
+/* About you: the details form at sign-up, the one-time prompt for older accounts, and Your details in settings. */
+.about-fields{display:grid;gap:22px;margin-top:24px;max-width:560px}
+.about-field{display:grid;gap:7px;margin:0;padding:0;border:0;min-width:0}
+.about-field>label:not(.about-consent),.about-field>legend{padding:0;margin-bottom:2px;font-size:calc(15px*var(--rc-scale,1));font-weight:600;color:var(--dw-ink,#522d46)}
+.about-field small{display:block;font-size:calc(14px*var(--rc-scale,1));font-weight:400;line-height:1.45;color:var(--dw-muted,#7d536e)}
+.about-field legend small,.about-field>label small{display:inline;margin-left:8px}
+.about-field .form-error{margin:0}
+.about-unit-input{position:relative;display:block;min-width:0}
+.about-unit-input input{width:100%;min-height:50px;padding:10px 60px 10px 14px;border:1px solid var(--dw-line,#d8b7cc);border-radius:14px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font:inherit;font-size:calc(17px*var(--rc-scale,1))}
+.about-unit-input input:focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:2px}
+.about-unit-input input[aria-invalid=true]{border:2px solid var(--dw-error,#932b4a)}
+.about-unit-input em{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-style:normal;font-size:calc(15px*var(--rc-scale,1));color:var(--dw-muted,#7d536e);pointer-events:none}
+.about-age{max-width:190px}
+.about-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.about-measure{display:grid;gap:7px}
+.about-measure-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;font-size:calc(15px*var(--rc-scale,1));color:var(--dw-ink,#522d46)}
+.about-units{display:inline-flex;border:1px solid var(--dw-line,#d8b7cc);border-radius:12px;overflow:hidden}
+.about-units button{min-height:44px;min-width:58px;padding:0 12px;border:0;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:600;cursor:pointer}
+.about-units button+button{border-left:1px solid var(--dw-line,#d8b7cc)}
+.about-units button[aria-pressed=true]{background:var(--dw-accent,#803c65);color:var(--dw-on-accent,#fff7fb)}
+.about-chips{display:flex;flex-wrap:wrap;gap:8px}
+.about-chips button{min-height:48px;padding:10px 16px;border:1px solid var(--dw-line,#d8b7cc);border-radius:16px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font:inherit;font-size:calc(15px*var(--rc-scale,1));font-weight:600;cursor:pointer}
+.about-chips button[aria-pressed=true]{border-color:var(--dw-accent,#803c65);background:var(--dw-accent,#803c65);color:var(--dw-on-accent,#fff7fb)}
+.about-units button:focus-visible,.about-chips button:focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:2px;position:relative}
+.about-consent{font-weight:400;display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start;padding:12px 14px;border:1px solid var(--dw-line,#d8b7cc);border-radius:14px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font-size:calc(15px*var(--rc-scale,1));cursor:pointer}
+.about-consent input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--dw-accent,#803c65)}
+.about-switch{cursor:pointer;font-weight:400;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--dw-line,#d8b7cc);border-radius:16px;background:var(--dw-surface,#fff7fb)}
+.about-switch strong{display:block;font-size:calc(16px*var(--rc-scale,1));color:var(--dw-ink,#522d46)}
+.about-switch small{display:block;margin-top:3px;font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#7d536e)}
+.about-guide{display:grid;gap:4px;padding:12px 14px;border-radius:14px;background:var(--dw-soft,#edd0e2);color:var(--dw-ink,#522d46);font-size:calc(15px*var(--rc-scale,1))}
+.about-guide strong{font-size:calc(20px*var(--rc-scale,1));font-variant-numeric:tabular-nums}
+.about-private{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px;align-items:start;margin:0;font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#7d536e)}
+.about-private svg{margin-top:3px}
+.about-summary{max-width:560px;margin-top:22px;padding:18px;border:1px solid var(--dw-line,#d8b7cc);border-radius:20px;background:var(--dw-surface,#fff7fb)}
+.first-visit .about-summary h2{margin:0 0 10px;font-size:calc(18px*var(--rc-scale,1))}
+.about-summary p{margin:12px 0 0;font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#7d536e)}
+.about-summary-list{display:grid;gap:6px;margin:0}
+.about-summary-list div{display:grid;grid-template-columns:minmax(0,10em) minmax(0,1fr);gap:12px}
+.about-summary-list dt{font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#7d536e)}
+.about-summary-list dd{margin:0;font-size:calc(15px*var(--rc-scale,1));font-weight:600;font-variant-numeric:tabular-nums}
+.about-details{display:grid;gap:10px;padding:14px 16px;border:1px solid var(--dw-line,#e3dbe9);border-radius:16px}
+.about-details-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.about-details-head strong{font-size:calc(16px*var(--rc-scale,1))}
+.about-dialog form{display:grid;gap:16px}
+.about-dialog .about-fields{margin-top:0}
+.about-weights summary{display:list-item;list-style:disclosure-closed inside;padding:11px 0;font-size:calc(15px*var(--rc-scale,1));font-weight:600;cursor:pointer}
+.about-weights[open] summary{list-style-type:disclosure-open}
+.about-weights dl{display:grid;gap:6px;margin:8px 0 0}
+.about-weights div{display:flex;justify-content:space-between;gap:12px;font-size:calc(15px*var(--rc-scale,1));font-variant-numeric:tabular-nums}
+.about-weights dd{margin:0;font-weight:600}
+.about-delete{display:grid;gap:10px;padding:12px 14px;border-radius:14px;background:var(--dw-error-bg,#fff0f2)}
+.about-delete p{margin:0;font-size:calc(15px*var(--rc-scale,1));font-weight:600;color:var(--dw-error,#932b4a)}
+.about-delete span{display:flex;flex-wrap:wrap;gap:8px}
+.about-prompt-footer{justify-content:flex-end}
+/* The welcome steps' own small type, raised to the 14px floor now that there are four steps. On phones, only the
+   current step keeps its visible name; the others stay readable to screen readers. */
+.first-visit .welcome-progress li{font-size:calc(14px*var(--rc-scale,1));white-space:nowrap}
+.first-visit .welcome-step-heading p{font-size:calc(15px*var(--rc-scale,1))}
+.first-visit .welcome-progress li>span:not(.welcome-step-label){width:28px;height:28px;font-size:calc(14px*var(--rc-scale,1))}
+.first-visit .welcome-progress li>span.welcome-step-label{display:inline;width:auto;height:auto;border:0;border-radius:0;background:none;font-size:inherit}
+.first-visit .welcome-back{font-size:calc(15px*var(--rc-scale,1))}
+@media(max-width:640px){.first-visit .welcome-progress ol{flex-wrap:wrap;gap:12px}.first-visit .welcome-progress li:not([aria-current=step]) .welcome-step-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+/* The daily guide beside calories in Eat, shown only while calorie tracking is on. */
+.nutrition-totals .calorie-guide{display:inline-block;justify-self:start;margin-top:6px;padding:4px 10px;border-radius:10px;background:var(--dw-soft,#edd0e2);color:var(--dw-ink,#522d46);font-size:calc(14px*var(--rc-scale,1));font-weight:600}

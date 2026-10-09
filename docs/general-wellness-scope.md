@@ -14,6 +14,15 @@ Daywell helps people unwind after travel or a busy day, step away from scrolling
 - For immediate danger or inability to stay safe, point directly to local emergency help and a trusted nearby person if possible. Do not diagnose, teach procedures, invent local service numbers or imply that Daywell has contacted help. Use clear speech; no breathing performance, long relaxation pause or routine in place of help.
 - Basic comfort and exercise-stop safeguards remain. Breathing is optional and unforced; offer quiet or noticing the room. Stop exercise coaching if pain or feeling unwell is reported. Food labels and stated exclusions still matter; never promise allergy safety or exact photo nutrition.
 
+## Profile details
+
+Owner decision, 9 October 2026. The "About you" step asks for an age, required and 18 or over. Sex for estimates, height and weight are optional. People who joined before the step existed are asked once. The age is self-declared: it's an age gate, not age verification, and it never relaxes the boundaries above.
+
+- Height and weight are kept only after the person ticks the box, and the time of that OK is saved. Deleting them in Your details also removes the OK and the estimate.
+- Calorie tracking is off by default. When it's on, the daily guide is the person's own number, or the Mifflin–St Jeor estimate for a lightly active day (× 1.375, rounded to the nearest 50 kcal). Without a stated sex it uses the midpoint of the two formulas. It's an everyday guide, not medical advice.
+- No BMI, goal weights, deficits, trend judgements or reminders to weigh in. These details never go to AI services; `tests/profile.test.mjs` checks the code that talks to them.
+- Still needed before a public launch: these details in the privacy page and the Your data download (#34), and an adviser's review of the health-data wording.
+
 ## Enforcement and limits
 
 `config/wellness-scope.json` is the shared policy. Its instructions are included in the agent template and the capture API. The running ElevenLabs agent must be updated and read back separately: changing a repository JSON file alone does not update that service.

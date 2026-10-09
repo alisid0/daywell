@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { today, type schemas } from "@/lib/daywell";
+import { calorieGuide } from "@/lib/profile";
 import type { z } from "zod";
 import { activitySources, resizeIntakePortions, intakeRecord, nutritionSources, nutritionSummary, sugarHistory, type Intake } from "@/lib/food-tracking";
 import type { AppState } from "./use-daywell";
@@ -9,12 +10,13 @@ const kcal = (value: number) => value.toLocaleString("en-GB", { maximumFractionD
 export function DailyNutrition({ a, area }: { a: AppState; area: "eat" | "move" }) {
   const [date, setDate] = useState(today());
   const total = nutritionSummary(a.entries, date);
+  const guide = calorieGuide(a.settings);
   function log(kind: "food" | "move") { a.openEditor(kind); a.setDraft((draft: Record<string, unknown>) => ({ ...draft, date })); }
   return <section className="well-card nutrition-day" aria-label={area === "eat" ? "Food record" : "Movement record"}>
     <div className="food-toolbar"><div><span className="food-eyebrow">Your record, at your pace</span><h2>Your {area === "eat" ? "food" : "movement"} {date === today() ? "today" : "record"}</h2></div><label>Record date<input type="date" required max={today()} value={date} onChange={event => { if(event.target.value) setDate(event.target.value); }}/></label></div>
     {area === "eat" ? <>
       <div className="nutrition-totals">
-        <div><span>Calories consumed</span><strong>{total.eatenCount ? kcal(total.eaten) : "—"}<small>{total.eatenCount ? " kcal recorded" : " none added"}</small></strong><p>{total.meals} food {total.meals === 1 ? "entry" : "entries"}{total.unknownFood > 0 ? ` · ${total.unknownFood} without calories` : ""}</p><button className="well-text-button" onClick={() => log("food")}>Log food or drink</button></div>
+        <div><span>Calories consumed</span><strong>{total.eatenCount ? kcal(total.eaten) : "—"}<small>{total.eatenCount ? " kcal recorded" : " none added"}</small></strong>{guide && <span className="calorie-guide">of {guide.source === "estimate" ? "about " : ""}{kcal(guide.kcal)}, {guide.source === "estimate" ? "your estimate" : "your number"}</span>}<p>{total.meals} food {total.meals === 1 ? "entry" : "entries"}{total.unknownFood > 0 ? ` · ${total.unknownFood} without calories` : ""}</p><button className="well-text-button" onClick={() => log("food")}>Log food or drink</button></div>
         <div><span>Total sugar consumed</span><strong>{total.sugarCount ? kcal(total.sugarGrams) : "—"}<small>{total.sugarCount ? " g recorded" : " not recorded"}</small></strong><p>{total.sugarCount} of {total.meals} food entries have sugar amounts{total.unknownSugar > 0 ? ` · ${total.unknownSugar} not recorded` : ""}</p><button className="well-text-button" onClick={() => log("food")}>Log sugar with food or drink</button></div>
       </div>
       <p className="food-caption">A record of what you’ve logged. Blank amounts stay unknown, and a daily total may be incomplete.</p>
@@ -29,9 +31,9 @@ export function DailyNutrition({ a, area }: { a: AppState; area: "eat" | "move" 
     </> : <>
       <div className="nutrition-totals">
         <div><span>Movement logged</span><strong>{total.activities ? kcal(total.movementMinutes) : "—"}<small>{total.activities ? " minutes" : " none added"}</small></strong><p>{total.activities} {total.activities === 1 ? "activity" : "activities"}</p></div>
-        {a.settings.activityCalories && <div><span>Activity calories burned</span><strong>{total.burnedCount ? kcal(total.burned) : "—"}<small>{total.burnedCount ? " kcal estimated" : " none added"}</small></strong><p>{total.burnedCount} of {total.activities} activities have estimates{total.unknownActivity > 0 ? ` · ${total.unknownActivity} without calories` : ""}</p></div>}
+        {a.settings.calorieTracking && <div><span>Activity calories burned</span><strong>{total.burnedCount ? kcal(total.burned) : "—"}<small>{total.burnedCount ? " kcal estimated" : " none added"}</small></strong><p>{total.burnedCount} of {total.activities} activities have estimates{total.unknownActivity > 0 ? ` · ${total.unknownActivity} without calories` : ""}</p></div>}
       </div>
-      {a.settings.activityCalories && <p className="food-caption">Optional estimates for the activities you log, not all energy your body uses. You don’t need to balance these against food.</p>}
+      {a.settings.calorieTracking && <p className="food-caption">Optional estimates for the activities you log, not all energy your body uses. You don’t need to balance these against food.</p>}
     </>}
   </section>;
 }

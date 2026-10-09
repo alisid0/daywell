@@ -18,6 +18,7 @@ import "./appearance-mixes.css";
 import "./design-iterations.css";
 import "./appearance-studio.css";
 import "./wellbeing.css";
+import "./about-you.css";
 import "./food.css";
 import "./capture.css";
 import "./audio-library.css";

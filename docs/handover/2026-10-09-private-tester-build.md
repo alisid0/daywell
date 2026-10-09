@@ -4,7 +4,7 @@ Branch: `codex/private-tester-build`, [draft PR #36](https://github.com/alisid0/
 
 Private hosted app: https://daywell-private.alisid1994.workers.dev/
 
-Deployed code commit: `1fb07f50250a765417d86e8e4f5572e135c20879` (9 October). Cloudflare version: `e9249756-2a85-4f9d-a9e4-bc0e85cec842`. Subsequent handover-only changes do not change the deployed app.
+Deployed code commit: `0f6ffed341c1fb3937788ba66b15bf9716cb4e63` (9 October, evening update). Cloudflare version: `5b88dad3-5c36-4142-9811-3bc68f54811e`, verified serving 100% of traffic. Subsequent handover-only changes do not change the deployed app. The first release and its checks are recorded below; see the evening update section for current acceptance.
 
 ## Included work
 
@@ -62,3 +62,17 @@ Other machine: fetch this branch, run `npm run install:ci`, preserve local crede
 The owner requested publication of the latest changes following the 9 October assessment. [Launch readiness](../launch-readiness-2026-10-09.md) now records evidence, blockers, acceptance requirements, owner dependencies and conditional dates. README and the mobile release plan point to it and correct the obsolete hosting status. The current estimate is 6–8 weeks for public Android/iPhone availability, potentially longer; 5 November remains a review checkpoint, with the precise owner milestone unconfirmed.
 
 This follow-up changes documentation only. Diff/whitespace review passed and all 25 relative links across the four changed documents resolved. The 172 passing tests are evidence for the existing app, not a newly run suite for this publication. There are no app, migration, credential or deployment changes. GitHub checks for the new documentation commit must be reported separately. The deployed code/version above remains the phone build. Implementation of the listed gaps is still outstanding.
+
+## Private update, 9 October 2026 evening
+
+The owner explicitly requested publication of the latest test build and subsequent checks. GitHub `0f6ffed` was clean, matched the remote branch and had a successful check before deployment. It includes PRs #37–#41: everyday wellness-filter fixes, larger Eat/Move text, Food basket undo, simpler Move/Sleep/Relax controls, About you and the product-area guidance. PR #36 remains open; this deployment does not merge it into main.
+
+- Published at 22:20 UTC on 9 October (23:20 Europe/London). Cloudflare version `5b88dad3-5c36-4142-9811-3bc68f54811e` is confirmed at 100% traffic. Previous version `e9249756-2a85-4f9d-a9e4-bc0e85cec842` remains the prior release reference.
+- The app changes passed the local type check, 185 tests and production build; scoped lint found no added errors across the 25 changed source files. Those checks were completed during the afternoon sync and were not redundantly rerun for this unchanged source revision. GitHub's successful check also includes the Cloudflare packaging gate.
+- A fresh build using the real ignored Cloudflare profile and Wrangler dry-run passed. Generated Worker/account/database/origin/Access settings, authenticated asset handling and disabled preview URLs were checked against that profile before upload.
+- No lockfile or database migrations changed since the previous deployment. The remote migration check confirmed no pending migrations. No local database or user records were uploaded.
+- Eight anonymous/forged-identity checks against the root, APIs and an asset route all redirected to Access sign-in. The existing signed-in owner browser loaded the new About you prompt after refresh; its phone-width layout was inspected at 390 px.
+- Further authenticated screen journeys are pending the owner entering their age in the new one-time prompt. No age, sex, height or weight was invented or saved during these checks. Actual phone sign-in, microphone/audio behaviour, live conversations and a separately invited account remain unverified.
+- Access policies, provider secrets and the live ElevenLabs agent were unchanged. Food-photo AI remains disconnected at the owner's request, and no paid provider calls were made. The local development server was not running during hosted verification.
+
+Next: complete About you directly in the private app, then verify the updated Food/Move/Sleep/Relax flows and save/reload behaviour on the phone. Height, weight and sex are optional. Keep the hosted app private and do not treat this deployment as store or public-launch readiness. Background sync still updates source only and must not deploy subsequent commits automatically.

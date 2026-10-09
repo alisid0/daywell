@@ -7,7 +7,7 @@ This is a private browser test of Daywell's current Food, Move, Relax and Sleep 
 ## Start here
 
 1. Open the link in Safari on iPhone or Chrome on Android. Choose Cloudflare sign-in and use the account with the allowed email. This version uses Cloudflare account sign-in, not an emailed one-time code. Records are scoped to the signed-in account; a second tester account still needs a hosted isolation check.
-2. Complete the welcome screen. Choose a name and an appearance you like. Reload once to check that your entries persist.
+2. Complete the welcome screen. Choose a name and an appearance you like. The latest build asks for an adult age in About you; existing accounts see this once too. Enter your own age directly in the app. Sex, height and weight are optional and may be left blank; do not add sensitive details just to test. Reload once to check that your entries persist.
 3. Use the four main areas below. The keyboard is a fallback; Food prioritises pictures and voice, and Move is a guided training partner.
 4. If something fails, note the area, what you pressed, what you expected, the phone/browser and approximate time. A screenshot is useful, but exclude personal details, keys and sign-in codes.
 

@@ -32,7 +32,7 @@
 .calendar-strip-days>span{display:grid;justify-items:center;gap:2px;padding:5px 0;border-radius:12px}
 .calendar-strip-days small{font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#86607a)}
 .calendar-strip-days b{font-size:calc(14px*var(--rc-scale,1));font-variant-numeric:tabular-nums}
-.calendar-strip-days .calendar-strip-today{background:var(--dw-soft,#f3dce8)}
+.calendar-strip-days .calendar-strip-today{background:var(--dw-soft,#f3dce8)}.calendar-strip-today small{color:var(--dw-ink,#522d46)}
 .calendar-strip-dots{display:flex;gap:2px;justify-content:center;min-height:6px}
 .calendar-strip:hover{border-color:var(--dw-accent,#803c65)}
 .calendar-strip:focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:3px}

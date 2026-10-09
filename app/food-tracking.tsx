@@ -28,10 +28,10 @@ export function DailyNutrition({ a, area }: { a: AppState; area: "eat" | "move" 
       </details>
     </> : <>
       <div className="nutrition-totals">
-        <div><span>Movement logged</span><strong>{total.activities ? kcal(total.movementMinutes) : "—"}<small>{total.activities ? " minutes" : " none added"}</small></strong><p>{total.activities} {total.activities === 1 ? "activity" : "activities"}</p><button className="well-text-button" onClick={() => log("move")}>Log an activity</button></div>
-        <div><span>Activity calories burned</span><strong>{total.burnedCount ? kcal(total.burned) : "—"}<small>{total.burnedCount ? " kcal estimated" : " none added"}</small></strong><p>{total.burnedCount} of {total.activities} activities have estimates{total.unknownActivity > 0 ? ` · ${total.unknownActivity} without calories` : ""}</p></div>
+        <div><span>Movement logged</span><strong>{total.activities ? kcal(total.movementMinutes) : "—"}<small>{total.activities ? " minutes" : " none added"}</small></strong><p>{total.activities} {total.activities === 1 ? "activity" : "activities"}</p></div>
+        {a.settings.activityCalories && <div><span>Activity calories burned</span><strong>{total.burnedCount ? kcal(total.burned) : "—"}<small>{total.burnedCount ? " kcal estimated" : " none added"}</small></strong><p>{total.burnedCount} of {total.activities} activities have estimates{total.unknownActivity > 0 ? ` · ${total.unknownActivity} without calories` : ""}</p></div>}
       </div>
-      <p className="food-caption">Optional estimates for the activities you log, not all energy your body uses. You don’t need to balance these against food.</p>
+      {a.settings.activityCalories && <p className="food-caption">Optional estimates for the activities you log, not all energy your body uses. You don’t need to balance these against food.</p>}
     </>}
   </section>;
 }

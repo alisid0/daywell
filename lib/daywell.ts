@@ -2,8 +2,8 @@ import { z } from "zod";
 import { workoutSetSchema } from "./wellbeing.ts";
 import { foodTrackingFields, activityTrackingFields } from "./food-tracking.ts";
 export const moduleIds = ["alarm","clock","focus","sleep","grocery","food","move"] as const;
-export const settingsSchema = z.object({name:z.string().trim().min(1).max(40),modules:z.array(z.enum(moduleIds)).min(1).max(7).transform(v=>[...new Set(v)]),calorieGoal:z.number().int().min(0).max(10000),bedtime:z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),wakeTime:z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),onboarded:z.boolean(),guideDismissed:z.boolean().default(false)});
-export const defaults = {name:"You", modules:[...moduleIds],calorieGoal:2000,bedtime:"22:30",wakeTime:"07:00",onboarded:false,guideDismissed:false};
+export const settingsSchema = z.object({name:z.string().trim().min(1).max(40),modules:z.array(z.enum(moduleIds)).min(1).max(7).transform(v=>[...new Set(v)]),calorieGoal:z.number().int().min(0).max(10000),bedtime:z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),wakeTime:z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),onboarded:z.boolean(),guideDismissed:z.boolean().default(false),activityCalories:z.boolean().default(false)});
+export const defaults = {name:"You", modules:[...moduleIds],calorieGoal:2000,bedtime:"22:30",wakeTime:"07:00",onboarded:false,guideDismissed:false,activityCalories:false};
 const title=z.string().trim().min(1).max(160), date=z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value=>{const [year,month,day]=value.split("-").map(Number);const parsed=new Date(Date.UTC(year,month-1,day));return year>=1900&&year<=9999&&parsed.getUTCFullYear()===year&&parsed.getUTCMonth()===month-1&&parsed.getUTCDate()===day},"Choose a valid calendar date"), time=z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/);
 export const schemas = {
  task:z.object({title,done:z.boolean(),date,completedDate:date.nullable().optional(),completedAt:z.string().datetime().nullable().optional(),minutes:z.number().int().min(1).max(240)}),

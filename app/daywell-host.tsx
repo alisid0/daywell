@@ -89,7 +89,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   async function startAgent(mode: "voice" | "text") { voice.stop(); setConsent(null); setAiChosen(true); setAiText(mode === "text"); if (mode === "text") setTyped(true); await agent.start(mode === "text"); }
   function openChat() { voice.stop(); setTyped(true); setAiChosen(true); setAiText(true); setConsent("text"); }
   function useCommands() { voice.stop(); void agent.stop(); setConsent(null); setAiChosen(false); setAiText(false); setTyped(true); }
-  function goRest() { voice.stop(); void agent.stop(); a.setActive("relax"); }
+  function goRest() { voice.stop(); void agent.stop(); a.openRest(); }
   const companion: ActivityCompanion = a.timer.companion || (a.timer.mode === "Focus" ? "pip" : "tock");
   const hasActivity = Boolean(a.timer.startedAt || a.timer.endAt || a.remaining < a.timer.duration);
   const finished = hasActivity && a.remaining === 0;
@@ -214,7 +214,8 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     const openHost = (event: Event) => {
       const disclosure = region.current?.closest("details"); if (disclosure) disclosure.open = true;
       region.current?.scrollIntoView({ behavior: "instant", block: "start" });
-      const detail = (event as CustomEvent<{ text?: string; mode?: string }>).detail;
+      const detail = (event as CustomEvent<{ text?: string; mode?: string; show?: boolean }>).detail;
+      if (detail?.show) return;
       const request = detail?.text || (detail?.mode === "meal" ? "Log a meal" : undefined);
       typeRequest(request);
     };

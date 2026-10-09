@@ -46,6 +46,17 @@ test("history separates actual records, future plans and undated legacy completi
   assert.equal(monthlyProgress(rows, "2026-10-04").at(-1).tasks, 1);
   assert.deepEqual(plannedEntries(entries, "2026-10-01", "2026-10-31").map(e => e.id), ["evt"]);
 });
+test("move history mentions activity calories only when they're turned on", () => {
+  const entries = [{ id: "run", kind: "move", data: { title: "Run", date: "2026-10-04", minutes: 20, caloriesBurned: 180 } },
+    { id: "stretch", kind: "move", data: { title: "Stretch", date: "2026-10-04", minutes: 1 } }];
+  const detail = (rows, id) => rows.find(row => row.entry.id === id).detail;
+  const hidden = historyRecords(entries, "2026-10-04");
+  assert.equal(detail(hidden, "run"), "20 minutes of movement");
+  assert.equal(detail(hidden, "stretch"), "1 minute of movement");
+  const shown = historyRecords(entries, "2026-10-04", { activityCalories: true });
+  assert.match(detail(shown, "run"), /^20 minutes of movement · 180 kcal/);
+  assert.equal(detail(shown, "stretch"), "1 minute of movement");
+});
 test("calendar files preserve all-day dates, local appointment instants, stable IDs and escaping", () => {
   const timed = event({ title: "Coffee, tea; a chat\\hello\nnext", notes: "Two lines\nA second line" });
   const output = calendarFile([task("t", "2026-12-31"), timed, task("done", "2026-10-01", true)], new Date("2026-10-04T10:00:00Z"));

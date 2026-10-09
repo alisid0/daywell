@@ -4,9 +4,9 @@ A cosy home for Move, Relax, Eat and Sleep, with one host and a quiet place to p
 
 Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 
-**Private phone hosting:** the [Cloudflare hosting guide](docs/cloudflare-hosting.md) prepares an owned Workers/D1 deployment behind verified Cloudflare Access sign-in. `npm run cloudflare:check` validates packaging without deploying; `npm run cloudflare:build` requires the account's completed local profile. Hosted sign-in, records and real-device voice must still be verified after connection.
+**Private phone hosting:** an owner-only Cloudflare Workers/D1 test app is deployed. See the [private tester guide](docs/private-tester-guide.md) and [deployment evidence](docs/handover/2026-10-09-private-tester-build.md). Hosted sign-in, food persistence and recorded playback passed browser checks; actual phone/live-voice and separate tester-account checks remain. Food-photo AI is disconnected by owner choice. The [hosting guide](docs/cloudflare-hosting.md) covers repeatable builds and deployment.
 
-**Current release direction:** prepare Android and iPhone versions for early-November store review. See the [mobile release plan](docs/mobile-release-plan.md) for the working 5 November 2026 deadline, launch scope, account dependencies and acceptance checks. These are release targets; the current local MVP is not yet a store-ready build.
+**Current release direction:** prepare Android and iPhone versions, keeping 5 November 2026 as the working release-review checkpoint. The [9 October launch assessment](docs/launch-readiness-2026-10-09.md) records the remaining blockers and a conditional 6–8 week estimate for public availability in both stores. See the [mobile release plan](docs/mobile-release-plan.md) for scope and acceptance checks. The private web app is not a store-ready release, and the estimates are not approval guarantees.
 
 **Working on either machine? GitHub is the source of truth.** Read [the shared session workflow](docs/github-workflow.md): fetch before starting, then commit, push and verify the GitHub handover before ending each session. A local preview is not a saved or merged version. Coding assistants must also read [AGENTS.md](AGENTS.md); [CLAUDE.md](CLAUDE.md) points to the same rules.
 

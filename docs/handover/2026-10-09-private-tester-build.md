@@ -56,3 +56,9 @@ Follow `docs/cloudflare-hosting.md` for future updates. Rebuild with the real pr
 See `docs/private-tester-guide.md` for the owner/tester checklist. Real provider calls, two-account hosted isolation, phone microphone/camera permissions, background behaviour and actual listening quality are not covered by local automated checks. PR #34's data controls and PR #35's later design proposals are not included.
 
 Other machine: fetch this branch, run `npm run install:ci`, preserve local credentials/records, and use the documented local migration setup. Keep the separate `daywell-food` greeting and `daywell` audio checkouts intact. Do not merge this PR automatically.
+
+## Launch assessment publication
+
+The owner requested publication of the latest changes following the 9 October assessment. [Launch readiness](../launch-readiness-2026-10-09.md) now records evidence, blockers, acceptance requirements, owner dependencies and conditional dates. README and the mobile release plan point to it and correct the obsolete hosting status. The current estimate is 6–8 weeks for public Android/iPhone availability, potentially longer; 5 November remains a review checkpoint, with the precise owner milestone unconfirmed.
+
+This follow-up changes documentation only. Diff/whitespace review passed and all 25 relative links across the four changed documents resolved. The 172 passing tests are evidence for the existing app, not a newly run suite for this publication. There are no app, migration, credential or deployment changes. GitHub checks for the new documentation commit must be reported separately. The deployed code/version above remains the phone build. Implementation of the listed gaps is still outstanding.

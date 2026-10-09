@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import Link from "@/components/daywell-link";
 import { AudioLines, Check, ChevronDown, Keyboard, Mic, MicOff, Pause, Play, Send, Settings2, Square, Sun, Undo2, Volume2, VolumeX, X } from "lucide-react";
 import { CompanionPortrait } from "@/components/daywell-companions";
@@ -15,6 +15,9 @@ import { useElevenAgent } from "./use-eleven-agent";
 import { safeAgentRequest } from "@/lib/voice-tools";
 import { wellnessBoundary } from "@/lib/wellness-scope";
 import { hostInputRoute } from "@/lib/host-input";
+import { useLibraryAudio } from "./use-library-audio";
+import { audioResponseById, type AudioResponse } from "@/lib/audio-library";
+import { eligibleReplies, foodCaptureMode, localReplyDecision, type ReplyDecision, type ReplyArea } from "@/lib/response-router";
 
 const supportOptions: { id: SupportLevel; title: string; description: string }[] = [
   { id: "quiet", title: "Stay quiet", description: "Company without check-ins" },
@@ -37,6 +40,13 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   const [pending, setPending] = useState<HostAction[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [routing, setRouting] = useState(false);
+  const [pickerConsent, setPickerConsent] = useState<string | null>(null);
+  const [recordedReply, setRecordedReply] = useState<AudioResponse | null>(null);
+  const pickerAllowed = useRef(false), responseEpoch = useRef(0);
+  const responseAbort = useRef<AbortController | null>(null), fallbackRequest = useRef("");
+  const library = useLibraryAudio();
+  const availableReplies = useMemo(() => library.manifest ? eligibleReplies(library.manifest) : [], [library.manifest]);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [support, setSupport] = useState<SupportLevel>("quiet");
   const [spoken, setSpoken] = useState(false);
@@ -82,12 +92,13 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   }, [immersive, pending, agentActive, heard, reply, voice.error]);
   const agentSession = useRef(agentActive); agentSession.current = agentActive;
   const stopAgent = agent.stop;
+  const stopRecording = library.stop;
   const previousView = useRef(a.active);
   useEffect(() => {
-    if(previousView.current !== a.active) { previousView.current = a.active; stopVoice(); void stopAgent(); }
-  }, [a.active, stopVoice, stopAgent]);
-  async function startAgent(mode: "voice" | "text") { voice.stop(); setConsent(null); setAiChosen(true); setAiText(mode === "text"); if (mode === "text") setTyped(true); await agent.start(mode === "text"); }
-  function openChat() { voice.stop(); setTyped(true); setAiChosen(true); setAiText(true); setConsent("text"); }
+    if(previousView.current !== a.active) { previousView.current = a.active; stopVoice(); stopRecording(); void stopAgent(); }
+  }, [a.active, stopVoice, stopAgent, stopRecording]);
+  async function startAgent(mode: "voice" | "text") { voice.stop(); library.stop(); setConsent(null); setAiChosen(true); setAiText(mode === "text"); if (mode === "text") setTyped(true); const initial = fallbackRequest.current; const sent = await agent.start(mode === "text", initial); if (sent && fallbackRequest.current === initial) { fallbackRequest.current = ""; if (initial) setText(""); } }
+  function openChat() { voice.stop(); fallbackRequest.current = ""; setTyped(true); setAiChosen(true); setAiText(true); setConsent("text"); }
   function useCommands() { voice.stop(); void agent.stop(); setConsent(null); setAiChosen(false); setAiText(false); setTyped(true); }
   function goRest() { voice.stop(); void agent.stop(); a.openRest(); }
   const companion: ActivityCompanion = a.timer.companion || (a.timer.mode === "Focus" ? "pip" : "tock");
@@ -97,8 +108,50 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   live.current = { a, support, spoken, companion, voice, hasActivity };
 
   function say(message: string) {
+    setRecordedReply(null);
     setReply(message);
     if (spoken && !agentActive) voice.speak(message, companion === "luma" && hasActivity);
+  }
+  useEffect(() => {
+    const cancel = () => { responseEpoch.current++; responseAbort.current?.abort(); fallbackRequest.current = ""; setRouting(false); setPickerConsent(null); setConsent(null); setRecordedReply(null); };
+    // Navigation invalidates replies and permission cards belonging to the old area.
+    const currentEpoch = ++responseEpoch.current;
+    queueMicrotask(() => { if (mounted.current && responseEpoch.current === currentEpoch) cancel(); });
+    const hidden = () => { if (document.hidden) cancel(); };
+    document.addEventListener("visibilitychange", hidden);
+    window.addEventListener("pagehide", cancel);
+    return () => { responseEpoch.current++; responseAbort.current?.abort(); document.removeEventListener("visibilitychange", hidden); window.removeEventListener("pagehide", cancel); };
+  }, [a.active]);
+  async function replyToUnknown(value: string, allowAi = pickerAllowed.current) {
+    responseAbort.current?.abort(); const epoch = ++responseEpoch.current;
+    const controller = new AbortController(); responseAbort.current = controller;
+    setRouting(true); setPickerConsent(null); setRecordedReply(null);
+    try {
+      let decision = library.manifest ? localReplyDecision(value, availableReplies) : null;
+      if (!decision) {
+        const area: ReplyArea = (["today", "eat", "move", "sleep", "relax", "calendar"] as string[]).includes(a.active) ? a.active as ReplyArea : "today";
+        const response = await fetch("/api/respond", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: value, area, allowAi }), signal: AbortSignal.any([controller.signal, AbortSignal.timeout(5000)]) });
+        if (!response.ok) throw Error("The reply connection is unavailable. Your request is still here.");
+        decision = await response.json() as ReplyDecision;
+      }
+      if (!mounted.current || responseEpoch.current !== epoch || controller.signal.aborted) return;
+      if (decision.kind === "permission") { setPickerConsent(value); return; }
+      if (decision.kind === "boundary") { say(decision.message); return; }
+      if (decision.kind === "recorded") {
+        const entry = audioResponseById.get(decision.id);
+        if (entry && entry.text === decision.message && availableReplies.some(reply => reply.id === entry.id)) {
+          setReply(entry.text); setRecordedReply(entry);
+          if (spoken) await library.play(entry);
+          return;
+        }
+      }
+      if (decision.kind === "local") { say("Tell me the details of what you’d like to do."); return; }
+      fallbackRequest.current = value;
+      if (agent.configured) { setReply("This needs a new reply. I can bring your request into a live conversation."); setConsent(spoken ? "voice" : "text"); }
+      else say("This needs a new reply, but live conversation is not connected. Your everyday tools and recorded sessions still work.");
+    } catch (problem) {
+      if (mounted.current && responseEpoch.current === epoch && !controller.signal.aborted) setError(problem instanceof Error ? problem.message : "Couldn’t find a reply. Please try again.");
+    } finally { if (mounted.current && responseEpoch.current === epoch) setRouting(false); }
   }
   function rememberPreferences(next: { support?: SupportLevel; spoken?: boolean; hideCompanions?: boolean }) {
     try { localStorage.setItem("daywell-host-preferences", JSON.stringify({ support, spoken, hideCompanions, ...next })); } catch { /* Preferences still work for this visit. */ }
@@ -162,11 +215,17 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   }
   async function receive(value: string) {
     if (lock.current || !value.trim()) return;
+    responseEpoch.current++; responseAbort.current?.abort(); fallbackRequest.current = ""; setConsent(null); setRouting(false); setPickerConsent(null); library.stop(); setRecordedReply(null);
     voice.silence(); setError(""); setHeard(value.trim());
     const boundary = wellnessBoundary(value);
     if (boundary) { setPending(null); preparedPlan.current = null; setCue(""); setSupport("quiet"); voice.stop(); void agent.stop(); setReply(boundary); return; }
     if (/^(?:just rest|take a break|stop scrolling|help me stop scrolling|open relax)$/i.test(value.trim())) { goRest(); return; }
     if (/^(?:open |show )?(?:explore|move|eat|sleep)$/i.test(value.trim())) { a.setActive(value.trim().toLowerCase().replace(/^(open |show )/, "")); return; }
+    const captureMode = foodCaptureMode(value);
+    if (captureMode && !agentActive) {
+      window.dispatchEvent(new CustomEvent("daywell-capture", { detail: { mode: captureMode, text: value } }));
+      say("Let’s check what you meant before saving anything."); return;
+    }
     const request = parseHostRequest(value);
     // Conversation must not approve or clear a plan that is waiting for review.
     if (request.type === "reply") { say(request.message); return; }
@@ -177,9 +236,9 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
       if (request.command === "cancel") { setPending(null); say("That request is cleared. Your current activity stays as it is."); return; }
       setPending(null); return controlActivity(request.command);
     }
+    if (request.type === "unknown") { await replyToUnknown(value); return; }
     setPending(null);
     if (request.type === "support") { changeSupport(request.level); setReply(request.level === "quiet" ? "I’ll keep you company quietly." : "Your encouragement preference is updated."); return; }
-    if (request.type === "unknown") { say(request.message); return; }
     if (request.type === "open") {
       if (request.module !== "calendar" && !a.enabled(request.module)) { say(`Enable ${moduleNames[request.module]} in Customize tools first.`); return; }
       a.setActive(request.module); if (request.view) a.setCalendarView(request.view); if (request.kind) a.openEditor(request.kind);
@@ -192,7 +251,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   }
   function sendText() {
     voice.clearError();
-    const route = hostInputRoute(text, agent.status, aiChosen, busy);
+    const route = hostInputRoute(text, agent.status, aiChosen, busy || routing);
     if (route === "ignore") return;
     if (route === "agent") { if (agent.send(text)) setText(""); }
     else if (route === "reconnect") setConsent("text");
@@ -257,9 +316,9 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   }, []);
   const agentListening = agent.status === "connected" && agent.mode === "listening" && !aiText && !agent.muted;
   const micState = voice.blocked && !agentActive ? "blocked"
-    : agent.status === "connecting" || busy ? "thinking"
+    : agent.status === "connecting" || busy || routing ? "thinking"
     : voice.listening || agentListening ? "listening"
-    : voice.speaking || (agent.status === "connected" && agent.mode === "speaking") ? "speaking"
+    : voice.speaking || library.status === "playing" || (agent.status === "connected" && agent.mode === "speaking") ? "speaking"
     : agentActive ? "connected" : "idle";
   const wasListening = useRef(false);
   useEffect(() => {
@@ -273,25 +332,26 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     <div className="host-invitation"><div><h2 id="host-heading">{immersive ? `${hasActivity ? "A little time for you" : cozy ? "A little company" : "Take a moment"}${a.settings.name !== "You" ? `, ${a.settings.name}` : ""}.` : `What’s on your mind${a.settings.name !== "You" ? `, ${a.settings.name}` : ""}?`}</h2><p>{cozy ? "Tell Daywell what you need. Your little helpers will come along." : immersive ? "Whatever’s on your mind, start here." : "One place to ask. A little company along the way."}</p></div><span className="host-listening-mark" aria-hidden="true"><AudioLines size={46} /></span></div>
     {company !== "quiet" && !hasActivity && !hideCompanions && <div className="nook-company" aria-hidden="true"><CompanionPortrait id="luma" size={220} decorative eager /><CompanionPortrait id="bounce" size={220} decorative eager /><CompanionPortrait id="pip" size={300} motion={hostCompanionMotion(micState)} decorative eager /></div>}
     {settingsOpen && <div className="host-settings" id="host-settings"><h3>Make yourself comfortable</h3><div className="voice-provider"><strong>{agent.configured ? "Live AI is set up" : "ElevenLabs host is waiting for setup"}</strong><p>{agent.configured ? "Talk naturally or choose AI chat for a quiet conversation. Your microphone stays off until you start talking." : "Everyday tools and typed commands work now. Your private API key and agent ID activate open conversation."}</p>{!agent.configured && <a href="/voice-setup" target="_blank" rel="noreferrer">Connect your ElevenLabs agent</a>}</div><label className="host-check"><input type="checkbox" checked={spoken} disabled={!voice.canSpeak} onChange={event => { setSpoken(event.target.checked); rememberPreferences({ spoken: event.target.checked }); if (!event.target.checked) voice.silence(); }} />Read Daywell’s replies aloud</label><label className="host-check"><input type="checkbox" checked={hideCompanions} onChange={event => { setHideCompanions(event.target.checked); rememberPreferences({ hideCompanions: event.target.checked }); }} />Hide companion pictures</label><CompanionMotionControl /><fieldset><legend>During an activity</legend>{supportOptions.map(option => <label className="host-support-option" key={option.id}><input type="radio" name="host-support" checked={support === option.id} onChange={() => changeSupport(option.id)} /><span><strong>{option.title}</strong><small>{option.description}</small></span></label>)}</fieldset><small>Saved on this browser. Check-ins happen while Daywell is open and visible. Winding down ends silently.</small></div>}
-    <div className="host-input-actions"><button className="host-talk" disabled={busy || agent.checking || (!agent.configured && !voice.available)} onClick={() => { if(agentActive) void agent.stop(); else if(agent.configured) setConsent("voice"); else if (voice.listening) voice.stop(); else { setSpoken(true); rememberPreferences({ spoken: true }); voice.start(); } }}><span className="host-talk-symbol"><span className="mic-glow" aria-hidden="true" /><span className="mic-ring" aria-hidden="true" /><span className="mic-ring" aria-hidden="true" /><span className="mic-stack" aria-hidden="true"><span className="mic-layer mic-layer-mic"><Mic size={20} /></span><span className="mic-layer mic-layer-bars"><i /><i /><i /><i /><i /></span><span className="mic-layer mic-layer-dots"><i /><i /><i /></span><span className="mic-layer mic-layer-stop"><Square size={20} /></span><span className="mic-layer mic-layer-off"><MicOff size={20} /></span></span></span><span className="host-talk-label">{agent.status === "connecting" ? "Cancel connection" : agentActive ? "End conversation" : voice.listening ? "Stop listening" : "Talk to Daywell"}</span></button><button className="host-type" aria-label={agent.configured && !agentActive ? "Chat with Daywell" : "Type a request"} disabled={agent.status === "connecting"} onClick={() => { if (agent.configured && !agentActive) openChat(); else typeRequest(); }}><Keyboard size={18} />{agent.configured && !agentActive ? "Chat with Daywell" : "Type instead"}</button>{voice.speaking && <button className="host-type" onClick={voice.silence}><VolumeX size={18} />Stop speaking</button>}</div>
-    <p className="host-voice-note">{agent.configured ? "Live AI voice & chat · Start when you’re ready. Your saved journal is not sent. Changes need your confirmation." : voice.available ? "Tap to talk. Your browser may process speech online. Nothing is saved until you confirm." : "Voice input isn’t available in this browser. Type below, or use your device’s keyboard dictation."}</p>
-    <div className="host-agent-ui">{consent && <div className="host-consent" role="region" aria-label="Start ElevenLabs conversation"><strong>A moment with Daywell</strong><p>{consent === "voice" ? "Your microphone audio" : "The messages you send"} will go to ElevenLabs and the agent’s AI provider. They may retain conversations under your agent’s settings. Daywell helps with everyday routines and unwinding. It does not provide medical advice, therapy or emergency care. Live conversations use your ElevenLabs allowance. You can end at any time.</p><button className="host-primary" onClick={()=>void startAgent(consent)}>Start {consent === "voice" ? "talking" : "AI chat"}</button><button className="host-text-button" onClick={()=>setConsent(null)}>Not now</button></div>}
+    <div className="host-input-actions"><button className="host-talk" disabled={busy || routing || agent.checking || (!agent.configured && !voice.available)} onClick={() => { if(agentActive) void agent.stop(); else if (voice.listening) voice.stop(); else if (voice.available) { setAiChosen(false); setSpoken(true); rememberPreferences({ spoken: true }); voice.start(); } else { fallbackRequest.current = ""; setConsent("voice"); } }}><span className="host-talk-symbol"><span className="mic-glow" aria-hidden="true" /><span className="mic-ring" aria-hidden="true" /><span className="mic-ring" aria-hidden="true" /><span className="mic-stack" aria-hidden="true"><span className="mic-layer mic-layer-mic"><Mic size={20} /></span><span className="mic-layer mic-layer-bars"><i /><i /><i /><i /><i /></span><span className="mic-layer mic-layer-dots"><i /><i /><i /></span><span className="mic-layer mic-layer-stop"><Square size={20} /></span><span className="mic-layer mic-layer-off"><MicOff size={20} /></span></span></span><span className="host-talk-label">{agent.status === "connecting" ? "Cancel connection" : agentActive ? "End conversation" : voice.listening ? "Stop listening" : "Talk to Daywell"}</span></button><button className="host-type" aria-label={agent.configured && !agentActive ? "Chat with Daywell" : "Type a request"} disabled={agent.status === "connecting"} onClick={() => { if (!agentActive) { setAiChosen(false); setConsent(null); } typeRequest(); }}><Keyboard size={18} />{agent.configured && !agentActive ? "Chat with Daywell" : "Type instead"}</button>{voice.speaking && <button className="host-type" onClick={voice.silence}><VolumeX size={18} />Stop speaking</button>}</div>
+    <p className="host-voice-note">{voice.available ? "Everyday commands and suitable recordings first. Your browser may process speech online. New replies use AI after you choose to continue." : "Type or use keyboard dictation. Suitable recordings come first; new replies use AI after you choose to continue."}</p>
+    <div className="host-agent-ui">{pickerConsent && <div className="host-consent" aria-label="Choose a recorded reply"><strong>Find a reply for this moment?</strong><p>For this visit, requests without an exact recorded match and the area you are using can go to TypeSafe’s Jev to choose an existing reply. Your saved journal and profile are not sent. TypeSafe processes inputs in the US and retains them under its policy; it says inputs are not used for model training. This uses the picker allowance.</p><a href="https://typesafe.ai/legal/privacy-policy" target="_blank" rel="noreferrer">TypeSafe privacy</a><button className="host-primary" onClick={() => { pickerAllowed.current = true; void replyToUnknown(pickerConsent, true); }}>Find a reply</button><button className="host-text-button" onClick={() => { setPickerConsent(null); setReply("Your words were not sent. Your everyday tools and the recorded library are still here."); }}>Keep this on Daywell</button></div>}{consent && <div className="host-consent" role="region" aria-label="Start ElevenLabs conversation"><strong>A moment with Daywell</strong><p>{consent === "voice" ? "Your microphone audio" : "The messages you send"} will go to ElevenLabs and the agent’s AI provider. They may retain conversations under your agent’s settings. Daywell helps with everyday routines and unwinding. It does not provide medical advice, therapy or emergency care. Live conversations use your ElevenLabs allowance. While live conversation is on, replies are newly generated instead of selected from recordings. You can end at any time.</p><button className="host-primary" onClick={()=>void startAgent(consent)}>Start {consent === "voice" ? "talking" : "AI chat"}</button><button className="host-text-button" onClick={()=>setConsent(null)}>Not now</button></div>}
     {agent.error && <p className="host-error" role="alert">{agent.error}</p>}
     {agentActive && <p className="agent-caption" role="status">{agent.status === "connecting" ? "Opening your conversation…" : aiText ? "AI chat is on · Microphone off" : agent.muted ? "Microphone muted · Daywell can still reply" : agent.mode === "speaking" ? "Daywell is speaking. You can interrupt." : "Listening. Speak whenever you’re ready."}</p>}
     {agent.status === "connected" && !aiText && <button className="host-text-button" aria-pressed={agent.muted} onClick={agent.toggleMuted}>{agent.muted ? <Mic size={16} /> : <MicOff size={16} />}{agent.muted ? "Unmute microphone" : "Mute microphone"}</button>}
     {typed && agent.configured && !agentActive && !aiChosen && <button className="host-text-button" onClick={openChat}>Start AI chat</button>}
     {typed && (aiChosen || agentActive) && <button className="host-text-button" onClick={useCommands}>Use everyday commands instead</button>}
-    {typed && !agentActive && !consent && <p className="agent-caption" role="status">{aiChosen ? "AI chat is off. Send to reconnect; your draft stays here." : "Everyday commands · No AI conversation"}</p>}</div>
-    {typed && <form className="host-form" onSubmit={submit}><label htmlFor="host-request">Tell Daywell what you need</label><div><textarea id="host-request" ref={input} value={text} maxLength={600} rows={2} placeholder={aiChosen || agentActive ? "I’ve had a busy day. Can we unwind for a moment?" : "Add milk and focus on my email for 10 minutes"} onChange={event => setText(event.target.value)} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); sendText(); } }} /><button type="submit" disabled={!text.trim() || busy || agent.status === "connecting"} aria-label="Send request"><Send size={19} /></button></div></form>}
+    {typed && !agentActive && !consent && <p className="agent-caption" role="status">{aiChosen ? "AI chat is off. Send to reconnect; your draft stays here." : "Everyday commands and recorded replies first"}</p>}</div>
+    {typed && <form className="host-form" onSubmit={submit}><label htmlFor="host-request">Tell Daywell what you need</label><div><textarea id="host-request" ref={input} value={text} maxLength={600} rows={2} placeholder={aiChosen || agentActive ? "I’ve had a busy day. Can we unwind for a moment?" : "Add milk and focus on my email for 10 minutes"} onChange={event => setText(event.target.value)} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); sendText(); } }} /><button type="submit" disabled={!text.trim() || busy || routing || agent.status === "connecting"} aria-label="Send request"><Send size={19} /></button></div></form>}
     {!hasActivity && !pending && <div className="host-suggestions" aria-label="A place to begin"><button className="rest-entry" onClick={goRest}>Just rest</button><button onClick={()=>a.setActive("explore")}>Explore</button></div>}
     {!hasActivity && !pending && <Link className="host-library-link" href="/audio-library" onClick={() => { voice.stop(); void agent.stop(); }}>Just listen · little words of comfort</Link>}
-    <div className="host-conversation" ref={replyRegion} aria-live="polite" aria-atomic="true">{(voice.listening || heard) && <p className="host-heard">{voice.listening ? voice.transcript || "Listening…" : `You: ${heard}`}</p>}<p className="host-reply"><span>Daywell</span>{busy ? "Taking care of that…" : reply}</p></div>
-    {(error || voice.error) && <p className="host-error" ref={voiceErrorRegion} role="alert">{error || voice.error}</p>}
+    <div className="host-conversation" ref={replyRegion} aria-live="polite" aria-atomic="true">{(voice.listening || heard) && <p className="host-heard">{voice.listening ? voice.transcript || "Listening…" : `You: ${heard}`}</p>}<p className="host-reply"><span>Daywell</span>{busy ? "Taking care of that…" : routing ? "Finding the right reply…" : reply}</p>
+      {recordedReply && <div className="host-recorded-reply"><span>Recorded reply</span><button className="host-text-button" onClick={() => library.status === "idle" ? void library.play(recordedReply) : library.stop()}>{library.status === "idle" ? "Listen" : "Stop playback"}</button></div>}
+    </div>{library.error && <p className="host-error" role="status">{library.error}</p>}{(error || voice.error) && <p className="host-error" ref={voiceErrorRegion} role="alert">{error || voice.error}</p>}
     {pending && <div className="host-plan" ref={planRegion} tabIndex={-1} aria-label="Review your request"><h3>Here’s the plan</h3><ul>{pending.map((action, index) => <li key={index}><Check size={16} />{describeAction(action)}</li>)}</ul>{pending.some(action => action.type === "activity") && hasActivity && !finished && <p className="host-replace-note">This replaces your current activity. Your lists stay saved.</p>}<div><button className="host-primary" disabled={busy} onClick={() => void applyPlan()}>{busy ? "Saving…" : "Do this"}</button><button className="host-text-button" disabled={busy} onClick={() => { setPending(null); voice.silence(); setReply("Request cleared. Your saved day stays as it is."); }}>Cancel request</button></div></div>}
     <div className="host-history-actions"><button disabled={busy || !undoable} onClick={() => void undo()}><Undo2 size={15} />Undo last change</button><button onClick={() => setShowChanges(!showChanges)} aria-expanded={showChanges}>What changed?<ChevronDown size={14} /></button>{spoken && <span><Volume2 size={14} />Replies aloud</span>}</div>
     {showChanges && <div className="host-change-summary">{lastChange ? `${lastChange.undone ? "Undone: " : "Last change: "}${lastChange.summary}` : "Nothing changed in this visit yet."}</div>}
     {ack && <div className="host-ack" role="status">{!hideCompanions && <CompanionPortrait id={ack.id} size={49} decorative />}<span><Check size={15} />{ack.text}</span></div>}
     {hasActivity && <section className={`host-activity host-activity-${companion}`} aria-label="Current activity"><div className="host-activity-main">{!hideCompanions && <CompanionPortrait id={companion} size={144} motion={activityCompanionMotion(companion, Boolean(a.timer.endAt), finished)} decorative eager />}<div><span className="host-activity-label">{finished ? "Your time is complete" : a.timer.endAt ? activityLabels[companion] : "Paused, whenever you’re ready"}</span><h3>{a.timer.title}</h3><p>{finished ? companion === "luma" ? "You can leave the day here. Rest whenever you’re ready." : "Take a moment. There’s no rush to start something else." : activityMessages[companion]}</p>{!hideCompanions && <small>{companions[companion].name} is keeping you company</small>}</div><div className="host-time" role="timer" aria-label={`${Math.floor(a.remaining / 60)} minutes ${a.remaining % 60} seconds remaining`}>{String(Math.floor(a.remaining / 60)).padStart(2, "0")}<span>:</span>{String(a.remaining % 60).padStart(2, "0")}</div></div>{!finished && <div className="host-activity-controls"><button className="host-primary" disabled={busy} onClick={() => void controlActivity(a.timer.endAt ? "pause" : "resume")}>{a.timer.endAt ? <Pause size={16} /> : <Play size={16} />}{a.timer.endAt ? "Pause activity" : "Resume activity"}</button><button className="host-text-button" disabled={busy} onClick={() => void controlActivity("end")}><X size={15} />End activity</button>{companion !== "tock" && <label>Company<select aria-label="Activity encouragement" value={support} onChange={event => changeSupport(event.target.value as SupportLevel)}>{supportOptions.map(option => <option key={option.id} value={option.id}>{option.title}</option>)}</select></label>}</div>}{finished && <button className="host-text-button" disabled={busy} onClick={() => void controlActivity("end")}>Clear finished activity</button>}{finished && companion === "bounce" && <button className="host-primary" onClick={() => { a.openEditor("move"); a.setDraft({ title: a.timer.title, date: today(), minutes: Math.round(a.timer.duration / 60) }); }}>Log this movement</button>}{cue && !finished && <p className="host-cue" role="status">{cue}</p>}</section>}
-    <details className="host-help"><summary>Things you can say</summary><p>Use these everyday phrases by voice or text. Names are optional; Daywell brings the right helper.</p><div className="host-phrase-list">{["Add milk and eggs to my list", "Add a task to finish my email", "Focus on my email for ten minutes", "Add milk and focus on my email for 10 minutes", "Help me wind down for five minutes", "Start a walk for fifteen minutes", "Set a timer for five minutes", "Set an alarm for 7 am", "Log a meal", "Log my sleep", "Show my calendar", "Show my progress", "Plan an event", "Add a reflection", "Show my shopping list", "Stay quiet", "Undo that"].map(phrase => <button key={phrase} onClick={() => typeRequest(phrase)}>{phrase}</button>)}</div><p>Choose Talk to Daywell or Chat with Daywell for live AI. Everyday commands work without AI. Photo understanding needs a separate connection.</p></details>
+    <details className="host-help"><summary>Things you can say</summary><p>Use these everyday phrases by voice or text. Names are optional; Daywell brings the right helper.</p><div className="host-phrase-list">{["Add milk and eggs to my list", "Add a task to finish my email", "Focus on my email for ten minutes", "Add milk and focus on my email for 10 minutes", "Help me wind down for five minutes", "Start a walk for fifteen minutes", "Set a timer for five minutes", "Set an alarm for 7 am", "Log a meal", "Log my sleep", "Show my calendar", "Show my progress", "Plan an event", "Add a reflection", "Show my shopping list", "Stay quiet", "Undo that"].map(phrase => <button key={phrase} onClick={() => typeRequest(phrase)}>{phrase}</button>)}</div><p>Talk or type for everyday commands and recorded replies. Choose Start AI chat for a continuous conversation with new responses. Food pictures and descriptions open a separate review before saving.</p></details>
   </section>;
 }

@@ -119,7 +119,7 @@ test("the note under calorie tracking says what's missing", () => {
 });
 
 test("profile details stay out of the code that talks to AI services", () => {
-  const aiFacing = ["app/api/capture/route.ts", "app/api/voice/route.ts", "lib/capture.ts", "lib/voice-tools.ts", "app/use-eleven-agent.ts"];
+  const aiFacing = ["app/api/capture/route.ts", "app/api/voice/route.ts", "app/api/respond/route.ts", "lib/response-router.ts", "lib/capture.ts", "lib/voice-tools.ts", "app/use-eleven-agent.ts"];
   for (const file of aiFacing) {
     const source = readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
     for (const field of ["birthYear", "heightCm", "weights", "bodyConsentAt", ".sex", "calorieGuide", "calorieTracking"]) assert.equal(source.includes(field), false, `${file} mentions ${field}`);

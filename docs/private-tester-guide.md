@@ -29,7 +29,7 @@ Start with non-sensitive test entries. Daywell offers general wellness routines 
 
 ## Known boundaries
 
-- Food photos and recorded descriptions need the owner's OpenAI connection. The owner explicitly left this disconnected for the private test; no OpenAI key was uploaded and no paid food-photo test was run. Hosted setup reports the missing connection.
+- Food photos and recorded descriptions need the owner's OpenAI connection. It was deliberately disconnected for the initial private test. The owner now asks to connect it, but the saved-key/verification step is outstanding; see the [latest source handover](handover/2026-10-10-response-router.md). Hosted setup still reports the missing connection.
 - Live ElevenLabs conversations need configured credentials, permission to use the microphone, and a real-device test. The web browser may suspend background audio. This release does not claim reliable lock-screen coaching or alarms.
 - Pre-recorded sessions do not need a live AI conversation. Their playback still needs testing on the actual phone.
 - Personalisation stored only in the browser does not automatically transfer between devices. Saved account records should be checked on a second browser signed into the same account.

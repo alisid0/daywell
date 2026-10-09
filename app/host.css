@@ -21,3 +21,5 @@
 .gallery-prototype-note{margin:12px 0 25px;font-size:calc(14px*var(--rc-scale,1));color:#625570}.gallery-prototype-note a{text-decoration:underline;text-underline-offset:4px}
 
 .host-is-active .host-invitation h2{font-size:calc(30px*var(--rc-scale,1));max-width:none;letter-spacing:-.7px}.host-is-active .host-invitation p{display:none}.host-is-active .host-listening-mark{width:56px;height:56px}.host-is-active .host-listening-mark svg{width:29px}.host-is-active .host-topline{margin-bottom:14px}.host-is-active .host-invitation{margin-bottom:17px}
+
+.host-recorded-reply{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#604c68)}.host-recorded-reply button{min-height:44px;text-decoration:underline}

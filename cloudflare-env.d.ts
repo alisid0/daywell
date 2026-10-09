@@ -11,5 +11,7 @@ declare namespace Cloudflare {
     OPENAI_API_KEY?: string;
     OPENAI_MODEL?: string;
     OPENAI_TRANSCRIBE_MODEL?: string;
+    TYPESAFE_API_KEY?: string;
+    TYPESAFE_PICKER_ENABLED?: string;
   }
 }

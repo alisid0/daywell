@@ -4,7 +4,9 @@ A cosy home for Move, Relax, Eat and Sleep, with one host and a quiet place to p
 
 Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 
-**Private phone hosting:** an owner-only Cloudflare Workers/D1 test app is deployed. See the [private tester guide](docs/private-tester-guide.md) and [deployment evidence](docs/handover/2026-10-09-private-tester-build.md). Hosted sign-in, food persistence and recorded playback passed browser checks; actual phone/live-voice and separate tester-account checks remain. Food-photo AI is disconnected by owner choice. The [hosting guide](docs/cloudflare-hosting.md) covers repeatable builds and deployment.
+**Private phone hosting:** an owner-only Cloudflare Workers/D1 test app is deployed. See the [private tester guide](docs/private-tester-guide.md) and [deployment evidence](docs/handover/2026-10-09-private-tester-build.md). Hosted sign-in, food persistence and recorded playback passed browser checks; actual phone/live-voice and separate tester-account checks remain. The owner now requests food AI; it still awaits a saved, verified key. The [hosting guide](docs/cloudflare-hosting.md) covers repeatable builds and deployment.
+
+**Recorded-first responses:** the [shared router](docs/response-routing.md) checks local commands and exact playable clips before optional JEV matching or new ElevenLabs responses. JEV is gated until its key and accuracy test are available. See the [implementation and remaining connection steps](docs/handover/2026-10-10-response-router.md). This source update has not been deployed to the phone app.
 
 **Current release direction:** prepare Android and iPhone versions, keeping 5 November 2026 as the working release-review checkpoint. The [9 October launch assessment](docs/launch-readiness-2026-10-09.md) records the remaining blockers and a conditional 6–8 week estimate for public availability in both stores. See the [mobile release plan](docs/mobile-release-plan.md) for scope and acceptance checks. The private web app is not a store-ready release, and the estimates are not approval guarantees.
 

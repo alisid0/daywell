@@ -27,8 +27,8 @@ export function useElevenAgent(options: Options) {
     document.addEventListener("visibilitychange",hidden); window.addEventListener("pagehide",stopEvent); window.addEventListener("daywell-stop-voice",stopEvent);
     return ()=>{mounted.current=false;check.abort();void stop();document.removeEventListener("visibilitychange",hidden);window.removeEventListener("pagehide",stopEvent);window.removeEventListener("daywell-stop-voice",stopEvent);};
   },[stop]);
-  async function start(textOnly = false) {
-    if(connecting.current || session.current) return;
+  async function start(textOnly = false, initialRequest?: string) {
+    if(connecting.current || session.current) return false;
     window.dispatchEvent(new Event("daywell-stop-library-audio"));
     window.dispatchEvent(new Event("daywell-stop-guided-audio"));
     connecting.current = true; const attempt = ++generation.current;
@@ -42,9 +42,9 @@ export function useElevenAgent(options: Options) {
       const data = await response.json() as {signedUrl?: string; error?:string};
       if(!response.ok) throw Error(data.error || "Couldn’t start the conversation.");
       if(!data.signedUrl) throw Error("No voice connection was returned. Please try again.");
-      if(!valid()) return;
+      if(!valid()) return false;
       const { Conversation } = await import("@elevenlabs/client");
-      if(!valid()) return;
+      if(!valid()) return false;
       const created = await Conversation.startSession({
         signedUrl:data.signedUrl,connectionType:"websocket",textOnly,
         onConversationCreated: conversation => { if(valid()) session.current=conversation; else void conversation.endSession(); },
@@ -62,11 +62,18 @@ export function useElevenAgent(options: Options) {
         onMCPToolApprovalRequest: async()=>false,
         clientTools:{daywell_request: async parameters => valid()?current.current.onRequest(parameters):"Conversation ended. No changes made."},
       });
-      if(!valid()){await created.endSession();return;}
+      if(!valid()){await created.endSession();return false;}
       session.current=created; connecting.current=false; setStatus("connected");
+      // Preserve the turn that needed generation, without sending saved records or profile data.
+      if (initialRequest?.trim() && !wellnessBoundary(initialRequest)) {
+        created.sendUserMessage(initialRequest.trim().slice(0,600));
+        current.current.onMessage("user", initialRequest.trim().slice(0,600));
+      }
       duration.current=setTimeout(()=>{if(valid()){setError("This conversation has reached 15 minutes. You can start another whenever you’re ready.");void stop();}},15*60*1000);
+      return true;
     } catch(problem) {
       if(valid()){setError(problem instanceof Error && problem.name!=="AbortError" ? problem.message : "Couldn’t connect. Please try again.");await stop();}
+      return false;
     } finally { clearTimeout(timeout); if(valid())connecting.current=false; }
   }
   function send(text: string) {

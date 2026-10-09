@@ -36,6 +36,8 @@ The one-kettlebell routine includes setup cues, separate left/right carries and 
 
 ## Current connection and verification
 
+The [shared response router](response-routing.md) checks everyday commands and exact recordings locally before offering optional JEV matching or a new ElevenLabs conversation. Food statements hand their original words into the review. Continuous live conversation still generates its own turns; movement step cues remain local.
+
 The capture endpoint uses server-side OpenAI credentials; never put keys in frontend code. On the development machine at this checkpoint, ElevenLabs configuration exists but OPENAI_API_KEY is absent. Choosing photos, review logic and failure handling can be tested, but real image interpretation and recorded-speech transcription require that separate connection. Do not represent samples or tests as live recognition.
 
 Reference: [OpenAI image inputs](https://developers.openai.com/api/docs/guides/images-vision), [speech transcription](https://developers.openai.com/api/docs/guides/speech-to-text), [structured output](https://developers.openai.com/api/docs/guides/structured-outputs).

@@ -10,7 +10,7 @@ import type { MealProposal } from "@/lib/food-journey";
 import { PlanCoverage, PlanGuide } from "./food-plan-journey";
 
 type Mode = "meal" | "basket" | "grocery" | "plan";
-type CaptureStart = { mode?: string; intent?: string; planStart?: string; planCount?: number; planMeal?: string };
+type CaptureStart = { mode?: string; intent?: string; text?: string; planStart?: string; planCount?: number; planMeal?: string };
 type StockInput = Extract<FoodAction, { type: "stock.add" }>["items"][number];
 type Draft = { summary: string; question: string | null; entries: Entry[]; basket?: StockInput[]; plans?: MealProposal[]; transcript?: string };
 const choices: [Mode, string][] = [["meal", "Meal or drink"], ["basket", "Food basket"], ["grocery", "Shopping list"]];
@@ -71,6 +71,7 @@ export function CaptureHub({ a }: { a: AppState }) {
   useEffect(() => { beginRef.current = detail => {
     if (lock.current) return;
     close(); setOpen(true); setMode(detail.mode === "basket" || detail.mode === "grocery" || detail.mode === "plan" ? detail.mode : "meal");
+    if (detail.text) { setText(detail.text.slice(0,6000)); setTyped(true); }
     setMealOrigin("home"); setPlanOptions({ start: detail.planStart || today(), count: detail.planCount || 2, meal: detail.planMeal || "Dinner" });
     window.dispatchEvent(new Event("daywell-stop-voice"));
     if (detail.intent === "photo") picker.current?.click();
@@ -185,7 +186,7 @@ export function CaptureHub({ a }: { a: AppState }) {
         </>}
       </>}
       {error && <p className="form-error" role="alert">{error}</p>}
-      <p className="food-caption">“Understand” sends your photo or recording to the AI service. Recording stops after 30 seconds. For meal planning, it also sends your saved basket and reserved quantities. Daywell keeps the entries you confirm; it doesn’t save your original photo or recording.</p>
+      <p className="food-caption">“Understand” sends your photo, recording or description to OpenAI. Recording stops after 30 seconds. For meal planning, it also sends your saved basket and reserved quantities. Daywell keeps the entries you confirm; it doesn’t save your original photo or recording.</p>
     </DialogContent></Dialog>
   </>;
 }

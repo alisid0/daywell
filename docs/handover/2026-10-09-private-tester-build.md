@@ -4,7 +4,7 @@ Branch: `codex/private-tester-build`, [draft PR #36](https://github.com/alisid0/
 
 Private hosted app: https://daywell-private.alisid1994.workers.dev/
 
-Deployed code commit: `0f6ffed341c1fb3937788ba66b15bf9716cb4e63` (9 October, evening update). Cloudflare version: `5b88dad3-5c36-4142-9811-3bc68f54811e`, verified serving 100% of traffic. Subsequent handover-only changes do not change the deployed app. The first release and its checks are recorded below; see the evening update section for current acceptance.
+Deployed code commit: `0f6ffed341c1fb3937788ba66b15bf9716cb4e63` (9 October, evening update). Cloudflare version: `5b88dad3-5c36-4142-9811-3bc68f54811e`, verified serving 100% of traffic. Later source changes do not change the deployed app; the [10 October response-routing checkpoint](2026-10-10-response-router.md) is not deployed. The first release and its checks are recorded below; see the evening update section for hosted acceptance.
 
 ## Included work
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState, type CSSProperties } from "react";
-import Link from "next/link";
+import Link from "@/components/daywell-link";
 import { ChevronDown, Heart, X } from "lucide-react";
 import { companions, companionIds, type CompanionId } from "@/lib/companions";
 import { companionArtworkRoot, type CompanionMotion } from "@/lib/companion-motion";

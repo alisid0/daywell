@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/daywell-link';
 import { ArrowLeft, ArrowRight, Headphones, Play, Search, Square } from 'lucide-react';
 import { CompanionPortrait } from '@/components/daywell-companions';
 import { audioCategories, audioGroups, audioResponses, searchAudioResponses, type AudioCategory, type AudioResponse } from '@/lib/audio-library';

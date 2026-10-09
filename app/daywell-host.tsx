@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
-import Link from "next/link";
+import Link from "@/components/daywell-link";
 import { AudioLines, Check, ChevronDown, Keyboard, Mic, MicOff, Pause, Play, Send, Settings2, Square, Sun, Undo2, Volume2, VolumeX, X } from "lucide-react";
 import { CompanionPortrait } from "@/components/daywell-companions";
 import { CompanionMotionControl } from "@/components/companion-motion-preference";

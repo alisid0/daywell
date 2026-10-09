@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/daywell-link";
 import { CompanionAssistant, CompanionPortrait, CompanionWelcome, CompanionFamily } from "@/components/daywell-companions";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";

@@ -1,6 +1,6 @@
 import { requireChatGPTUser } from "@/app/chatgpt-auth";
 import agent from "@/config/daywell-agent.json";
-import Link from "next/link";
+import Link from "@/components/daywell-link";
 import VoiceKeyForm from "./key-form";
 import FoodKeyForm from "./food-key-form";
 import { env } from "cloudflare:workers";

@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/daywell-link';
 import { ArrowLeft, Download, Play, Search, Square } from 'lucide-react';
 import { audioCategories, audioResponses, searchAudioResponses, type AudioCategory, type AudioHandling } from '@/lib/audio-library';
 import { useDaywellStyle } from '../design-switcher';

@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createLocalJWKSet, exportJWK, generateKeyPair, SignJWT } from "jose";
 import { handlePrivateCloudflareRequest } from "../lib/cloudflare-access.ts";
+import { servePrivateAssets } from "../lib/cloudflare-assets.ts";
 
 const { privateKey, publicKey } = await generateKeyPair("RS256");
 const jwk = { ...await exportJWK(publicKey), kid: "test", alg: "RS256", use: "sig" };
@@ -107,4 +108,45 @@ test("sign-in redirects stay on Daywell and sign-out uses the Access logout endp
   assert.equal(valid.response.headers.get("location"), `${env.DAYWELL_APP_ORIGIN}/eat?tab=basket`);
   const logout = await inspect(request(token, "/signout-with-chatgpt"));
   assert.equal(logout.response.headers.get("location"), `${env.CF_ACCESS_ISSUER}/cdn-cgi/access/logout`);
+});
+
+test("production CSS and audio are served after authentication with their types and range headers intact", async () => {
+  let assetReads = 0;
+  const assets = { async fetch(req) {
+    assetReads++;
+    assert.equal(req.headers.get("cf-access-jwt-assertion"), null);
+    assert.match(req.headers.get("oai-authenticated-user-id"), /^cf-access:/);
+    if (req.url.endsWith(".mp3")) {
+      assert.equal(req.headers.get("range"), "bytes=0-3");
+      return new Response("MP3!", { status: 206, headers: { "Content-Type": "audio/mpeg", "Content-Range": "bytes 0-3/100", "Cache-Control": "public" } });
+    }
+    return new Response("body{color:green}", { headers: { "Content-Type": "text/css", "Cache-Control": "public" } });
+  } };
+  const dynamic = async () => { assert.fail("Existing build assets must not reach the framework's 404 route"); };
+  const route = req => servePrivateAssets(req, assets, dynamic);
+  const denied = await handlePrivateCloudflareRequest(request(null, "/_next/static/app.css"), env, route, keys);
+  assert.equal(denied.status, 401);
+  assert.equal(assetReads, 0);
+  const css = await handlePrivateCloudflareRequest(request(await sign(), "/_next/static/app.css"), env, route, keys);
+  assert.equal(css.status, 200);
+  assert.equal(css.headers.get("Content-Type"), "text/css");
+  assert.equal(css.headers.get("Cache-Control"), "private, no-store");
+  assert.match(await css.text(), /color:green/);
+  const audio = await handlePrivateCloudflareRequest(request(await sign(), "/guided-audio/calm.mp3", { range: "bytes=0-3" }), env, route, keys);
+  assert.equal(audio.status, 206);
+  assert.equal(audio.headers.get("Content-Range"), "bytes 0-3/100");
+  assert.equal(audio.headers.get("Content-Type"), "audio/mpeg");
+});
+
+test("missing assets reach dynamic pages, while API and write requests bypass asset lookup", async () => {
+  let reads = 0;
+  const assets = { async fetch() { reads++; return new Response("missing", { status: 404 }); } };
+  const next = async req => new Response(`dynamic:${req.method}:${new URL(req.url).pathname}`);
+  const page = await servePrivateAssets(request(null, "/eat"), assets, next);
+  assert.equal(await page.text(), "dynamic:GET:/eat");
+  assert.equal(reads, 1);
+  const api = await servePrivateAssets(request(null, "/api/state"), assets, next);
+  assert.equal(await api.text(), "dynamic:GET:/api/state");
+  await servePrivateAssets(request(null, "/eat", {}, "POST", "test"), assets, next);
+  assert.equal(reads, 1);
 });

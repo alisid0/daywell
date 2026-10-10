@@ -89,7 +89,7 @@ test('malformed, fabricated, low-confidence and ambiguous answers fall back with
   for (const mutate of [
     () => null,
     value => { value.answers.pick.choice = 'outside-catalogue'; return value; },
-    value => { value.answers.pick.confidence = .84; return value; },
+    value => { value.answers.pick.confidence = .79; return value; },
     value => { value.answers.pick.confidence = NaN; return value; },
     value => { value.answers.pick.probabilities = { made_up: 1 }; return value; },
     value => { const p = value.answers.pick.probabilities; p[value.answers.pick.choice] = .49; p.none_fit = .48; return value; },
@@ -107,4 +107,27 @@ test('provider errors or cancellation never return a late recording', async () =
   const result = await routeReply({ ...request, signal: controller.signal, pick: async body => { calls++; controller.abort(); return answer(body, topic(body)); } });
   assert.deepEqual(result, { kind: 'generate', reason: 'unavailable' });
   assert.equal(calls, 1);
+});
+
+test('everyday feelings that mention a time or say start, stop or had still reach Jev', async () => {
+  for (const text of ["I need to stop scrolling... let me just be here", "it's 3am and I'm wide awake", 'I had a terrible day', 'this morning started badly, can I start again?']) {
+    let calls = 0;
+    const result = await routeReply({ ...request, text, pick: async body => { calls++; return answer(body, 'none_fit'); } });
+    assert.deepEqual(result, { kind: 'generate', reason: 'no-fit' });
+    assert.equal(calls, 1, text);
+  }
+});
+
+test('the reply step accepts the top reply when none-fit is unlikely, and falls back when it is likely', async () => {
+  const spread = (body, noneFit) => {
+    const ids = Object.keys(body.questions.pick.criteria), rest = ids.filter(id => id !== 'none_fit' && id !== 'r0');
+    const probabilities = Object.fromEntries(ids.map(id => [id, id === 'r0' ? .45 : id === 'none_fit' ? noneFit : (1 - .45 - noneFit) / rest.length]));
+    return { answers: { pick: { type: 'choice', choice: 'r0', confidence: .45, probabilities } } };
+  };
+  for (const [noneFit, kind] of [[.1, 'recorded'], [.3, 'generate']]) {
+    let calls = 0;
+    const result = await routeReply({ ...request, pick: async body => ++calls === 1 ? answer(body, topic(body)) : spread(body, noneFit) });
+    assert.equal(result.kind, kind, `none-fit at ${noneFit}`);
+    if (kind === 'recorded') assert.equal(result.message, replies.find(reply => reply.id === result.id).text);
+  }
 });

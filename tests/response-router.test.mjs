@@ -124,7 +124,7 @@ test('the reply step accepts the top reply when none-fit is unlikely, and falls 
     const probabilities = Object.fromEntries(ids.map(id => [id, id === 'r0' ? .45 : id === 'none_fit' ? noneFit : (1 - .45 - noneFit) / rest.length]));
     return { answers: { pick: { type: 'choice', choice: 'r0', confidence: .45, probabilities } } };
   };
-  for (const [noneFit, kind] of [[.1, 'recorded'], [.3, 'generate']]) {
+  for (const [noneFit, kind] of [[.1, 'recorded'], [.35, 'recorded'], [.4, 'generate']]) {
     let calls = 0;
     const result = await routeReply({ ...request, pick: async body => ++calls === 1 ? answer(body, topic(body)) : spread(body, noneFit) });
     assert.equal(result.kind, kind, `none-fit at ${noneFit}`);

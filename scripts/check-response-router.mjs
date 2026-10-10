@@ -22,15 +22,22 @@ if (useJev) {
   const results = [];
   for (const { text, groups } of cases) {
     const start = performance.now();
+    // Each step's answer is kept so a decline can be traced to the topic or the reply step.
+    const steps = [];
     const decision = await routeReply({ text, area: 'today', replies, allowAi: true, pick: async (body, signal) => {
       signal.throwIfAborted();
       if (++calls > cases.length*2) throw Error('Benchmark request cap reached.');
       const response = await fetch('https://api.typesafe.ai/v1/systemone', { method:'POST', headers: { Authorization: `Bearer ${process.env.TYPESAFE_API_KEY}`, 'Content-Type':'application/json' }, body: JSON.stringify(body), signal });
       if (!response.ok) throw Error('Picker unavailable');
-      return response.json();
+      const result = await response.json();
+      const answer = result?.answers?.pick, criteria = body.questions.pick.criteria;
+      const top = Object.entries(answer?.probabilities ?? {}).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      steps.push({ step: 'r0' in criteria ? 'reply' : 'topic', choice: answer?.choice, confidence: answer?.confidence, noneFit: answer?.probabilities?.none_fit,
+        top: top.map(([id, p]) => [id, p, String(criteria[id] ?? '').slice(0, 80)]) });
+      return result;
     } });
     const group = decision.kind === 'recorded' ? replies.find(reply => reply.id === decision.id)?.groupId : null;
-    results.push({ text, expected: groups, decision, correct: groups.length ? groups.includes(group) : !group, ms: +(performance.now()-start).toFixed(2) });
+    results.push({ text, expected: groups, decision, steps, correct: groups.length ? groups.includes(group) : !group, ms: +(performance.now()-start).toFixed(2) });
   }
   const match = results.filter(result => result.expected.length), none = results.filter(result => !result.expected.length);
   const accuracy = rows => rows.filter(row => row.correct).length / rows.length;

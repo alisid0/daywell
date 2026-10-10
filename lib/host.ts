@@ -1,5 +1,6 @@
 import type { Entry, Kind } from "./daywell";
 import { wellnessBoundary } from "./wellness-scope.ts";
+import { timerIntent } from "./timer-intent.ts";
 
 export type SupportLevel = "quiet" | "occasional" | "guided";
 export type ActivityCompanion = "pip" | "luma" | "bounce" | "tock";
@@ -9,6 +10,7 @@ export type HostAction =
   | { type: "activity"; companion: ActivityCompanion; title: string; minutes: number }
   | { type: "alarm"; time: string };
 export type HostRequest =
+  | { type: "timer-status" }
   | { type: "plan"; actions: HostAction[] }
   | { type: "control"; command: "confirm" | "cancel" | "undo" | "changes" | "pause" | "resume" | "end" }
   | { type: "support"; level: SupportLevel }
@@ -33,6 +35,9 @@ export function parseHostRequest(input: string): HostRequest {
   if (/^(?:thanks|thank you)(?:[ ,]+daywell| so much)?$/i.test(text)) return { type: "reply", message: "You’re welcome. Take your time—I’m here when you need a hand." };
   if (/^(?:are you there|can you hear me|is this working)$/i.test(text)) return { type: "reply", message: "I received your message. You can type here, or tap Talk to Daywell to try voice." };
   if (/^(?:help|what can you do|how (?:do i|can i) (?:start|use (?:this|daywell)))$/i.test(text)) return { type: "reply", message: "We can start small: try “Help me wind down”, “Focus for ten minutes”, or “Show my calendar”. Move, Eat, Sleep and Relax are below. Choose Just rest if you only need a pause." };
+  if (/^(?:how (?:much|long)(?: time)? (?:is left|left|remaining)(?: on (?:my|the) timer)?|is (?:my|the) timer (?:running|on|paused)|what(?:[’']s| is) (?:my|the) (?:current )?timer(?: status)?|timer status|do i have (?:an? )?(?:active |running )?timer)$/i.test(text)) return { type: "timer-status" };
+  const timed = timerIntent(text);
+  if (timed) return { type: "plan", actions: [{type:"activity",companion:"tock",...timed}] };
   const controls: [RegExp, "confirm" | "cancel" | "undo" | "changes" | "pause" | "resume" | "end"][] = [
     [/^(yes|yes please|confirm|do it|do this|go ahead|save it)$/i, "confirm"],
     [/^(no|cancel|never mind|nevermind)$/i, "cancel"], [/^undo(?: that| last change)?$/i, "undo"],
@@ -104,7 +109,7 @@ export function describeAction(action: HostAction) {
     case "grocery": return `Add ${action.titles.join(", ")} to your shopping list`;
     case "task": return `Add “${action.title}” to today’s priorities`;
     case "alarm": return `Set a one-time alarm for ${action.time} (keep Daywell open)`;
-    case "activity": return action.companion === "pip" ? `Focus on ${action.title} for ${action.minutes} minutes` : action.companion === "luma" ? `Wind down for ${action.minutes} minutes` : action.companion === "tock" ? `Start a ${action.minutes}-minute timer` : `Make time for ${action.title.toLowerCase()} (${action.minutes} minutes)`;
+    case "activity": return action.companion === "pip" ? `Focus on ${action.title} for ${action.minutes} minutes` : action.companion === "luma" ? `Wind down for ${action.minutes} minutes` : action.companion === "tock" ? `Start a ${action.minutes}-minute timer${action.title === "Your timer" ? "" : ` for ${action.title.toLowerCase()}`}` : `Make time for ${action.title.toLowerCase()} (${action.minutes} minutes)`;
   }
 }
 export function entriesForActions(actions: HostAction[], date: string, now: number, id: () => string): Entry[] {

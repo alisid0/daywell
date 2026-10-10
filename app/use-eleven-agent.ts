@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Conversation, Mode, Status } from "@elevenlabs/client";
 import { wellnessBoundary } from "@/lib/wellness-scope";
 
-type Options = { onMessage: (role: "user" | "agent", message: string) => void; onRequest: (parameters: unknown) => Promise<string> };
+type Options = { contextKey: string; getContext: () => string; onMessage: (role: "user" | "agent", message: string) => void; onRequest: (parameters: unknown) => Promise<string> };
 export function useElevenAgent(options: Options) {
   const [configured,setConfigured] = useState(false), [checking,setChecking] = useState(true), [status,setStatus] = useState<Status>("disconnected"), [mode,setMode] = useState<Mode>("listening"), [error,setError] = useState("");
   const current = useRef(options);
@@ -11,6 +11,11 @@ export function useElevenAgent(options: Options) {
   const session = useRef<Conversation | null>(null), generation = useRef(0), controller = useRef<AbortController | null>(null), mounted = useRef(true), connecting = useRef(false);
   const duration = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [muted, setMuted] = useState(false);
+  const updateContext = useCallback(() => {
+    try { if (session.current?.isOpen()) session.current.sendContextualUpdate(current.current.getContext()); }
+    catch { /* A disconnected session is handled by the connection callbacks. */ }
+  }, []);
+  useEffect(() => { updateContext(); }, [options.contextKey, updateContext]);
   const stop = useCallback(async () => {
     generation.current++; connecting.current = false; controller.current?.abort(); controller.current = null;
     if(duration.current) clearTimeout(duration.current); duration.current = null;
@@ -31,6 +36,7 @@ export function useElevenAgent(options: Options) {
     if(connecting.current || session.current) return false;
     window.dispatchEvent(new Event("daywell-stop-library-audio"));
     window.dispatchEvent(new Event("daywell-stop-guided-audio"));
+    window.dispatchEvent(new Event("daywell-stop-narration"));
     connecting.current = true; const attempt = ++generation.current;
     const valid = () => mounted.current && generation.current === attempt;
     setError(""); setMuted(false); setStatus("connecting");
@@ -53,6 +59,7 @@ export function useElevenAgent(options: Options) {
         onMessage: ({role,message})=>{
           if (!valid()) return;
           current.current.onMessage(role,message);
+          if (role === "user") updateContext();
           const boundary = role === "user" ? wellnessBoundary(message) : undefined;
           if (boundary) { void stop(); current.current.onMessage("agent",boundary); }
         },
@@ -64,6 +71,7 @@ export function useElevenAgent(options: Options) {
       });
       if(!valid()){await created.endSession();return false;}
       session.current=created; connecting.current=false; setStatus("connected");
+      updateContext();
       // Preserve the turn that needed generation, without sending saved records or profile data.
       if (initialRequest?.trim() && !wellnessBoundary(initialRequest)) {
         created.sendUserMessage(initialRequest.trim().slice(0,600));
@@ -81,7 +89,7 @@ export function useElevenAgent(options: Options) {
     const boundary = wellnessBoundary(text);
     if (boundary) { current.current.onMessage("user",text.trim()); void stop(); current.current.onMessage("agent",boundary); return true; }
     if(!session.current?.isOpen()) { setError("The conversation has ended. Your message is still here; reconnect to send it."); void stop(); return false; }
-    try { session.current.sendUserMessage(text.trim().slice(0,600)); current.current.onMessage("user",text.trim()); return true; }
+    try { updateContext(); session.current.sendUserMessage(text.trim().slice(0,600)); current.current.onMessage("user",text.trim()); return true; }
     catch { setError("That message didn’t send. Please reconnect and try again."); return false; }
   }
   function toggleMuted() {

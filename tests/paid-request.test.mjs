@@ -39,3 +39,18 @@ test('cancelling during reservation refunds it without dispatch', async () => {
   assert.equal(updates, 2);
   assert.equal(sent, false);
 });
+
+test('food readouts use their own bounded allowance and refund provider refusals', async () => {
+  const sqlite = new DatabaseSync(':memory:');
+  sqlite.exec(readFileSync(new URL('../drizzle/0001_usage_limits.sql', import.meta.url), 'utf8').replaceAll('--> statement-breakpoint', ''));
+  const db = { prepare: sql => ({ bind: (...values) => ({ first: async () => sqlite.prepare(sql).get(...values) ?? null }) }) };
+  let calls = 0;
+  try {
+    await paidRequest(db,'reader','narration',async()=>new Response(null,{status:403}));
+    for(let i=0;i<limits.narration.max;i++) await paidRequest(db,'reader','narration',async()=>{calls++;return new Response();});
+    await assert.rejects(paidRequest(db,'reader','narration',async()=>{calls++;return new Response();}),/20 food readouts/);
+    assert.equal(calls,20);
+    assert.equal(sqlite.prepare('SELECT count FROM usage_limits WHERE user_id=? AND feature=?').get('reader','narration').count,20);
+    assert.equal(sqlite.prepare('SELECT count FROM usage_limits WHERE user_id=? AND feature=?').get('reader','capture'),undefined);
+  } finally {sqlite.close();}
+});

@@ -7,6 +7,8 @@ import { foodDetail, mealOrigins, resizeCapturedMeal } from "@/lib/food-tracking
 import type { FoodAction } from "@/lib/food-client";
 import type { AppState } from "./use-daywell";
 import type { MealProposal } from "@/lib/food-journey";
+import { useFoodNarration } from "./use-food-narration";
+import { foodNarration } from "@/lib/food-narration";
 import { PlanCoverage, PlanGuide } from "./food-plan-journey";
 
 type Mode = "meal" | "basket" | "grocery" | "plan";
@@ -30,6 +32,8 @@ export function FoodCaptureCard({ a }: { a: AppState }) {
 }
 
 export function CaptureHub({ a }: { a: AppState }) {
+  const narration = useFoodNarration();
+  const clearNarration = narration.clear;
   const [open, setOpen] = useState(false), [mode, setMode] = useState<Mode>("meal");
   const [planOptions, setPlanOptions] = useState({start:today(),count:2,meal:"Dinner"});
   const [mealOrigin, setMealOrigin] = useState<keyof typeof mealOrigins>("home");
@@ -43,6 +47,7 @@ export function CaptureHub({ a }: { a: AppState }) {
   const recorder = useRef<MediaRecorder | null>(null), stream = useRef<MediaStream | null>(null), timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const abort = useRef<AbortController | null>(null), epoch = useRef(0), lock = useRef(false), micLock = useRef(false), micEpoch = useRef(0);
   const beginRef = useRef<(detail: CaptureStart) => void>(() => {});
+  useEffect(() => { clearNarration(); }, [result, clearNarration]);
 
   function stopRecording() {
     micEpoch.current++;
@@ -53,7 +58,7 @@ export function CaptureHub({ a }: { a: AppState }) {
   function close() {
     epoch.current++; abort.current?.abort(); stopRecording(); lock.current = false; micLock.current = false;
     setOpen(false); setRecording(false); setBusy(false); setPhoto(null); setPreview(null); setAudio(null); setResult(null); setText(""); setContext(""); setTyped(false); setSaved(false); setConsumed(false); setUncertain(false); setError("");
-    if ("speechSynthesis" in window) speechSynthesis.cancel();
+    narration.clear();
   }
   async function checkConnection() {
     try { const r = await fetch("/api/capture", { cache: "no-store" }); const j = await r.json() as {connected?: boolean}; setConnected(r.ok && j.connected === true); }
@@ -78,7 +83,7 @@ export function CaptureHub({ a }: { a: AppState }) {
     // Voice begins on the labelled record button, after the sharing notice is visible.
   }; });
   async function choosePhoto(file: File) {
-    const token = epoch.current; setError("");
+    narration.clear(); const token = epoch.current; setError("");
     if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size > 15 * 1024 * 1024) { setError("Choose a JPEG, PNG or WebP photo under 15 MB."); return; }
     setBusy(true); lock.current = true;
     try {
@@ -95,7 +100,7 @@ export function CaptureHub({ a }: { a: AppState }) {
   async function understand(recorded?: File) {
     if (lock.current) return;
     if (!connected) { setError("Photo and voice understanding need the AI connection first. You can add an entry by hand for now."); return; }
-    const token = epoch.current; lock.current = true; setBusy(true); setError(""); setResult(null); setConsumed(false);
+    narration.clear(); const token = epoch.current; lock.current = true; setBusy(true); setError(""); setResult(null); setConsumed(false);
     abort.current = new AbortController();
     try {
       const form = new FormData(); form.set("date", today()); form.set("time", new Date().toLocaleTimeString()); form.set("mode", mode); form.set("context", context); form.set("text", mode === "plan" ? text || "Suggest meals from my saved basket for the selected number of meals, one person." : `${text}\nMeal origin: ${mealOrigin}.`);
@@ -152,11 +157,6 @@ export function CaptureHub({ a }: { a: AppState }) {
     if (done) { setSaved(true); setUncertain(false); setResult(null); setPhoto(null); setPreview(null); setAudio(null); setContext(""); }
     else { setUncertain(true); setError("The save couldn’t be confirmed. Retry these same entries safely, or check your saved history before starting again."); }
   }
-  function readReply() {
-    if (!result || !("speechSynthesis" in window)) return;
-    window.dispatchEvent(new Event("daywell-stop-voice")); window.dispatchEvent(new Event("daywell-stop-library-audio")); window.dispatchEvent(new Event("daywell-stop-guided-audio"));
-    speechSynthesis.cancel(); const line = new SpeechSynthesisUtterance(result.question || result.summary); line.rate = .95; speechSynthesis.speak(line);
-  }
   const hasDraft = !!result && !result.question && (result.entries.length > 0 || !!result.basket?.length || !!result.plans?.length);
   const hasMeal = !!result?.entries.some(entry => entry.kind === "food");
   return <>
@@ -168,25 +168,25 @@ export function CaptureHub({ a }: { a: AppState }) {
         {mode === "meal" && !hasDraft && !result?.question && <div className="capture-choices" role="group" aria-label="Where is your meal from?">{Object.entries(mealOrigins).map(([id,label])=><button type="button" key={id} disabled={busy || recording} aria-pressed={mealOrigin===id} onClick={()=>setMealOrigin(id as keyof typeof mealOrigins)}>{label}</button>)}</div>}
         {mode === "plan" && !hasDraft && !result?.question && <><p>Up to {planOptions.count} {planOptions.meal.toLowerCase()} meals for one person, starting {planOptions.start}. Say any preferences or exclusions.</p><button className="well-button" disabled={busy || !connected} onClick={()=>void understand()}>Suggest from my saved basket</button></>}
         {preview && <figure className="food-photo-preview"><img src={preview} alt="Your food photo for review"/>{!busy && !recording && !uncertain && <button className="well-text-button" onClick={() => upload.current?.click()}>Choose another photo</button>}</figure>}
-        {result && <section className="capture-review"><p aria-live="polite">{result.question || result.summary}</p><button className="well-text-button" onClick={readReply}><Volume2 size={16}/>Hear this</button>{result.transcript && <small>You said: “{result.transcript}”</small>}
+        {result && <section className="capture-review"><div aria-live="polite"><p>{result.summary}</p>{result.question && <p><strong>{result.question}</strong></p>}</div><button className="well-text-button" disabled={recording || busy} onClick={() => void narration.speak(foodNarration(result))}><Volume2 size={16}/>{narration.status === "loading" ? "Cancel voice loading" : narration.status === "playing" ? "Stop voice" : "Hear this · ElevenLabs"}</button>{narration.error && <p role="alert">{narration.error}</p>}{result.transcript && <small>You said: “{result.transcript}”</small>}
           {result.entries.map(entry => <article className="capture-draft-item" key={entry.id}><strong>{entry.data.title}</strong><small>{entry.kind === "food" ? foodDetail(entry.data) : entry.data.quantity}</small>{entry.kind === "food" && <div className="capture-choices" role="group" aria-label={`Meal for ${entry.data.title}`}>{["Breakfast", "Lunch", "Dinner", "Snack"].map(meal => <button key={meal} disabled={busy || recording || uncertain} aria-pressed={entry.data.meal === meal} onClick={() => setResult({ ...result, entries: result.entries.map(old => old.id === entry.id ? { ...old, data: { ...old.data, meal } } : old) })}>{meal}</button>)}</div>}</article>)}
           {result.plans?.map(plan=><article className="capture-draft-item" key={plan.id}><strong>{plan.title}</strong><small>{plan.date} · {plan.meal} · one person</small><small>{plan.ingredients.map(item=>`${item.quantity} ${item.unit} ${item.ingredient}`).join(" · ")}</small><PlanGuide plan={plan}/></article>)}
           {!!result.plans?.length && a.food.snapshot && <PlanCoverage state={a.food.snapshot.state} plans={result.plans}/>}
           {result.basket?.map(item => <article className="capture-draft-item" key={item.id}><ShoppingBasket size={16}/><strong>{item.ingredient}</strong><small>{item.quantity === null ? "Amount to check" : `${item.quantity} ${item.unit}`}</small></article>)}
-          {hasMeal && <><div className="capture-choices" role="group" aria-label="Adjust the portion shown">{[.5,2].map(factor=><button type="button" key={factor} disabled={busy || recording || uncertain} onClick={()=>{try{setResult({...result,entries:result.entries.map(entry=>entry.kind==="food"?resizeCapturedMeal(entry,factor):entry)});setConsumed(false);}catch{setError("That portion is too small or large. Say a correction instead.");}}}>{factor===.5?"Half of the shown portion":"Twice the shown portion"}</button>)}</div><p className="food-caption">Nutrition is approximate. Say what changed if the portion looks wrong. Sugar stays unknown without an amount from you or a readable label.</p><label className="food-checkbox"><input type="checkbox" checked={consumed} disabled={busy || recording || uncertain} onChange={e => setConsumed(e.target.checked)}/>I consumed this and checked the portion shown</label></>}
+          {hasMeal && <><div className="capture-choices" role="group" aria-label="Adjust the portion shown">{[.5,2].map(factor=><button type="button" key={factor} disabled={busy || recording || uncertain} onClick={()=>{try{narration.clear();const entries=result.entries.map(entry=>entry.kind==="food"?resizeCapturedMeal(entry,factor):entry);setResult({...result,entries,summary:"Portion adjusted. "+entries.filter(entry=>entry.kind==="food").map(entry=>`${entry.data.title}: ${foodDetail(entry.data)}`).join(". ")});setConsumed(false);}catch{setError("That portion is too small or large. Say a correction instead.");}}}>{factor===.5?"Half of the shown portion":"Twice the shown portion"}</button>)}</div><p className="food-caption">Nutrition is approximate. Say what changed if the portion looks wrong. Sugar stays unknown without an amount from you or a readable label.</p><label className="food-checkbox"><input type="checkbox" checked={consumed} disabled={busy || recording || uncertain} onChange={e => setConsumed(e.target.checked)}/>I consumed this and checked the portion shown</label></>}
         </section>}
         {busy && <p role="status">{uncertain ? "Checking your save…" : "One moment…"}</p>}
-        {recording && <div className="capture-recording" role="status"><Mic/><span>Listening · {seconds}s / 30s</span><button className="well-button" onClick={() => recorder.current?.stop()}><Square size={16}/>Stop & understand</button></div>}
+        {recording && <div className="capture-recording" role="status"><Mic/><span>Recording your description · {seconds}s (30s maximum)</span><button className="well-button" onClick={() => recorder.current?.stop()}><Square size={16}/>Finished speaking</button></div>}
         {!busy && !recording && <>
           {hasDraft && <button className="well-button capture-confirm" disabled={hasMeal && !consumed} onClick={() => void confirm()}><Check size={18}/>{uncertain ? "Retry save safely" : result.plans?.length ? "Review meals & save" : result.basket?.length ? "Review basket items" : hasMeal ? "Save food consumed" : "Add to shopping list"}</button>}
-          {!uncertain && <><div className="capture-primary-actions">{!preview && !hasDraft && <button className="well-button well-secondary" onClick={() => picker.current?.click()}><Camera size={22}/>Take a photo</button>}<button className="well-button well-secondary" onClick={() => void startRecording()} disabled={connected === null}><Mic size={22}/>{hasDraft ? "Say a correction" : result?.question ? "Say your answer" : "Record & understand"}</button></div>
-          {preview && !result && <button className="well-button capture-confirm" onClick={() => void understand()}>Understand this photo</button>}
+          {!uncertain && <>{preview && !result && <><button className="well-button capture-confirm" onClick={() => void understand()}>Understand this photo</button><p className="food-caption">No description needed. I’ll identify what’s visible and estimate the shown portion for you to check.</p></>}<div className="capture-primary-actions">{!preview && !hasDraft && <button className="well-button well-secondary" onClick={() => picker.current?.click()}><Camera size={22}/>Take a photo</button>}<button className="well-button well-secondary" onClick={() => void startRecording()} disabled={connected === null}><Mic size={22}/>{hasDraft ? "Say a correction" : result?.question ? "Say your answer" : preview ? "Add a voice detail (optional)" : "Record & understand"}</button></div>
+
           <div className="capture-backups">{!hasDraft && <button className="well-text-button" onClick={() => upload.current?.click()}>Choose from photos</button>}<button className="well-text-button" onClick={() => { setTyped(!typed); if (hasDraft) setResult(null); }}><Keyboard size={15}/>Type instead</button>{audio && <button className="well-text-button" onClick={() => void understand(audio)}>Retry recording</button>}</div>
           {typed && <form className="capture-text" onSubmit={e => { e.preventDefault(); void understand(); }}><label>Tell Daywell<input autoFocus maxLength={6000} value={text} onChange={e => setText(e.target.value)} placeholder={mode === "plan" ? "Two dinners for me, no mushrooms…" : mode === "basket" ? "I have six eggs and a bag of rice…" : "I had half of this for lunch…"}/></label><button className="well-button" disabled={!text.trim()}>Understand</button></form>}</>}
         </>}
       </>}
       {error && <p className="form-error" role="alert">{error}</p>}
-      <p className="food-caption">“Understand” sends your photo, recording or description to OpenAI. Recording stops after 30 seconds. For meal planning, it also sends your saved basket and reserved quantities. Daywell keeps the entries you confirm; it doesn’t save your original photo or recording.</p>
+      <p className="food-caption">“Understand” sends your photo, recording or description to OpenAI. Voice descriptions record for up to 30 seconds; tap Finished speaking whenever you’re done. This is not an activity timer. For meal planning, it also sends your saved basket and reserved quantities. “Hear this” sends the review text to ElevenLabs using your Daywell voice (v4), with up to 20 new readouts per day. Replaying the same open review uses its existing audio. Daywell keeps the entries you confirm; it doesn’t save your original photo or recording.</p>
     </DialogContent></Dialog>
   </>;
 }

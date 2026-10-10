@@ -9,7 +9,9 @@
   ["I keep changing my mind about lunch.","Pick something familiar that fits what you have. Lunch does not have to be the best possible choice."],
   ["Everyone at home wants a different meal.","Could you share one base, like rice or bread, and let people choose their own toppings?"],
   ["I am too tired to follow a recipe.","An assembled meal counts. Put together a few ready to eat foods you like, without turning it into a cooking project."],
-  ["Can you choose a meal from what I own?","Tell me a few ingredients you have and any dietary needs. We can then narrow the options together.","live"]
+  ["Can you choose a meal from what I own?","Tell me a few ingredients you have and any dietary needs. We can then narrow the options together.","live"],
+  ["I have no idea what to eat.","Let's start with one question: something warm, or something you can eat straight away? Let that answer pick the meal."],
+  ["Nothing sounds good to eat right now.","Think of something you enjoyed recently and have a simple version of it. It only needs to be good enough for today."]
  ]},
  {"id":"eat-quick-options","category":"eat","title":"Food when time is short","companion":"nori","examples":[
   ["I have ten minutes before my next meeting.","Use that time for something straightforward to eat. A sandwich or leftovers may be enough to get lunch started."],
@@ -68,7 +70,9 @@
   ["Can breakfast just be leftovers?","Breakfast does not need special breakfast food. Safely stored and reheated leftovers can be an option you enjoy."],
   ["I need breakfast ideas for a hotel room.","Look for simple food you can store safely, or check what the hotel offers. You can keep the choice familiar."],
   ["I have got bored of my usual breakfast.","Change one part, such as the fruit or topping, before replacing the whole routine."],
-  ["I want to prepare tomorrow's breakfast tonight.","Choose an option that stores safely overnight. Set out what you need so the morning has fewer steps." ]
+  ["I want to prepare tomorrow's breakfast tonight.","Choose an option that stores safely overnight. Set out what you need so the morning has fewer steps." ],
+  ["I never really eat breakfast.","Not everyone wants food first thing, and that is okay. If you would like something earlier in the day, keep one easy option where you will see it."],
+  ["I keep skipping breakfast without meaning to.","Make it as easy as possible: something you can eat in a few bites, set out the night before, so it is ready when you are."]
  ]},
  {"id":"eat-lunch-pause","category":"eat","title":"Make room for lunch","companion":"nori","examples":[
   ["I work through lunch almost every day.","Could you protect a short break to eat today? Your work can have a pause without needing to be finished first."],

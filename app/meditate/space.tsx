@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/daywell-link';
 import { ArrowLeft, Pause, Play, Square, Volume2 } from 'lucide-react';
 import { CompanionPortrait } from '@/components/daywell-companions';
 import { CompanionMotionControl, useCompanionMotion } from '@/components/companion-motion-preference';

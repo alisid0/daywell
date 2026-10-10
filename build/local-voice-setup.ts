@@ -8,6 +8,7 @@ const endpoint = "/__daywell/local-voice-setup";
 const hosts = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const addresses = new Set(["127.0.0.1", "::1", "::ffff:127.0.0.1"]);
 const keyPattern = /^[a-zA-Z0-9_-]{16,256}$/;
+const foodKeyPattern = /^[a-zA-Z0-9_-]{16,512}$/;
 const agentPattern = /^[a-zA-Z0-9_-]{5,100}$/;
 
 function reply(response: ServerResponse, status: number, body: object) {
@@ -28,6 +29,8 @@ function savedStatus(settings: string) {
     available: true,
     keySaved: /^\s*ELEVENLABS_API_KEY\s*=\s*["']?[a-zA-Z0-9_-]{16,256}["']?\s*$/m.test(settings),
     agentSaved: /^\s*ELEVENLABS_AGENT_ID\s*=\s*["']?[a-zA-Z0-9_-]{5,100}["']?\s*$/m.test(settings),
+    foodKeySaved: /^\s*OPENAI_API_KEY\s*=\s*["']?[a-zA-Z0-9_-]{16,512}["']?\s*$/m.test(settings),
+    pickerKeySaved: /^\s*TYPESAFE_API_KEY\s*=\s*["']?[a-zA-Z0-9_.-]{16,512}["']?\s*$/m.test(settings),
   };
 }
 
@@ -62,20 +65,24 @@ export function createVoiceSetupHandler(root: string, secure = false) {
         body += chunk.toString();
         if (Buffer.byteLength(body) > 4096) return reply(response, 413, { error: "The pasted value is too long." });
       }
-      let value: { apiKey?: unknown; agentId?: unknown };
+      let value: { apiKey?: unknown; agentId?: unknown; openaiKey?: unknown; typesafeKey?: unknown };
       try {
         value = JSON.parse(body);
         if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error();
       } catch { return reply(response, 400, { error: "Enter your key in the form and try again." }); }
       const key = typeof value.apiKey === "string" ? value.apiKey.trim() : "";
       const agentId = typeof value.agentId === "string" ? value.agentId.trim() : "";
-      if ((!key && !agentId) || (key && !keyPattern.test(key)) || (agentId && !agentPattern.test(agentId))) return reply(response, 400, { error: "Check the key and agent ID, then paste them again. Nothing was saved." });
+      const foodKey = typeof value.openaiKey === "string" ? value.openaiKey.trim() : "";
+      const pickerKey = typeof value.typesafeKey === "string" ? value.typesafeKey.trim() : "";
+      if ((!key && !agentId && !foodKey && !pickerKey) || (key && !keyPattern.test(key)) || (agentId && !agentPattern.test(agentId)) || (foodKey && !foodKeyPattern.test(foodKey)) || (pickerKey && !/^[a-zA-Z0-9_.-]{16,512}$/.test(pickerKey))) return reply(response, 400, { error: "Check the key and agent ID, then paste them again. Nothing was saved." });
       const existing = await readSettings(path);
       const kept = existing.split(/\r?\n/).filter(line =>
         !(key && /^\s*ELEVENLABS_API_KEY\s*=/.test(line)) &&
-        !(agentId && /^\s*ELEVENLABS_AGENT_ID\s*=/.test(line))
+        !(agentId && /^\s*ELEVENLABS_AGENT_ID\s*=/.test(line)) &&
+        !(foodKey && /^\s*OPENAI_API_KEY\s*=/.test(line)) &&
+        !(pickerKey && /^\s*TYPESAFE_API_KEY\s*=/.test(line))
       ).join("\n").trimEnd();
-      const updated = `${kept}${kept ? "\n" : ""}${key ? `ELEVENLABS_API_KEY=${key}\n` : ""}${agentId ? `ELEVENLABS_AGENT_ID=${agentId}\n` : ""}`;
+      const updated = `${kept}${kept ? "\n" : ""}${key ? `ELEVENLABS_API_KEY=${key}\n` : ""}${agentId ? `ELEVENLABS_AGENT_ID=${agentId}\n` : ""}${foodKey ? `OPENAI_API_KEY=${foodKey}\n` : ""}${pickerKey ? `TYPESAFE_API_KEY=${pickerKey}\n` : ""}`;
       temporary = `${path}.daywell-${randomUUID()}`;
       await writeFile(temporary, updated, { encoding: "utf8", mode: 0o600, flag: "wx" });
       await rename(temporary, path);

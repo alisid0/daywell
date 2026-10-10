@@ -8,7 +8,7 @@ export function safeAgentRequest(value: unknown): string | null {
   if (/^(?:open |show )?(?:explore|move|eat|sleep)$/i.test(request)) return request;
   if (/^(?:just rest|take a break|stop scrolling|help me stop scrolling|open relax)$/i.test(request)) return request;
   const parsed = parseHostRequest(request);
-  return parsed.type === "plan" || parsed.type === "open" ? request : null;
+  return parsed.type === "plan" || parsed.type === "open" || parsed.type === "timer-status" ? request : null;
 }
 
 export function allowedVoiceOrigin(request: Request) {

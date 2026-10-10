@@ -26,3 +26,5 @@ jobs:
         run: npm audit --omit=dev --audit-level=high
       - run: npm run db:setup
       - run: npm run db:setup
+      - name: Package private Cloudflare hosting (no deployment)
+        run: npm run cloudflare:check

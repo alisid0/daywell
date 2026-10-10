@@ -10,6 +10,7 @@ export type Exercise = {
 export type Routine = {
   id: string; name: string; where: Where; level: number; minutes: number;
   companion: "bounce" | "luma" | "nori" | "pip" | "sunny"; when: string; rounds?: number; blocks: [string, string][];
+  setup?: string; restSeconds?: number;
 };
 // A step's prescribed amount: how many sets, and either reps or a timed hold per set.
 export type Amount = { sets: number; reps?: number; seconds?: number; text: string };
@@ -58,10 +59,12 @@ export function swapStep(step: RoutineStep, id: string | null): RoutineStep {
 }
 
 // Turns finished steps into saved sets (bodyweight by default). The app stores at most 20 sets.
-export function completedSets(done: RoutineStep[]): WorkoutSet[] {
+export function completedSets(done: RoutineStep[], equipmentLoads: Record<string, number> = {}): WorkoutSet[] {
   return done.flatMap(step => {
     const unit = step.amount.reps ? { reps: step.amount.reps } : step.amount.seconds ? { seconds: step.amount.seconds } : null;
-    return unit ? Array.from({ length: step.amount.sets }, () => ({ exercise: step.exercise.name.slice(0, 80), ...unit, kg: 0 })) : [];
+    const load = step.exercise.kit ? equipmentLoads[step.exercise.kit] : 0;
+    const kg = Number.isFinite(load) && load >= 0 && load <= 500 ? load : 0;
+    return unit ? Array.from({ length: step.amount.sets }, () => ({ exercise: step.exercise.name.slice(0, 80), ...unit, kg })) : [];
   }).slice(0, 20);
 }
 

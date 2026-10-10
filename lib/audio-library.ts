@@ -425,6 +425,8 @@ export const audioGroups: AudioGroup[] = [
     'If the task has become unclear, write the next action in plain words.',
     'Returning is part of focusing. You are allowed to do it more than once.',
     'You can choose to continue, take a break, or change the plan. Make that choice deliberately.',
+    'That happens to everyone. Notice where you were, take one slow breath, and pick up the very next small step.',
+    'Being distracted again does not undo what you have done. Close one thing you do not need, then return to a single small part of the task.',
   ]),
   group('focus-priority', 'focus', 'Make the list smaller', 'pip', [
     'Which task would make the next part of your day easier? You can start by choosing just that one.',
@@ -533,6 +535,8 @@ export const audioGroups: AudioGroup[] = [
     'You can decide what needs doing and what can wait, one thing at a time.',
     'A day with less energy still deserves comfort and care.',
     'If this is a time to rest, you do not have to turn rest into an achievement.',
+    'Some days have less in them, and that is okay. Choose the one or two things that matter most today, and let the rest wait.',
+    'Go gently today. Pick the easiest version of what you need to do, and leave a few quiet minutes for yourself when you can.',
   ]),
   group('everyday-choice', 'everyday', 'Too many choices', 'pip', [
     'You can narrow the choice to two practical options, then pick the one that feels easier to begin.',

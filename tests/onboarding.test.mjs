@@ -16,10 +16,16 @@ test("a timer is tried only after starting or completing it, not just choosing a
   assert.equal(hasTriedStep([{ id: "focus-session", kind: "session", data: {} }], "timer"), true);
 });
 test("older settings get the guide without changing their selected tools or name", () => {
-  const { guideDismissed, ...oldSettings } = defaults;
+  const { guideDismissed, calorieTracking, birthYear, sex, heightCm, weights, bodyConsentAt, ...oldSettings } = defaults;
   const result = settingsSchema.parse({ ...oldSettings, name: "Alex", modules: ["grocery"], onboarded: true });
   assert.equal(result.guideDismissed, false);
   assert.equal(result.name, "Alex");
   assert.deepEqual(result.modules, ["grocery"]);
   assert.equal(settingsSchema.parse({ ...result, guideDismissed: true }).guideDismissed, true);
+  // Calorie tracking is opt-in, and the About you details start empty.
+  assert.equal(result.calorieTracking, false);
+  assert.equal(defaults.calorieTracking, false);
+  assert.equal(result.birthYear, null);
+  assert.deepEqual(result.weights, []);
+  assert.equal(settingsSchema.parse({ ...result, calorieTracking: true }).calorieTracking, true);
 });

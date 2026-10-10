@@ -1,3 +1,9 @@
 # Copy to .dev.vars for local development. Never commit real credentials.
 ELEVENLABS_API_KEY=
 ELEVENLABS_AGENT_ID=
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-4.1-mini
+OPENAI_TRANSCRIBE_MODEL=gpt-transcribe
+TYPESAFE_API_KEY=
+# Leave disabled until the actual picker passes docs/response-routing.md.
+TYPESAFE_PICKER_ENABLED=false

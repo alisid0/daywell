@@ -46,6 +46,7 @@ test('food readout uses current adjusted calories and includes clarifying recogn
   const entry={id:'meal',kind:'food',data:{title:'Toast',calories:400,protein:10,carbs:40,fat:10,nutritionKnown:true,macrosKnown:true,nutritionSource:'estimate',portions:1,foodStatus:'eaten',meal:'Breakfast',date:'2026-10-10'}};
   const draft={summary:'Original 400 calorie estimate',question:null,entries:[resizeCapturedMeal(entry,.5)]};
   assert.match(foodNarration(draft),/200/);assert.doesNotMatch(foodNarration(draft),/400/);
+  assert.doesNotMatch(foodNarration(draft),/eaten|recorded|saved/);assert.match(foodNarration(draft),/portion.*shown/);
   assert.equal(foodNarration({summary:'I can see rice.',question:'Is the topping egg?',entries:[]}), 'I can see rice. Is the topping egg?');
   for(const value of [null,{}, {text:''},{text:'x'.repeat(1801)}]) assert.equal(narrationInput(value),null);
   assert.equal(narrationInput({text:' Food review '}),'Food review');

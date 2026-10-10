@@ -20,6 +20,8 @@ The owner reported that a meal photo needed a description, food replies sounded 
 - A short ElevenLabs v4 food readout returned playable MP3 bytes using the configured voice.
 - One live AI text conversation called the real client tool for a named 60-minute PlayStation proposal, then correctly read synthetic running status (39 minutes) and paused status (15 minutes). No microphone, generated conversation audio or owner records were used in that test.
 - Isolated browser QA confirmed the same natural request prepares a review, Do this starts the named timer, and status follows pause/resume without resetting the remaining time.
+- Hosted browser QA on the first deployment (`70823d5`, Cloudflare version `c09f1a0c-ac02-4d46-8300-6a5ab3f9e242`) repeated the real photo-only flow, generated the configured ElevenLabs readout, replayed/stopped it and halved 350 kcal to 175 kcal. Closing the review left zero food entries. Sixteen anonymous/forged-sign-in probes stayed protected. Four local narration requests with wrong origin, empty/oversized text or oversized bodies were rejected before provider dispatch.
+- Hosted review exposed old saved-record wording in a draft. The follow-up changes the unsaved screen and readout to “portion shown” and “kcal estimated”; the regression test excludes “eaten”, “recorded” and “saved” from the draft readout. A new allowance test also checks narration caps, isolation from photo checks and refund on explicit provider refusal.
 
 ## Setup and remaining testing
 

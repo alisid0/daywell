@@ -49,7 +49,7 @@ Owner decision, updated 9–10 October: photo and voice understanding is connect
 
 For moments like “I can’t switch off”, “it’s 11pm and I’m still scrolling” and “how have I slept this week?”
 
-1. **Evening:** wind down with Luma, a soft sound or a bedtime track.
+1. **Evening:** wind down with Luma, a sleep sound or a bedtime track. The quiet corner offers 11 looping [sleep sounds](sleep-sounds.md), with an optional Stop after.
 2. **Night:** nothing to do, and nothing tracking the person.
 3. **Morning:** one tap for how they slept.
 4. **Week:** a gentle look back, with no scores.
@@ -84,6 +84,6 @@ Each change to an area must keep its journeys working. Run them at phone size, w
 - **Move:** do part of a routine, then save only what was done; record a strength session by hand; log a walk; edit and remove a saved session; finish the kettlebell routine early and review the bell weight; make time with Bounce.
 - **Eat:** add an ingredient to the basket; use some food, then undo; log a meal with calories and sugar; plan meals from the basket so missing items go to shopping; add a shopping note; take a photo without the AI connection, then add by hand; find a logged meal in the meal story.
 - **Sleep:** log last night; change the wind-down time; wind down with Luma and leave; add a night to the journal, then edit it.
-- **Relax:** follow a little guidance; turn the soft sound on and off; play and pause a guided session; play a little word of comfort; write a private reflection.
+- **Relax:** follow a little guidance; choose a sleep sound, play it, set Stop after and pause; play and pause a guided session; play a little word of comfort; write a private reflection.
 
 Not yet covered by these runs: the live server and sign-in, two accounts that must not see each other’s records, photo and voice understanding, live conversations, and real phones (microphone, audio with the screen locked).

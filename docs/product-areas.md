@@ -70,6 +70,12 @@ For moments like “I need to stop scrolling”, “I just got home” and “ev
 
 Today is where people start: say or tap what they need, and see what’s planned. The 7-day strip on every screen is for looking back at recent days. Plans for the future belong in the calendar.
 
+### Conversation and timer context
+
+The owner requested on 10 October that agreeing to a timer in conversation starts it, and that returning to Dave preserves its purpose and current state. Prepare one named activity and duration before asking for agreement. The next explicit “yes”, “okay” or “start it” can confirm that one timer; changing subjects, cancelling, leaving the conversation or waiting more than two minutes expires spoken confirmation. Replacing an active or paused timer needs “replace the timer” or the visible Start timer button. Other records and multi-action plans still use their existing review controls.
+
+Use the saved timer as the authority at connection and on status questions. Share only its current title, state and time, plus pending actions under the existing conversation disclosure. Do not claim to remember a previous conversation: no additional chat-history store is introduced. A manually created generic timer has no inferred purpose. Timers may continue counting while away, but the web app cannot promise a sound with the phone locked or the app closed.
+
 ## End-to-end journeys
 
 Each change to an area must keep its journeys working. Run them at phone size, with Standard and Larger text, before asking for a merge. On 9 October, 28 of the 29 worked on PR #36; “Make time with Bounce” only partly worked.

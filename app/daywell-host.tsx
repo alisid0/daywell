@@ -9,11 +9,12 @@ import { hostCompanionMotion, activityCompanionMotion } from "@/lib/companion-mo
 import { companions, type CompanionId } from "@/lib/companions";
 import { today, type Entry } from "@/lib/daywell";
 import { actionModule, canUndoHostChange, describeAction, entriesForActions, guidanceAt, parseHostRequest, type ActivityCompanion, type HostAction, type SupportLevel } from "@/lib/host";
-import type { AppState } from "./use-daywell";
+import { initialTimer, type AppState } from "./use-daywell";
 import { PrivacyDetails } from "./privacy-details";
 import { useHostVoice } from "./use-host-voice";
 import { useElevenAgent } from "./use-eleven-agent";
 import { timerConversationContext, timerStatusReply } from "@/lib/timer-context";
+import { TimerConfirmation, timerConsent, type TimerOffer } from "@/lib/conversation-timer";
 import { safeAgentRequest } from "@/lib/voice-tools";
 import { wellnessBoundary } from "@/lib/wellness-scope";
 import { hostInputRoute } from "@/lib/host-input";
@@ -39,7 +40,14 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   const [aiChosen, setAiChosen] = useState(false);
   const [heard, setHeard] = useState("");
   const [reply, setReply] = useState("Tell me what you need. I’ll bring the right little helper along.");
-  const [pending, setPending] = useState<HostAction[] | null>(null);
+  const [pending, setPendingState] = useState<HostAction[] | null>(null);
+  const pendingRef = useRef<HostAction[] | null>(null);
+  const timerConfirmation = useRef(new TimerConfirmation());
+  const lastUserMessage = useRef("");
+  const conversationTurn = useRef(0);
+  const timerOutcome = useRef("");
+  const verifiedTimer = useRef(a.timer); verifiedTimer.current = a.timer;
+  function setPending(actions: HostAction[] | null) { pendingRef.current = actions; timerConfirmation.current.clear(); setPendingState(actions); }
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [routing, setRouting] = useState(false);
@@ -77,7 +85,37 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   const preparedPlan = useRef<{ actions: HostAction[]; items: Entry[] } | null>(null);
   const mounted = useRef(true);
   const voice = useHostVoice(value => { setHeard(value); void receive(value); });
-  const agent = useElevenAgent({ contextKey: JSON.stringify([a.timer, Math.ceil(a.remaining / 60), pending]), getContext: () => timerConversationContext(a.timer, pending?.map(describeAction) || []), onMessage: (role, message) => { if(role === "user") { setHeard(message); if (wellnessBoundary(message)) { setPending(null); preparedPlan.current = null; setCue(""); setSupport("quiet"); voice.stop(); } } else setReply(message); }, onRequest: async value => { const allowed = safeAgentRequest(value); if (!allowed) return "Unsupported request. Ask the user to use the visible controls. Never claim a change was saved."; if (parseHostRequest(allowed).type === "timer-status") return timerStatusReply(a.timer); await receive(allowed); return "The request is shown in Daywell. Any record or timer change requires the user to press Do this. Nothing is saved by this tool."; } });
+  const agent = useElevenAgent({
+    contextKey: JSON.stringify([a.timer, Math.ceil(a.remaining / 60), pending]),
+    getContext: () => timerConversationContext(verifiedTimer.current, pendingRef.current?.map(describeAction) || []) + timerOutcome.current,
+    prepareContext: async () => { setPending(null); timerOutcome.current = ""; const saved = await a.readTimer(); verifiedTimer.current = saved.timer || initialTimer; return timerConversationContext(verifiedTimer.current, []); },
+    onEnd: () => { conversationTurn.current++; timerConfirmation.current.clear(); },
+    onUserMessage: async message => {
+      lastUserMessage.current = message;
+      conversationTurn.current++;
+      const hadOffer = !!timerConfirmation.current.offer;
+      const agreement = timerConfirmation.current.claim(message);
+      if (agreement.kind === "confirmed") await applyPlan([agreement.offer.action], agreement.offer);
+      else if (agreement.kind === "replace") setReply('Your current timer is still going. Say “replace the timer” to start this one instead, or keep the current timer.');
+      else if (hadOffer) { setPending(null); if (agreement.kind === "expired") setReply("That timer suggestion has expired. Tell me what you’d like to start now."); }
+    },
+    onMessage: (role, message) => { if(role === "user") { setHeard(message); if (wellnessBoundary(message)) { setPending(null); preparedPlan.current = null; setCue(""); setSupport("quiet"); voice.stop(); } } else setReply(message); },
+    onRequest: async value => {
+      const allowed = safeAgentRequest(value);
+      if (!allowed) return "Unsupported request. Ask the user to use the visible controls. Never claim a change was saved.";
+      const request = parseHostRequest(allowed);
+      if (request.type === "timer-status") {
+        try { const saved = await a.readTimer(); verifiedTimer.current = saved.timer || initialTimer; return timerOutcome.current + timerStatusReply(verifiedTimer.current); }
+        catch { return "Timer status unavailable. Do not guess whether anything started. Ask the user to check their timer and try again."; }
+      }
+      if (lock.current) return "A change is still being saved. Wait and check timer status; do not claim success yet.";
+      if (request.type === "plan" && timerConsent(lastUserMessage.current) !== "other") return "Do not propose another timer after agreement or cancellation. Check the saved timer with How much time is left?; only a fresh request may create a new proposal.";
+      try {
+        const result = await receive(allowed, true);
+        return result || "The request was handled on screen. No saved change is implied. Other records require the visible Do this button.";
+      } catch { return "Could not prepare the request. Nothing was started. Ask the user to try again."; }
+    },
+  });
   const stopVoice = voice.stop;
   useEffect(() => {
     window.addEventListener("daywell-stop-voice", stopVoice);
@@ -167,24 +205,34 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     if (value) setText(value);
     requestAnimationFrame(() => input.current?.focus());
   }, [stopVoice]);
-  async function applyPlan() {
-    if (!pending || lock.current) return;
-    const missing = pending.find(action => !a.enabled(actionModule(action)));
+  async function applyPlan(actions = pendingRef.current, confirmed?: TimerOffer) {
+    if (!actions || lock.current) return;
+    const missing = actions.find(action => !a.enabled(actionModule(action)));
     if (missing) { say(`Enable ${moduleNames[actionModule(missing)]} in Customize tools first. Nothing has changed.`); return; }
     lock.current = true; setBusy(true); setError("");
-    if (preparedPlan.current?.actions !== pending) preparedPlan.current = { actions: pending, items: entriesForActions(pending, today(), Date.now(), () => crypto.randomUUID()) };
+    let timerOffer = confirmed;
+    if (actions.length === 1 && actions[0].type === "activity" && !timerOffer) {
+      const approval = timerConfirmation.current.claim("", Date.now(), true);
+      if (approval.kind !== "confirmed") { lock.current = false; setBusy(false); setPending(null); say("Please ask for that timer again so we can check the details."); return; }
+      timerOffer = approval.offer;
+    }
+    if (preparedPlan.current?.actions !== actions) preparedPlan.current = { actions, items: entriesForActions(actions, today(), Date.now(), () => crypto.randomUUID()) };
     const items = preparedPlan.current.items;
     const before = a.entries.filter(entry => items.some(item => item.id === entry.id));
+    if (timerOffer) timerOutcome.current = "The agreed timer is still being saved. Do not claim it started yet. ";
     try {
       a.unlockAudio();
-      const applied = await a.hostChange(items);
+      const applied = timerOffer ? await a.startConfirmedTimer(timerOffer) : await a.hostChange(items);
+      const savedTimer = applied.find(entry => entry.kind === "timer");
+      if (savedTimer) verifiedTimer.current = savedTimer.data;
+      if (timerOffer) timerOutcome.current = "The agreed timer was saved. Its current status follows; do not propose it again. ";
       if (!mounted.current) return;
-      const summary = pending.map(describeAction).join(". ") + ".";
-      setLastChange({ before, applied, summary }); preparedPlan.current = null; setPending(null); setShowChanges(false); setText(""); setTyped(false);
-      const activity = pending.find(action => action.type === "activity");
+      const summary = actions.map(describeAction).join(". ") + ".";
+      setLastChange({ before, applied, summary }); preparedPlan.current = null; setPending(null); setShowChanges(false); setText(""); if (!aiText) setTyped(false);
+      const activity = actions.find(action => action.type === "activity");
       setCue("");
-      say(activity?.type === "activity" ? `${pending.length > 1 ? "Your other changes are saved. " : ""}${activity.minutes} minutes are yours. ${activityMessages[activity.companion]}` : "Done. Your changes are saved. You can undo them below.");
-    } catch (problem) { setError(problem instanceof Error ? problem.message : "Couldn’t save that. Your request is still here to retry."); }
+      say(activity?.type === "activity" && savedTimer ? `${timerStatusReply(savedTimer.data)} ${actions.length > 1 ? "Your other changes are saved. " : ""}` : "Done. Your changes are saved. You can undo them below.");
+    } catch (problem) { if(timerOffer){timerOutcome.current = "The new timer could not be confirmed as saved. The following status may belong to the previous timer; do not claim the requested change succeeded or retry automatically. ";setPending(null);} setError(problem instanceof Error ? problem.message : "Couldn’t save that. Please check your timer before trying again."); }
     finally { lock.current = false; if (mounted.current) setBusy(false); }
   }
   async function undo() {
@@ -215,12 +263,21 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     } catch (problem) { setError(problem instanceof Error ? problem.message : "Couldn’t update your activity. Please try again."); }
     finally { lock.current = false; if (mounted.current) setBusy(false); }
   }
-  async function receive(value: string) {
+  async function receive(value: string, fromAgent = false) {
     if (lock.current || !value.trim()) return;
+    const turn = conversationTurn.current;
     responseEpoch.current++; responseAbort.current?.abort(); fallbackRequest.current = ""; setConsent(null); setRouting(false); setPickerConsent(null); library.stop(); setRecordedReply(null);
-    voice.silence(); setError(""); setHeard(value.trim());
+    voice.silence(); setError(""); if (!fromAgent) setHeard(value.trim());
     const boundary = wellnessBoundary(value);
     if (boundary) { setPending(null); preparedPlan.current = null; setCue(""); setSupport("quiet"); voice.stop(); void agent.stop(); setReply(boundary); return; }
+    if (!agentActive && timerConfirmation.current.offer) {
+      const agreement = timerConfirmation.current.claim(value);
+      if (agreement.kind === "confirmed") return applyPlan([agreement.offer.action], agreement.offer);
+      if (agreement.kind === "replace") { say('Say “replace the timer” to replace your current timer, or tap Start timer.'); return; }
+      setPending(null);
+      if (agreement.kind === "cancelled") { say("That suggestion is cleared. Your current timer stays as it is."); return; }
+      if (agreement.kind === "expired" && timerConsent(value) !== "other") { say("Please ask for that timer again so we can check the details."); return; }
+    }
     if (/^(?:just rest|take a break|stop scrolling|help me stop scrolling|open relax)$/i.test(value.trim())) { goRest(); return; }
     if (/^(?:open |show )?(?:explore|move|eat|sleep)$/i.test(value.trim())) { a.setActive(value.trim().toLowerCase().replace(/^(open |show )/, "")); return; }
     const captureMode = foodCaptureMode(value);
@@ -230,7 +287,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     }
     const request = parseHostRequest(value);
     // Conversation must not approve or clear a plan that is waiting for review.
-    if (request.type === "timer-status") { say(timerStatusReply(a.timer)); return; }
+    if (request.type === "timer-status") { try { const saved = await a.readTimer(); verifiedTimer.current = saved.timer || initialTimer; say(timerStatusReply(verifiedTimer.current)); } catch { say("I couldn’t check your saved timer. Please try again."); } return; }
     if (request.type === "reply") { say(request.message); return; }
     if (request.type === "control") {
       if (request.command === "confirm") { if (!pending) { say("Tell me what you’d like to do first."); return; } return applyPlan(); }
@@ -249,6 +306,17 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     }
     const missing = request.actions.find(action => !a.enabled(actionModule(action)));
     if (missing) { say(`Enable ${moduleNames[actionModule(missing)]} in Customize tools first. Nothing has changed.`); return; }
+    if (request.actions.length === 1 && request.actions[0].type === "activity") {
+      const saved = await a.readTimer(); verifiedTimer.current = saved.timer || initialTimer;
+      if (conversationTurn.current !== turn || !mounted.current) return "That request is no longer current. Nothing was proposed or started. Ask for the current activity and duration again.";
+      timerOutcome.current = "";
+      setPending(request.actions);
+      const offer = timerConfirmation.current.prepare(request.actions, saved.version, saved.timer, crypto.randomUUID())!;
+      const instruction = offer.replaces ? 'This replaces your current timer. Say “replace the timer” or tap Start timer to agree.' : 'Say “okay” or tap Start timer when you’re ready.';
+      const result = `${describeAction(offer.action)}. ${instruction} The proposal has NOT started. After agreement check the saved timer before claiming success.`;
+      say(`${describeAction(offer.action)}. ${instruction}`);
+      return result;
+    }
     setPending(request.actions);
     say(`Here’s what I understood. ${request.actions.map(describeAction).join(". ")}. ${request.actions.some(action => action.type === "activity") && hasActivity && !finished ? "This will replace your current activity. " : ""}${agentActive ? "Press Do this to confirm." : "Say yes or press Do this."}`);
   }
@@ -256,7 +324,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     voice.clearError();
     const route = hostInputRoute(text, agent.status, aiChosen, busy || routing);
     if (route === "ignore") return;
-    if (route === "agent") { if (agent.send(text)) setText(""); }
+    if (route === "agent") { const sent = text; void agent.send(sent).then(ok => { if(ok)setText(current => current === sent ? "" : current); }); }
     else if (route === "reconnect") setConsent("text");
     else void receive(text);
   }
@@ -350,7 +418,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     <div className="host-conversation" ref={replyRegion} aria-live="polite" aria-atomic="true">{(voice.listening || heard) && <p className="host-heard">{voice.listening ? voice.transcript || "Listening…" : `You: ${heard}`}</p>}<p className="host-reply"><span>Daywell</span>{busy ? "Taking care of that…" : routing ? "Finding the right reply…" : reply}</p>
       {recordedReply && <div className="host-recorded-reply"><button className="host-text-button" onClick={() => library.status === "idle" ? void library.play(recordedReply) : library.stop()}>{library.status === "idle" ? "Listen" : "Stop playback"}</button></div>}
     </div>{library.error && <p className="host-error" role="status">{library.error}</p>}{(error || voice.error) && <p className="host-error" ref={voiceErrorRegion} role="alert">{error || voice.error}</p>}
-    {pending && <div className="host-plan" ref={planRegion} tabIndex={-1} aria-label="Review your request"><h3>Here’s the plan</h3><ul>{pending.map((action, index) => <li key={index}><Check size={16} />{describeAction(action)}</li>)}</ul>{pending.some(action => action.type === "activity") && hasActivity && !finished && <p className="host-replace-note">This replaces your current activity. Your lists stay saved.</p>}<div><button className="host-primary" disabled={busy} onClick={() => void applyPlan()}>{busy ? "Saving…" : "Do this"}</button><button className="host-text-button" disabled={busy} onClick={() => { setPending(null); voice.silence(); setReply("Request cleared. Your saved day stays as it is."); }}>Cancel request</button></div></div>}
+    {pending && <div className="host-plan" ref={planRegion} tabIndex={-1} aria-label="Review your request"><h3>Here’s the plan</h3><ul>{pending.map((action, index) => <li key={index}><Check size={16} />{describeAction(action)}</li>)}</ul>{pending.some(action => action.type === "activity") && hasActivity && !finished && <p className="host-replace-note">This replaces your current activity. Your lists stay saved.</p>}<div><button className="host-primary" disabled={busy} onClick={() => void applyPlan()}>{busy ? "Saving…" : pending.length === 1 && pending[0].type === "activity" ? "Start timer" : "Do this"}</button><button className="host-text-button" disabled={busy} onClick={() => { setPending(null); voice.silence(); setReply("Request cleared. Your saved day stays as it is."); }}>Cancel request</button></div></div>}
     <div className="host-history-actions"><button disabled={busy || !undoable} onClick={() => void undo()}><Undo2 size={15} />Undo last change</button><button onClick={() => setShowChanges(!showChanges)} aria-expanded={showChanges}>What changed?<ChevronDown size={14} /></button>{spoken && <span><Volume2 size={14} />Replies aloud</span>}</div>
     {showChanges && <div className="host-change-summary">{lastChange ? `${lastChange.undone ? "Undone: " : "Last change: "}${lastChange.summary}` : "Nothing changed in this visit yet."}</div>}
     {ack && <div className="host-ack" role="status">{!hideCompanions && <CompanionPortrait id={ack.id} size={49} decorative />}<span><Check size={15} />{ack.text}</span></div>}

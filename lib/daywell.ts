@@ -15,7 +15,7 @@ export const schemas = {
  sleep:z.object({date,bedtime:time,wakeTime:time,minutes:z.number().min(1).max(960),quality:z.enum(["Rested","Okay","Tired"])}),
  move:z.object({title,date,minutes:z.number().int().min(1).max(600),sets:z.array(workoutSetSchema).min(1).max(20).optional(),...activityTrackingFields}),
  alarm:z.object({title,time,enabled:z.boolean(),days:z.array(z.number().int().min(0).max(6)).max(7),lastFired:z.string().max(50).optional(),snoozeAt:z.number().nullable().optional()}),
- timer:z.object({title:z.string().max(160),duration:z.number().min(1).max(86400),remaining:z.number().min(0).max(86400),endAt:z.number().nullable(),mode:z.enum(["Focus","Break","Timer"]),companion:z.enum(["pip","luma","bounce","tock"]).optional(),startedAt:z.number().optional()}),
+ timer:z.object({title:z.string().max(160),duration:z.number().min(1).max(86400),remaining:z.number().min(0).max(86400),endAt:z.number().nullable(),mode:z.enum(["Focus","Break","Timer"]),companion:z.enum(["pip","luma","bounce","tock"]).optional(),startedAt:z.number().optional(),confirmationId:z.string().uuid().optional()}),
  event:z.object({title,date,allDay:z.boolean(),time,minutes:z.number().int().min(1).max(1440),location:z.string().max(200),notes:z.string().max(3000),done:z.boolean(),completedDate:date.nullable().optional(),completedAt:z.string().datetime().nullable().optional()}),
  reflection:z.object({date,text:z.string().trim().min(1).max(3000)}),
  session:z.object({title,date,minutes:z.number().min(0).max(1440)})

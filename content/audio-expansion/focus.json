@@ -9,7 +9,9 @@
   ["I need to tidy but do not know where to begin.","Choose one small surface or one kind of item. Stop before the task spreads to the whole room."],
   ["I have wasted the morning and cannot begin now.","The next few minutes are still available. Choose a small action that fits the time you have now."],
   ["I need a tiny first step for studying.","Open the material and find the section you need. That is enough for the first step; reading can come next."],
-  ["Please make starting feel less serious.","Try a small experiment: give the task two minutes of imperfect attention. You can reassess when those minutes are over." ]
+  ["Please make starting feel less serious.","Try a small experiment: give the task two minutes of imperfect attention. You can reassess when those minutes are over." ],
+  ["I cannot make myself start working.","Starting is often the hardest part. Pick the smallest piece, like opening the file or writing one line, and give it just two minutes."],
+  ["I have been putting off my work all day.","You do not have to make up for the whole day. Choose one small task you can finish in ten minutes, and begin there."]
  ]},
  {"id":"focus-choose-priority","category":"focus","title":"Choose one priority","companion":"pip","examples":[
   ["Everything on my list feels urgent.","Check which task has a real deadline or consequence today. Start there, and let the rest wait on the list."],
@@ -33,7 +35,9 @@
   ["I am distracted by everything on my desk.","Move just the things that compete with the next task. You do not need a perfectly tidy desk to continue."],
   ["I lost my place after scrolling.","Look for the last small thing you completed. Write a brief note about the next action, then begin there."],
   ["Can you block all distracting apps for me?","Daywell does not automatically block other apps. Your device may have focus or screen time settings you can choose to use.","live"],
-  ["Remind me that I can come back after distraction.","A distraction does not cancel the work you have done. Take one gentle return to the next visible step." ]
+  ["Remind me that I can come back after distraction.","A distraction does not cancel the work you have done. Take one gentle return to the next visible step." ],
+  ["I have lost my focus again.","That happens to everyone. Notice where you were, take one slow breath, and pick up the very next small step."],
+  ["I keep getting distracted today.","Being distracted again does not undo what you have done. Close one thing you do not need, then return to a single small part of the task."]
  ]},
  {"id":"focus-break-it-down","category":"focus","title":"Make the task smaller","companion":"pip","examples":[
   ["Help me break down cleaning my room.","Choose one category first, such as clothes. Put those in their places before deciding whether to take on anything else."],
@@ -117,6 +121,8 @@
   ["I am tired but have more to study.","Check whether a break or stopping for the day would be more useful. More time at the desk is not always more learning."],
   ["I cannot remember anything I studied.","Try one small recall question and then check your notes. Begin with a narrow topic rather than testing yourself on everything."],
   ["I want to end studying with a clear next step.","Write the next topic and one question to start with. That gives your next session a place to begin."],
-  ["Can you do my exam for me?","I can support practice and understanding, but I cannot take an exam on your behalf. We can work on the topic you need to learn.","live"]
+  ["Can you do my exam for me?","I can support practice and understanding, but I cannot take an exam on your behalf. We can work on the topic you need to learn.","live"],
+  ["I cannot concentrate on my revision.","Try one short, clear session: one topic, twenty minutes, phone out of reach. Then take a proper break before you choose the next."],
+  ["My mind keeps wandering while I study.","Test yourself instead of rereading. Close your notes, write what you remember about one topic, then check what you missed."]
  ]}
 ]

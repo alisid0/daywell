@@ -7085,6 +7085,76 @@
       "src": "/audio-library/everyday-finish-gently-10-4bda4fc861ac.mp3",
       "text": "Goodnight. Let the remaining tasks wait where they can. You can settle into the rest of your evening at your own pace.",
       "bytes": 47691
+    },
+    "everyday-lowenergy-11": {
+      "src": "/audio-library/everyday-lowenergy-11-2e52e978903b.mp3",
+      "text": "Some days have less in them, and that is okay. Choose the one or two things that matter most today, and let the rest wait.",
+      "bytes": 53751
+    },
+    "sleep-late-screen-11": {
+      "src": "/audio-library/sleep-late-screen-11-8bba8fbe7fbd.mp3",
+      "text": "It is easy to keep going when the feed never ends. Choose one last thing to watch, then turn the phone face down and let the room go quiet.",
+      "bytes": 62528
+    },
+    "everyday-lowenergy-12": {
+      "src": "/audio-library/everyday-lowenergy-12-a33d33b88089.mp3",
+      "text": "Go gently today. Pick the easiest version of what you need to do, and leave a few quiet minutes for yourself when you can.",
+      "bytes": 54796
+    },
+    "eat-choosing-meal-12": {
+      "src": "/audio-library/eat-choosing-meal-12-2ecdeae0cea3.mp3",
+      "text": "Think of something you enjoyed recently and have a simple version of it. It only needs to be good enough for today.",
+      "bytes": 44347
+    },
+    "sleep-late-screen-12": {
+      "src": "/audio-library/sleep-late-screen-12-0fbc9b080328.mp3",
+      "text": "You can choose the ending tonight. Once the phone is down, a sleep sound or Luma can keep you company instead.",
+      "bytes": 46646
+    },
+    "eat-choosing-meal-11": {
+      "src": "/audio-library/eat-choosing-meal-11-e28cbd437328.mp3",
+      "text": "Let's start with one question: something warm, or something you can eat straight away? Let that answer pick the meal.",
+      "bytes": 47064
+    },
+    "focus-starting-friction-11": {
+      "src": "/audio-library/focus-starting-friction-11-edeedde113c8.mp3",
+      "text": "Starting is often the hardest part. Pick the smallest piece, like opening the file or writing one line, and give it just two minutes.",
+      "bytes": 53751
+    },
+    "eat-breakfast-start-12": {
+      "src": "/audio-library/eat-breakfast-start-12-132a338021fd.mp3",
+      "text": "Make it as easy as possible: something you can eat in a few bites, set out the night before, so it is ready when you are.",
+      "bytes": 50408
+    },
+    "eat-breakfast-start-11": {
+      "src": "/audio-library/eat-breakfast-start-11-2ef9c4bfd2ce.mp3",
+      "text": "Not everyone wants food first thing, and that is okay. If you would like something earlier in the day, keep one easy option where you will see it.",
+      "bytes": 63991
+    },
+    "focus-distracted-again-11": {
+      "src": "/audio-library/focus-distracted-again-11-75ba1de18d3e.mp3",
+      "text": "That happens to everyone. Notice where you were, take one slow breath, and pick up the very next small step.",
+      "bytes": 44347
+    },
+    "focus-starting-friction-12": {
+      "src": "/audio-library/focus-starting-friction-12-f2bd25be1eb2.mp3",
+      "text": "You do not have to make up for the whole day. Choose one small task you can finish in ten minutes, and begin there.",
+      "bytes": 51453
+    },
+    "focus-distracted-again-12": {
+      "src": "/audio-library/focus-distracted-again-12-2746f9006332.mp3",
+      "text": "Being distracted again does not undo what you have done. Close one thing you do not need, then return to a single small part of the task.",
+      "bytes": 61901
+    },
+    "focus-study-support-12": {
+      "src": "/audio-library/focus-study-support-12-af407dd474e5.mp3",
+      "text": "Test yourself instead of rereading. Close your notes, write what you remember about one topic, then check what you missed.",
+      "bytes": 52288
+    },
+    "focus-study-support-11": {
+      "src": "/audio-library/focus-study-support-11-9c635a0883aa.mp3",
+      "text": "Try one short, clear session: one topic, twenty minutes, phone out of reach. Then take a proper break before you choose the next.",
+      "bytes": 55632
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Daywell general-wellness audio catalogue: 1417 published recordings.",
+  "description": "Daywell general-wellness audio catalogue: 1431 published recordings.",
   "note": "Examples are not an automatic intent router. Medical and crisis examples are excluded. App actions require explicit confirmation; playback must not imply an action has happened.",
   "entries": [
     {
@@ -3872,6 +3872,24 @@
       "companion": "luma",
       "text": "If this is a time to rest, you do not have to turn rest into an achievement.",
       "recording": "/audio-library/everyday-lowenergy-10-361a5361ab47.mp3"
+    },
+    {
+      "id": "everyday-lowenergy-11",
+      "groupId": "everyday-lowenergy",
+      "category": "everyday",
+      "title": "A lower-energy day",
+      "companion": "luma",
+      "text": "Some days have less in them, and that is okay. Choose the one or two things that matter most today, and let the rest wait.",
+      "recording": "/audio-library/everyday-lowenergy-11-2e52e978903b.mp3"
+    },
+    {
+      "id": "everyday-lowenergy-12",
+      "groupId": "everyday-lowenergy",
+      "category": "everyday",
+      "title": "A lower-energy day",
+      "companion": "luma",
+      "text": "Go gently today. Pick the easiest version of what you need to do, and leave a few quiet minutes for yourself when you can.",
+      "recording": "/audio-library/everyday-lowenergy-12-a33d33b88089.mp3"
     },
     {
       "id": "everyday-choice-01",
@@ -7980,6 +7998,28 @@
       "recording": "/audio-library/sleep-late-screen-10-bc153752377d.mp3"
     },
     {
+      "id": "sleep-late-screen-11",
+      "groupId": "sleep-late-screen",
+      "category": "sleep",
+      "title": "Let the screen finish for tonight",
+      "companion": "luma",
+      "prompt": "I lie in bed scrolling for ages.",
+      "text": "It is easy to keep going when the feed never ends. Choose one last thing to watch, then turn the phone face down and let the room go quiet.",
+      "handling": "recorded",
+      "recording": "/audio-library/sleep-late-screen-11-8bba8fbe7fbd.mp3"
+    },
+    {
+      "id": "sleep-late-screen-12",
+      "groupId": "sleep-late-screen",
+      "category": "sleep",
+      "title": "Let the screen finish for tonight",
+      "companion": "luma",
+      "prompt": "Scrolling keeps me up later than I meant.",
+      "text": "You can choose the ending tonight. Once the phone is down, a sleep sound or Luma can keep you company instead.",
+      "handling": "recorded",
+      "recording": "/audio-library/sleep-late-screen-12-0fbc9b080328.mp3"
+    },
+    {
       "id": "sleep-after-short-night-01",
       "groupId": "sleep-after-short-night",
       "category": "sleep",
@@ -10147,6 +10187,28 @@
       "recording": "/audio-library/eat-choosing-meal-10-3a763e664458.mp3"
     },
     {
+      "id": "eat-choosing-meal-11",
+      "groupId": "eat-choosing-meal",
+      "category": "eat",
+      "title": "Choosing something to eat",
+      "companion": "nori",
+      "prompt": "I have no idea what to eat.",
+      "text": "Let's start with one question: something warm, or something you can eat straight away? Let that answer pick the meal.",
+      "handling": "recorded",
+      "recording": "/audio-library/eat-choosing-meal-11-e28cbd437328.mp3"
+    },
+    {
+      "id": "eat-choosing-meal-12",
+      "groupId": "eat-choosing-meal",
+      "category": "eat",
+      "title": "Choosing something to eat",
+      "companion": "nori",
+      "prompt": "Nothing sounds good to eat right now.",
+      "text": "Think of something you enjoyed recently and have a simple version of it. It only needs to be good enough for today.",
+      "handling": "recorded",
+      "recording": "/audio-library/eat-choosing-meal-12-2ecdeae0cea3.mp3"
+    },
+    {
       "id": "eat-quick-options-01",
       "groupId": "eat-quick-options",
       "category": "eat",
@@ -10684,6 +10746,28 @@
       "text": "Choose an option that stores safely overnight. Set out what you need so the morning has fewer steps.",
       "handling": "recorded",
       "recording": "/audio-library/eat-breakfast-start-10-ce62e4f6c631.mp3"
+    },
+    {
+      "id": "eat-breakfast-start-11",
+      "groupId": "eat-breakfast-start",
+      "category": "eat",
+      "title": "A manageable breakfast",
+      "companion": "sunny",
+      "prompt": "I never really eat breakfast.",
+      "text": "Not everyone wants food first thing, and that is okay. If you would like something earlier in the day, keep one easy option where you will see it.",
+      "handling": "recorded",
+      "recording": "/audio-library/eat-breakfast-start-11-2ef9c4bfd2ce.mp3"
+    },
+    {
+      "id": "eat-breakfast-start-12",
+      "groupId": "eat-breakfast-start",
+      "category": "eat",
+      "title": "A manageable breakfast",
+      "companion": "sunny",
+      "prompt": "I keep skipping breakfast without meaning to.",
+      "text": "Make it as easy as possible: something you can eat in a few bites, set out the night before, so it is ready when you are.",
+      "handling": "recorded",
+      "recording": "/audio-library/eat-breakfast-start-12-132a338021fd.mp3"
     },
     {
       "id": "eat-lunch-pause-01",
@@ -11566,6 +11650,28 @@
       "recording": "/audio-library/focus-starting-friction-10-c71db5ebefc6.mp3"
     },
     {
+      "id": "focus-starting-friction-11",
+      "groupId": "focus-starting-friction",
+      "category": "focus",
+      "title": "When starting is the hard part",
+      "companion": "pip",
+      "prompt": "I cannot make myself start working.",
+      "text": "Starting is often the hardest part. Pick the smallest piece, like opening the file or writing one line, and give it just two minutes.",
+      "handling": "recorded",
+      "recording": "/audio-library/focus-starting-friction-11-edeedde113c8.mp3"
+    },
+    {
+      "id": "focus-starting-friction-12",
+      "groupId": "focus-starting-friction",
+      "category": "focus",
+      "title": "When starting is the hard part",
+      "companion": "pip",
+      "prompt": "I have been putting off my work all day.",
+      "text": "You do not have to make up for the whole day. Choose one small task you can finish in ten minutes, and begin there.",
+      "handling": "recorded",
+      "recording": "/audio-library/focus-starting-friction-12-f2bd25be1eb2.mp3"
+    },
+    {
       "id": "focus-choose-priority-01",
       "groupId": "focus-choose-priority",
       "category": "focus",
@@ -11784,6 +11890,28 @@
       "text": "A distraction does not cancel the work you have done. Take one gentle return to the next visible step.",
       "handling": "recorded",
       "recording": "/audio-library/focus-distracted-again-10-8d733359acc5.mp3"
+    },
+    {
+      "id": "focus-distracted-again-11",
+      "groupId": "focus-distracted-again",
+      "category": "focus",
+      "title": "Returning after distraction",
+      "companion": "pip",
+      "prompt": "I have lost my focus again.",
+      "text": "That happens to everyone. Notice where you were, take one slow breath, and pick up the very next small step.",
+      "handling": "recorded",
+      "recording": "/audio-library/focus-distracted-again-11-75ba1de18d3e.mp3"
+    },
+    {
+      "id": "focus-distracted-again-12",
+      "groupId": "focus-distracted-again",
+      "category": "focus",
+      "title": "Returning after distraction",
+      "companion": "pip",
+      "prompt": "I keep getting distracted today.",
+      "text": "Being distracted again does not undo what you have done. Close one thing you do not need, then return to a single small part of the task.",
+      "handling": "recorded",
+      "recording": "/audio-library/focus-distracted-again-12-2746f9006332.mp3"
     },
     {
       "id": "focus-break-it-down-01",
@@ -12554,6 +12682,28 @@
       "text": "I can support practice and understanding, but I cannot take an exam on your behalf. We can work on the topic you need to learn.",
       "handling": "live",
       "recording": "/audio-library/focus-study-support-10-5eaeed8cc5a9.mp3"
+    },
+    {
+      "id": "focus-study-support-11",
+      "groupId": "focus-study-support",
+      "category": "focus",
+      "title": "A gentler study session",
+      "companion": "pip",
+      "prompt": "I cannot concentrate on my revision.",
+      "text": "Try one short, clear session: one topic, twenty minutes, phone out of reach. Then take a proper break before you choose the next.",
+      "handling": "recorded",
+      "recording": "/audio-library/focus-study-support-11-9c635a0883aa.mp3"
+    },
+    {
+      "id": "focus-study-support-12",
+      "groupId": "focus-study-support",
+      "category": "focus",
+      "title": "A gentler study session",
+      "companion": "pip",
+      "prompt": "My mind keeps wandering while I study.",
+      "text": "Test yourself instead of rereading. Close your notes, write what you remember about one topic, then check what you missed.",
+      "handling": "recorded",
+      "recording": "/audio-library/focus-study-support-12-af407dd474e5.mp3"
     },
     {
       "id": "progress-gentle-review-01",

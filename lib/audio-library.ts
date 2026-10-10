@@ -533,6 +533,8 @@ export const audioGroups: AudioGroup[] = [
     'You can decide what needs doing and what can wait, one thing at a time.',
     'A day with less energy still deserves comfort and care.',
     'If this is a time to rest, you do not have to turn rest into an achievement.',
+    'Some days have less in them, and that is okay. Choose the one or two things that matter most today, and let the rest wait.',
+    'Go gently today. Pick the easiest version of what you need to do, and leave a few quiet minutes for yourself when you can.',
   ]),
   group('everyday-choice', 'everyday', 'Too many choices', 'pip', [
     'You can narrow the choice to two practical options, then pick the one that feels easier to begin.',

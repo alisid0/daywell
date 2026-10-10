@@ -19,12 +19,12 @@ test('the library has 1431 distinct scripts across 144 situations', () => {
   }
 });
 
-test('929 published examples have unique user utterances and explicit response handling', () => {
+test('927 published examples have unique user utterances and explicit response handling', () => {
   const examples = audioResponses.filter(item=>item.prompt);
-  assert.equal(examples.length,929);
-  assert.equal(new Set(examples.map(item=>item.prompt.toLowerCase().replace(/[^a-z0-9]/g,''))).size,929);
+  assert.equal(examples.length,927);
+  assert.equal(new Set(examples.map(item=>item.prompt.toLowerCase().replace(/[^a-z0-9]/g,''))).size,927);
   for(const entry of examples) assert.ok(['recorded','tool','live','urgent'].includes(entry.handling),entry.id);
-  assert.equal(audioResponses.filter(item=>!item.prompt).length,502);
+  assert.equal(audioResponses.filter(item=>!item.prompt).length,504);
 });
 
 test('variations cycle predictably and unknown situations do not invent responses', () => {

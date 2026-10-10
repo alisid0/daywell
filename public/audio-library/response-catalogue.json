@@ -3064,6 +3064,24 @@
       "recording": "/audio-library/focus-return-10-521c369102b8.mp3"
     },
     {
+      "id": "focus-return-11",
+      "groupId": "focus-return",
+      "category": "focus",
+      "title": "After a distraction",
+      "companion": "pip",
+      "text": "That happens to everyone. Notice where you were, take one slow breath, and pick up the very next small step.",
+      "recording": "/audio-library/focus-return-11-75ba1de18d3e.mp3"
+    },
+    {
+      "id": "focus-return-12",
+      "groupId": "focus-return",
+      "category": "focus",
+      "title": "After a distraction",
+      "companion": "pip",
+      "text": "Being distracted again does not undo what you have done. Close one thing you do not need, then return to a single small part of the task.",
+      "recording": "/audio-library/focus-return-12-2746f9006332.mp3"
+    },
+    {
       "id": "focus-priority-01",
       "groupId": "focus-priority",
       "category": "focus",
@@ -11890,28 +11908,6 @@
       "text": "A distraction does not cancel the work you have done. Take one gentle return to the next visible step.",
       "handling": "recorded",
       "recording": "/audio-library/focus-distracted-again-10-8d733359acc5.mp3"
-    },
-    {
-      "id": "focus-distracted-again-11",
-      "groupId": "focus-distracted-again",
-      "category": "focus",
-      "title": "Returning after distraction",
-      "companion": "pip",
-      "prompt": "I have lost my focus again.",
-      "text": "That happens to everyone. Notice where you were, take one slow breath, and pick up the very next small step.",
-      "handling": "recorded",
-      "recording": "/audio-library/focus-distracted-again-11-75ba1de18d3e.mp3"
-    },
-    {
-      "id": "focus-distracted-again-12",
-      "groupId": "focus-distracted-again",
-      "category": "focus",
-      "title": "Returning after distraction",
-      "companion": "pip",
-      "prompt": "I keep getting distracted today.",
-      "text": "Being distracted again does not undo what you have done. Close one thing you do not need, then return to a single small part of the task.",
-      "handling": "recorded",
-      "recording": "/audio-library/focus-distracted-again-12-2746f9006332.mp3"
     },
     {
       "id": "focus-break-it-down-01",

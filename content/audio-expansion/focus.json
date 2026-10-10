@@ -35,9 +35,7 @@
   ["I am distracted by everything on my desk.","Move just the things that compete with the next task. You do not need a perfectly tidy desk to continue."],
   ["I lost my place after scrolling.","Look for the last small thing you completed. Write a brief note about the next action, then begin there."],
   ["Can you block all distracting apps for me?","Daywell does not automatically block other apps. Your device may have focus or screen time settings you can choose to use.","live"],
-  ["Remind me that I can come back after distraction.","A distraction does not cancel the work you have done. Take one gentle return to the next visible step." ],
-  ["I have lost my focus again.","That happens to everyone. Notice where you were, take one slow breath, and pick up the very next small step."],
-  ["I keep getting distracted today.","Being distracted again does not undo what you have done. Close one thing you do not need, then return to a single small part of the task."]
+  ["Remind me that I can come back after distraction.","A distraction does not cancel the work you have done. Take one gentle return to the next visible step." ]
  ]},
  {"id":"focus-break-it-down","category":"focus","title":"Make the task smaller","companion":"pip","examples":[
   ["Help me break down cleaning my room.","Choose one category first, such as clothes. Put those in their places before deciding whether to take on anything else."],

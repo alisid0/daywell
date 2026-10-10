@@ -16,8 +16,16 @@ This changes presentation only: no routing, model, voice, provider configuration
 - Type checking, all 202 existing tests and the production build passed.
 - Scoped lint passed with no new errors.
 - Isolated browser checks verified the food dialog's shorter controls, keyboard expansion of the sharing notice and the unavailable-conversation settings without setup instructions. No owner records were created or changed, and no paid generation was needed for these copy checks.
-- Private-build and deployment evidence follows below after publishing.
+- Private Cloudflare build and dry-run passed, including the existing Worker, database and Access binding checks.
+- GitHub's complete Check Daywell run [38008972534](https://github.com/alisid0/daywell/actions/runs/38008972534) passed for application source `1c17cf96ed51619400943ce8b0dee11a19892b79`.
 
 ## Remaining verification and setup
 
 Physical Android microphone, camera and speaker behaviour should continue through the owner's phone testing. This copy pass does not claim new recognition accuracy, background timer support or store readiness. No installation, migration or secret change is required. Source updates alone do not deploy the hosted phone app.
+
+## Private deployment and readback
+
+- Application source `1c17cf96ed51619400943ce8b0dee11a19892b79` was deployed at 00:27:30 UTC on 10 October. Cloudflare version `fa8ccd32-0fdb-4bb6-9fa6-c7c215cd7f97` was read back serving 100% of traffic on the existing private app.
+- The hosted food dialog was verified at a 393 × 851 responsive viewport. The initial screen shows the simple photo/voice actions; expanding Privacy & details reveals the providers, sharing, retention links and readout limits. The chat consent was also checked before connecting, including keyboard access to its timer-context and provider notice.
+- Sixteen anonymous and forged-sign-in probes all remained protected. No owner entries were saved, no live conversation was started and no paid generation was used during this wording pass.
+- The temporary isolated QA server was stopped. The normal local preview and private hosted app remain available. The final handover-only commit does not change deployed application code.

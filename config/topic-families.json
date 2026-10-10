@@ -1,0 +1,29 @@
+{
+  "description": "Recorded-reply topics that cover the same situation, usually one of the original 50 and a newer topic written for the same moment. JEV is offered each family as a single topic, so its confidence is not split between two right answers, and the reply step then offers every reply in the family. Owner decision, 10 October 2026. When a new topic duplicates an existing one, add it to that family.",
+  "families": [
+    ["relax-scroll", "relax-scroll-loop"],
+    ["relax-self-talk", "everyday-kindness"],
+    ["relax-decision-load", "everyday-choice"],
+    ["sleep-phone", "sleep-late-screen"],
+    ["sleep-awake", "sleep-waking"],
+    ["sleep-thoughts", "sleep-tomorrow"],
+    ["sleep-room", "sleep-room-comfort"],
+    ["move-begin", "move-first-step"],
+    ["move-walk", "move-walk-choice"],
+    ["move-strength", "move-strength-basics"],
+    ["move-return", "move-returning", "progress-gaps-return"],
+    ["eat-begin", "eat-choosing-meal"],
+    ["eat-simple", "eat-evening-meals"],
+    ["eat-pantry", "eat-cupboard-options"],
+    ["eat-shopping", "eat-food-shopping"],
+    ["eat-log", "eat-notes-and-logs"],
+    ["focus-start", "focus-starting-friction"],
+    ["focus-return", "focus-distracted-again"],
+    ["focus-priority", "focus-choose-priority"],
+    ["progress-small", "progress-small-wins"],
+    ["progress-lookback", "progress-gentle-review"],
+    ["everyday-hello", "everyday-say-hello"],
+    ["everyday-goodbye", "everyday-finish-gently"],
+    ["everyday-transition", "focus-task-transitions", "relax-work-ending"]
+  ]
+}

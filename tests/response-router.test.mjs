@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { audioResponses } from '../lib/audio-library.ts';
-import { eligibleReplies, foodCaptureMode, localReplyDecision, routeReply } from '../lib/response-router.ts';
+import { audioGroups, audioResponses } from '../lib/audio-library.ts';
+import { eligibleReplies, foodCaptureMode, localReplyDecision, pickerTopics, routeReply } from '../lib/response-router.ts';
+import topicFamilies from '../config/topic-families.json' with { type: 'json' };
 
 const manifest = JSON.parse(readFileSync(new URL('../public/audio-library/manifest.json', import.meta.url)));
 const replies = eligibleReplies(manifest);
@@ -130,4 +131,29 @@ test('the reply step accepts the top reply when none-fit is unlikely, and falls 
     assert.equal(result.kind, kind, `none-fit at ${noneFit}`);
     if (kind === 'recorded') assert.equal(result.message, replies.find(reply => reply.id === result.id).text);
   }
+});
+
+test('topics covering the same situation are offered to Jev as one, and every reply in them stays selectable', async () => {
+  const ids = topicFamilies.families.flat();
+  assert.equal(new Set(ids).size, ids.length);
+  assert.ok(topicFamilies.families.every(family => family.length >= 2 && family.every(id => audioGroups.some(group => group.id === id))));
+  const offered = audioGroups.filter(group => replies.some(reply => reply.groupId === group.id));
+  const topics = pickerTopics(replies);
+  assert.equal(topics.length, offered.length - ids.length + topicFamilies.families.length);
+  assert.deepEqual(topics.flatMap(topic => topic.ids).sort(), offered.map(group => group.id).sort());
+  const scroll = topics.find(topic => topic.ids.includes('relax-scroll'));
+  assert.deepEqual(scroll.ids, ['relax-scroll', 'relax-scroll-loop']);
+  assert.match(scroll.label, /^relax: Step away from the feed \/ Leave the scrolling loop\. /);
+  assert.equal(topics.find(topic => topic.ids.includes('relax-news')).label.split('. ')[0], 'relax: When the news feels heavy');
+  const second = scroll.responses.findIndex(reply => reply.groupId === 'relax-scroll-loop');
+  const bodies = [];
+  const result = await routeReply({ ...request, text: 'I have been on my phone all evening', pick: async body => {
+    bodies.push(body);
+    const criteria = body.questions.pick.criteria;
+    return answer(body, bodies.length === 1 ? Object.keys(criteria).find(key => criteria[key] === scroll.label) : `r${second}`);
+  } });
+  assert.equal(Object.keys(bodies[0].questions.pick.criteria).length, topics.length + 1);
+  assert.equal(Object.keys(bodies[1].questions.pick.criteria).length, scroll.responses.length + 1);
+  assert.equal(result.kind, 'recorded');
+  assert.equal(replies.find(reply => reply.id === result.id).groupId, 'relax-scroll-loop');
 });

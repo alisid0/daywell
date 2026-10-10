@@ -28,3 +28,10 @@ The owner reported that a meal photo needed a description, food replies sounded 
 No lockfile changes or migrations. Existing OpenAI and ElevenLabs secrets are reused; the ElevenLabs key requires Agents read and text-to-speech permission. Live-agent prompt changes are not applied by the GitHub sync monitor. Deployment evidence is appended after publishing.
 
 The owner must retest their actual biryani photo and Android microphone/speaker behaviour. A web timer can report elapsed time on return but cannot guarantee an alert while Android is locked or the browser is suspended. JEV remains separately gated. This is a private tester improvement, not a claim of Play Store readiness or background-alarm support.
+
+## Final private deployment
+
+- Deployed application source: `45655379ed65370f97cfa7f3ef0524aecfff14cb`; its GitHub Check Daywell run passed on 10 October at 00:13:51 UTC.
+- Cloudflare version `873d36fd-d366-4caa-8f67-388e295b0975` serves 100% of the private app, deployed at 00:13:04 UTC. The existing Access policy and provider secrets were preserved; no migration was needed.
+- After refreshing the hosted app, a 393 × 851 browser check again identified eggs and toast from the image alone and showed “1 portion shown · 350 kcal estimated”. The save remained behind consumption confirmation. Closing it still showed zero saved food entries. This was desktop-browser responsive verification, not a claim of controlling or testing the owner's physical Android phone.
+- The temporary isolated QA server was stopped. The normal localhost:5190 preview remains available. The only commits after the deployed source are handover documentation; a GitHub sync does not redeploy the phone app.

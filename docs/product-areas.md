@@ -15,6 +15,7 @@ Small, calm steps for the everyday basics: moving, eating, sleeping and switchin
 5. **Easy to read and use.** One decision per screen, big buttons, Reading comfort everywhere, calm motion. Design for autistic, ADHD and dyslexic people first.
 6. **Everyday wellness only.** No medical advice. Urgent needs go to emergency help.
 7. **Free first.** Recorded replies and on-device features come first. Paid AI is used only where it really helps, within limits.
+8. **Speak to the person using Daywell.** Labels describe actions and results: “Take a photo”, “Hear this”, “Start chat”. Do not narrate routing, generation, providers, model versions or setup requirements in the main journey. Keep AI identity, approximate estimates and confirmation clear. Put provider/data-sharing/retention details in a keyboard-accessible disclosure available before sharing, and setup instructions in the owner setup screen. Never conceal a limitation or remove consent to make a screen simpler.
 
 ## Move, with Bounce
 
@@ -40,7 +41,7 @@ For moments like “what can I make tonight?”, “we’re out of milk” and �
 3. **Confirm**, and it goes to the right place: basket, meal plan, shopping or the food record.
 4. **Undo** straight away if it’s wrong.
 
-Owner decision: photo and voice understanding stays disconnected in the private test for now. Adding by hand must stay complete without it.
+Owner decision, updated 9–10 October: photo and voice understanding is connected for the private test following explicit owner approval. Adding by hand must remain complete when recognition is unavailable.
 
 ## Sleep, with Luma
 

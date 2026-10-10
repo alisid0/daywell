@@ -1,4 +1,5 @@
 "use client";
+import { PrivacyDetails } from "./privacy-details";
 import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, Pause, Play, RotateCcw, SkipForward, Mic, Volume2 } from "lucide-react";
 import { CompanionPortrait } from "@/components/daywell-companions";
@@ -124,7 +125,7 @@ function RoutinePlayer({ routine, onClose, onLog }: { routine: Routine; onClose:
     <section className="routine-voice" aria-label="Training partner voice">
       <label className="food-checkbox"><input type="checkbox" checked={spoken} disabled={!voice.canSpeak} onChange={e=>{window.dispatchEvent(new Event("daywell-stop-voice"));setSpoken(e.target.checked);}}/>Read each step aloud</label>
       <div className="well-actions"><button type="button" className="well-button well-secondary" disabled={!voice.available} onClick={()=>{if(voice.listening)voice.stop();else{window.dispatchEvent(new Event("daywell-stop-voice"));voice.start();}}}><Mic size={17}/>{voice.listening?"Stop listening":"Tap to give a command"}</button><button type="button" className="well-text-button" disabled={!voice.canSpeak} onClick={()=>{window.dispatchEvent(new Event("daywell-stop-voice"));voice.speak(cue);}}><Volume2 size={17}/>Hear this step</button></div>
-      <small>{resting ? "Say “next” when ready, “pause” to pause the rest timer, or “end”. Rest never counts as a completed exercise." : "Say “done” to record this step, “next” to skip, or “pause”, “continue”, “repeat”, “easier”, “end”."} Tap the mic for each command. Your browser handles speech; no camera is used.</small>
+      <small>{resting ? "Say “next” when ready, “pause” to pause the rest timer, or “end”. Rest never counts as a completed exercise." : "Say “done” to record this step, “next” to skip, or “pause”, “continue”, “repeat”, “easier”, “end”."} Tap the mic for each command.</small><PrivacyDetails><p>Voice commands use your browser’s speech recognition, which may process audio online. Spoken steps use your device’s voice. Your camera stays off.</p></PrivacyDetails>
       {!voice.available&&<p>Voice commands aren’t available in this browser. All routine controls work by tapping.</p>}
       <p role="status">{voice.listening?"Listening…":voiceNote}</p>{voice.error&&<p role="alert">Voice couldn’t continue. Use the buttons, or check microphone access and try again.</p>}
     </section>

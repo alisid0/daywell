@@ -43,7 +43,7 @@ export function useElevenAgent(options: Options) {
     controller.current = new AbortController();
     const timeout = setTimeout(()=>{if(valid()){setError("The conversation took too long to connect. Please try again.");void stop();}},30000);
     try {
-      if(!textOnly && (!navigator.mediaDevices?.getUserMedia || !window.isSecureContext)) throw Error("This browser can’t use the microphone here. Try an AI text conversation instead.");
+      if(!textOnly && (!navigator.mediaDevices?.getUserMedia || !window.isSecureContext)) throw Error("This browser can’t use the microphone here. Try a text chat instead.");
       const response = await fetch("/api/voice",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}",signal:controller.current.signal});
       const data = await response.json() as {signedUrl?: string; error?:string};
       if(!response.ok) throw Error(data.error || "Couldn’t start the conversation.");
@@ -65,7 +65,7 @@ export function useElevenAgent(options: Options) {
         },
         onDisconnect: details=>{if(valid()){if(details.reason === "error") setError("The connection ended. Your unsent message is still here. Reconnect when you’re ready."); void stop();}},
         onError: ()=>{if(valid()){setError("The conversation was interrupted. Check microphone access and your connection, then try again.");void stop();}},
-        onUnhandledClientToolCall: ()=>{if(valid())setError("This agent requested a tool Daywell doesn’t support. Check the Daywell agent setup.");},
+        onUnhandledClientToolCall: ()=>{if(valid())setError("I couldn’t do that here. Please use the on-screen controls.");},
         onMCPToolApprovalRequest: async()=>false,
         clientTools:{daywell_request: async parameters => valid()?current.current.onRequest(parameters):"Conversation ended. No changes made."},
       });

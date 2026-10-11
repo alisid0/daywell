@@ -3,7 +3,7 @@ import { schemas, type Kind } from "./daywell.ts";
 
 // Validate the envelope before reading properties: valid JSON can still be null,
 // an array or a primitive. These are input errors, not storage outages.
-export const stateBodySchema = z.record(z.unknown());
+export const stateBodySchema = z.record(z.string(), z.unknown());
 const entriesSchema = z.array(z.object({
   id: z.string().regex(/^[-a-zA-Z0-9]{1,80}$/),
   kind: z.string().refine(kind => Object.hasOwn(schemas, kind), "Invalid entry kind"),

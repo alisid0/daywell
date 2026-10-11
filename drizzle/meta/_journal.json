@@ -29,6 +29,13 @@
       "when": 1791303542215,
       "tag": "0003_food_history_index",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1791760000000,
+      "tag": "0004_account_closures",
+      "breakpoints": true
     }
   ]
 }

@@ -8,9 +8,11 @@ Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 
 **Recorded-first responses:** the deployed [shared router](docs/response-routing.md) checks local commands and exact playable clips before optional JEV matching or new ElevenLabs responses. JEV remains off until its separate key and accuracy test are available. See the [implementation and deployment evidence](docs/handover/2026-10-10-response-router.md). Continuous live conversations still generate subsequent turns through ElevenLabs.
 
-**Current release direction:** prepare Android and iPhone versions, keeping 5 November 2026 as the working release-review checkpoint. The [9 October launch assessment](docs/launch-readiness-2026-10-09.md) records the remaining blockers and a conditional 6–8 week estimate for public availability in both stores. See the [mobile release plan](docs/mobile-release-plan.md) for scope and acceptance checks. The private web app is not a store-ready release, and the estimates are not approval guarantees.
+**Current release direction:** prepare Android and iPhone versions. On 11 October the owner requested a wide release the following week (12–18 October), superseding the earlier November target. See the [mobile release plan](docs/mobile-release-plan.md) for remaining gates; no public availability date is guaranteed. The [account lifecycle foundation](docs/account-lifecycle.md) adds durable saved-data closure and consistent exports, while customer identity, provider removal, operational privacy controls and native builds remain unfinished.
 
 **Working on either machine? GitHub is the source of truth.** Read [the shared session workflow](docs/github-workflow.md): fetch before starting, then commit, push and verify the GitHub handover before ending each session. A local preview is not a saved or merged version. Coding assistants must also read [AGENTS.md](AGENTS.md); [CLAUDE.md](CLAUDE.md) points to the same rules.
+
+**Your data and safety launch proposal:** [data controls](docs/your-data-proposal.md), [image upload rules](docs/image-upload-policy.md), and [safeguarding and investigation requests](docs/safeguarding-and-data-requests.md) extend [PR 34](https://github.com/alisid0/daywell/pull/34). They identify implementation and legal-review work still needed; they are not deployed guarantees. See the [8 October handover](docs/handover/2026-10-08-data-and-safety-proposals.md).
 
 ## Four-area MVP
 

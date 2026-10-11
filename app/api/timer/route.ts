@@ -1,3 +1,4 @@
+import { activeAccountRoute } from "../active-account";
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 import { database } from '@/db/store';
 import { readLimited, sameOrigin } from '@/lib/request-guards';
@@ -5,7 +6,7 @@ import { readSavedTimer, startSavedTimer, timerStartSchema } from '@/lib/timer-s
 
 export const dynamic = 'force-dynamic';
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
-export async function GET() {
+async function handleGET() {
   const user = await getChatGPTUser();
   if (!user) return json({ error: 'Sign in to check your timer.' }, 401);
   try {
@@ -13,7 +14,7 @@ export async function GET() {
     return json({ timer, version });
   } catch { return json({ error: 'I couldn’t check your saved timer. Please try again.' }, 503); }
 }
-export async function POST(request: Request) {
+async function handlePOST(request: Request) {
   const user = await getChatGPTUser();
   if (!user) return json({ error: 'Sign in to start your timer.' }, 401);
   if (!sameOrigin(request)) return json({ error: 'Request origin is not allowed.' }, 403);
@@ -28,3 +29,7 @@ export async function POST(request: Request) {
     return json({ error: 'I couldn’t confirm the timer was saved. Check its status before trying again.' }, 503);
   }
 }
+
+export const GET = activeAccountRoute(handleGET);
+
+export const POST = activeAccountRoute(handlePOST);

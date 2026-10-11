@@ -2,6 +2,18 @@
 
 Daywell is now being prepared for launch on both Google Play and the Apple App Store. A personal APK is an early testing build within that release, not the final objective. The launch experience must work over the internet with the development computers switched off.
 
+## Latest owner direction and implementation — 12 October
+
+The owner requested a wide release during **12–18 October 2026**. This supersedes the November date assumptions below; those remain historical estimates, not the active target or a promise. Store availability depends on completing the release gates and external review.
+
+PR #36 is now merged into main. The private preview intentionally follows **PR #46, codex/sound-discovery**, published checkpoint `f53d5bb`, while that work is reviewed. Do not switch it to another branch or discard its changes to integrate account work.
+
+The separate **codex/account-lifecycle** draft integrates PR #34's data controls and adds durable closure, late-write protection, canonical receipts, consistent readable/JSON exports and scoped device cleanup. See the [implementation contract](account-lifecycle.md) and [handover](handover/2026-10-12-account-lifecycle.md). This is tested locally, not deployed or a complete whole-service deletion system.
+
+The immediate gates remain: ordinary customer identity/recovery and fresh deletion verification; provider/backup retention and removal operations; real operator/support details and public information routes; reproducible Android/iOS builds; physical-device acceptance and store submission materials. Billing is required before a paid offering, not completed by passing web tests. The Google Play organisation account is reported verified; Apple enrolment and Mac/build-service readiness are still awaiting confirmation. Keep every unfinished gate visible while pursuing the owner's earlier target.
+
+## Historical planning baseline
+
 **Plan date:** 6 October 2026, Europe/London.
 
 **Working review deadline:** 5 November 2026, thirty days from the plan date. The owner has requested an early-November review deadline; confirmation of the exact day and whether it means submission or public availability is pending. Plan for an internal release review on 27 October and initial store submissions from 29 October where account eligibility permits. Store approval and public availability are separate milestones controlled in part by Apple and Google.
@@ -103,6 +115,8 @@ For applicable personal Google Play accounts created after 13 November 2023, at 
 If the owner means public availability by 5 November, aim to submit earlier and mark the schedule at risk until account eligibility and review timing are confirmed. Never label a submitted or approved-but-unreleased app as publicly launched.
 
 ## Store submission checks
+
+**8 October data and safety checkpoint:** [PR 34](https://github.com/alisid0/daywell/pull/34) provides an initial account export/deletion UI and privacy/help pages. Before treating it as launch-ready, complete the [Your data requirements](your-data-proposal.md), [image upload controls](image-upload-policy.md), and [safeguarding and investigation procedures](safeguarding-and-data-requests.md). Their acceptance lists remain open. Publishing these documents does not activate moderation, provider deletion or legal holds, and filling the three existing owner placeholders is not sufficient for release.
 
 - [ ] Google production eligibility confirmed, including applicable testing and verification.
 - [ ] Android AAB and signed iOS archive built from the documented GitHub release commit. Keep the Android APK for direct testing; it does not replace the store bundle.

@@ -1,5 +1,7 @@
 # Talk picker: recorded replies first, live AI only when nothing fits
 
+**Historical proposal, retained when PR #35 was integrated on 11 October 2026.** The implemented behaviour and current acceptance evidence are in [response routing](response-routing.md). The costs and behaviour below describe the original proposal, not verified current provider pricing or a guarantee of on-device speech recognition. The keyword baseline is a comparison tool, not the app's fallback. The app checks exact recordings and offers a new conversation when no approved reply fits; it does not automatically publish generated replies or enable JEV. Use `scripts/check-response-router.mjs` to test the implemented router. The older script here remains available for comparison; `--baseline-only` makes no provider calls.
+
 Owner direction, 8 October 2026. Talking to Daywell should feel like a conversation, yet most turns should cost almost nothing, much as Siri handles common requests on its own. Concept page: https://claude.ai/artifact/HQEREJ3ekmY77QWiiNTb62 (the owner's private link).
 
 ## How one turn should work

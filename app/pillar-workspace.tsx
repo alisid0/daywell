@@ -11,6 +11,7 @@ import { ModuleView } from "./modules";
 import { EntryActions } from "./parts";
 import { FoodSpace } from "./food-space";
 import { RestSpace } from "./rest-space";
+import { SleepSounds } from "./sleep-sounds";
 import { CalendarStrip } from "./calendar-strip";
 import { DailyNutrition, ActivityCaloriesFields } from "./food-tracking";
 import { activityDetail } from "@/lib/food-tracking";
@@ -75,6 +76,6 @@ function MoveSpace({ a }: { a: AppState }) {
 }
 function SleepSpace({ a }: { a: AppState }) {
   const [resting, setResting] = useState(false);
-  if(resting) return <RestSpace a={a} bedtime onLeave={()=>setResting(false)}/>;
-  return <section className="well-space"><Heading id="sleep"/><CalendarStrip a={a} area="sleep"/><div className="well-card sleep-door"><div><h2>Make tonight a little softer.</h2><p>Quiet company, a gentle grounding prompt and optional soft sound.</p></div><button className="well-button" onClick={()=>{window.dispatchEvent(new Event("daywell-stop-voice"));setResting(true);}}>Wind down with Luma</button></div><ModuleView a={a}/><LookBack a={a}/></section>;
+  if(resting) return <RestSpace a={a} bedtime onLeave={()=>{a.clearSoundFocus();setResting(false);}}/>;
+  return <section className="well-space"><Heading id="sleep"/><CalendarStrip a={a} area="sleep"/><div className="well-card sleep-door"><div><h2>Make tonight a little softer.</h2><p>Quiet company and a little guidance, whenever you want it.</p></div><button className="well-button" onClick={()=>{window.dispatchEvent(new Event("daywell-stop-voice"));a.clearSoundFocus();setResting(true);}}>Wind down with Luma</button></div><SleepSounds focusRequest={a.soundFocus}/><ModuleView a={a}/><LookBack a={a}/></section>;
 }

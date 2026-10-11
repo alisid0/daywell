@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
-import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import Link from "@/components/daywell-link";
 import { AudioLines, Check, ChevronDown, Keyboard, Mic, MicOff, Pause, Play, Send, Settings2, Square, Sun, Undo2, Volume2, VolumeX, X } from "lucide-react";
 import { CompanionPortrait } from "@/components/daywell-companions";
 import { CompanionMotionControl } from "@/components/companion-motion-preference";
@@ -9,10 +9,18 @@ import { hostCompanionMotion, activityCompanionMotion } from "@/lib/companion-mo
 import { companions, type CompanionId } from "@/lib/companions";
 import { today, type Entry } from "@/lib/daywell";
 import { actionModule, canUndoHostChange, describeAction, entriesForActions, guidanceAt, parseHostRequest, type ActivityCompanion, type HostAction, type SupportLevel } from "@/lib/host";
-import type { AppState } from "./use-daywell";
+import { initialTimer, type AppState } from "./use-daywell";
+import { PrivacyDetails } from "./privacy-details";
 import { useHostVoice } from "./use-host-voice";
 import { useElevenAgent } from "./use-eleven-agent";
+import { timerConversationContext, timerStatusReply } from "@/lib/timer-context";
+import { TimerConfirmation, timerConsent, type TimerOffer } from "@/lib/conversation-timer";
 import { safeAgentRequest } from "@/lib/voice-tools";
+import { wellnessBoundary } from "@/lib/wellness-scope";
+import { hostInputRoute } from "@/lib/host-input";
+import { useLibraryAudio } from "./use-library-audio";
+import { audioResponseById, type AudioResponse } from "@/lib/audio-library";
+import { eligibleReplies, foodCaptureMode, localReplyDecision, type ReplyDecision, type ReplyArea } from "@/lib/response-router";
 
 const supportOptions: { id: SupportLevel; title: string; description: string }[] = [
   { id: "quiet", title: "Stay quiet", description: "Company without check-ins" },
@@ -29,11 +37,26 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   const [typed, setTyped] = useState(false);
   const [consent, setConsent] = useState<"voice" | "text" | null>(null);
   const [aiText, setAiText] = useState(false);
+  const [aiChosen, setAiChosen] = useState(false);
   const [heard, setHeard] = useState("");
   const [reply, setReply] = useState("Tell me what you need. I’ll bring the right little helper along.");
-  const [pending, setPending] = useState<HostAction[] | null>(null);
+  const [pending, setPendingState] = useState<HostAction[] | null>(null);
+  const pendingRef = useRef<HostAction[] | null>(null);
+  const timerConfirmation = useRef(new TimerConfirmation());
+  const lastUserMessage = useRef("");
+  const conversationTurn = useRef(0);
+  const timerOutcome = useRef("");
+  const verifiedTimer = useRef(a.timer); verifiedTimer.current = a.timer;
+  function setPending(actions: HostAction[] | null) { pendingRef.current = actions; timerConfirmation.current.clear(); setPendingState(actions); }
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [routing, setRouting] = useState(false);
+  const [pickerConsent, setPickerConsent] = useState<string | null>(null);
+  const [recordedReply, setRecordedReply] = useState<AudioResponse | null>(null);
+  const pickerAllowed = useRef(false), responseEpoch = useRef(0);
+  const responseAbort = useRef<AbortController | null>(null), fallbackRequest = useRef("");
+  const library = useLibraryAudio();
+  const availableReplies = useMemo(() => library.manifest ? eligibleReplies(library.manifest) : [], [library.manifest]);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [support, setSupport] = useState<SupportLevel>("quiet");
   const [spoken, setSpoken] = useState(false);
@@ -48,6 +71,8 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   const input = useRef<HTMLTextAreaElement>(null);
   const region = useRef<HTMLElement>(null);
   const planRegion = useRef<HTMLDivElement>(null);
+  const replyRegion = useRef<HTMLDivElement>(null);
+  const voiceErrorRegion = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     if (!immersive || !pending) return;
     const frame = requestAnimationFrame(() => {
@@ -57,23 +82,65 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     return () => cancelAnimationFrame(frame);
   }, [immersive, pending]);
   const lock = useRef(false);
+  const preparedPlan = useRef<{ actions: HostAction[]; items: Entry[] } | null>(null);
   const mounted = useRef(true);
   const voice = useHostVoice(value => { setHeard(value); void receive(value); });
-  const agent = useElevenAgent({ onMessage: (role, message) => { if(role === "user") setHeard(message); else setReply(message); }, onRequest: async value => { const allowed = safeAgentRequest(value); if (!allowed) return "Unsupported request. Ask the user to use the visible controls. Never claim a change was saved."; await receive(allowed); return "The request is shown in Daywell. Any record or timer change requires the user to press Do this. Nothing is saved by this tool."; } });
+  const agent = useElevenAgent({
+    contextKey: JSON.stringify([a.timer, Math.ceil(a.remaining / 60), pending]),
+    getContext: () => timerConversationContext(verifiedTimer.current, pendingRef.current?.map(describeAction) || []) + timerOutcome.current,
+    prepareContext: async () => { setPending(null); timerOutcome.current = ""; const saved = await a.readTimer(); verifiedTimer.current = saved.timer || initialTimer; return timerConversationContext(verifiedTimer.current, []); },
+    onEnd: () => { conversationTurn.current++; timerConfirmation.current.clear(); },
+    onUserMessage: async message => {
+      lastUserMessage.current = message;
+      conversationTurn.current++;
+      const hadOffer = !!timerConfirmation.current.offer;
+      const agreement = timerConfirmation.current.claim(message);
+      if (agreement.kind === "confirmed") await applyPlan([agreement.offer.action], agreement.offer);
+      else if (agreement.kind === "replace") setReply('Your current timer is still going. Say “replace the timer” to start this one instead, or keep the current timer.');
+      else if (hadOffer) { setPending(null); if (agreement.kind === "expired") setReply("That timer suggestion has expired. Tell me what you’d like to start now."); }
+    },
+    onMessage: (role, message) => { if(role === "user") { setHeard(message); if (wellnessBoundary(message)) { setPending(null); preparedPlan.current = null; setCue(""); setSupport("quiet"); voice.stop(); } } else setReply(message); },
+    onRequest: async value => {
+      const allowed = safeAgentRequest(value);
+      if (!allowed) return "Unsupported request. Ask the user to use the visible controls. Never claim a change was saved.";
+      const request = parseHostRequest(allowed);
+      if (request.type === "timer-status") {
+        try { const saved = await a.readTimer(); verifiedTimer.current = saved.timer || initialTimer; return timerOutcome.current + timerStatusReply(verifiedTimer.current); }
+        catch { return "Timer status unavailable. Do not guess whether anything started. Ask the user to check their timer and try again."; }
+      }
+      if (lock.current) return "A change is still being saved. Wait and check timer status; do not claim success yet.";
+      if (request.type === "plan" && timerConsent(lastUserMessage.current) !== "other") return "Do not propose another timer after agreement or cancellation. Check the saved timer with How much time is left?; only a fresh request may create a new proposal.";
+      try {
+        const result = await receive(allowed, true);
+        return result || "The request was handled on screen. No saved change is implied. Other records require the visible Do this button.";
+      } catch { return "Could not prepare the request. Nothing was started. Ask the user to try again."; }
+    },
+  });
   const stopVoice = voice.stop;
   useEffect(() => {
     window.addEventListener("daywell-stop-voice", stopVoice);
     return () => window.removeEventListener("daywell-stop-voice", stopVoice);
   }, [stopVoice]);
   const agentActive = agent.status !== "disconnected";
+  useEffect(() => {
+    if (!immersive || pending || agentActive || (!heard && !voice.error)) return;
+    const frame = requestAnimationFrame(() => {
+      const target = voice.error ? voiceErrorRegion.current : replyRegion.current;
+      target?.scrollIntoView({ block: "nearest", behavior: "instant" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [immersive, pending, agentActive, heard, reply, voice.error]);
   const agentSession = useRef(agentActive); agentSession.current = agentActive;
   const stopAgent = agent.stop;
+  const stopRecording = library.stop;
   const previousView = useRef(a.active);
   useEffect(() => {
-    if(previousView.current !== a.active) { previousView.current = a.active; stopVoice(); void stopAgent(); }
-  }, [a.active, stopVoice, stopAgent]);
-  async function startAgent(mode: "voice" | "text") { voice.stop(); setConsent(null); setAiText(mode === "text"); await agent.start(mode === "text"); }
-  function goRest() { voice.stop(); void agent.stop(); a.setActive("relax"); }
+    if(previousView.current !== a.active) { previousView.current = a.active; stopVoice(); stopRecording(); void stopAgent(); }
+  }, [a.active, stopVoice, stopAgent, stopRecording]);
+  async function startAgent(mode: "voice" | "text") { voice.stop(); library.stop(); setConsent(null); setAiChosen(true); setAiText(mode === "text"); if (mode === "text") setTyped(true); const initial = fallbackRequest.current; const sent = await agent.start(mode === "text", initial); if (sent && fallbackRequest.current === initial) { fallbackRequest.current = ""; if (initial) setText(""); } }
+  function openChat() { voice.stop(); fallbackRequest.current = ""; setTyped(true); setAiChosen(true); setAiText(true); setConsent("text"); }
+  function useCommands() { voice.stop(); void agent.stop(); setConsent(null); setAiChosen(false); setAiText(false); setTyped(true); }
+  function goRest() { voice.stop(); void agent.stop(); a.openRest(); }
   const companion: ActivityCompanion = a.timer.companion || (a.timer.mode === "Focus" ? "pip" : "tock");
   const hasActivity = Boolean(a.timer.startedAt || a.timer.endAt || a.remaining < a.timer.duration);
   const finished = hasActivity && a.remaining === 0;
@@ -81,8 +148,50 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   live.current = { a, support, spoken, companion, voice, hasActivity };
 
   function say(message: string) {
+    setRecordedReply(null);
     setReply(message);
     if (spoken && !agentActive) voice.speak(message, companion === "luma" && hasActivity);
+  }
+  useEffect(() => {
+    const cancel = () => { responseEpoch.current++; responseAbort.current?.abort(); fallbackRequest.current = ""; setRouting(false); setPickerConsent(null); setConsent(null); setRecordedReply(null); };
+    // Navigation invalidates replies and permission cards belonging to the old area.
+    const currentEpoch = ++responseEpoch.current;
+    queueMicrotask(() => { if (mounted.current && responseEpoch.current === currentEpoch) cancel(); });
+    const hidden = () => { if (document.hidden) cancel(); };
+    document.addEventListener("visibilitychange", hidden);
+    window.addEventListener("pagehide", cancel);
+    return () => { responseEpoch.current++; responseAbort.current?.abort(); document.removeEventListener("visibilitychange", hidden); window.removeEventListener("pagehide", cancel); };
+  }, [a.active]);
+  async function replyToUnknown(value: string, allowAi = pickerAllowed.current) {
+    responseAbort.current?.abort(); const epoch = ++responseEpoch.current;
+    const controller = new AbortController(); responseAbort.current = controller;
+    setRouting(true); setPickerConsent(null); setRecordedReply(null);
+    try {
+      let decision = library.manifest ? localReplyDecision(value, availableReplies) : null;
+      if (!decision) {
+        const area: ReplyArea = (["today", "eat", "move", "sleep", "relax", "calendar"] as string[]).includes(a.active) ? a.active as ReplyArea : "today";
+        const response = await fetch("/api/respond", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: value, area, allowAi }), signal: AbortSignal.any([controller.signal, AbortSignal.timeout(5000)]) });
+        if (!response.ok) throw Error("The reply connection is unavailable. Your request is still here.");
+        decision = await response.json() as ReplyDecision;
+      }
+      if (!mounted.current || responseEpoch.current !== epoch || controller.signal.aborted) return;
+      if (decision.kind === "permission") { setPickerConsent(value); return; }
+      if (decision.kind === "boundary") { say(decision.message); return; }
+      if (decision.kind === "recorded") {
+        const entry = audioResponseById.get(decision.id);
+        if (entry && entry.text === decision.message && availableReplies.some(reply => reply.id === entry.id)) {
+          setReply(entry.text); setRecordedReply(entry);
+          if (spoken) await library.play(entry);
+          return;
+        }
+      }
+      if (decision.kind === "local") { say("Tell me the details of what you’d like to do."); return; }
+      fallbackRequest.current = value;
+      if (agent.configured) { setReply("Let’s talk that through. Start a conversation when you’re ready."); setConsent(spoken ? "voice" : "text"); }
+      else say("I can’t chat just now. You can still use your everyday tools or choose something to listen to.");
+    } catch (problem) {
+      if (mounted.current && responseEpoch.current === epoch && !controller.signal.aborted) setError(problem instanceof Error ? problem.message : "Couldn’t find a reply. Please try again.");
+    } finally { if (mounted.current && responseEpoch.current === epoch) setRouting(false); }
   }
   function rememberPreferences(next: { support?: SupportLevel; spoken?: boolean; hideCompanions?: boolean }) {
     try { localStorage.setItem("daywell-host-preferences", JSON.stringify({ support, spoken, hideCompanions, ...next })); } catch { /* Preferences still work for this visit. */ }
@@ -96,23 +205,34 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     if (value) setText(value);
     requestAnimationFrame(() => input.current?.focus());
   }, [stopVoice]);
-  async function applyPlan() {
-    if (!pending || lock.current) return;
-    const missing = pending.find(action => !a.enabled(actionModule(action)));
+  async function applyPlan(actions = pendingRef.current, confirmed?: TimerOffer) {
+    if (!actions || lock.current) return;
+    const missing = actions.find(action => !a.enabled(actionModule(action)));
     if (missing) { say(`Enable ${moduleNames[actionModule(missing)]} in Customize tools first. Nothing has changed.`); return; }
     lock.current = true; setBusy(true); setError("");
-    const items = entriesForActions(pending, today(), Date.now(), () => crypto.randomUUID());
+    let timerOffer = confirmed;
+    if (actions.length === 1 && actions[0].type === "activity" && !timerOffer) {
+      const approval = timerConfirmation.current.claim("", Date.now(), true);
+      if (approval.kind !== "confirmed") { lock.current = false; setBusy(false); setPending(null); say("Please ask for that timer again so we can check the details."); return; }
+      timerOffer = approval.offer;
+    }
+    if (preparedPlan.current?.actions !== actions) preparedPlan.current = { actions, items: entriesForActions(actions, today(), Date.now(), () => crypto.randomUUID()) };
+    const items = preparedPlan.current.items;
     const before = a.entries.filter(entry => items.some(item => item.id === entry.id));
+    if (timerOffer) timerOutcome.current = "The agreed timer is still being saved. Do not claim it started yet. ";
     try {
       a.unlockAudio();
-      const applied = await a.hostChange(items);
+      const applied = timerOffer ? await a.startConfirmedTimer(timerOffer) : await a.hostChange(items);
+      const savedTimer = applied.find(entry => entry.kind === "timer");
+      if (savedTimer) verifiedTimer.current = savedTimer.data;
+      if (timerOffer) timerOutcome.current = "The agreed timer was saved. Its current status follows; do not propose it again. ";
       if (!mounted.current) return;
-      const summary = pending.map(describeAction).join(". ") + ".";
-      setLastChange({ before, applied, summary }); setPending(null); setShowChanges(false); setText(""); setTyped(false);
-      const activity = pending.find(action => action.type === "activity");
+      const summary = actions.map(describeAction).join(". ") + ".";
+      setLastChange({ before, applied, summary }); preparedPlan.current = null; setPending(null); setShowChanges(false); setText(""); if (!aiText) setTyped(false);
+      const activity = actions.find(action => action.type === "activity");
       setCue("");
-      say(activity?.type === "activity" ? `${pending.length > 1 ? "Your other changes are saved. " : ""}${activity.minutes} minutes are yours. ${activityMessages[activity.companion]}` : "Done. Your changes are saved. You can undo them below.");
-    } catch (problem) { setError(problem instanceof Error ? problem.message : "Couldn’t save that. Your request is still here to retry."); }
+      say(activity?.type === "activity" && savedTimer ? `${timerStatusReply(savedTimer.data)} ${actions.length > 1 ? "Your other changes are saved. " : ""}` : "Done. Your changes are saved. You can undo them below.");
+    } catch (problem) { if(timerOffer){timerOutcome.current = "The new timer could not be confirmed as saved. The following status may belong to the previous timer; do not claim the requested change succeeded or retry automatically. ";setPending(null);} setError(problem instanceof Error ? problem.message : "Couldn’t save that. Please check your timer before trying again."); }
     finally { lock.current = false; if (mounted.current) setBusy(false); }
   }
   async function undo() {
@@ -143,12 +263,32 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     } catch (problem) { setError(problem instanceof Error ? problem.message : "Couldn’t update your activity. Please try again."); }
     finally { lock.current = false; if (mounted.current) setBusy(false); }
   }
-  async function receive(value: string) {
+  async function receive(value: string, fromAgent = false) {
     if (lock.current || !value.trim()) return;
-    voice.silence(); setError(""); setHeard(value.trim());
+    const turn = conversationTurn.current;
+    responseEpoch.current++; responseAbort.current?.abort(); fallbackRequest.current = ""; setConsent(null); setRouting(false); setPickerConsent(null); library.stop(); setRecordedReply(null);
+    voice.silence(); setError(""); if (!fromAgent) setHeard(value.trim());
+    const boundary = wellnessBoundary(value);
+    if (boundary) { setPending(null); preparedPlan.current = null; setCue(""); setSupport("quiet"); voice.stop(); void agent.stop(); setReply(boundary); return; }
+    if (!agentActive && timerConfirmation.current.offer) {
+      const agreement = timerConfirmation.current.claim(value);
+      if (agreement.kind === "confirmed") return applyPlan([agreement.offer.action], agreement.offer);
+      if (agreement.kind === "replace") { say('Say “replace the timer” to replace your current timer, or tap Start timer.'); return; }
+      setPending(null);
+      if (agreement.kind === "cancelled") { say("That suggestion is cleared. Your current timer stays as it is."); return; }
+      if (agreement.kind === "expired" && timerConsent(value) !== "other") { say("Please ask for that timer again so we can check the details."); return; }
+    }
     if (/^(?:just rest|take a break|stop scrolling|help me stop scrolling|open relax)$/i.test(value.trim())) { goRest(); return; }
     if (/^(?:open |show )?(?:explore|move|eat|sleep)$/i.test(value.trim())) { a.setActive(value.trim().toLowerCase().replace(/^(open |show )/, "")); return; }
+    const captureMode = foodCaptureMode(value);
+    if (captureMode && !agentActive) {
+      window.dispatchEvent(new CustomEvent("daywell-capture", { detail: { mode: captureMode, text: value } }));
+      say("Let’s check what you meant before saving anything."); return;
+    }
     const request = parseHostRequest(value);
+    // Conversation must not approve or clear a plan that is waiting for review.
+    if (request.type === "timer-status") { try { const saved = await a.readTimer(); verifiedTimer.current = saved.timer || initialTimer; say(timerStatusReply(verifiedTimer.current)); } catch { say("I couldn’t check your saved timer. Please try again."); } return; }
+    if (request.type === "reply") { say(request.message); return; }
     if (request.type === "control") {
       if (request.command === "confirm") { if (!pending) { say("Tell me what you’d like to do first."); return; } return applyPlan(); }
       if (request.command === "undo") return undo();
@@ -156,9 +296,9 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
       if (request.command === "cancel") { setPending(null); say("That request is cleared. Your current activity stays as it is."); return; }
       setPending(null); return controlActivity(request.command);
     }
+    if (request.type === "unknown") { await replyToUnknown(value); return; }
     setPending(null);
     if (request.type === "support") { changeSupport(request.level); setReply(request.level === "quiet" ? "I’ll keep you company quietly." : "Your encouragement preference is updated."); return; }
-    if (request.type === "unknown") { say(request.message); return; }
     if (request.type === "open") {
       if (request.module !== "calendar" && !a.enabled(request.module)) { say(`Enable ${moduleNames[request.module]} in Customize tools first.`); return; }
       a.setActive(request.module); if (request.view) a.setCalendarView(request.view); if (request.kind) a.openEditor(request.kind);
@@ -166,10 +306,28 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     }
     const missing = request.actions.find(action => !a.enabled(actionModule(action)));
     if (missing) { say(`Enable ${moduleNames[actionModule(missing)]} in Customize tools first. Nothing has changed.`); return; }
+    if (request.actions.length === 1 && request.actions[0].type === "activity") {
+      const saved = await a.readTimer(); verifiedTimer.current = saved.timer || initialTimer;
+      if (conversationTurn.current !== turn || !mounted.current) return "That request is no longer current. Nothing was proposed or started. Ask for the current activity and duration again.";
+      timerOutcome.current = "";
+      setPending(request.actions);
+      const offer = timerConfirmation.current.prepare(request.actions, saved.version, saved.timer, crypto.randomUUID())!;
+      const instruction = offer.replaces ? 'This replaces your current timer. Say “replace the timer” or tap Start timer to agree.' : 'Say “okay” or tap Start timer when you’re ready.';
+      const result = `${describeAction(offer.action)}. ${instruction} The proposal has NOT started. After agreement check the saved timer before claiming success.`;
+      say(`${describeAction(offer.action)}. ${instruction}`);
+      return result;
+    }
     setPending(request.actions);
     say(`Here’s what I understood. ${request.actions.map(describeAction).join(". ")}. ${request.actions.some(action => action.type === "activity") && hasActivity && !finished ? "This will replace your current activity. " : ""}${agentActive ? "Press Do this to confirm." : "Say yes or press Do this."}`);
   }
-  function sendText() { if(agent.status === "connected") { agent.send(text); setText(""); } else void receive(text); }
+  function sendText() {
+    voice.clearError();
+    const route = hostInputRoute(text, agent.status, aiChosen, busy || routing);
+    if (route === "ignore") return;
+    if (route === "agent") { const sent = text; void agent.send(sent).then(ok => { if(ok)setText(current => current === sent ? "" : current); }); }
+    else if (route === "reconnect") setConsent("text");
+    else void receive(text);
+  }
   function submit(event: FormEvent) { event.preventDefault(); sendText(); }
 
   useEffect(() => {
@@ -186,13 +344,14 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     const openHost = (event: Event) => {
       const disclosure = region.current?.closest("details"); if (disclosure) disclosure.open = true;
       region.current?.scrollIntoView({ behavior: "instant", block: "start" });
-      const detail = (event as CustomEvent<{ text?: string; mode?: string }>).detail;
+      const detail = (event as CustomEvent<{ text?: string; mode?: string; show?: boolean }>).detail;
+      if (detail?.show) return;
       const request = detail?.text || (detail?.mode === "meal" ? "Log a meal" : undefined);
       typeRequest(request);
     };
     window.addEventListener("daywell-host", openHost);
-    window.addEventListener("daywell-capture", openHost);
-    return () => { mounted.current = false; window.removeEventListener("daywell-host", openHost); window.removeEventListener("daywell-capture", openHost); };
+
+    return () => { mounted.current = false; window.removeEventListener("daywell-host", openHost); };
   }, [typeRequest]);
 
   // Notice persisted changes, including ones made through the ordinary tools.
@@ -226,11 +385,11 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     const interval = setInterval(tick, 500);
     return () => clearInterval(interval);
   }, []);
-  const agentListening = agent.status === "connected" && agent.mode === "listening" && !aiText;
+  const agentListening = agent.status === "connected" && agent.mode === "listening" && !aiText && !agent.muted;
   const micState = voice.blocked && !agentActive ? "blocked"
-    : agent.status === "connecting" || busy ? "thinking"
+    : agent.status === "connecting" || busy || routing ? "thinking"
     : voice.listening || agentListening ? "listening"
-    : voice.speaking || (agent.status === "connected" && agent.mode === "speaking") ? "speaking"
+    : voice.speaking || library.status === "playing" || (agent.status === "connected" && agent.mode === "speaking") ? "speaking"
     : agentActive ? "connected" : "idle";
   const wasListening = useRef(false);
   useEffect(() => {
@@ -243,23 +402,27 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     <div className="host-topline"><span className="host-identity"><Sun size={21} />Daywell is here</span><button className="host-settings-toggle" aria-expanded={settingsOpen} aria-controls="host-settings" onClick={() => setSettingsOpen(!settingsOpen)}><Settings2 size={17} />Voice & company</button></div>
     <div className="host-invitation"><div><h2 id="host-heading">{immersive ? `${hasActivity ? "A little time for you" : cozy ? "A little company" : "Take a moment"}${a.settings.name !== "You" ? `, ${a.settings.name}` : ""}.` : `What’s on your mind${a.settings.name !== "You" ? `, ${a.settings.name}` : ""}?`}</h2><p>{cozy ? "Tell Daywell what you need. Your little helpers will come along." : immersive ? "Whatever’s on your mind, start here." : "One place to ask. A little company along the way."}</p></div><span className="host-listening-mark" aria-hidden="true"><AudioLines size={46} /></span></div>
     {company !== "quiet" && !hasActivity && !hideCompanions && <div className="nook-company" aria-hidden="true"><CompanionPortrait id="luma" size={220} decorative eager /><CompanionPortrait id="bounce" size={220} decorative eager /><CompanionPortrait id="pip" size={300} motion={hostCompanionMotion(micState)} decorative eager /></div>}
-    {settingsOpen && <div className="host-settings" id="host-settings"><h3>Make yourself comfortable</h3><div className="voice-provider"><strong>{agent.configured ? "ElevenLabs is configured" : "ElevenLabs host is waiting for setup"}</strong><p>{agent.configured ? "Start a conversation below. Your microphone is off until you choose to talk." : "Everyday tools and typed commands work now. Your private API key and agent ID activate open conversation."}</p>{!agent.configured && <a href="/voice-setup" target="_blank" rel="noreferrer">Connect your ElevenLabs agent</a>}</div><label className="host-check"><input type="checkbox" checked={spoken} disabled={!voice.canSpeak} onChange={event => { setSpoken(event.target.checked); rememberPreferences({ spoken: event.target.checked }); if (!event.target.checked) voice.silence(); }} />Read Daywell’s replies aloud</label><label className="host-check"><input type="checkbox" checked={hideCompanions} onChange={event => { setHideCompanions(event.target.checked); rememberPreferences({ hideCompanions: event.target.checked }); }} />Hide companion pictures</label><CompanionMotionControl /><fieldset><legend>During an activity</legend>{supportOptions.map(option => <label className="host-support-option" key={option.id}><input type="radio" name="host-support" checked={support === option.id} onChange={() => changeSupport(option.id)} /><span><strong>{option.title}</strong><small>{option.description}</small></span></label>)}</fieldset><small>Saved on this browser. Check-ins happen while Daywell is open and visible. Winding down ends silently.</small></div>}
-    <div className="host-input-actions"><button className="host-talk" disabled={busy || agent.checking || (!agent.configured && !voice.available)} onClick={() => { if(agentActive) void agent.stop(); else if(agent.configured) setConsent("voice"); else if (voice.listening) voice.stop(); else { setSpoken(true); rememberPreferences({ spoken: true }); voice.start(); } }}><span className="host-talk-symbol"><span className="mic-glow" aria-hidden="true" /><span className="mic-ring" aria-hidden="true" /><span className="mic-ring" aria-hidden="true" /><span className="mic-stack" aria-hidden="true"><span className="mic-layer mic-layer-mic"><Mic size={20} /></span><span className="mic-layer mic-layer-bars"><i /><i /><i /><i /><i /></span><span className="mic-layer mic-layer-dots"><i /><i /><i /></span><span className="mic-layer mic-layer-stop"><Square size={20} /></span><span className="mic-layer mic-layer-off"><MicOff size={20} /></span></span></span><span className="host-talk-label">{agent.status === "connecting" ? "Cancel connection" : agentActive ? "End conversation" : voice.listening ? "Stop listening" : "Talk to Daywell"}</span></button><button className="host-type" aria-label="Type a request" onClick={() => typeRequest()}><Keyboard size={18} />{immersive ? "Type instead" : "Type a request"}</button>{voice.speaking && <button className="host-type" onClick={voice.silence}><VolumeX size={18} />Stop speaking</button>}</div>
-    <p className="host-voice-note">{agent.configured ? "Voice and AI chat use ElevenLabs. Your saved journal is not sent. Changes need your confirmation." : voice.available ? "Tap to talk. Your browser may process speech online. Nothing is saved until you confirm." : "Voice input isn’t available in this browser. Type below, or use your device’s keyboard dictation."}</p>
-    <div className="host-agent-ui">{consent && <div className="host-consent" role="region" aria-label="Start ElevenLabs conversation"><strong>A moment with Daywell</strong><p>{consent === "voice" ? "Your microphone audio" : "The messages you send"} will go to ElevenLabs and the agent’s AI provider. They may retain conversations under your agent’s settings. Daywell is an AI wellbeing companion. It can suggest ideas; it cannot diagnose or provide emergency care.</p><button className="host-primary" onClick={()=>void startAgent(consent)}>Start {consent === "voice" ? "talking" : "AI chat"}</button><button className="host-text-button" onClick={()=>setConsent(null)}>Not now</button></div>}
+    {settingsOpen && <div className="host-settings" id="host-settings"><h3>Make yourself comfortable</h3><div className="voice-provider"><strong>{agent.configured ? "Ready for a conversation" : "Conversation is unavailable right now"}</strong><p>{agent.configured ? "Talk naturally or start a chat. Your microphone stays off until you start talking." : "You can still use your everyday tools and listen to a quiet moment."}</p></div><label className="host-check"><input type="checkbox" checked={spoken} disabled={!voice.canSpeak} onChange={event => { setSpoken(event.target.checked); rememberPreferences({ spoken: event.target.checked }); if (!event.target.checked) voice.silence(); }} />Read quick replies aloud</label><label className="host-check"><input type="checkbox" checked={hideCompanions} onChange={event => { setHideCompanions(event.target.checked); rememberPreferences({ hideCompanions: event.target.checked }); }} />Hide companion pictures</label><CompanionMotionControl /><fieldset><legend>During an activity</legend>{supportOptions.map(option => <label className="host-support-option" key={option.id}><input type="radio" name="host-support" checked={support === option.id} onChange={() => changeSupport(option.id)} /><span><strong>{option.title}</strong><small>{option.description}</small></span></label>)}</fieldset><small>Saved on this browser. Check-ins happen while Daywell is open and visible. Winding down ends silently.</small></div>}
+    <div className="host-input-actions"><button className="host-talk" disabled={busy || routing || agent.checking || (!agent.configured && !voice.available)} onClick={() => { if(agentActive) void agent.stop(); else if (voice.listening) voice.stop(); else if (voice.available) { setAiChosen(false); setSpoken(true); rememberPreferences({ spoken: true }); voice.start(); } else { fallbackRequest.current = ""; setConsent("voice"); } }}><span className="host-talk-symbol"><span className="mic-glow" aria-hidden="true" /><span className="mic-ring" aria-hidden="true" /><span className="mic-ring" aria-hidden="true" /><span className="mic-stack" aria-hidden="true"><span className="mic-layer mic-layer-mic"><Mic size={20} /></span><span className="mic-layer mic-layer-bars"><i /><i /><i /><i /><i /></span><span className="mic-layer mic-layer-dots"><i /><i /><i /></span><span className="mic-layer mic-layer-stop"><Square size={20} /></span><span className="mic-layer mic-layer-off"><MicOff size={20} /></span></span></span><span className="host-talk-label">{agent.status === "connecting" ? "Cancel connection" : agentActive ? "End conversation" : voice.listening ? "Stop listening" : "Talk to Daywell"}</span></button><button className="host-type" aria-label={agent.configured && !agentActive ? "Chat with Daywell" : "Type a request"} disabled={agent.status === "connecting"} onClick={() => { if (!agentActive) { setAiChosen(false); setConsent(null); } typeRequest(); }}><Keyboard size={18} />{agent.configured && !agentActive ? "Chat with Daywell" : "Type instead"}</button>{voice.speaking && <button className="host-type" onClick={voice.silence}><VolumeX size={18} />Stop speaking</button>}</div>
+    <p className="host-voice-note">Daywell is your AI companion for everyday routines.</p><PrivacyDetails><p>{voice.available ? "Tap Talk to Daywell to say a request. Your browser may process your speech online. Quick replies can use your device’s voice." : "Type a request or use your keyboard’s dictation."} Before starting a live conversation, you choose whether to share your messages or microphone audio. Listening to a saved recording leaves your microphone off.</p></PrivacyDetails>
+    <div className="host-agent-ui">{pickerConsent && <div className="host-consent" aria-label="Find a reply"><strong>A few words for this moment?</strong><p>Allow Daywell to share your request with an AI service to find a helpful reply for this visit.</p><PrivacyDetails><p>Requests without an exact match, together with the area you are using, go to TypeSafe’s Jev to choose an existing reply. Your saved journal and profile are not sent. TypeSafe processes inputs in the US and retains them under its policy; it says inputs are not used for model training. Daily request limits apply.</p><a href="https://typesafe.ai/legal/privacy-policy" target="_blank" rel="noreferrer">TypeSafe privacy policy</a></PrivacyDetails><button className="host-primary" onClick={() => { pickerAllowed.current = true; void replyToUnknown(pickerConsent, true); }}>Find a reply</button><button className="host-text-button" onClick={() => { setPickerConsent(null); setReply("No problem. You can still use your tools or choose something to listen to."); }}>Not now</button></div>}{consent && <div className="host-consent" role="region" aria-label="Start a conversation"><strong>A moment with Daywell</strong><p>Talk things through with your AI companion. Starting shares {consent === "voice" ? "your voice" : "your messages"} and current timer details to keep the conversation relevant. You can end at any time.</p><PrivacyDetails><p>{consent === "voice" ? "Your microphone audio" : "The messages you send"}, the current timer’s title, status and remaining time, and proposed changes go to ElevenLabs and its AI provider. They may retain conversations under Daywell’s conversation settings. <a href="https://elevenlabs.io/privacy-policy" target="_blank" rel="noreferrer">ElevenLabs privacy policy</a>.</p><p>Daywell offers everyday company, not medical advice, therapy or emergency care. Conversations end after 15 minutes and daily limits apply. You still confirm changes before they are saved.</p></PrivacyDetails><button className="host-primary" onClick={()=>void startAgent(consent)}>Start {consent === "voice" ? "talking" : "chat"}</button><button className="host-text-button" onClick={()=>setConsent(null)}>Not now</button></div>}
     {agent.error && <p className="host-error" role="alert">{agent.error}</p>}
-    {agentActive && <p className="agent-caption" role="status">{agent.status === "connecting" ? "Opening your conversation…" : aiText ? "AI chat is on" : agent.mode === "speaking" ? "Daywell is speaking. You can interrupt." : "Listening. Speak whenever you’re ready."}</p>}
-    {typed && agent.configured && !agentActive && <button className="host-text-button" onClick={()=>setConsent("text")}>Start an AI text conversation</button>}</div>
-    {typed && <form className="host-form" onSubmit={submit}><label htmlFor="host-request">Tell Daywell what you need</label><div><textarea id="host-request" ref={input} value={text} maxLength={600} rows={2} placeholder="Add milk and focus on my email for 10 minutes" onChange={event => setText(event.target.value)} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); sendText(); } }} /><button type="submit" disabled={!text.trim() || busy} aria-label="Send request"><Send size={19} /></button></div></form>}
+    {agentActive && <p className="agent-caption" role="status">{agent.status === "connecting" ? "Opening your conversation…" : aiText ? "Chat is on · Microphone off" : agent.muted ? "Microphone muted · Daywell can still reply" : agent.mode === "speaking" ? "Daywell is speaking. You can interrupt." : "Listening. Speak whenever you’re ready."}</p>}
+    {agent.status === "connected" && !aiText && <button className="host-text-button" aria-pressed={agent.muted} onClick={agent.toggleMuted}>{agent.muted ? <Mic size={16} /> : <MicOff size={16} />}{agent.muted ? "Unmute microphone" : "Mute microphone"}</button>}
+    {typed && agent.configured && !agentActive && !aiChosen && <button className="host-text-button" onClick={openChat}>Start chat</button>}
+    {typed && (aiChosen || agentActive) && <button className="host-text-button" onClick={useCommands}>Back to quick requests</button>}
+    {typed && !agentActive && !consent && <p className="agent-caption" role="status">{aiChosen ? "Chat has ended. Send your message to start again." : "Try “set a timer for ten minutes” or start a chat."}</p>}</div>
+    {typed && <form className="host-form" onSubmit={submit}><label htmlFor="host-request">Tell Daywell what you need</label><div><textarea id="host-request" ref={input} value={text} maxLength={600} rows={2} placeholder={aiChosen || agentActive ? "I’ve had a busy day. Can we unwind for a moment?" : "Add milk and focus on my email for 10 minutes"} onChange={event => setText(event.target.value)} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); sendText(); } }} /><button type="submit" disabled={!text.trim() || busy || routing || agent.status === "connecting"} aria-label="Send request"><Send size={19} /></button></div></form>}
     {!hasActivity && !pending && <div className="host-suggestions" aria-label="A place to begin"><button className="rest-entry" onClick={goRest}>Just rest</button><button onClick={()=>a.setActive("explore")}>Explore</button></div>}
     {!hasActivity && !pending && <Link className="host-library-link" href="/audio-library" onClick={() => { voice.stop(); void agent.stop(); }}>Just listen · little words of comfort</Link>}
-    <div className="host-conversation" aria-live="polite" aria-atomic="true">{(voice.listening || heard) && <p className="host-heard">{voice.listening ? voice.transcript || "Listening…" : `You: ${heard}`}</p>}<p className="host-reply"><span>Daywell</span>{busy ? "Taking care of that…" : reply}</p></div>
-    {(error || voice.error) && <p className="host-error" role="alert">{error || voice.error}</p>}
-    {pending && <div className="host-plan" ref={planRegion} tabIndex={-1} aria-label="Review your request"><h3>Here’s the plan</h3><ul>{pending.map((action, index) => <li key={index}><Check size={16} />{describeAction(action)}</li>)}</ul>{pending.some(action => action.type === "activity") && hasActivity && !finished && <p className="host-replace-note">This replaces your current activity. Your lists stay saved.</p>}<div><button className="host-primary" disabled={busy} onClick={() => void applyPlan()}>{busy ? "Saving…" : "Do this"}</button><button className="host-text-button" disabled={busy} onClick={() => { setPending(null); voice.silence(); setReply("Request cleared. Your saved day stays as it is."); }}>Cancel request</button></div></div>}
+    <div className="host-conversation" ref={replyRegion} aria-live="polite" aria-atomic="true">{(voice.listening || heard) && <p className="host-heard">{voice.listening ? voice.transcript || "Listening…" : `You: ${heard}`}</p>}<p className="host-reply"><span>Daywell</span>{busy ? "Taking care of that…" : routing ? "Finding the right reply…" : reply}</p>
+      {recordedReply && <div className="host-recorded-reply"><button className="host-text-button" onClick={() => library.status === "idle" ? void library.play(recordedReply) : library.stop()}>{library.status === "idle" ? "Listen" : "Stop playback"}</button></div>}
+    </div>{library.error && <p className="host-error" role="status">{library.error}</p>}{(error || voice.error) && <p className="host-error" ref={voiceErrorRegion} role="alert">{error || voice.error}</p>}
+    {pending && <div className="host-plan" ref={planRegion} tabIndex={-1} aria-label="Review your request"><h3>Here’s the plan</h3><ul>{pending.map((action, index) => <li key={index}><Check size={16} />{describeAction(action)}</li>)}</ul>{pending.some(action => action.type === "activity") && hasActivity && !finished && <p className="host-replace-note">This replaces your current activity. Your lists stay saved.</p>}<div><button className="host-primary" disabled={busy} onClick={() => void applyPlan()}>{busy ? "Saving…" : pending.length === 1 && pending[0].type === "activity" ? "Start timer" : "Do this"}</button><button className="host-text-button" disabled={busy} onClick={() => { setPending(null); voice.silence(); setReply("Request cleared. Your saved day stays as it is."); }}>Cancel request</button></div></div>}
     <div className="host-history-actions"><button disabled={busy || !undoable} onClick={() => void undo()}><Undo2 size={15} />Undo last change</button><button onClick={() => setShowChanges(!showChanges)} aria-expanded={showChanges}>What changed?<ChevronDown size={14} /></button>{spoken && <span><Volume2 size={14} />Replies aloud</span>}</div>
     {showChanges && <div className="host-change-summary">{lastChange ? `${lastChange.undone ? "Undone: " : "Last change: "}${lastChange.summary}` : "Nothing changed in this visit yet."}</div>}
     {ack && <div className="host-ack" role="status">{!hideCompanions && <CompanionPortrait id={ack.id} size={49} decorative />}<span><Check size={15} />{ack.text}</span></div>}
     {hasActivity && <section className={`host-activity host-activity-${companion}`} aria-label="Current activity"><div className="host-activity-main">{!hideCompanions && <CompanionPortrait id={companion} size={144} motion={activityCompanionMotion(companion, Boolean(a.timer.endAt), finished)} decorative eager />}<div><span className="host-activity-label">{finished ? "Your time is complete" : a.timer.endAt ? activityLabels[companion] : "Paused, whenever you’re ready"}</span><h3>{a.timer.title}</h3><p>{finished ? companion === "luma" ? "You can leave the day here. Rest whenever you’re ready." : "Take a moment. There’s no rush to start something else." : activityMessages[companion]}</p>{!hideCompanions && <small>{companions[companion].name} is keeping you company</small>}</div><div className="host-time" role="timer" aria-label={`${Math.floor(a.remaining / 60)} minutes ${a.remaining % 60} seconds remaining`}>{String(Math.floor(a.remaining / 60)).padStart(2, "0")}<span>:</span>{String(a.remaining % 60).padStart(2, "0")}</div></div>{!finished && <div className="host-activity-controls"><button className="host-primary" disabled={busy} onClick={() => void controlActivity(a.timer.endAt ? "pause" : "resume")}>{a.timer.endAt ? <Pause size={16} /> : <Play size={16} />}{a.timer.endAt ? "Pause activity" : "Resume activity"}</button><button className="host-text-button" disabled={busy} onClick={() => void controlActivity("end")}><X size={15} />End activity</button>{companion !== "tock" && <label>Company<select aria-label="Activity encouragement" value={support} onChange={event => changeSupport(event.target.value as SupportLevel)}>{supportOptions.map(option => <option key={option.id} value={option.id}>{option.title}</option>)}</select></label>}</div>}{finished && <button className="host-text-button" disabled={busy} onClick={() => void controlActivity("end")}>Clear finished activity</button>}{finished && companion === "bounce" && <button className="host-primary" onClick={() => { a.openEditor("move"); a.setDraft({ title: a.timer.title, date: today(), minutes: Math.round(a.timer.duration / 60) }); }}>Log this movement</button>}{cue && !finished && <p className="host-cue" role="status">{cue}</p>}</section>}
-    <details className="host-help"><summary>Things you can say</summary><p>Use these everyday phrases by voice or text. Names are optional; Daywell brings the right helper.</p><div className="host-phrase-list">{["Add milk and eggs to my list", "Add a task to finish my email", "Focus on my email for ten minutes", "Add milk and focus on my email for 10 minutes", "Help me wind down for five minutes", "Start a walk for fifteen minutes", "Set a timer for five minutes", "Set an alarm for 7 am", "Log a meal", "Log my sleep", "Show my calendar", "Show my progress", "Plan an event", "Add a reflection", "Show my shopping list", "Stay quiet", "Undo that"].map(phrase => <button key={phrase} onClick={() => typeRequest(phrase)}>{phrase}</button>)}</div><p>Everyday commands work without an AI connection. Connect ElevenLabs for open conversation. Meal photo recognition is not part of this MVP.</p></details>
+    <details className="host-help"><summary>Things you can say</summary><p>Use these everyday phrases by voice or text. Names are optional; Daywell brings the right helper.</p><div className="host-phrase-list">{["Add milk and eggs to my list", "Add a task to finish my email", "Focus on my email for ten minutes", "Add milk and focus on my email for 10 minutes", "Help me wind down for five minutes", "Start a walk for fifteen minutes", "Set a timer for five minutes", "Set an alarm for 7 am", "Log a meal", "Log my sleep", "Show my calendar", "Show my progress", "Plan an event", "Add a reflection", "Show my shopping list", "Stay quiet", "Undo that"].map(phrase => <button key={phrase} onClick={() => typeRequest(phrase)}>{phrase}</button>)}</div><p>Ask for a timer, add something to your list, or start a chat. For food, share a picture or a few words, then check the details before saving.</p></details>
   </section>;
 }

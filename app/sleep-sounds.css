@@ -1,0 +1,15 @@
+/* Sounds for rest and sleep, in the quiet corner that Relax and Sleep's wind-down open. */
+.sleep-sounds{display:grid;gap:14px;width:100%;max-width:520px;margin:18px auto 0;padding:18px;border:1px solid var(--dw-line,#d8b7cc);border-radius:22px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);text-align:left}
+.sleep-sounds h2{margin:0;font-size:calc(18px*var(--rc-scale,1));color:var(--dw-ink,#522d46)}
+.sleep-sounds-group{display:grid;gap:8px}
+.sleep-sounds-group>p{margin:0;font-size:calc(14px*var(--rc-scale,1));font-weight:700;color:var(--dw-muted,#7d536e)}
+.sleep-sounds-chips{display:flex;flex-wrap:wrap;gap:8px}
+.sleep-sounds-chips button{min-height:44px;padding:8px 14px;border:1px solid var(--dw-line,#d8b7cc);border-radius:16px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font:inherit;font-size:calc(15px*var(--rc-scale,1));font-weight:600;cursor:pointer}
+.sleep-sounds-chips button[aria-pressed=true]{border-color:var(--dw-accent,#803c65);background:var(--dw-accent,#803c65);color:var(--dw-on-accent,#fff7fb)}
+.sleep-sounds-chips button:focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:2px}
+.sleep-sounds-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.sleep-sounds-volume{display:flex;align-items:center;gap:10px;font-size:calc(15px*var(--rc-scale,1));color:var(--dw-ink,#522d46)}
+.sleep-sounds-volume input{width:140px;max-width:100%;accent-color:var(--dw-accent,#803c65)}
+.sleep-sounds-note{margin:0;min-height:1.4em;font-size:calc(15px*var(--rc-scale,1));font-weight:600;color:var(--dw-ink,#522d46)}
+.sleep-sounds small{font-size:calc(14px*var(--rc-scale,1));line-height:1.45;color:var(--dw-muted,#7d536e)}
+.sleep-sounds .form-error{margin:0}

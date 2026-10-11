@@ -49,6 +49,55 @@ const cooking = extra => ({ type: "cook", title: "Rice bowl", date: "2026-10-07"
   consumed: [{ stockId: "rice", quantity: 300, unit: "g" }], ...extra });
 const command = (action, operationId = "test") => foodCommandSchema.parse({ operationId, expectedRevision: 0, action });
 
+test("a cooking receipt from before nutrition tracking still replays after upgrading", async t => {
+  const {db,sqlite,save}=database(t);
+  await save(stock("rice","Rice",500)); await save(plan());
+  // Exact JSON shape produced by the former schema, including its defaults.
+  const old={operationId:"old-cook",expectedRevision:2,action:{type:"cook",planId:"dinner",title:"Rice bowl",date:"2026-10-07",meal:"Dinner",servings:2,consumed:[{stockId:"rice",quantity:300,unit:"g"}],useReservedStock:false,leftovers:{id:"saved",title:"Rice bowl",portions:1,bestBefore:null}}};
+  await saveFoodCommand(db,"ali",old);
+  const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(JSON.stringify(old)));
+  const oldHash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("");
+  sqlite.prepare("UPDATE food_operations SET request_hash=? WHERE operation_id='old-cook'").run(oldHash);
+  assert.equal((await saveFoodCommand(db,"ali",old)).replayed,true);
+  assert.equal((await getFoodSpace(db,"ali")).revision,3);
+});
+
+test("using basket food saves only personal intake, retries once and undoes stock and meal together", async t => {
+  const { db, sqlite, save } = database(t);
+  await save(stock("apples", "Apple", 4, "each"));
+  const input = { operationId:"snack", expectedRevision:1, action:{ type:"use", title:"Apple", date:"2026-10-08", meal:"Snack", consumed:[{stockId:"apples",quantity:1,unit:"each"}], intake:{portions:1,calories:80,source:"estimate",sugarGrams:15.2} } };
+  await saveFoodCommand(db,"ali",input);
+  assert.equal((await saveFoodCommand(db,"ali",input)).replayed,true);
+  assert.equal((await getFoodSpace(db,"ali")).state.stock[0].quantity,3);
+  const row = JSON.parse(sqlite.prepare("SELECT data FROM entries WHERE id='food-snack'").get().data);
+  assert.equal(row.sugarGrams,15.2); assert.equal(row.calories,80); assert.equal(row.portions,1); assert.equal(row.foodStatus,"eaten"); assert.equal(row.macrosKnown,false);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n,1);
+  await save({type:"undo",operationId:"snack"});
+  assert.equal((await getFoodSpace(db,"ali")).state.stock[0].quantity,4);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n,0);
+});
+test("prepared meals are not intake; cooking can separately save a personal portion and leftovers", () => {
+  const state=applyFoodCommand(emptyFoodState(),command(stock("rice","Rice",1000))).state;
+  const prepared=applyFoodCommand(state,command(cooking({}))).effect.meal.data;
+  assert.equal(prepared.foodStatus,"prepared"); assert.equal(prepared.nutritionKnown,false);
+  const cooked=applyFoodCommand(state,command(cooking({servings:4,intake:{portions:1,calories:400,sugarGrams:2.5},leftovers:{id:"leftovers",title:"Rice bowl",portions:2}})));
+  assert.equal(cooked.effect.meal.data.sugarGrams,2.5); assert.equal(cooked.effect.meal.data.calories,400); assert.equal(cooked.effect.meal.data.portions,1);
+  assert.equal(cooked.state.stock.find(x=>x.id==="leftovers").quantity,2);
+  assert.throws(()=>applyFoodCommand(state,command(cooking({servings:2,intake:{portions:1},leftovers:{id:"leftovers",title:"Rice",portions:2}}))),/cannot exceed/);
+  assert.throws(()=>applyFoodCommand(state,command(cooking({servings:1,leftovers:{id:"leftovers",title:"Rice",portions:2}}))),/cannot exceed/);
+  assert.equal(state.stock[0].quantity,1000);
+});
+test("basket use preserves other plans, rejects overspending and records used-only without intake", () => {
+  let state=applyFoodCommand(emptyFoodState(),command(stock("rice","Rice",500))).state;
+  state=applyFoodCommand(state,command(plan())).state;
+  const used={type:"use",title:"Rice used",date:"2026-10-08",meal:"Dinner",consumed:[{stockId:"rice",quantity:250,unit:"g"}]};
+  assert.throws(()=>applyFoodCommand(state,command(used)),/reserved/);
+  assert.throws(()=>applyFoodCommand(state,command({...used,consumed:[{stockId:"rice",quantity:501,unit:"g"}],useReservedStock:true})),/less in/);
+  const result=applyFoodCommand(state,command({...used,useReservedStock:true}));
+  assert.equal(result.effect.meal.data.foodStatus,"used"); assert.equal(result.effect.meal.data.nutritionKnown,false);
+  assert.equal(result.state.plans.length,1); assert.equal(foodOverview(result.state).toBuy[0].toBuy,50);
+});
+
 test("plans reserve compatible amounts without consuming stock; swaps and removals recalculate shopping", () => {
   let state = applyFoodCommand(emptyFoodState(), command(stock("rice", "Rice", 0.5, "kg"))).state;
   state = applyFoodCommand(state, command(plan("monday", 300))).state;
@@ -174,7 +223,7 @@ test("a receipt committed between the initial lookup and the snapshot still prev
   let injected = false;
   const interleaved = { ...db, prepare(sql) {
     const prepared = db.prepare(sql);
-    if (!sql.startsWith("SELECT revision,data")) return prepared;
+    if (!sql.startsWith("SELECT COALESCE((SELECT revision")) return prepared;
     return { bind(...values) {
       const bound = prepared.bind(...values);
       return { ...bound, first: async () => {
@@ -341,4 +390,140 @@ test("the API enforces authentication, origin, body limits and no-store response
   assert.equal(saved.headers.get("cache-control"), "no-store");
   const loaded = await foodResponse(new Request("https://daywell.example/api/food"), deps);
   assert.equal((await loaded.json()).state.stock[0].quantity, 500);
+});
+
+test("spoken and older shopping notes join Food basket without being copied or inventing stock", async t => {
+  const { db, sqlite } = database(t);
+  const { saveEntries } = await import("../db/entry-store.ts");
+  const milk = { id: "spoken-milk", kind: "grocery", data: { title: "milk", quantity: "check pack size", done: false } };
+  const timer = { id: "timer", kind: "timer", data: { title: "Focus", duration: 600, remaining: 600, endAt: 123456, mode: "Focus" } };
+  await saveEntries(db, "ali", [milk, timer]);
+  const snapshot = await getFoodSpace(db, "ali");
+  assert.equal(snapshot.revision, 1);
+  assert.equal(snapshot.state.shopping[0].id, "entry--spoken-milk");
+  assert.equal(snapshot.state.shopping[0].quantity, "check pack size");
+  assert.deepEqual(snapshot.state.stock, []);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries WHERE user_id='ali'").get().n, 2);
+  assert.deepEqual((await getFoodSpace(db, "another-user")).state.shopping, []);
+  assert.deepEqual(JSON.parse(sqlite.prepare("SELECT data FROM food_spaces WHERE user_id='ali'").get().data).shopping, []);
+});
+
+test("a spoken note purchase, lost-response retry and undo change stock and the original note together", async t => {
+  const { db, sqlite, save } = database(t);
+  const { saveEntries } = await import("../db/entry-store.ts");
+  await saveEntries(db, "ali", [{ id: "milk", kind: "grocery", data: { title: "milk", quantity: "a bottle", done: false } }]);
+  const purchase = { operationId: "same-purchase", expectedRevision: 1, action: { type: "purchase", items: [{ id: "milk-pack", ingredient: "milk", quantity: 2, unit: "l", shoppingId: "entry--milk" }] } };
+  await saveFoodCommand(db, "ali", purchase);
+  assert.equal((await saveFoodCommand(db, "ali", purchase)).replayed, true);
+  let snapshot = await getFoodSpace(db, "ali");
+  assert.equal(snapshot.state.stock[0].quantity, 2000);
+  assert.equal(snapshot.state.shopping[0].done, true);
+  assert.equal(JSON.parse(sqlite.prepare("SELECT data FROM entries WHERE id='milk'").get().data).done, true);
+  await save({ type: "undo", operationId: "same-purchase" });
+  snapshot = await getFoodSpace(db, "ali");
+  assert.deepEqual(snapshot.state.stock, []);
+  assert.equal(snapshot.state.shopping[0].done, false);
+  assert.equal(snapshot.state.shopping[0].quantity, "a bottle");
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries WHERE id='milk'").get().n, 1);
+});
+
+test("shopping edits invalidate an open food review and block undo over a newer note", async t => {
+  const { db, save } = database(t);
+  const { saveEntries } = await import("../db/entry-store.ts");
+  const note = { id: "milk", kind: "grocery", data: { title: "milk", quantity: "1", done: false } };
+  await saveEntries(db, "ali", [note]);
+  const purchase = { operationId: "buy-milk", expectedRevision: 1, action: { type: "purchase", items: [{ id: "pack", ingredient: "milk", quantity: 500, unit: "ml", shoppingId: "entry--milk" }] } };
+  await saveEntries(db, "ali", [{ ...note, data: { ...note.data, title: "oat drink" } }]);
+  await assert.rejects(saveFoodCommand(db, "ali", purchase), /changed/);
+  await saveFoodCommand(db, "ali", { ...purchase, expectedRevision: 2 });
+  await saveEntries(db, "ali", [{ ...note, data: { ...note.data, quantity: "two cartons", done: true } }]);
+  await assert.rejects(save({ type: "undo", operationId: "buy-milk" }), /changed/);
+  assert.equal((await getFoodSpace(db, "ali")).state.stock[0].quantity, 500);
+});
+
+test("editing and removing a connected note update the original; longest legacy IDs still work", async t => {
+  const { db, sqlite, save } = database(t);
+  const { saveEntries } = await import("../db/entry-store.ts");
+  const id = "a".repeat(80);
+  await saveEntries(db, "ali", [{ id, kind: "grocery", data: { title: "Bin bags", quantity: "1 roll", done: false } }]);
+  await save({ type: "shopping.set", item: { id: `entry--${id}`, title: "Bin bags", quantity: "2 rolls", done: true } });
+  assert.equal(JSON.parse(sqlite.prepare("SELECT data FROM entries WHERE id=?").get(id).data).quantity, "2 rolls");
+  assert.deepEqual((await getFoodSpace(db, "ali")).state.stock, []);
+  await save({ type: "shopping.remove", id: `entry--${id}` });
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n, 0);
+  assert.deepEqual((await getFoodSpace(db, "ali")).state.shopping, []);
+});
+
+
+test("a restored draft cannot read or write after switching authenticated accounts", async t => {
+  const { db } = database(t);
+  const { recoveryScopeForUser } = await import("../lib/recovery-scope.ts");
+  const scope = await recoveryScopeForUser("ali");
+  for (const method of ["GET", "POST"]) {
+    const request = new Request("http://localhost/api/food", { method, headers: { Origin: "http://localhost", "X-Daywell-Recovery-Scope": scope }, ...(method === "POST" ? { body: JSON.stringify(command(stock("rice", "rice", 100))) } : {}) });
+    const response = await foodResponse(request, { userId: "sam", database: () => db });
+    assert.equal(response.status, 403);
+  }
+  assert.deepEqual((await getFoodSpace(db, "sam")).state.stock, []);
+});
+
+
+test("pre-sugar intake receipts keep their original hash and replay without a duplicate meal", async t => {
+  const { db, sqlite, save } = database(t);
+  await save(stock("rice", "Rice", 1000));
+  const old = { operationId: "before-sugar", expectedRevision: 1, action: {
+    type: "cook", title: "Rice bowl", date: "2026-10-07", meal: "Dinner", servings: 2,
+    consumed: [{ stockId: "rice", quantity: 300, unit: "g" }], useReservedStock: false,
+    intake: { portions: 1, calories: 400, macros: { protein: 10, carbs: 20, fat: 5 }, source: "label" }
+  } };
+  await saveFoodCommand(db, "ali", old);
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(JSON.stringify(old)));
+  const hash = Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, "0")).join("");
+  sqlite.prepare("UPDATE food_operations SET request_hash=? WHERE operation_id='before-sugar'").run(hash);
+  assert.equal((await saveFoodCommand(db, "ali", old)).replayed, true);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n, 1);
+  assert.equal((await getFoodSpace(db, "ali")).state.stock[0].quantity, 700);
+});
+
+test("reviewed basket captures save atomically, retry once and undo without affecting existing stock",async t=>{
+  const {db,save,sqlite}=database(t);
+  await save(stock("old-rice","rice",200));
+  const before=await getFoodSpace(db,"ali");
+  const action={type:"stock.add",items:[{id:"photo-eggs",ingredient:"Eggs",quantity:6,unit:"each"},{id:"photo-rice",ingredient:"Rice",quantity:null,unit:"g"}]};
+  const cmd=foodCommandSchema.parse({operationId:"photo-once",expectedRevision:before.revision,action});
+  await saveFoodCommand(db,"ali",cmd);const again=await saveFoodCommand(db,"ali",cmd);assert.equal(again.replayed,true);
+  const after=await getFoodSpace(db,"ali");assert.equal(after.state.stock.length,3);assert.equal(after.state.stock.find(x=>x.id==="photo-rice").quantity,null);
+  assert.equal(sqlite.prepare("SELECT count(*) AS n FROM entries WHERE user_id='ali' AND kind='food'").get().n,0);
+  await save({type:"undo",operationId:"photo-once"});
+  assert.deepEqual((await getFoodSpace(db,"ali")).state.stock,before.state.stock);
+  const rev=(await getFoodSpace(db,"ali")).revision;
+  await assert.rejects(()=>save({type:"stock.add",items:[{id:"new-one",ingredient:"Milk",quantity:1,unit:"l"},{id:"old-rice",ingredient:"Rice",quantity:3,unit:"kg"}]}));
+  const failed=await getFoodSpace(db,"ali");assert.equal(failed.revision,rev);assert.deepEqual(failed.state.stock,before.state.stock);
+});
+
+
+test("adding a guided meal batch retries without duplication and rejects a stale revision", async t => {
+  const {db,save,sqlite}=database(t);
+  await save(stock("eggs","Egg",4,"each")); await save(plan("existing",100,1));
+  const input={operationId:"planned-batch",expectedRevision:2,action:{type:"plan.add",plans:[{id:"new-meal",title:"Eggs",date:"2026-10-09",meal:"Dinner",servings:1,ingredients:[{ingredient:"Egg",quantity:2,unit:"each"}],guide:{steps:["Cook following pack instructions."],caloriesPerServing:140,nutritionNote:"Test estimate"}}]}};
+  await saveFoodCommand(db,"ali",input); assert.equal((await saveFoodCommand(db,"ali",input)).replayed,true);
+  const saved=await getFoodSpace(db,"ali");assert.equal(saved.state.plans.length,2);assert.equal(saved.state.stock[0].quantity,4);
+  assert.equal(saved.state.plans.find(x=>x.id==="new-meal").guide.caloriesPerServing,140);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM entries").get().n,0);
+  await assert.rejects(saveFoodCommand(db,"ali",{...input,operationId:"stale",action:{type:"plan.add",plans:[{...input.action.plans[0],id:"different"}]}}),/changed/);
+  assert.equal((await getFoodSpace(db,"sam")).state.plans.length,0);
+});
+
+test("one serving can be half consumed and half saved, without counting leftovers as intake", async t => {
+  const {db,save,sqlite}=database(t);
+  await save(stock("rice","Rice",100));
+  const action=cooking({servings:1,consumed:[{stockId:"rice",quantity:75,unit:"g"}],intake:{portions:.5,calories:210,source:"estimate"},leftovers:{id:"half-saved",title:"Half a rice bowl",portions:.5,bestBefore:null}});
+  await save(action);
+  const snapshot=await getFoodSpace(db,"ali");
+  assert.equal(snapshot.state.stock.find(x=>x.id==="half-saved").quantity,.5);
+  assert.equal(snapshot.state.stock.find(x=>x.id==="rice").quantity,25);
+  const note=JSON.parse(sqlite.prepare("SELECT data FROM entries WHERE user_id='ali'").get().data);
+  assert.equal(note.portions,.5);assert.equal(note.calories,210);
+  await assert.rejects(save({...action,consumed:[{stockId:"rice",quantity:10,unit:"g"}],leftovers:{...action.leftovers,id:"too-much",portions:.75}}),/exceed/);
+  assert.equal((await getFoodSpace(db,"ali")).revision,snapshot.revision);
 });

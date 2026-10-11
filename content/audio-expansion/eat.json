@@ -9,7 +9,9 @@
   ["I keep changing my mind about lunch.","Pick something familiar that fits what you have. Lunch does not have to be the best possible choice."],
   ["Everyone at home wants a different meal.","Could you share one base, like rice or bread, and let people choose their own toppings?"],
   ["I am too tired to follow a recipe.","An assembled meal counts. Put together a few ready to eat foods you like, without turning it into a cooking project."],
-  ["Can you choose a meal from what I own?","Tell me a few ingredients you have and any dietary needs. We can then narrow the options together.","live"]
+  ["Can you choose a meal from what I own?","Tell me a few ingredients you have and any dietary needs. We can then narrow the options together.","live"],
+  ["I have no idea what to eat.","Let's start with one question: something warm, or something you can eat straight away? Let that answer pick the meal."],
+  ["Nothing sounds good to eat right now.","Think of something you enjoyed recently and have a simple version of it. It only needs to be good enough for today."]
  ]},
  {"id":"eat-quick-options","category":"eat","title":"Food when time is short","companion":"nori","examples":[
   ["I have ten minutes before my next meeting.","Use that time for something straightforward to eat. A sandwich or leftovers may be enough to get lunch started."],
@@ -47,7 +49,7 @@
   ["I buy too much when I go shopping.","Try starting with meals you realistically expect to make. Leave room for convenience, rather than planning an ambitious week."],
   ["Can you order all my groceries?","Daywell does not place grocery orders. You can use your food list as a reference when ordering from your chosen shop.","live"]
  ]},
- {"id":"eat-flexible-planning","category":"eat","title":"A flexible meal plan","companion":"nori","examples":[
+ {"id":"eat-flexible-planning","category":"eat","title":"A flexible meal plan","companion":"nori","responseIds":["eat-flexible-planning-01","eat-flexible-planning-02","eat-flexible-planning-03","eat-flexible-planning-04","eat-flexible-planning-05","eat-flexible-planning-06","eat-flexible-planning-07","eat-flexible-planning-09","eat-flexible-planning-10"],"examples":[
   ["Meal planning feels like too much work.","Plan just one meal ahead. You can repeat something familiar and leave the rest of the week open."],
   ["I never stick to a weekly menu.","Try a small set of options rather than fixed meals for every day. You can choose based on your energy."],
   ["Can I eat the same lunch a few days in a row?","Repeating a lunch you enjoy can simplify things. Aim for variety across your eating over time, without making each meal complicated."],
@@ -55,9 +57,8 @@
   ["I am feeding people with different tastes.","Meals with separate toppings or sides can offer choice without several completely different dinners."],
   ["I want to prepare food ahead without spending Sunday cooking.","Choose one useful preparation step, such as washing produce or making a portion for later. You can stop there."],
   ["I planned five dinners but only cooked one.","That tells you the plan asked for too much this week. Try fewer cooking nights and more easy options next time."],
-  ["Can you make my entire meal plan personal to me?","I would need your preferences, budget, schedule, and dietary needs. Medical nutrition plans should involve a qualified professional.","live"],
   ["I want a simple way to plan tomorrow's food.","Think about when you will be home and when you will be out. Choose one realistic food option for each part of the day."],
-  ["My family meal plan changes every evening.","Keep a few adaptable ingredients available if you can. The plan can be a set of possibilities rather than a promise." ]
+  ["My family meal plan changes every evening.","Keep a few adaptable ingredients available if you can. The plan can be a set of possibilities rather than a promise."]
  ]},
  {"id":"eat-breakfast-start","category":"eat","title":"A manageable breakfast","companion":"sunny","examples":[
   ["Breakfast feels like another task.","Make it as familiar as possible. Keep an easy option where you can find it without searching."],
@@ -69,7 +70,9 @@
   ["Can breakfast just be leftovers?","Breakfast does not need special breakfast food. Safely stored and reheated leftovers can be an option you enjoy."],
   ["I need breakfast ideas for a hotel room.","Look for simple food you can store safely, or check what the hotel offers. You can keep the choice familiar."],
   ["I have got bored of my usual breakfast.","Change one part, such as the fruit or topping, before replacing the whole routine."],
-  ["I want to prepare tomorrow's breakfast tonight.","Choose an option that stores safely overnight. Set out what you need so the morning has fewer steps." ]
+  ["I want to prepare tomorrow's breakfast tonight.","Choose an option that stores safely overnight. Set out what you need so the morning has fewer steps." ],
+  ["I never really eat breakfast.","Not everyone wants food first thing, and that is okay. If you would like something earlier in the day, keep one easy option where you will see it."],
+  ["I keep skipping breakfast without meaning to.","Make it as easy as possible: something you can eat in a few bites, set out the night before, so it is ready when you are."]
  ]},
  {"id":"eat-lunch-pause","category":"eat","title":"Make room for lunch","companion":"nori","examples":[
   ["I work through lunch almost every day.","Could you protect a short break to eat today? Your work can have a pause without needing to be finished first."],
@@ -95,7 +98,7 @@
   ["I do not want to cook a special meal just for myself.","A small, familiar meal is enough. You are allowed convenience even when you are the only person eating."],
   ["I want tomorrow's dinner to be easier.","Choose the meal before tomorrow gets busy. Check its ingredients and any safe preparation you can do ahead." ]
  ]},
- {"id":"eat-snack-options","category":"eat","title":"Something between meals","companion":"momo","examples":[
+ {"id":"eat-snack-options","category":"eat","title":"Something between meals","companion":"momo","responseIds":["eat-snack-options-01","eat-snack-options-02","eat-snack-options-03","eat-snack-options-04","eat-snack-options-05","eat-snack-options-06","eat-snack-options-07","eat-snack-options-08","eat-snack-options-09"],"examples":[
   ["I need an easy snack idea.","Try something you enjoy and can eat comfortably, such as fruit, toast, or yoghurt. Check it suits your dietary needs."],
   ["Is it okay to have a snack?","Snacks can be part of everyday eating. You do not need to turn having something to eat into a moral decision."],
   ["I need a snack for a long journey.","Choose food that travels and stores safely. Keep it easy to reach when you are stopped somewhere safe to eat."],
@@ -104,44 +107,34 @@
   ["I forgot to take food on my trip.","At your next safe opportunity, look for an accessible food option. Taking care of that need is part of the journey."],
   ["I need snacks I can keep at my desk.","Look for food with suitable storage instructions and packaging. Keep a couple of options you actually like."],
   ["I always judge myself for evening snacks.","Try describing what happened without blame. If food worries keep taking over, support from a qualified professional may help."],
-  ["Can I include sweet food in my week?","Enjoyment can be part of eating. You can think about the overall pattern without labelling a single food choice as a failure."],
-  ["I want to stop using exercise to earn snacks.","Food does not need to be earned through movement. If that rule feels hard to let go of, consider talking with an eating disorder professional.","live"]
+  ["Can I include sweet food in my week?","Enjoyment can be part of eating. You can think about the overall pattern without labelling a single food choice as a failure."]
  ]},
- {"id":"eat-protein-options","category":"eat","title":"Food alongside strength training","companion":"nori","examples":[
+ {"id":"eat-protein-options","category":"eat","title":"Food alongside strength training","companion":"nori","responseIds":["eat-protein-options-01","eat-protein-options-02","eat-protein-options-04","eat-protein-options-06","eat-protein-options-08","eat-protein-options-09"],"examples":[
   ["What foods contain protein?","Beans, lentils, tofu, eggs, dairy, fish, and meat are examples. Choose options that fit your preferences and dietary needs."],
   ["Can I get protein from plant foods?","Beans, lentils, tofu, and other plant foods can contribute protein. A varied eating pattern can help you include different nutrients."],
-  ["Do I have to buy protein powder?","Protein powder is not essential for everyone. Ordinary food can provide protein, and personal needs are worth discussing with a qualified dietitian."],
   ["I want to eat well while getting stronger.","Regular meals, enough food overall, and suitable protein sources can support training. A personalised plan depends on your needs."],
-  ["How much protein should I eat for my body?","That depends on factors including your health and activity. A registered dietitian can help work out an appropriate amount.","live"],
   ["I need a simple protein option for lunch.","You could add beans, tofu, egg, fish, or another suitable food you enjoy to a familiar lunch."],
-  ["Can you tell me which supplement to buy?","I cannot choose supplements safely without your health context. A pharmacist or qualified clinician can help check suitability and interactions.","live"],
   ["I think I have to eat perfectly to build strength.","A workable eating routine matters more than making every plate feel perfect. Leave room for ordinary meals and enjoyment."],
-  ["I cannot afford expensive gym food.","You do not need food marketed for the gym. Everyday ingredients can be useful, including beans, lentils, and other affordable options."],
-  ["Can you give me a muscle gain diet?","A suitable plan needs more information about your health, preferences, and training. A qualified dietitian can help personalise it.","live"]
+  ["I cannot afford expensive gym food.","You do not need food marketed for the gym. Everyday ingredients can be useful, including beans, lentils, and other affordable options."]
  ]},
- {"id":"eat-regular-rhythm","category":"eat","title":"Finding an eating rhythm","companion":"sunny","examples":[
+ {"id":"eat-regular-rhythm","category":"eat","title":"Finding an eating rhythm","companion":"sunny","responseIds":["eat-regular-rhythm-01","eat-regular-rhythm-02","eat-regular-rhythm-03","eat-regular-rhythm-05","eat-regular-rhythm-06","eat-regular-rhythm-07","eat-regular-rhythm-08","eat-regular-rhythm-10"],"examples":[
   ["I forget to eat when I am absorbed in something.","Try placing an eating break beside a regular part of your day. A visible reminder can help you notice the time."],
   ["My eating routine disappears on busy days.","Keep one reliable, easy food option available. The backup can support you when the usual routine does not fit."],
   ["I want fewer all or nothing food rules.","Choose one supportive habit rather than a strict list of restrictions. Make it something you can adapt when life changes."],
-  ["I cannot tell whether I am hungry anymore.","That can be difficult to navigate alone. A qualified clinician or dietitian can help you find a safe eating routine.","live"],
   ["I missed a meal and now feel behind.","You do not have to make the day perfect again. Think about your next practical opportunity to eat something."],
   ["How can I remember to take food to work?","Put a note beside your keys or bag, and prepare what you can safely in advance. Keep the reminder visible."],
   ["My schedule changes every day.","Try planning around events, like leaving home or finishing a shift, instead of relying only on fixed meal times."],
   ["I want a gentle food reminder without calorie talk.","You can use a simple reminder such as, have I made room to eat? No calorie target is needed for that prompt."],
-  ["I have hardly eaten for several days.","Please speak to a healthcare professional promptly, especially if you feel weak or unwell. This needs more support than a food reminder.","live"],
-  ["Can you help me build a realistic food routine?","Start by identifying the part of the day when eating is hardest. We can make one small change around that moment." ]
+  ["Can you help me build a realistic food routine?","Start by identifying the part of the day when eating is hardest. We can make one small change around that moment."]
  ]},
- {"id":"eat-less-judgement","category":"eat","title":"A kinder relationship with food","companion":"luma","examples":[
+ {"id":"eat-less-judgement","category":"eat","title":"A kinder relationship with food","companion":"luma","responseIds":["eat-less-judgement-01","eat-less-judgement-02","eat-less-judgement-03","eat-less-judgement-04","eat-less-judgement-05","eat-less-judgement-06","eat-less-judgement-07"],"examples":[
   ["I feel like I ruined everything with one meal.","One meal is not a verdict on you. You can continue your day without punishing yourself or trying to undo it."],
   ["I want to skip dinner because I ate dessert.","Dessert does not mean you have lost permission to eat dinner. If these rules feel persistent, reach out for qualified support.","live"],
   ["Can you shame me into eating better?","I will not use shame around food. We can look for a small, practical change that respects your needs."],
   ["I keep comparing my plate to everyone else's.","Other people's plates do not show their needs or their whole day. Bring the focus back to what supports your own eating."],
   ["Food tracking makes me anxious.","You can step away from tracking. If anxiety around food is growing, a qualified professional can help you find a gentler approach."],
   ["I do not want a weight loss goal.","You can focus on regular meals, enjoyment, and having energy for your day. A weight goal is not required."],
-  ["I want you to call my food good or bad.","I would rather help you describe what a meal offers and what you enjoy. Moral labels can make eating feel harder."],
-  ["I think I need to work off what I ate.","Movement does not need to repay food. If that pressure keeps coming back, consider support from an eating disorder professional.","live"],
-  ["I am frightened of eating more foods.","That sounds difficult. A qualified professional can help you work with that fear at a pace that is safe for you.","live"],
-  ["Can this app treat my eating disorder?","Daywell cannot treat an eating disorder. Please seek professional care; gentle app tools can only sit alongside appropriate support.","live"]
+  ["I want you to call my food good or bad.","I would rather help you describe what a meal offers and what you enjoy. Moral labels can make eating feel harder."]
  ]},
  {"id":"eat-budget-meals","category":"eat","title":"Food within your budget","companion":"momo","examples":[
   ["Healthy food feels too expensive.","Start with affordable foods you already use. Tinned and frozen options can help you build meals without needing speciality products."],
@@ -166,17 +159,5 @@
   ["Is my food history private?","Check Daywell's current privacy information and settings before adding sensitive details. Only share what you are comfortable recording.","live"],
   ["Can you see whether my eating has improved?","That would need your actual records and a clear idea of what improvement means to you. A saved reply cannot assess the pattern.","tool"],
   ["I do not want meal logging to become a chore.","Keep only the details that help you. You can pause logging when it stops feeling useful." ]
- ]},
- {"id":"eat-dietary-safety","category":"eat","title":"Dietary needs and limits","companion":"nori","examples":[
-  ["I have a food allergy; can you choose something safe?","Please check ingredient labels, allergen information, and your care advice. I cannot guarantee that a suggested meal is safe for your allergy.","live"],
-  ["Can I eat this if I have diabetes?","Your own care plan and medication matter. A qualified clinician or dietitian can advise on food choices for your diabetes.","live"],
-  ["I need food advice during pregnancy.","Please use pregnancy specific guidance from a qualified clinician or trusted health service. General meal ideas cannot check every safety consideration.","live"],
-  ["I am vegan; can you keep that in mind?","Vegan meal ideas are possible. Share any other dietary needs too, so the suggestions can fit your preferences.","live"],
-  ["My throat is swelling after eating something.","Call emergency services now. In the UK, call nine nine nine. If you have a prescribed adrenaline auto injector, use it according to your emergency plan.","urgent"],
-  ["Can you put my child on a diet?","Children's nutrition and growth need qualified guidance. Please speak with an appropriate healthcare professional instead of using an adult diet plan.","live"],
-  ["Can food cure my medical condition?","I cannot promise a cure through food. Speak with your healthcare team about nutrition that can support your treatment.","live"],
-  ["I need a diet for kidney disease.","Kidney conditions can require specific nutritional advice. Please work with your kidney care team or a specialist dietitian.","live"],
-  ["The recipe says may contain my allergen; is a little okay?","Do not rely on me to judge an allergy risk. Follow your allergy care advice and check with an appropriate professional.","live"],
-  ["I have been vomiting and cannot keep fluids down.","Please seek urgent medical advice, especially if you feel very unwell or dehydrated. In the UK, NHS one one one can guide you.","live"]
  ]}
 ]

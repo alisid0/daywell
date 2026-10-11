@@ -4,7 +4,11 @@ A cosy home for Move, Relax, Eat and Sleep, with one host and a quiet place to p
 
 Built with React, TypeScript, Vinext, shadcn/ui and Cloudflare D1.
 
-**Current release direction:** prepare Android and iPhone versions for early-November store review. See the [mobile release plan](docs/mobile-release-plan.md) for the working 5 November 2026 deadline, launch scope, account dependencies and acceptance checks. These are release targets; the current local MVP is not yet a store-ready build.
+**Private phone hosting:** an owner-only Cloudflare Workers/D1 test app is deployed. See the [private tester guide](docs/private-tester-guide.md) and [deployment evidence](docs/handover/2026-10-10-response-router.md). Food AI is connected: a synthetic label passed local and hosted photo analysis, and hosted portion correction updated calories and sugar correctly without saving a test record. Actual phone/live-voice, varied real-food accuracy and separate tester-account checks remain. The [hosting guide](docs/cloudflare-hosting.md) covers repeatable builds and deployment.
+
+**Recorded-first responses:** the deployed [shared router](docs/response-routing.md) checks local commands and exact playable clips before optional JEV matching or new ElevenLabs responses. JEV remains off until its separate key and accuracy test are available. See the [implementation and deployment evidence](docs/handover/2026-10-10-response-router.md). Continuous live conversations still generate subsequent turns through ElevenLabs.
+
+**Current release direction:** prepare Android and iPhone versions, keeping 5 November 2026 as the working release-review checkpoint. The [9 October launch assessment](docs/launch-readiness-2026-10-09.md) records the remaining blockers and a conditional 6–8 week estimate for public availability in both stores. See the [mobile release plan](docs/mobile-release-plan.md) for scope and acceptance checks. The private web app is not a store-ready release, and the estimates are not approval guarantees.
 
 **Working on either machine? GitHub is the source of truth.** Read [the shared session workflow](docs/github-workflow.md): fetch before starting, then commit, push and verify the GitHub handover before ending each session. A local preview is not a saved or merged version. Coding assistants must also read [AGENTS.md](AGENTS.md); [CLAUDE.md](CLAUDE.md) points to the same rules.
 
@@ -24,9 +28,11 @@ Focus, timers and alarms are the **Everyday extras** on Today. Alarms and encour
 
 ### Reusable audio: Just listen
 
-Open **Just listen · little words of comfort** on Home, or `/audio-library`. The bank contains **1,500 unique short recordings across 150 situations**: Relax 300, Sleep 230, Move 280, Eat 210, Focus 140, Progress 140 and Everyday company 200. The original 500 clips are preserved. Another **1,000 distinct example user utterances and replies** are authored in `content/audio-expansion/`, with ten examples per group. Search includes both questions and replies. The listening shelves only include comfort/guidance examples; action requests, personal advice and urgent-support examples stay in the labelled catalogue.
+Open **Just listen · little words of comfort** on Home, or `/audio-library`. The published library contains **1,431 short recordings across 144 situations**: the original 500, 917 everyday example replies, and 14 replies added on 10 October for topics where JEV found the right topic but no fitting reply. On 8 October the owner limited Daywell to general wellness. The 83 medical, clinical and crisis examples were retired from public playback, downloads and future generation; their historical scripts and recordings are retained outside `public/` in `archive/medical-audio/`.
 
-Open `/response-bank` for the complete, searchable collection of 1,000 new questions, with category filtering, pagination and playback. **Download all 1,500 scripts** provides `public/audio-library/response-catalogue.json`, including the original comfort scripts and the local recording path for each entry. Run `node --experimental-strip-types scripts/export-response-catalogue.mjs` after changing scripts or recordings. Each new example has a `handling` field: `recorded`, `tool`, `live` or `urgent`. These distinguish reusable guidance from requests needing a real action, individual context or urgent support. This is a representative English-language collection, not every possible utterance and not an automatic intent router. The live ElevenLabs host still uses the live voice service; this change does not intercept live speech or replace its replies with cached clips.
+Open `/response-bank` for everyday questions, filtering, playback and a download of the published scripts. Search covers questions and replies. Examples that need an app action or a live conversation are labelled; playback never performs that action. The library does not automatically route live conversations or remove their provider charges. Run `node --experimental-strip-types scripts/export-response-catalogue.mjs` after any approved script change. Retain `responseIds` when retiring individual examples so existing recordings keep their identities.
+
+The product boundary is in [the general-wellness policy](docs/general-wellness-scope.md) and `config/wellness-scope.json`. The live agent and capture instructions use it. Ordinary relaxation, food organisation, comfortable movement and bedtime routines are in scope. Clinical assessment, treatment, mental-health care, medicines, supplements and alcohol recommendations are out of scope, regardless of claimed age.
 
 Each clip is generated once and shipped as an MP3. Listening opens no microphone, live agent, language-model or speech-generation request; ordinary asset delivery still has hosting/bandwidth costs. Playback starts only after a tap and stops on another clip, navigation, hiding the page or starting voice. The words remain readable if an audio file is unavailable. These are brief reusable replies, not full sessions or personalised answers. All short clips use Daywell's existing Eric host voice, with a slower pace for Relax and Sleep; the mascot provides visual company.
 
@@ -79,7 +85,7 @@ under **Your tools & saved day**, the bottom bar, and the sidebar in the classic
 - Saved activities survive reload; encouragement does not replay missed cues.
   Keep Daywell open for timers, alarms and spoken guidance.
 
-Without credentials, Daywell uses bounded everyday commands. Connecting an ElevenLabs agent enables open voice and AI text conversations.
+Without credentials, Daywell uses bounded everyday commands plus friendly replies to greetings, thanks and help requests. “Hello”, “Hi Daywell” and “What can you do?” need no AI call, and do not save anything or dismiss a pending plan. A greeting can precede a supported command, such as “Hello Daywell, focus for ten minutes”. New local replies and browser speech errors scroll into view above the phone menu. Connecting an ElevenLabs agent enables open voice and AI text conversations. Credentials belong to each checkout's ignored local setup; switching previews does not copy them through GitHub.
 Use **Things you can say** for supported phrases. Examples include “Add milk
 and focus on my email for ten minutes”, “Help me wind down”, “Start a walk for
 fifteen minutes”, “Set an alarm for 7 am”, “Log a meal”, and “Undo that”.
@@ -270,6 +276,15 @@ sessions, timer titles, overnight sleep and entry validation. Manual browser
 checks cover onboarding, tasks, grocery quantities and completion, timer modes,
 stopwatch navigation, saved data and responsive layout.
 
+For repeatable HTTP integration checks, start a separate, migrated local QA
+checkout on port 5190, then run
+`node scripts/smoke-local.mjs http://localhost:5190 --allow-test-writes`.
+This opt-in test creates synthetic records, verifies saves, retries and conflicts,
+checks the audio assets, and removes only its own fixtures; food audit receipts
+remain. Never run it against the owner's everyday database. See the
+[8 October end-to-end report](docs/handover/2026-10-08-end-to-end-testing.md)
+for browser coverage and remaining hosted/device acceptance gates.
+
 ## Optional AI adapter
 
 The current host uses browser speech and the bounded commands described above.
@@ -352,7 +367,7 @@ Third-party notices are preserved in `vendor/` and `build/`.
 
 **Stay for a little longer** in Just listen opens `/meditate`: **An easy breath** (2 minutes), **Leave the feed behind** (3 minutes), and **A softer goodnight** (5 minutes). Relax and Sleep also link to these sessions. Each uses a saved Eleven v4 recording, with explicit warm, unhurried delivery directions and measured quiet intervals. Daywell's connected live host was already configured for Eleven v4 Turbo; these sessions do not open a live connection.
 
-The player provides pause/continue, end, position and volume controls, current-passage captions and the full written guidance. It pauses when the tab is hidden and stops when leaving the page; returning to that still-open tab allows a paused session to resume. A new page visit starts at the beginning. Playback does not save a completion, open a microphone, or incur new speech-generation/agent usage. The 1,500 short-response library remains available separately.
+The player provides pause/continue, end, position and volume controls, current-passage captions and the full written guidance. It pauses when the tab is hidden and stops when leaving the page; returning to that still-open tab allows a paused session to resume. A new page visit starts at the beginning. Playback does not save a completion, open a microphone, or incur new speech-generation/agent usage. The published general-wellness reply library remains available separately.
 
 Scripts and timelines are in `lib/guided-sessions.ts`; configuration is in `config/guided-audio-generation.json`. Run `npm run meditation:plan`, then `npm run meditation:generate` to generate missing sessions. Generation requires FFmpeg/FFprobe on PATH, checks the existing included allowance with a conservative two-credit-per-character budget and a 20,000-credit reserve, and never buys an upgrade. Private keys remain in the environment or ignored `.dev.vars`. Narration is cached under ignored `work/guided-audio`; final recordings and timing metadata are under `public/guided-audio`. The assembler rejects a passage that would overflow its allotted slot instead of cutting off speech. Review the audio before public release.
 
@@ -366,4 +381,4 @@ The new scripts use Eleven v4 warm/soft/slow delivery and inhale/exhale audio ta
 
 New scripts: `lib/unwind-sessions.ts`. Voices/settings: `config/unwind-voices.json`. Use `npm run unwind:plan`, then `npm run unwind:generate`; optional `-- --session scroll-unwind --voice lily` selects a single combination. The original `meditation:generate` command only handles the three original sessions. Both assemblers measure narration with FFprobe, reject overlapping passages, pad real quiet intervals, and preserve completed files. New short scripts total 112,210 characters; the five-voice unwind plan totals 21,285 input characters. Provider usage reports can lag, so do not infer actual credit consumption from an immediate before/after query. No ongoing speech-generation cost is incurred by replaying these saved files; hosting delivery still applies.
 
-Verification: 70 automated tests, type check and production build; all 1,500 short assets match scripts, filenames and byte counts. The original 500 manifest records and files remain unchanged. All 15 new full tracks and 20 short samples also passed a complete FFmpeg decode check. Automated checks do not substitute for an editorial listen before a public launch, especially for expressive delivery and urgent-support wording.
+Historical generation verification covered all 1,500 original assets; current checks cover the 1,431 published clips and ensure retired clips are absent from public assets. The original 500 manifest records and files remain unchanged. All 15 new full tracks and 20 short samples also passed a complete FFmpeg decode check. Automated checks do not substitute for an editorial listen before a public launch, especially for expressive delivery and the approved everyday-wellness scope.

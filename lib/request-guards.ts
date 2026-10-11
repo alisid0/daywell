@@ -47,6 +47,8 @@ export const limits = {
   "voice-day": { windowMs: day, max: 10 },
   "voice-all": { windowMs: day, max: 100 },
   capture: { windowMs: day, max: 20 },
+  narration: { windowMs: day, max: 20 },
+  picker: { windowMs: day, max: 120 },
 } as const;
 export type LimitedFeature = keyof typeof limits;
 // The usage_limits row shared by everyone. No real sign-in ID is "*".

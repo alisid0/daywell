@@ -3,6 +3,24 @@ import assert from "node:assert/strict";
 import { parseHostRequest, entriesForActions, guidanceAt, canUndoHostChange, actionModule } from "../lib/host.ts";
 import { schemas } from "../lib/daywell.ts";
 
+test("greetings and help receive local replies without creating actions", () => {
+  for (const phrase of ["hello", "HELLO!", "Hi Daywell", "hello, Daywell!", "Hey there", "Good evening, Daywell", "  hello   daywell  ", "Daywell?", "thanks", "Thank you, Daywell", "Hello, what can you do?", "How do I use this?", "Are you there?", "Can you hear me?"]) {
+    const reply = parseHostRequest(phrase);
+    assert.equal(reply.type, "reply", phrase);
+    assert.ok(reply.message.length > 0, phrase);
+    assert.equal("actions" in reply, false, phrase);
+  }
+  assert.match(parseHostRequest("Can you hear me?").message, /received your message/);
+});
+
+test("greeting prefixes keep the command and confirmation boundary intact", () => {
+  assert.deepEqual(parseHostRequest("Hello Daywell, focus for ten minutes"), parseHostRequest("Focus for ten minutes"));
+  assert.deepEqual(parseHostRequest("Hi, add milk to my list"), parseHostRequest("Add milk to my list"));
+  for (const phrase of ["Hello, don't add milk", "Hello Daywell, add milk then book a flight", "Hello and delete everything", "Thanks and start a workout", "Can you hear me and save everything", "hello ".repeat(110)]) {
+    assert.equal(parseHostRequest(phrase).type, "unknown", phrase);
+  }
+});
+
 test("one request routes shopping and focus without requiring a mascot name", () => {
   const plan = parseHostRequest("Add milk and eggs to my list and help me focus on my email for ten minutes");
   assert.equal(plan.type, "plan");

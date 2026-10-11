@@ -3451,60 +3451,10 @@
       "text": "We can take one thought at a time. For now, there is no need to explain the whole situation.",
       "bytes": 36197
     },
-    "relax-human-support-01": {
-      "src": "/audio-library/relax-human-support-01-0cdfc1d91186.mp3",
-      "text": "I cannot diagnose you. A healthcare professional can help you understand what you are experiencing and what support may fit.",
-      "bytes": 62319
-    },
-    "relax-human-support-02": {
-      "src": "/audio-library/relax-human-support-02-e84350819e60.mp3",
-      "text": "Difficulty focusing can have different causes. Daywell cannot diagnose ADHD; consider discussing the pattern with a qualified professional.",
-      "bytes": 75694
-    },
-    "relax-human-support-03": {
-      "src": "/audio-library/relax-human-support-03-b9e22f350c86.mp3",
-      "text": "Please speak with your prescriber before changing medication. I can help you prepare questions, but cannot advise on your dose.",
-      "bytes": 59185
-    },
-    "relax-human-support-05": {
-      "src": "/audio-library/relax-human-support-05-7e06fbd026b9.mp3",
-      "text": "Call emergency services now; in the UK, nine nine nine. Do not wait for this app. Tell someone nearby what has happened.",
-      "bytes": 55632
-    },
-    "relax-human-support-04": {
-      "src": "/audio-library/relax-human-support-04-2a76c7f850ca.mp3",
-      "text": "You deserve immediate support. Contact local emergency services now and ask someone you trust to stay with you. In the UK, call nine nine nine.",
-      "bytes": 70052
-    },
-    "relax-human-support-06": {
-      "src": "/audio-library/relax-human-support-06-ee6b84f92af3.mp3",
-      "text": "If you can, move to a safer place and contact local emergency services. In the UK, call nine nine nine. This app cannot send help.",
-      "bytes": 69634
-    },
-    "relax-human-support-07": {
-      "src": "/audio-library/relax-human-support-07-779469e9c279.mp3",
-      "text": "No. Daywell offers everyday tools and supportive moments. It cannot replace therapy, clinical care, or a person who can support you directly.",
-      "bytes": 75903
-    },
-    "relax-human-support-08": {
-      "src": "/audio-library/relax-human-support-08-d630f45797b3.mp3",
-      "text": "If you cannot stay safe, call nine nine nine. For urgent mental health help without immediate danger, call NHS one one one and select mental health.",
-      "bytes": 80083
-    },
     "sleep-delaying-01": {
       "src": "/audio-library/sleep-delaying-01-51b16af5afd0.mp3",
       "text": "What are you hoping to get from staying up? A little time for yourself may need a gentler place in tomorrow's plan.",
       "bytes": 55214
-    },
-    "relax-human-support-09": {
-      "src": "/audio-library/relax-human-support-09-415ed8aefa81.mp3",
-      "text": "You can contact Samaritans on one one six, one two three. If you are in immediate danger, call nine nine nine instead.",
-      "bytes": 59603
-    },
-    "relax-human-support-10": {
-      "src": "/audio-library/relax-human-support-10-822e75a54fc4.mp3",
-      "text": "You do not have to manage that alone. Reach out to a healthcare professional or someone you trust; seek urgent help if you cannot stay safe.",
-      "bytes": 65663
     },
     "sleep-delaying-03": {
       "src": "/audio-library/sleep-delaying-03-8ec6c9628912.mp3",
@@ -3771,11 +3721,6 @@
       "text": "Keep the smallest familiar part of it. A routine can travel in pieces; it does not need all its usual conditions.",
       "bytes": 53960
     },
-    "sleep-away-07": {
-      "src": "/audio-library/sleep-away-07-67551bec68b0.mp3",
-      "text": "I cannot recommend a personal supplement or dose. Ask a pharmacist or clinician, especially if you take other medicines.",
-      "bytes": 55632
-    },
     "sleep-away-06": {
       "src": "/audio-library/sleep-away-06-9af29035134c.mp3",
       "text": "Travel can disrupt your rhythm. Keep the next step gentle; if sleep problems persist, ask a healthcare professional for advice.",
@@ -3840,11 +3785,6 @@
       "src": "/audio-library/sleep-shifts-09-1c21dd7f7232.mp3",
       "text": "Protect the rest that is possible without making the gap another performance. Consider whether someone can help with a practical demand.",
       "bytes": 64827
-    },
-    "sleep-shifts-07": {
-      "src": "/audio-library/sleep-shifts-07-890b0b508901.mp3",
-      "text": "I can help organise your own plan, but personalised sleep treatment needs a qualified professional who understands your work and health.",
-      "bytes": 54378
     },
     "sleep-small-routine-02": {
       "src": "/audio-library/sleep-small-routine-02-a1996517703b.mp3",
@@ -3916,11 +3856,6 @@
       "text": "Yes. You can choose a comfortable, low-demand pause without setting sleep as the outcome.",
       "bytes": 40586
     },
-    "sleep-resting-daytime-03": {
-      "src": "/audio-library/sleep-resting-daytime-03-c13948b502c2.mp3",
-      "text": "People respond differently to naps. Notice your own pattern, and ask a clinician if persistent sleep difficulties need personalised advice.",
-      "bytes": 71515
-    },
     "sleep-resting-daytime-07": {
       "src": "/audio-library/sleep-resting-daytime-07-f3cf5d61a333.mp3",
       "text": "Put the chores somewhere outside your head. You can choose whether to return to them after the pause.",
@@ -3975,11 +3910,6 @@
       "src": "/audio-library/sleep-journal-help-05-b59c30ce4feb.mp3",
       "text": "You can choose how much to record. The journal should support noticing your rest, not make you grade every night.",
       "bytes": 47273
-    },
-    "sleep-journal-help-06": {
-      "src": "/audio-library/sleep-journal-help-06-9c35a81e9f76.mp3",
-      "text": "A journal may show patterns, but it cannot diagnose a cause. Persistent tiredness deserves a conversation with a healthcare professional.",
-      "bytes": 65663
     },
     "sleep-journal-help-09": {
       "src": "/audio-library/sleep-journal-help-09-8750a008cdba.mp3",
@@ -4050,56 +3980,6 @@
       "src": "/audio-library/sleep-alarm-help-09-3fde9ac65a3c.mp3",
       "text": "The browser may pause when closed or suspended. Use the device clock for essential alarms and keep Daywell open for its timers.",
       "bytes": 61066
-    },
-    "sleep-extra-support-01": {
-      "src": "/audio-library/sleep-extra-support-01-6345fae20839.mp3",
-      "text": "No recording can promise that. It can offer a quieter moment; persistent sleep difficulties are worth discussing with a healthcare professional.",
-      "bytes": 62946
-    },
-    "sleep-extra-support-03": {
-      "src": "/audio-library/sleep-extra-support-03-056d7ebc3681.mp3",
-      "text": "Please discuss that with a healthcare professional. A relaxation recording cannot assess breathing problems during sleep.",
-      "bytes": 52915
-    },
-    "sleep-extra-support-02": {
-      "src": "/audio-library/sleep-extra-support-02-3e5e6c28c1bd.mp3",
-      "text": "Please ask a pharmacist or prescriber about medicines for your situation. I cannot decide whether a sleeping tablet is appropriate for you.",
-      "bytes": 69007
-    },
-    "sleep-extra-support-04": {
-      "src": "/audio-library/sleep-extra-support-04-1b871fda1804.mp3",
-      "text": "Avoid driving or risky tasks while sleepy, and seek medical advice about the repeated sleepiness. Your safety comes before finishing the task.",
-      "bytes": 77784
-    },
-    "sleep-extra-support-07": {
-      "src": "/audio-library/sleep-extra-support-07-c6a344437228.mp3",
-      "text": "Speak with your prescriber before stopping or changing it. They can help you make an appropriate plan for that medicine.",
-      "bytes": 63364
-    },
-    "sleep-extra-support-06": {
-      "src": "/audio-library/sleep-extra-support-06-ea9057f382e5.mp3",
-      "text": "I cannot diagnose sleep conditions. You can bring your observations and sleep notes to a qualified professional for assessment.",
-      "bytes": 57095
-    },
-    "sleep-extra-support-05": {
-      "src": "/audio-library/sleep-extra-support-05-59aaa396fdd3.mp3",
-      "text": "Please seek prompt medical advice, especially with a marked change in energy or behaviour. A bedtime recording is not enough to assess this.",
-      "bytes": 65663
-    },
-    "sleep-extra-support-08": {
-      "src": "/audio-library/sleep-extra-support-08-06cd5cf036fd.mp3",
-      "text": "That sounds significant enough to ask for professional support. Your notes may help explain how long it has been happening and its impact.",
-      "bytes": 60439
-    },
-    "sleep-extra-support-09": {
-      "src": "/audio-library/sleep-extra-support-09-3ca0555b6a31.mp3",
-      "text": "Ask a pharmacist or prescriber before mixing them. If you have already taken them and feel seriously unwell, seek urgent medical help.",
-      "bytes": 66290
-    },
-    "sleep-extra-support-10": {
-      "src": "/audio-library/sleep-extra-support-10-53c1a8219c87.mp3",
-      "text": "Your clinician can advise around that condition and any treatment. Daywell can help you record observations, but cannot personalise medical sleep care.",
-      "bytes": 77157
     },
     "sleep-late-screen-03": {
       "src": "/audio-library/sleep-late-screen-03-5f1c422322a6.mp3",
@@ -4350,11 +4230,6 @@
       "src": "/audio-library/move-walk-choice-01-d9e0d04f91b2.mp3",
       "text": "Choose a simple route and put on your shoes. You do not need to decide on a perfect distance first.",
       "bytes": 42884
-    },
-    "move-desk-pause-09": {
-      "src": "/audio-library/move-desk-pause-09-a7d44f1630ad.mp3",
-      "text": "Do not push through pain. Stop the movement and seek appropriate professional advice if the pain persists or concerns you.",
-      "bytes": 53333
     },
     "move-walk-choice-03": {
       "src": "/audio-library/move-walk-choice-03-e5204292cbc8.mp3",
@@ -4726,11 +4601,6 @@
       "text": "Choose a comfortable easy movement you already know, or simply rest. Recovery does not need its own demanding checklist.",
       "bytes": 49990
     },
-    "move-recovery-day-05": {
-      "src": "/audio-library/move-recovery-day-05-6596cafa0025.mp3",
-      "text": "Return gradually and follow any medical advice you have. If symptoms persist or you are unsure, ask a healthcare professional before exercising.",
-      "bytes": 65872
-    },
     "move-recovery-day-08": {
       "src": "/audio-library/move-recovery-day-08-eb2b15105bdc.mp3",
       "text": "That was a response to the day you had. Decide the next session when you know what capacity you have.",
@@ -4751,60 +4621,10 @@
       "text": "Give rest its own place in the plan. You can describe it as recovery, or simply leave that space unfilled.",
       "bytes": 48109
     },
-    "move-discomfort-01": {
-      "src": "/audio-library/move-discomfort-01-201ea6603fb1.mp3",
-      "text": "Stop that movement. Do not push through sharp pain; seek appropriate medical advice, especially if pain is severe or persistent.",
-      "bytes": 61066
-    },
-    "move-discomfort-02": {
-      "src": "/audio-library/move-discomfort-02-9377b89e638f.mp3",
-      "text": "Stop exercising and get somewhere safe to rest. Seek urgent help if symptoms are severe, persistent, or accompanied by other concerning symptoms.",
-      "bytes": 73813
-    },
-    "move-discomfort-05": {
-      "src": "/audio-library/move-discomfort-05-9d9b46957a25.mp3",
-      "text": "No. A routine is not more important than pain or feeling unwell. Stop and choose appropriate support.",
-      "bytes": 47691
-    },
-    "move-discomfort-03": {
-      "src": "/audio-library/move-discomfort-03-ad014be42c6a.mp3",
-      "text": "Stop and call emergency services now. In the UK, call nine nine nine. Do not continue the workout or wait for this app.",
-      "bytes": 54796
-    },
-    "move-discomfort-04": {
-      "src": "/audio-library/move-discomfort-04-e11c5bf05297.mp3",
-      "text": "Stop the squat rather than forcing the range. A qualified professional can help assess the pain and suggest a suitable alternative.",
-      "bytes": 61066
-    },
-    "move-discomfort-08": {
-      "src": "/audio-library/move-discomfort-08-b47638d4ed68.mp3",
-      "text": "Avoid pushing the affected area and get medical advice. This needs assessment rather than a motivational message to continue.",
-      "bytes": 53960
-    },
-    "move-discomfort-07": {
-      "src": "/audio-library/move-discomfort-07-d556d61a28b6.mp3",
-      "text": "I cannot assess an injury from this recording. Stop the painful activity and seek appropriate professional advice.",
-      "bytes": 47064
-    },
-    "move-discomfort-06": {
-      "src": "/audio-library/move-discomfort-06-29d93116ee9c.mp3",
-      "text": "Keep the next activity gentle and avoid forcing painful movement. Seek professional advice if the soreness is severe, unusual or does not improve.",
-      "bytes": 71097
-    },
-    "move-discomfort-10": {
-      "src": "/audio-library/move-discomfort-10-f497d1709533.mp3",
-      "text": "End the set and attend to how you feel. Finishing the number is not worth ignoring a possible health problem.",
-      "bytes": 54378
-    },
     "move-accessible-01": {
       "src": "/audio-library/move-accessible-01-fd4db8819247.mp3",
       "text": "Your movement plan should fit your body. Choose suitable seated or supported options with guidance from a qualified professional where needed.",
       "bytes": 68589
-    },
-    "move-discomfort-09": {
-      "src": "/audio-library/move-discomfort-09-4722b418d7d9.mp3",
-      "text": "If you are unsure, stop and ask a qualified professional. You do not need to discover the limit by forcing through discomfort.",
-      "bytes": 53960
     },
     "move-accessible-02": {
       "src": "/audio-library/move-accessible-02-36639a78f598.mp3",
@@ -5081,11 +4901,6 @@
       "text": "That detail depends on the exercise and your body. Get a clear demonstration before adding resistance or speed.",
       "bytes": 49990
     },
-    "move-learning-form-08": {
-      "src": "/audio-library/move-learning-form-08-99f3141343a6.mp3",
-      "text": "I cannot reliably assess your movement from a short description. A qualified coach or clinician can observe and guide you.",
-      "bytes": 52915
-    },
     "move-learning-form-06": {
       "src": "/audio-library/move-learning-form-06-2c4f5d492ac5.mp3",
       "text": "Understand the easier version first. Choose difficulty that matches your skill, not just the version that looks impressive.",
@@ -5201,60 +5016,10 @@
       "text": "Returning is worth noticing. Keep the celebration gentle and let the next session stay manageable.",
       "bytes": 40377
     },
-    "move-personal-limits-01": {
-      "src": "/audio-library/move-personal-limits-01-9ccc30995ce8.mp3",
-      "text": "Please ask your healthcare team for exercise guidance specific to your condition. A generic routine cannot establish what is safe for you.",
-      "bytes": 61901
-    },
-    "move-personal-limits-02": {
-      "src": "/audio-library/move-personal-limits-02-24a9facdc093.mp3",
-      "text": "Ask your maternity team or a qualified pregnancy exercise professional about suitable activity. This recording cannot tailor a plan to your pregnancy.",
-      "bytes": 74022
-    },
-    "move-personal-limits-03": {
-      "src": "/audio-library/move-personal-limits-03-82cc7bd01def.mp3",
-      "text": "Follow your surgical team's recovery instructions and ask before adding exercise. Daywell cannot clear you to train.",
-      "bytes": 53960
-    },
-    "move-personal-limits-04": {
-      "src": "/audio-library/move-personal-limits-04-cf9b26f4ff3f.mp3",
-      "text": "Use the return-to-activity advice from your clinician or physiotherapist. Do not treat a generic app routine as rehabilitation.",
-      "bytes": 64409
-    },
-    "move-personal-limits-05": {
-      "src": "/audio-library/move-personal-limits-05-c9f2f178d20a.mp3",
-      "text": "No. Movement can support wellbeing, but Daywell cannot promise disease prevention or a particular medical outcome.",
-      "bytes": 62946
-    },
-    "move-personal-limits-06": {
-      "src": "/audio-library/move-personal-limits-06-a34ebcb0cd70.mp3",
-      "text": "You do not need to earn or undo food through exercise. Choose care over punishment, and seek support if this pattern is hard to interrupt.",
-      "bytes": 60021
-    },
-    "move-personal-limits-07": {
-      "src": "/audio-library/move-personal-limits-07-6bb73f84591d.mp3",
-      "text": "Do not use this app to push through illness. Rest and seek medical advice if you are unwell or unsure about returning to exercise.",
-      "bytes": 60439
-    },
-    "move-personal-limits-08": {
-      "src": "/audio-library/move-personal-limits-08-9ab7897d862a.mp3",
-      "text": "Rehabilitation needs a qualified assessment. I can help you organise an existing professional plan, but cannot diagnose or prescribe one.",
-      "bytes": 56677
-    },
     "eat-choosing-meal-01": {
       "src": "/audio-library/eat-choosing-meal-01-fd44a949aded.mp3",
       "text": "Let's make the choice smaller. Would something warm or something cold feel easier tonight?",
       "bytes": 33898
-    },
-    "move-personal-limits-09": {
-      "src": "/audio-library/move-personal-limits-09-ddcb294c5587.mp3",
-      "text": "Get urgent medical help now. If someone is unconscious or seriously unwell, call local emergency services; in the UK, nine nine nine.",
-      "bytes": 61901
-    },
-    "move-personal-limits-10": {
-      "src": "/audio-library/move-personal-limits-10-1af76af2152d.mp3",
-      "text": "These routines are not a personalised children's programme. Seek age-appropriate guidance from a qualified professional rather than adapting an adult routine blindly.",
-      "bytes": 77157
     },
     "eat-choosing-meal-03": {
       "src": "/audio-library/eat-choosing-meal-03-b5cd806a04ff.mp3",
@@ -5491,11 +5256,6 @@
       "text": "That tells you the plan asked for too much this week. Try fewer cooking nights and more easy options next time.",
       "bytes": 48109
     },
-    "eat-flexible-planning-08": {
-      "src": "/audio-library/eat-flexible-planning-08-97cb15f74360.mp3",
-      "text": "I would need your preferences, budget, schedule, and dietary needs. Medical nutrition plans should involve a qualified professional.",
-      "bytes": 52497
-    },
     "eat-breakfast-start-02": {
       "src": "/audio-library/eat-breakfast-start-02-f64275aca71a.mp3",
       "text": "Could you take something with you for later? Make space for food in a way that fits your morning.",
@@ -5691,11 +5451,6 @@
       "text": "Try describing what happened without blame. If food worries keep taking over, support from a qualified professional may help.",
       "bytes": 53751
     },
-    "eat-snack-options-10": {
-      "src": "/audio-library/eat-snack-options-10-24150ade84d1.mp3",
-      "text": "Food does not need to be earned through movement. If that rule feels hard to let go of, consider talking with an eating disorder professional.",
-      "bytes": 54796
-    },
     "eat-protein-options-01": {
       "src": "/audio-library/eat-protein-options-01-c95306ba1a30.mp3",
       "text": "Beans, lentils, tofu, eggs, dairy, fish, and meat are examples. Choose options that fit your preferences and dietary needs.",
@@ -5716,30 +5471,10 @@
       "text": "Beans, lentils, tofu, and other plant foods can contribute protein. A varied eating pattern can help you include different nutrients.",
       "bytes": 62528
     },
-    "eat-protein-options-03": {
-      "src": "/audio-library/eat-protein-options-03-18dc5b746bec.mp3",
-      "text": "Protein powder is not essential for everyone. Ordinary food can provide protein, and personal needs are worth discussing with a qualified dietitian.",
-      "bytes": 75694
-    },
-    "eat-protein-options-05": {
-      "src": "/audio-library/eat-protein-options-05-90ceeee0ec18.mp3",
-      "text": "That depends on factors including your health and activity. A registered dietitian can help work out an appropriate amount.",
-      "bytes": 52288
-    },
-    "eat-protein-options-07": {
-      "src": "/audio-library/eat-protein-options-07-dcde69b19b2c.mp3",
-      "text": "I cannot choose supplements safely without your health context. A pharmacist or qualified clinician can help check suitability and interactions.",
-      "bytes": 65663
-    },
     "eat-protein-options-06": {
       "src": "/audio-library/eat-protein-options-06-445d78032efd.mp3",
       "text": "You could add beans, tofu, egg, fish, or another suitable food you enjoy to a familiar lunch.",
       "bytes": 68171
-    },
-    "eat-protein-options-10": {
-      "src": "/audio-library/eat-protein-options-10-adca74ff8060.mp3",
-      "text": "A suitable plan needs more information about your health, preferences, and training. A qualified dietitian can help personalise it.",
-      "bytes": 60021
     },
     "eat-protein-options-09": {
       "src": "/audio-library/eat-protein-options-09-311ed656406a.mp3",
@@ -5771,11 +5506,6 @@
       "text": "Put a note beside your keys or bag, and prepare what you can safely in advance. Keep the reminder visible.",
       "bytes": 45810
     },
-    "eat-regular-rhythm-04": {
-      "src": "/audio-library/eat-regular-rhythm-04-b2babb752bbf.mp3",
-      "text": "That can be difficult to navigate alone. A qualified clinician or dietitian can help you find a safe eating routine.",
-      "bytes": 51870
-    },
     "eat-regular-rhythm-05": {
       "src": "/audio-library/eat-regular-rhythm-05-f4433fcad60e.mp3",
       "text": "You do not have to make the day perfect again. Think about your next practical opportunity to eat something.",
@@ -5790,11 +5520,6 @@
       "src": "/audio-library/eat-regular-rhythm-07-2fb42c73fc63.mp3",
       "text": "Try planning around events, like leaving home or finishing a shift, instead of relying only on fixed meal times.",
       "bytes": 51453
-    },
-    "eat-regular-rhythm-09": {
-      "src": "/audio-library/eat-regular-rhythm-09-c1a1d23e0f0c.mp3",
-      "text": "Please speak to a healthcare professional promptly, especially if you feel weak or unwell. This needs more support than a food reminder.",
-      "bytes": 57304
     },
     "eat-less-judgement-01": {
       "src": "/audio-library/eat-less-judgement-01-1f5d350f2dfb.mp3",
@@ -5831,25 +5556,10 @@
       "text": "I would rather help you describe what a meal offers and what you enjoy. Moral labels can make eating feel harder.",
       "bytes": 57304
     },
-    "eat-less-judgement-08": {
-      "src": "/audio-library/eat-less-judgement-08-2ced709c36d0.mp3",
-      "text": "Movement does not need to repay food. If that pressure keeps coming back, consider support from an eating disorder professional.",
-      "bytes": 52915
-    },
     "eat-less-judgement-06": {
       "src": "/audio-library/eat-less-judgement-06-967c4c96d123.mp3",
       "text": "You can focus on regular meals, enjoyment, and having energy for your day. A weight goal is not required.",
       "bytes": 54378
-    },
-    "eat-less-judgement-09": {
-      "src": "/audio-library/eat-less-judgement-09-dff1af5aafe5.mp3",
-      "text": "That sounds difficult. A qualified professional can help you work with that fear at a pace that is safe for you.",
-      "bytes": 42884
-    },
-    "eat-less-judgement-10": {
-      "src": "/audio-library/eat-less-judgement-10-260421d74eb0.mp3",
-      "text": "Daywell cannot treat an eating disorder. Please seek professional care; gentle app tools can only sit alongside appropriate support.",
-      "bytes": 61901
     },
     "eat-budget-meals-01": {
       "src": "/audio-library/eat-budget-meals-01-bc804e336fe7.mp3",
@@ -5951,60 +5661,10 @@
       "text": "Keep only the details that help you. You can pause logging when it stops feeling useful.",
       "bytes": 32853
     },
-    "eat-dietary-safety-02": {
-      "src": "/audio-library/eat-dietary-safety-02-f1329b892ac2.mp3",
-      "text": "Your own care plan and medication matter. A qualified clinician or dietitian can advise on food choices for your diabetes.",
-      "bytes": 55632
-    },
-    "eat-dietary-safety-01": {
-      "src": "/audio-library/eat-dietary-safety-01-23a43e43176f.mp3",
-      "text": "Please check ingredient labels, allergen information, and your care advice. I cannot guarantee that a suggested meal is safe for your allergy.",
-      "bytes": 63782
-    },
-    "eat-dietary-safety-04": {
-      "src": "/audio-library/eat-dietary-safety-04-737af24d5ec3.mp3",
-      "text": "Vegan meal ideas are possible. Share any other dietary needs too, so the suggestions can fit your preferences.",
-      "bytes": 49572
-    },
-    "eat-dietary-safety-05": {
-      "src": "/audio-library/eat-dietary-safety-05-d77c3645a03d.mp3",
-      "text": "Call emergency services now. In the UK, call nine nine nine. If you have a prescribed adrenaline auto injector, use it according to your emergency plan.",
-      "bytes": 70679
-    },
-    "eat-dietary-safety-03": {
-      "src": "/audio-library/eat-dietary-safety-03-f97a74e8573a.mp3",
-      "text": "Please use pregnancy specific guidance from a qualified clinician or trusted health service. General meal ideas cannot check every safety consideration.",
-      "bytes": 87188
-    },
-    "eat-dietary-safety-07": {
-      "src": "/audio-library/eat-dietary-safety-07-45d135749053.mp3",
-      "text": "I cannot promise a cure through food. Speak with your healthcare team about nutrition that can support your treatment.",
-      "bytes": 49572
-    },
-    "eat-dietary-safety-08": {
-      "src": "/audio-library/eat-dietary-safety-08-d55128910440.mp3",
-      "text": "Kidney conditions can require specific nutritional advice. Please work with your kidney care team or a specialist dietitian.",
-      "bytes": 54796
-    },
-    "eat-dietary-safety-06": {
-      "src": "/audio-library/eat-dietary-safety-06-fa4432052f47.mp3",
-      "text": "Children's nutrition and growth need qualified guidance. Please speak with an appropriate healthcare professional instead of using an adult diet plan.",
-      "bytes": 62319
-    },
     "focus-starting-friction-01": {
       "src": "/audio-library/focus-starting-friction-01-40cdbb5acb12.mp3",
       "text": "Make the first action smaller than the task. Opening the document or finding one item can be the whole beginning.",
       "bytes": 46228
-    },
-    "eat-dietary-safety-09": {
-      "src": "/audio-library/eat-dietary-safety-09-911b47eefd58.mp3",
-      "text": "Do not rely on me to judge an allergy risk. Follow your allergy care advice and check with an appropriate professional.",
-      "bytes": 48527
-    },
-    "eat-dietary-safety-10": {
-      "src": "/audio-library/eat-dietary-safety-10-93ebefcdff0d.mp3",
-      "text": "Please seek urgent medical advice, especially if you feel very unwell or dehydrated. In the UK, NHS one one one can guide you.",
-      "bytes": 59603
     },
     "focus-starting-friction-02": {
       "src": "/audio-library/focus-starting-friction-02-d8f8b4b09d82.mp3",
@@ -6661,11 +6321,6 @@
       "text": "A brief note about the day may help you notice patterns over time. Avoid treating one entry as the whole explanation.",
       "bytes": 48527
     },
-    "progress-notice-patterns-03": {
-      "src": "/audio-library/progress-notice-patterns-03-c494d416ab08.mp3",
-      "text": "A history can suggest questions, but it cannot establish the cause of poor sleep. Persistent difficulties are worth discussing with a clinician.",
-      "bytes": 67753
-    },
     "progress-notice-patterns-06": {
       "src": "/audio-library/progress-notice-patterns-06-1bc820a63c66.mp3",
       "text": "Company may be a useful support. You can plan with that in mind instead of treating it as a weakness.",
@@ -6685,11 +6340,6 @@
       "src": "/audio-library/progress-notice-patterns-08-f0662af4e2ca.mp3",
       "text": "That gives you a practical place to adjust. Could you protect a food break or keep an accessible backup option?",
       "bytes": 57304
-    },
-    "progress-notice-patterns-07": {
-      "src": "/audio-library/progress-notice-patterns-07-3585b9944d26.mp3",
-      "text": "Personal records can show what you logged, but they cannot prove medical benefits or explain every change in your health.",
-      "bytes": 49990
     },
     "progress-notice-patterns-09": {
       "src": "/audio-library/progress-notice-patterns-09-59dd1a4df3bf.mp3",
@@ -6886,11 +6536,6 @@
       "text": "Leave a small gap after it if you can. A short pause can give you room before the next commitment.",
       "bytes": 45183
     },
-    "progress-appointment-preparation-06": {
-      "src": "/audio-library/progress-appointment-preparation-06-e40a50929206.mp3",
-      "text": "Test results need clinical context. Please discuss them with the healthcare professional responsible for your care.",
-      "bytes": 51870
-    },
     "progress-appointment-preparation-10": {
       "src": "/audio-library/progress-appointment-preparation-10-0a9bebcb3a4e.mp3",
       "text": "That needs your saved notes. Open the relevant entry and check the questions you recorded.",
@@ -6910,11 +6555,6 @@
       "src": "/audio-library/progress-setbacks-context-02-59a1b4f26020.mp3",
       "text": "Look at the circumstances around the change. You may need a different amount of support or a smaller plan right now.",
       "bytes": 49572
-    },
-    "progress-setbacks-context-03": {
-      "src": "/audio-library/progress-setbacks-context-03-ccce74fc5024.mp3",
-      "text": "Recovery can become the priority. Return gradually when appropriate, following medical advice where you need it.",
-      "bytes": 46646
     },
     "progress-setbacks-context-04": {
       "src": "/audio-library/progress-setbacks-context-04-50681149487e.mp3",
@@ -6975,11 +6615,6 @@
       "src": "/audio-library/progress-long-view-04-b654a122ca2d.mp3",
       "text": "You do not need to turn life into constant measurement. Choose a few supports that leave room for enjoyment and rest.",
       "bytes": 48109
-    },
-    "progress-long-view-06": {
-      "src": "/audio-library/progress-long-view-06-80ef40d67a55.mp3",
-      "text": "Daywell cannot provide a clinically reliable biological age. Be cautious about treating a single score as a measure of your health.",
-      "bytes": 54378
     },
     "progress-long-view-08": {
       "src": "/audio-library/progress-long-view-08-faf39d374d7e.mp3",
@@ -7251,51 +6886,6 @@
       "text": "You can return to the appearance choices when you want. A design preference does not need to become a permanent decision.",
       "bytes": 47691
     },
-    "everyday-app-boundaries-03": {
-      "src": "/audio-library/everyday-app-boundaries-03-008e0775f387.mp3",
-      "text": "Daywell cannot promise to cure insomnia. Persistent sleep problems deserve advice from a healthcare professional.",
-      "bytes": 47691
-    },
-    "everyday-app-boundaries-02": {
-      "src": "/audio-library/everyday-app-boundaries-02-86132d3836e1.mp3",
-      "text": "Daywell cannot diagnose ADHD. A qualified healthcare professional can assess your experiences and discuss suitable support.",
-      "bytes": 54378
-    },
-    "everyday-app-boundaries-01": {
-      "src": "/audio-library/everyday-app-boundaries-01-6cf54cf22ce3.mp3",
-      "text": "No. Daywell offers everyday tools and general wellbeing support. It cannot replace a therapist or other qualified professional.",
-      "bytes": 57095
-    },
-    "everyday-app-boundaries-05": {
-      "src": "/audio-library/everyday-app-boundaries-05-1a3be7c06f0d.mp3",
-      "text": "Daywell cannot make an emergency call. If you are in immediate danger, call your local emergency number directly.",
-      "bytes": 47064
-    },
-    "everyday-app-boundaries-04": {
-      "src": "/audio-library/everyday-app-boundaries-04-3e0297182927.mp3",
-      "text": "A recording only plays words. Saving or changing a task requires a real app action and a result you can check.",
-      "bytes": 53751
-    },
-    "everyday-app-boundaries-06": {
-      "src": "/audio-library/everyday-app-boundaries-06-6db89d3b9595.mp3",
-      "text": "No session can guarantee a particular feeling. You can try it gently and stop or choose something else if it does not help.",
-      "bytes": 52497
-    },
-    "everyday-app-boundaries-08": {
-      "src": "/audio-library/everyday-app-boundaries-08-ac3b9256d537.mp3",
-      "text": "Medication advice and prescribing belong with a qualified clinician. I can only offer general, nonmedical settling ideas.",
-      "bytes": 52497
-    },
-    "everyday-app-boundaries-07": {
-      "src": "/audio-library/everyday-app-boundaries-07-219abc58b3b4.mp3",
-      "text": "Prerecorded listening does not use the microphone. Live voice requires a connection you choose to start; check its controls to end it.",
-      "bytes": 62946
-    },
-    "everyday-app-boundaries-09": {
-      "src": "/audio-library/everyday-app-boundaries-09-91ca66b294a4.mp3",
-      "text": "The app can offer general encouragement and tools. It cannot provide the same observation and individual assessment as a qualified trainer.",
-      "bytes": 63991
-    },
     "everyday-clarify-a-need-01": {
       "src": "/audio-library/everyday-clarify-a-need-01-65bb4e7f7245.mp3",
       "text": "Which thing would you like help with? A few ordinary words about the situation are enough to begin.",
@@ -7305,11 +6895,6 @@
       "src": "/audio-library/everyday-clarify-a-need-02-14cb04f1ec2b.mp3",
       "text": "Which activity do you mean today? I do not want to choose or change something based on a guess.",
       "bytes": 36615
-    },
-    "everyday-app-boundaries-10": {
-      "src": "/audio-library/everyday-app-boundaries-10-5ce392ef3002.mp3",
-      "text": "Please use qualified medical advice for those decisions. Daywell's general support and saved recordings cannot assess your health.",
-      "bytes": 60648
     },
     "everyday-clarify-a-need-05": {
       "src": "/audio-library/everyday-clarify-a-need-05-e677f16abb77.mp3",
@@ -7500,6 +7085,76 @@
       "src": "/audio-library/everyday-finish-gently-10-4bda4fc861ac.mp3",
       "text": "Goodnight. Let the remaining tasks wait where they can. You can settle into the rest of your evening at your own pace.",
       "bytes": 47691
+    },
+    "everyday-lowenergy-11": {
+      "src": "/audio-library/everyday-lowenergy-11-2e52e978903b.mp3",
+      "text": "Some days have less in them, and that is okay. Choose the one or two things that matter most today, and let the rest wait.",
+      "bytes": 53751
+    },
+    "sleep-late-screen-11": {
+      "src": "/audio-library/sleep-late-screen-11-8bba8fbe7fbd.mp3",
+      "text": "It is easy to keep going when the feed never ends. Choose one last thing to watch, then turn the phone face down and let the room go quiet.",
+      "bytes": 62528
+    },
+    "everyday-lowenergy-12": {
+      "src": "/audio-library/everyday-lowenergy-12-a33d33b88089.mp3",
+      "text": "Go gently today. Pick the easiest version of what you need to do, and leave a few quiet minutes for yourself when you can.",
+      "bytes": 54796
+    },
+    "eat-choosing-meal-12": {
+      "src": "/audio-library/eat-choosing-meal-12-2ecdeae0cea3.mp3",
+      "text": "Think of something you enjoyed recently and have a simple version of it. It only needs to be good enough for today.",
+      "bytes": 44347
+    },
+    "sleep-late-screen-12": {
+      "src": "/audio-library/sleep-late-screen-12-0fbc9b080328.mp3",
+      "text": "You can choose the ending tonight. Once the phone is down, a sleep sound or Luma can keep you company instead.",
+      "bytes": 46646
+    },
+    "eat-choosing-meal-11": {
+      "src": "/audio-library/eat-choosing-meal-11-e28cbd437328.mp3",
+      "text": "Let's start with one question: something warm, or something you can eat straight away? Let that answer pick the meal.",
+      "bytes": 47064
+    },
+    "focus-starting-friction-11": {
+      "src": "/audio-library/focus-starting-friction-11-edeedde113c8.mp3",
+      "text": "Starting is often the hardest part. Pick the smallest piece, like opening the file or writing one line, and give it just two minutes.",
+      "bytes": 53751
+    },
+    "eat-breakfast-start-12": {
+      "src": "/audio-library/eat-breakfast-start-12-132a338021fd.mp3",
+      "text": "Make it as easy as possible: something you can eat in a few bites, set out the night before, so it is ready when you are.",
+      "bytes": 50408
+    },
+    "eat-breakfast-start-11": {
+      "src": "/audio-library/eat-breakfast-start-11-2ef9c4bfd2ce.mp3",
+      "text": "Not everyone wants food first thing, and that is okay. If you would like something earlier in the day, keep one easy option where you will see it.",
+      "bytes": 63991
+    },
+    "focus-return-11": {
+      "src": "/audio-library/focus-return-11-75ba1de18d3e.mp3",
+      "text": "That happens to everyone. Notice where you were, take one slow breath, and pick up the very next small step.",
+      "bytes": 44347
+    },
+    "focus-starting-friction-12": {
+      "src": "/audio-library/focus-starting-friction-12-f2bd25be1eb2.mp3",
+      "text": "You do not have to make up for the whole day. Choose one small task you can finish in ten minutes, and begin there.",
+      "bytes": 51453
+    },
+    "focus-return-12": {
+      "src": "/audio-library/focus-return-12-2746f9006332.mp3",
+      "text": "Being distracted again does not undo what you have done. Close one thing you do not need, then return to a single small part of the task.",
+      "bytes": 61901
+    },
+    "focus-study-support-12": {
+      "src": "/audio-library/focus-study-support-12-af407dd474e5.mp3",
+      "text": "Test yourself instead of rereading. Close your notes, write what you remember about one topic, then check what you missed.",
+      "bytes": 52288
+    },
+    "focus-study-support-11": {
+      "src": "/audio-library/focus-study-support-11-9c635a0883aa.mp3",
+      "text": "Try one short, clear session: one topic, twenty minutes, phone out of reach. Then take a proper break before you choose the next.",
+      "bytes": 55632
     }
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/daywell-link";
 import { CompanionFamily, CompanionPortrait } from "@/components/daywell-companions";
 
 import { Check, Sun, Waves, ShoppingBag, Circle } from "lucide-react";

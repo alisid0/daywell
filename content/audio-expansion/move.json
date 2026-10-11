@@ -23,17 +23,16 @@
  ["I have two minutes and need a change of position.","If comfortable, stand or shift position and move gently. Keep the movement suited to your body and surroundings."],
  ["I did half my planned walk.","Half a walk still happened. Record what you actually did, if you want, and leave out the punishment for the rest."]
  ]},
- {"id":"move-desk-pause","category":"move","title":"A break from the desk","companion":"bounce","examples":[
- ["I have been at my desk for hours.","If you can, take a short movement break now. Change position and choose a comfortable way to move."],
- ["My shoulders feel tense from working.","Try an easier position and a gentle movement within comfort. Do not force a stretch or push into pain."],
- ["I want a desk break that will not make me sweaty.","Choose a gentle routine or a short easy walk. A break does not need to become a workout."],
- ["I cannot leave my desk for long.","A brief change of position may still fit. Keep it safe and comfortable within the space you have."],
- ["Can I move while a file is downloading?","That can be a useful cue. If it is practical, step away for a comfortable movement while you wait."],
- ["I keep forgetting to get up.","Link a movement pause to something you already notice, like finishing a call. A reliable device reminder is another option."],
- ["I need a seated movement option.","Choose a supported position and movements already comfortable for you. For tailored seated exercises, ask a qualified professional."],
- ["I feel stiff after concentrating for a long time.","Start with a gentle change of position. Give yourself room to move without trying to undo the whole day at once."],
- ["Can I stretch through the pain in my neck?","Do not push through pain. Stop the movement and seek appropriate professional advice if the pain persists or concerns you.","live"],
- ["I want to come back to work after a short walk.","Before leaving, note the next task step. That can make returning easier after your movement break."]
+ {"id":"move-desk-pause","category":"move","title":"A break from the desk","companion":"bounce","responseIds":["move-desk-pause-01","move-desk-pause-02","move-desk-pause-03","move-desk-pause-04","move-desk-pause-05","move-desk-pause-06","move-desk-pause-07","move-desk-pause-08","move-desk-pause-10"],"examples":[
+  ["I have been at my desk for hours.","If you can, take a short movement break now. Change position and choose a comfortable way to move."],
+  ["My shoulders feel tense from working.","Try an easier position and a gentle movement within comfort. Do not force a stretch or push into pain."],
+  ["I want a desk break that will not make me sweaty.","Choose a gentle routine or a short easy walk. A break does not need to become a workout."],
+  ["I cannot leave my desk for long.","A brief change of position may still fit. Keep it safe and comfortable within the space you have."],
+  ["Can I move while a file is downloading?","That can be a useful cue. If it is practical, step away for a comfortable movement while you wait."],
+  ["I keep forgetting to get up.","Link a movement pause to something you already notice, like finishing a call. A reliable device reminder is another option."],
+  ["I need a seated movement option.","Choose a supported position and movements already comfortable for you. For tailored seated exercises, ask a qualified professional."],
+  ["I feel stiff after concentrating for a long time.","Start with a gentle change of position. Give yourself room to move without trying to undo the whole day at once."],
+  ["I want to come back to work after a short walk.","Before leaving, note the next task step. That can make returning easier after your movement break."]
  ]},
  {"id":"move-walk-choice","category":"move","title":"Make a walk easier to choose","companion":"bounce","examples":[
  ["I want to go for a walk but keep postponing it.","Choose a simple route and put on your shoes. You do not need to decide on a perfect distance first."],
@@ -119,29 +118,16 @@
  ["I want a harder option for this movement.","Use the routine's harder option only if it fits your ability and you understand the technique. You can keep the current version."],
  ["I went backwards on one exercise.","One session can vary for many reasons. Record it honestly and look at the pattern before deciding something has gone wrong."]
  ]},
- {"id":"move-recovery-day","category":"move","title":"Recovery belongs in the plan","companion":"bounce","examples":[
- ["I feel guilty taking a rest day.","Rest can be part of training, not a break from being committed. Let today's plan reflect how you are doing."],
- ["I am tired but do not want to lose my streak.","A streak is not more important than your wellbeing. Choose rest or a gentler option when that is what you need."],
- ["Can I have a day without tracking movement?","Yes. You can move or rest without recording it. The app does not need evidence for every choice."],
- ["I trained hard yesterday and feel drained.","Consider a lighter day or rest. You do not need to repeat yesterday's effort just to feel consistent."],
- ["I am recovering from an illness.","Return gradually and follow any medical advice you have. If symptoms persist or you are unsure, ask a healthcare professional before exercising."],
- ["I want a gentle recovery activity.","Choose a comfortable easy movement you already know, or simply rest. Recovery does not need its own demanding checklist."],
- ["I am frustrated that my body needs rest.","You can be frustrated and still respond kindly. The next useful step may be making recovery easier, not arguing with it."],
- ["I skipped today because I was exhausted.","That was a response to the day you had. Decide the next session when you know what capacity you have."],
- ["Can more exercise make up for poor recovery?","Adding effort is not a substitute for recovery. Consider your rest and overall load, and get tailored advice if you are struggling."],
- ["I want to plan rest without calling it failure.","Give rest its own place in the plan. You can describe it as recovery, or simply leave that space unfilled."]
- ]},
- {"id":"move-discomfort","category":"move","title":"Listen when movement feels wrong","companion":"bounce","examples":[
- ["This exercise hurts sharply.","Stop that movement. Do not push through sharp pain; seek appropriate medical advice, especially if pain is severe or persistent.","live"],
- ["I feel dizzy during my workout.","Stop exercising and get somewhere safe to rest. Seek urgent help if symptoms are severe, persistent, or accompanied by other concerning symptoms.","live"],
- ["I have chest pain and feel short of breath while exercising.","Stop and call emergency services now. In the UK, call nine nine nine. Do not continue the workout or wait for this app.","urgent"],
- ["My knee hurts in this squat.","Stop the squat rather than forcing the range. A qualified professional can help assess the pain and suggest a suitable alternative.","live"],
- ["Should I push through because the routine says so?","No. A routine is not more important than pain or feeling unwell. Stop and choose appropriate support."],
- ["I am sore after trying something new.","Keep the next activity gentle and avoid forcing painful movement. Seek professional advice if the soreness is severe, unusual or does not improve."],
- ["Can you tell whether I have pulled a muscle?","I cannot assess an injury from this recording. Stop the painful activity and seek appropriate professional advice.","live"],
- ["My joint is swollen after exercise.","Avoid pushing the affected area and get medical advice. This needs assessment rather than a motivational message to continue.","live"],
- ["I do not know the difference between effort and pain.","If you are unsure, stop and ask a qualified professional. You do not need to discover the limit by forcing through discomfort."],
- ["I feel unwell but want to finish the last set.","End the set and attend to how you feel. Finishing the number is not worth ignoring a possible health problem."]
+ {"id":"move-recovery-day","category":"move","title":"Recovery belongs in the plan","companion":"bounce","responseIds":["move-recovery-day-01","move-recovery-day-02","move-recovery-day-03","move-recovery-day-04","move-recovery-day-06","move-recovery-day-07","move-recovery-day-08","move-recovery-day-09","move-recovery-day-10"],"examples":[
+  ["I feel guilty taking a rest day.","Rest can be part of training, not a break from being committed. Let today's plan reflect how you are doing."],
+  ["I am tired but do not want to lose my streak.","A streak is not more important than your wellbeing. Choose rest or a gentler option when that is what you need."],
+  ["Can I have a day without tracking movement?","Yes. You can move or rest without recording it. The app does not need evidence for every choice."],
+  ["I trained hard yesterday and feel drained.","Consider a lighter day or rest. You do not need to repeat yesterday's effort just to feel consistent."],
+  ["I want a gentle recovery activity.","Choose a comfortable easy movement you already know, or simply rest. Recovery does not need its own demanding checklist."],
+  ["I am frustrated that my body needs rest.","You can be frustrated and still respond kindly. The next useful step may be making recovery easier, not arguing with it."],
+  ["I skipped today because I was exhausted.","That was a response to the day you had. Decide the next session when you know what capacity you have."],
+  ["Can more exercise make up for poor recovery?","Adding effort is not a substitute for recovery. Consider your rest and overall load, and get tailored advice if you are struggling."],
+  ["I want to plan rest without calling it failure.","Give rest its own place in the plan. You can describe it as recovery, or simply leave that space unfilled."]
  ]},
  {"id":"move-accessible","category":"move","title":"Movement that fits your body","companion":"bounce","examples":[
  ["Standing exercise is not accessible to me.","Your movement plan should fit your body. Choose suitable seated or supported options with guidance from a qualified professional where needed."],
@@ -191,17 +177,16 @@
  ["I want to restart after travelling.","Use a manageable first session and see how it feels. You do not need to make up every missed activity."],
  ["Can you track my movement automatically while I travel?","This MVP does not automatically track your travel activity. You can add a movement record yourself when you want one.","tool"]
  ]},
- {"id":"move-learning-form","category":"move","title":"Understand before increasing effort","companion":"bounce","examples":[
- ["I do not understand this exercise cue.","Pause the routine and read it again. If the movement is still unclear, get a qualified demonstration rather than guessing."],
- ["How fast should I do these repetitions?","Use a controlled pace you have learned for the exercise. Speed is not a substitute for understanding the movement."],
- ["I keep losing count while learning the movement.","Put technique first. A simple counter or note can help, but the number does not need to override control."],
- ["Can I watch a demonstration before starting?","A clear demonstration from a qualified source can help. Daywell's text cue alone may not be enough for an unfamiliar exercise."],
- ["I am holding my breath while lifting and feel uncomfortable.","Stop and reset. Ask a qualified coach about breathing and technique appropriate to that lift rather than pushing through discomfort."],
- ["The harder version looks exciting.","Understand the easier version first. Choose difficulty that matches your skill, not just the version that looks impressive."],
- ["I do not know where my feet should go.","That detail depends on the exercise and your body. Get a clear demonstration before adding resistance or speed."],
- ["Can you correct my posture from what I tell you?","I cannot reliably assess your movement from a short description. A qualified coach or clinician can observe and guide you.","live"],
- ["I want to practise rather than chase a number.","That is a useful intention. Keep the effort manageable and notice whether the movement feels more controlled."],
- ["I rushed the last set and it felt messy.","Pause before continuing. You can reduce the demand and return to a version you can control, or end the session."]
+ {"id":"move-learning-form","category":"move","title":"Understand before increasing effort","companion":"bounce","responseIds":["move-learning-form-01","move-learning-form-02","move-learning-form-03","move-learning-form-04","move-learning-form-05","move-learning-form-06","move-learning-form-07","move-learning-form-09","move-learning-form-10"],"examples":[
+  ["I do not understand this exercise cue.","Pause the routine and read it again. If the movement is still unclear, get a qualified demonstration rather than guessing."],
+  ["How fast should I do these repetitions?","Use a controlled pace you have learned for the exercise. Speed is not a substitute for understanding the movement."],
+  ["I keep losing count while learning the movement.","Put technique first. A simple counter or note can help, but the number does not need to override control."],
+  ["Can I watch a demonstration before starting?","A clear demonstration from a qualified source can help. Daywell's text cue alone may not be enough for an unfamiliar exercise."],
+  ["I am holding my breath while lifting and feel uncomfortable.","Stop and reset. Ask a qualified coach about breathing and technique appropriate to that lift rather than pushing through discomfort."],
+  ["The harder version looks exciting.","Understand the easier version first. Choose difficulty that matches your skill, not just the version that looks impressive."],
+  ["I do not know where my feet should go.","That detail depends on the exercise and your body. Get a clear demonstration before adding resistance or speed."],
+  ["I want to practise rather than chase a number.","That is a useful intention. Keep the effort manageable and notice whether the movement feels more controlled."],
+  ["I rushed the last set and it felt messy.","Pause before continuing. You can reduce the demand and return to a version you can control, or end the session."]
  ]},
  {"id":"move-timer-company","category":"move","title":"Time a little movement","companion":"bounce","examples":[
  ["Start a ten-minute walk timer.","Review the proposed walk and duration before starting. Keep Daywell open if you want the timer and companion cues.","tool"],
@@ -226,17 +211,5 @@
  ["I need to restart after caring for someone.","Caring can take real energy. Begin with a small activity that fits your current responsibilities and leaves room for your own rest."],
  ["I am afraid another attempt will not last.","You do not need a lifetime promise to choose today. Make the next step useful even if the pattern changes later."],
  ["I want to celebrate coming back.","Returning is worth noticing. Keep the celebration gentle and let the next session stay manageable."]
- ]},
- {"id":"move-personal-limits","category":"move","title":"When movement needs tailored advice","companion":"bounce","examples":[
- ["I have a heart condition; which workout is safe?","Please ask your healthcare team for exercise guidance specific to your condition. A generic routine cannot establish what is safe for you.","live"],
- ["I am pregnant and want a new workout plan.","Ask your maternity team or a qualified pregnancy exercise professional about suitable activity. This recording cannot tailor a plan to your pregnancy.","live"],
- ["I have just had surgery and want to exercise.","Follow your surgical team's recovery instructions and ask before adding exercise. Daywell cannot clear you to train.","live"],
- ["I am returning after an injury.","Use the return-to-activity advice from your clinician or physiotherapist. Do not treat a generic app routine as rehabilitation.","live"],
- ["Can you guarantee these exercises will prevent disease?","No. Movement can support wellbeing, but Daywell cannot promise disease prevention or a particular medical outcome.","live"],
- ["I want to exercise to punish myself for eating.","You do not need to earn or undo food through exercise. Choose care over punishment, and seek support if this pattern is hard to interrupt.","live"],
- ["I want to train through a fever.","Do not use this app to push through illness. Rest and seek medical advice if you are unwell or unsure about returning to exercise.","live"],
- ["Can you design rehabilitation for my back pain?","Rehabilitation needs a qualified assessment. I can help you organise an existing professional plan, but cannot diagnose or prescribe one.","live"],
- ["I feel faint and have collapsed during exercise.","Get urgent medical help now. If someone is unconscious or seriously unwell, call local emergency services; in the UK, nine nine nine.","urgent"],
- ["Is this routine suitable for my child?","These routines are not a personalised children's programme. Seek age-appropriate guidance from a qualified professional rather than adapting an adult routine blindly.","live"]
  ]}
 ]

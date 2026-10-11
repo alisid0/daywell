@@ -8,6 +8,8 @@ Owner decision, 8 October 2026: Daywell counts only requests that reach a paid A
 | --- | --- | --- | --- |
 | Live voice and AI chat | ElevenLabs and its AI model | a conversation that ElevenLabs actually starts | 6 every 10 minutes and 10 a day per person; 100 a day for everyone together. Each conversation ends after 15 minutes. |
 | Photo or voice understanding, and meal planning | OpenAI | a request sent to OpenAI | 20 a day per person |
+| Food review readout | ElevenLabs v4, using the configured Daywell agent voice | a new readout sent for generation; replay of the same open review uses its in-memory audio | 20 a day per person; up to 1,800 characters per readout |
+| Optional recorded-reply matching | TypeSafe JEV | each classification request (topic and reply are separate) | 120 a day per person; disabled until acceptance testing |
 
 ## What never counts
 
@@ -27,12 +29,14 @@ The request is refused before any paid call, so it costs nothing. The person see
 | 10 a day for one person | You've had today's 10 live conversations. More are available tomorrow, and typing everyday commands still works. |
 | 100 a day for everyone | Live conversations are unavailable until tomorrow because Daywell's daily limit has been reached. Typing everyday commands still works. |
 | 20 photo or voice checks a day | You've used today's photo and voice checks. Typing an entry still works, and checks reset tomorrow. |
+| 20 food readouts a day | Read the review or replay its existing audio while that review remains open. New readouts reset tomorrow. |
+| 120 picker requests a day | The picker falls back to offering a new conversation; exact recordings and everyday commands remain free. |
 
 Daily limits reset at midnight UTC, which is 1 am in UK summer time. A limit never cuts off a conversation that has already started; it ends at 15 minutes as usual.
 
 ## Rules for code
 
-1. Take the allowance just before the first paid call, after the request has been validated. Allowances live in `limits` in `lib/request-guards.ts`.
+1. Take the allowance immediately before each paid call, after the complete request has been validated. A spoken capture can use one request for transcription and another for interpretation. Allowances live in `limits` in `lib/request-guards.ts`.
 2. If the paid service fails before doing any work, give the uses back with `returnAllowances`, using the same `now` that took them.
 3. Never take an allowance for pre-recorded audio or for on-device features.
 4. A new paid feature adds its own allowance to `limits`, and a row to the tables above.
@@ -40,5 +44,5 @@ Daily limits reset at midnight UTC, which is 1 am in UK summer time. A limit nev
 
 ## Still to do
 
-- The capture route in PR 32 takes its allowance before validating the request. Move the allowance to just before the first OpenAI call, and give it back if OpenAI fails.
+- Capture validation now runs before paid calls. Explicit provider refusals and cancelled dispatches are refunded; a timeout after dispatch stays counted because provider billing is unknown. See [response routing](response-routing.md).
 - Monthly paid plans will need minutes measured per conversation. ElevenLabs conversation IDs make this possible.

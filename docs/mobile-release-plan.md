@@ -6,29 +6,37 @@ Daywell is now being prepared for launch on both Google Play and the Apple App S
 
 **Working review deadline:** 5 November 2026, thirty days from the plan date. The owner has requested an early-November review deadline; confirmation of the exact day and whether it means submission or public availability is pending. Plan for an internal release review on 27 October and initial store submissions from 29 October where account eligibility permits. Store approval and public availability are separate milestones controlled in part by Apple and Google.
 
+**Readiness update, 9 October:** the [latest launch assessment](launch-readiness-2026-10-09.md) supersedes earlier status and timing assumptions below. Private web hosting now works, but public paid/store launch remains blocked by accounts/data controls, unverified AI/device journeys, billing and native builds. Keep 5 November as a review checkpoint; the current conditional estimate for public Android and iPhone availability is 20 November–4 December, potentially later. Earlier October delivery dates are at-risk targets, not completed milestones or a guarantee of public launch.
+
 ## Current state and immediate blockers
 
-GitHub is authoritative. The integrated baseline was `main` at `8473aa8` when this plan was prepared. [PR 17](https://github.com/alisid0/daywell/pull/17) contains the expanded audio library and unwind sessions; it remains a draft despite passing automated checks. Review and integrate it deliberately before cutting the mobile release branch. A passing web build does not establish mobile release readiness.
+GitHub is authoritative. The assessed current app is `codex/private-tester-build` at `ca3e528`, [draft PR #36](https://github.com/alisid0/daywell/pull/36), which integrates the latest Food/Move/voice work from PR #32 and private hosting from PR #31. The deployed code is `1fb07f5`; the later checkpoint contains documentation. These changes are not merged into main. The published audio assets are present in this build; do not blindly merge older audio branches over newer wellness removals. A passing web build does not establish mobile release readiness.
 
 | Area | Current state | Release requirement |
 | --- | --- | --- |
 | Android and iOS | No native projects or signed release builds in the repository | Reproducible builds, Android test APK and store AAB, signed iOS build and TestFlight distribution |
-| Hosting and identity | Local Cloudflare database and development identity; old Sites reference returned not found for the connected account | Confirm hosting ownership, deploy an authenticated online backend and test with separate users |
-| Eat | Connected Food basket, editable plans, actual purchases, partial cooking/leftovers, journal and undo on PR 26; local browser verified | Review/integrate PR 26; add reviewed ingredient-photo assistance and verify the complete flow on hosted accounts and both phones |
-| Audio and voice | Existing guided recordings and live voice integration; guided audio pauses when the page is hidden | Real-device microphone tests, appropriate audio interruptions, guided screen-off playback and bounded live usage |
+| Hosting and identity | Owner-only private Cloudflare service deployed; browser sign-in and food persistence checked | Customer onboarding/recovery, two-account isolation and real-phone acceptance |
+| Eat | Food basket, planning, shopping, cooking/leftovers, calorie and sugar logs implemented; food-photo AI intentionally disconnected | Authorised real photo/voice verification, corrections and complete food journeys on hosted accounts and both phones |
+| Audio and voice | Recorded hosted playback checked; ElevenLabs configured; workout cues use device speech | Real-device conversations, routine-state coaching, interruptions, intended background behaviour and measured monthly usage |
 | Payments | Prices discussed, but no store billing implementation | Verified store purchases, restore, cancellations, refunds and server-side entitlements |
-| Personal data | Per-user records and some exports; no complete account deletion flow | Published privacy information, explicit AI sharing consent, export and account/data deletion |
-| Release operations | Web CI exists | Mobile CI, device evidence, store metadata, reviewer access and rollback procedure |
+| Personal data | Per-user records; PR #34 export/deletion foundations and policy proposals remain separate | Integrate and complete account/provider data lifecycle, retention, privacy/support and image-handling controls |
+| Release operations | 172 app tests and GitHub checks passed; hosted browser checks recorded | Mobile CI, device evidence, monitoring, store metadata, reviewer access and exercised restore/rollback |
 
 Implementation checkpoint, 6 October: the [food inventory foundation](food-inventory.md) adds the persistent model/API, reviewed planning windows, transactional purchase/cooking history and retry/undo protection. The 7 October frontend checkpoint connects Food basket, Next meals and Shopping with quantity-reviewed recipe drafts, safe network retry and explicit conflict review. The real local D1/browser journey passed, including partial cooking, leftovers and undo. Ingredient-photo review, broader recipe/content review, hosted identity and mobile verification remain open; do not mark the complete food-cycle or launch milestone done from this checkpoint.
 
-## Decisions required by 8 October
+## Account history and outstanding decisions
 
-- Owner update, 7 October: **Google account reported ready; Apple account not yet ready.** Clarification is pending on whether Google means a registered, verified Google Play Console developer account. Do not mark Play publishing access or production eligibility verified from this statement alone. Apple enrolment remains an owner dependency; Android preparation can progress while the shared iPhone release target remains in scope.
+- Owner update, 7 October: **Cloudflare selected; account created.** The [private hosting path](cloudflare-hosting.md) adds an authenticated Worker entry point and repeatable build. Account authorization, Access policy, hosted D1/deployment and real-device verification remain prerequisites. Private tester sign-in does not complete consumer/native identity or store readiness.
+
+- Historical hosting checkpoint, 8 October: deployment was blocked by a missing permission. On 9 October the owner approved that permission and the private app was deployed, reusing the database and Access policy. This supersedes the earlier refusal and unavailable-link status for that deployment. See the [current hosting handover](handover/2026-10-09-private-tester-build.md). Future background source sync must not deploy automatically.
+
+- Testing checkpoint, 8 October: an isolated local browser walkthrough covers onboarding, host review/undo, the food cycle, movement, sleep, rest/audio, calendar/exports and phone-width layouts. The branch has 113 passing regression tests plus an opt-in HTTP/asset smoke runner. An invalid-request handling defect was fixed. Hosted accounts, real devices/providers and native release gates remain open; see the [end-to-end evidence and limits](handover/2026-10-08-end-to-end-testing.md).
+
+- Owner clarification, 9 October: **verified organisation Google Play Console developer account reported.** Console access and this app's production eligibility still need release checks; do not apply the new personal-account tester rule to it by assumption. Apple enrolment remains an owner dependency; Android preparation can progress while the shared iPhone release target remains in scope.
 - Confirm the exact November deadline and whether it is for submission or public availability.
 - Complete [Apple Developer Program enrolment](https://developer.apple.com/programs/enroll/) and confirm Google Play Console account type, verification and access. The owner completes identity, agreements and payment steps; credentials stay out of GitHub and chat.
 - Confirm a Mac with supported Xcode or an approved macOS build service, an iPhone and an Android phone for testing. Windows alone cannot produce an Xcode archive.
-- Confirm the hosting account, production address and staging address. The inaccessible legacy Sites reference is not evidence of a working production service.
+- Private hosting ownership and its address are established. Confirm the separate public launch address and staging arrangement; the owner-only tester address is not public customer onboarding.
 - Confirm launch countries and audience. The planning assumption is a UK, English-language adult wellbeing launch; it is not an approved age rating or a promise of worldwide availability.
 - Confirm paid launch products and exact allowances. Previously discussed prices are GBP 4.99, 9.99 and 19.99 monthly; voice minutes, photo allowances, trials and each tier's entitlements remain decisions. Do not advertise unlimited paid AI usage.
 - If Google's new-personal-account testing rule applies, recruit at least 12 eligible testers immediately and keep a record of participation and feedback. The owner handles invitations unless separately authorising messages.
@@ -36,6 +44,8 @@ Implementation checkpoint, 6 October: the [food inventory foundation](food-inven
 ## Launch scope
 
 Keep the selected Cosy cove direction, one Daywell host and the Move, Relax, Eat and Sleep structure. Helpers accompany tasks without becoming separate assistants users must remember. Prioritise readable screens, captions, reduced motion and short decisions over additional design variations.
+
+Owner scope decision, 8 October: [general wellness only](general-wellness-scope.md). Keep relaxation and ordinary routines; exclude clinical care, mental-health improvement promises, medicines, supplements and alcohol recommendations, regardless of claimed age. This does not establish suitability for children.
 
 ### A complete food cycle
 

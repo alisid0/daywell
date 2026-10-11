@@ -24,7 +24,7 @@ function LookPreview({ look, name, small = false }: { look: Appearance; name: st
   </div>;
 }
 
-export function AppearanceStudio({ look, name, onDone, onTry }: { look: AppearanceController; name: string; onDone: () => void; onTry: () => void }) {
+export function AppearanceStudio({ look, name, onDone, onUse }: { look: AppearanceController; name: string; onDone: () => void; onUse: (name: string, saved: boolean) => void }) {
   const [section, setSection] = useState<"iterations" | "looks" | "mix" | "saved" | "reading">("iterations");
   const [startingLook] = useState(look.current);
   const [history, setHistory] = useState<Appearance[]>([]);
@@ -38,6 +38,10 @@ export function AppearanceStudio({ look, name, onDone, onTry }: { look: Appearan
     setHistory(previous => [...previous.slice(-29), current]);
     const saved = look.apply(next);
     setMessage(saved ? `${label}. Saved in this browser.` : `${label} for this visit. This browser couldn’t save it.`);
+  }
+  function activateDesign(next: Appearance, name: string) {
+    // Keep the save result outside this dialog, which closes after selection.
+    onUse(name, look.apply(next));
   }
   function change<K extends keyof Appearance>(key: K, value: Appearance[K]) { apply({ ...current, [key]: value, ...(key === "style" && value !== "stillwater" ? { composition: "original" as const } : {}) }); }
   function undo() {
@@ -71,12 +75,12 @@ export function AppearanceStudio({ look, name, onDone, onTry }: { look: Appearan
         <div className="studio-tabs" role="group" aria-label="Appearance studio sections">{(["iterations", "looks", "mix", "saved", "reading"] as const).map(tab => <button key={tab} aria-pressed={section === tab} onClick={() => setSection(tab)}>{tab === "iterations" ? "Iterations" : tab === "looks" ? "Starting looks" : tab === "mix" ? "Mix your own" : tab === "reading" ? "Reading comfort" : `Saved (${look.favourites.length})`}</button>)}</div>
         <div className="studio-controls-scroll">
           {section === "iterations" && <>
-            <div className="studio-iteration-intro"><div><h3>Same feeling. A little more room.</h3><p>Three working designs grown from your selection. Try them at full size, then mix the details you like.</p></div><button className="studio-reference" onClick={() => { apply(referenceLook, "Your reference restored"); onTry(); }}><RotateCcw size={16} /><span>View your reference<small>Berry, paper flecks, soft buttons</small></span></button></div>
+            <div className="studio-iteration-intro"><div><h3>Same feeling. A little more room.</h3><p>Choose a design to use throughout Daywell. You can still mix the details or change it later.</p></div><button className="studio-reference" onClick={() => activateDesign(referenceLook, "Your reference")}><RotateCcw size={16} /><span>Use your reference<small>Berry, paper flecks, soft buttons</small></span></button></div>
             <div className="studio-iterations">{designIterations.map(iteration => <article className="studio-iteration" key={iteration.id} data-selected={sameLook(current, iterationLook(iteration.id))}>
               <LookPreview look={iterationLook(iteration.id)} name={name} />
-              <div className="studio-iteration-copy"><span>{iteration.detail}</span><h4>{iteration.name}</h4><p>{iteration.description}</p><button aria-label={`Try ${iteration.name}`} onClick={() => { apply(iterationLook(iteration.id), iteration.name); onTry(); }}>{sameLook(current, iterationLook(iteration.id)) ? <Check size={16} /> : null}Try this design</button></div>
+              <div className="studio-iteration-copy"><span>{iteration.detail}</span><h4>{iteration.name}</h4><p>{iteration.description}</p><button aria-label={`Use this design: ${iteration.name}`} aria-pressed={sameLook(current, iterationLook(iteration.id))} onClick={() => activateDesign(iterationLook(iteration.id), iteration.name)}>{sameLook(current, iterationLook(iteration.id)) ? <Check size={16} /> : null}Use this design</button></div>
             </article>)}</div>
-            <p className="studio-iteration-note">Your reference stays here. Trying a design doesn’t make it final.</p>
+            <p className="studio-iteration-note">Your chosen design is applied now and saved in this browser. You can change it whenever you like.</p>
           </>}
           {section === "looks" && <><p className="studio-hint">Start with a mood. Every part can be mixed.</p><div className="studio-starters">{starterLooks.map(starter => <button key={starter.name} className="studio-starter" aria-pressed={sameLook(current, starter.look)} onClick={() => apply(starter.look, starter.name)}><LookPreview look={starter.look} name={name} small /><span>{starter.name}{sameLook(current, starter.look) && <Check size={15} />}</span></button>)}</div><button className="studio-mix-link" onClick={() => setSection("mix")}>Mix the colours, textures & details</button><details className="studio-originals"><summary>Earlier designs</summary><div>{daywellStyles.filter(style => !["nook", "stillwater"].includes(style.id)).map(style => <button key={style.id} onClick={() => apply(originalLook(style.id), style.name)}>{style.name}<small>{style.description}</small></button>)}</div></details></>}
           {section === "mix" && <>

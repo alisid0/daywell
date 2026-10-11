@@ -26,6 +26,7 @@ export function useHostVoice(onTranscript: (value: string) => void) {
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const voiceUri = useRef<string | null>(null);
   const epoch = useRef(0);
+  const clearError = useCallback(() => setError(""), []);
 
   const silence = useCallback(() => { epoch.current++; if ("speechSynthesis" in window) window.speechSynthesis.cancel(); setSpeaking(false); }, []);
   const stopListening = useCallback(() => { recognition.current?.abort(); recognition.current = null; if (timeout.current) clearTimeout(timeout.current); setListening(false); }, []);
@@ -100,5 +101,5 @@ export function useHostVoice(onTranscript: (value: string) => void) {
       if ("speechSynthesis" in window) window.speechSynthesis.cancel();
     };
   }, [stop, silence]);
-  return { available, canSpeak, listening, speaking, transcript, error, blocked, start, stop, silence, speak };
+  return { available, canSpeak, listening, speaking, transcript, error, blocked, start, stop, silence, speak, clearError };
 }

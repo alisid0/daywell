@@ -4,6 +4,12 @@ Read [the shared session workflow](docs/github-workflow.md) before changing this
 
 Also read [the Android and iPhone release plan](docs/mobile-release-plan.md). The current objective is early-November store review on both platforms, not a standalone personal-APK demo. Confirm the working deadline and unresolved owner decisions, prioritise its launch scope, and keep release status tied to GitHub evidence. Do not represent target dates or passing web checks as store approval.
 
+Read and preserve [the general-wellness scope](docs/general-wellness-scope.md). The owner explicitly excludes medical/clinical advice, mental-health treatment or improvement promises, and medicine, supplement or alcohol recommendations. Earlier clinical or longevity ideas do not override this decision.
+
+Read [what Move, Eat, Sleep and Relax are for](docs/product-areas.md) before changing any area. It holds the owner-approved purposes, principles and end-to-end journeys each change must keep working.
+
+Read [the picture and voice workflow](docs/picture-and-voice-workflow.md). Food starts with a picture or spoken description, followed by a short review; typing is a fallback. Movement is a guided training partner with spoken cues and commands, never a workout-camera requirement. Preserve the owner’s preference for minimal data entry.
+
 ## GitHub is the source of truth
 
 - The canonical repository is **https://github.com/alisid0/daywell**. This rule applies to both machines, Codex, Claude and other contributors.

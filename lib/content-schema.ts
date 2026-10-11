@@ -28,6 +28,7 @@ const exerciseSchema = z.object({
 const routineSchema = z.object({
   id, name: text(40), where: z.enum(["none", "home", "gym"]), level: z.number().int().min(1).max(3), minutes: z.number().int().min(1).max(120),
   companion: id, when: text(100), rounds: z.number().int().min(2).max(6).optional(), blocks: z.array(z.tuple([id, text(60)])).min(1).max(10),
+  setup: text(400).optional(), restSeconds: z.number().int().min(10).max(300).optional(),
 }).strict();
 export const workoutsSchema = z.object({
   version: z.literal(1), notes: z.string(), exercises: z.array(exerciseSchema).min(1), routines: z.array(routineSchema).min(1),

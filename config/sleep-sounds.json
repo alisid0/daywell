@@ -1,0 +1,60 @@
+{
+  "model": "eleven_text_to_sound_v2",
+  "seconds": 30,
+  "outputFormat": "mp3_44100_128",
+  "promptInfluence": 0.45,
+  "maxCreditsPerSecond": 40,
+  "reserveCredits": 20000,
+  "sounds": [
+    {
+      "id": "forest",
+      "title": "Forest",
+      "variants": [
+        "Peaceful forest at night for falling asleep: a soft breeze through leaves, gentle distant crickets, an occasional quiet owl far away, steady and calm, no sudden or loud sounds",
+        "Calm forest in the early morning: soft wind in tall trees, light rustling leaves, sparse gentle birdsong in the distance, steady relaxing ambience, no sudden sounds"
+      ]
+    },
+    {
+      "id": "waterfall",
+      "title": "Calm waterfall",
+      "promptInfluence": 0.6,
+      "variants": [
+        "Slow, gentle waterfall heard from a distance: soft unhurried water falling over smooth stones, a low steady murmur, calm and spacious, no rushing or splashing, for sleep",
+        "A small, slow trickle of water falling softly into a quiet forest pool: gentle unhurried drops and a soft low flow, peaceful and spacious, for sleep"
+      ]
+    },
+    {
+      "id": "waves",
+      "title": "Sea waves",
+      "variants": [
+        "Slow, gentle sea waves rolling onto a sandy beach at night: soft foam, long calm pauses between waves, peaceful and steady, no wind or seagulls, for sleep",
+        "Calm ocean waves softly washing in and out on a pebble shore: a slow, regular rhythm, distant and soothing, no wind or seagulls, for sleep"
+      ]
+    },
+    {
+      "id": "drips",
+      "title": "Water filling a pot",
+      "variants": [
+        "Water dripping slowly into a metal pot, single drops falling one by one every second or two, soft resonant plinks, quiet room, calm and steady",
+        "Slow drops of water falling into a pot that is filling up: gentle deep plops one at a time, a quiet steady rhythm, peaceful and relaxing"
+      ]
+    },
+    {
+      "id": "drums",
+      "title": "Calm Chinese drums",
+      "note": "Played as two layers half a loop apart (lib/sleep-sounds.ts), so its beats come twice as often. Asking the model for faster beats ignored the timing.",
+      "variants": [
+        "Slow, calm Chinese temple drum played softly with padded mallets: deep warm low booms with long gaps between them, meditative and peaceful, gentle reverb, quiet"
+      ]
+    },
+    {
+      "id": "flute",
+      "title": "Flute",
+      "promptInfluence": 0.6,
+      "variants": [
+        "A lonely pan flute playing a slow, haunting melody with long sustained notes and gentle vibrato, wide cinematic reverb in the style of a classic western film score, calm and soothing",
+        "Soft breathy pan flute with long sustained notes over a quiet low string drone, melancholic and peaceful, spacious cinematic reverb, slow and dreamy, for sleep"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 import { z } from "zod";
+import { intakeSchema, intakeRecord } from "./food-tracking.ts";
 
 const id = z.string().regex(/^[a-zA-Z0-9-]{1,60}$/);
+const shoppingId = z.string().regex(/^[a-zA-Z0-9-]{1,87}$/);
 const label = z.string().trim().min(1).max(120);
 const amount = z.number().finite().min(0).max(1_000_000).refine(n => Math.abs(n * 1000 - Math.round(n * 1000)) < 0.00001, "Use at most three decimal places.");
 const positive = amount.refine(n => n > 0, "Enter an amount greater than zero.");
@@ -10,32 +12,48 @@ const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value => {
 }, "Choose a valid date.");
 const unit = z.enum(["g", "kg", "ml", "l", "each", "portion"]);
 const requirement = z.object({ ingredient: label, quantity: positive, unit }).strict();
-const planInput = z.object({
+export const planGuideSchema = z.object({
+  steps: z.array(z.string().trim().min(1).max(400)).max(8),
+  caloriesPerServing: z.number().finite().min(0).max(10000).optional(),
+  nutritionNote: z.string().trim().max(240),
+}).strict();
+export const planInput = z.object({
   id, title: label, date, meal: z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]),
   servings: z.number().int().min(1).max(24),
   // Quantities cover all servings of this meal, not one serving.
   ingredients: z.array(requirement).min(1).max(40),
+  guide: planGuideSchema.optional(),
 }).strict();
 const stockInput = z.object({ id, ingredient: label, quantity: amount.nullable(), unit, bestBefore: date.nullable().default(null) }).strict();
-const shoppingInput = z.object({ id, title: label, quantity: z.string().trim().min(1).max(80), done: z.boolean() }).strict();
-const actionSchema = z.discriminatedUnion("type", [
+const shoppingInput = z.object({ id: shoppingId, title: z.string().trim().min(1).max(160), quantity: z.string().trim().min(1).max(80), done: z.boolean() }).strict();
+const consumption = {
+  title: label, date, meal: z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]),
+  consumed: z.array(z.object({ stockId: id, quantity: positive, unit }).strict()).min(1).max(40),
+  useReservedStock: z.boolean().default(false), intake: intakeSchema.optional(),
+};
+export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("stock.set"), item: stockInput }).strict(),
   z.object({ type: z.literal("stock.remove"), id }).strict(),
+  z.object({ type: z.literal("stock.add"), items: z.array(stockInput).min(1).max(20) }).strict(),
   z.object({ type: z.literal("plan.set"), plan: planInput }).strict(),
+  z.object({ type: z.literal("plan.add"), plans: z.array(planInput).min(1).max(7) }).strict(),
   z.object({ type: z.literal("plan.window"), startDate: date, days: z.union([z.literal(2), z.literal(3), z.literal(7)]), plans: z.array(planInput).max(28) }).strict(),
   z.object({ type: z.literal("plan.remove"), id }).strict(),
   z.object({ type: z.literal("shopping.set"), item: shoppingInput }).strict(),
-  z.object({ type: z.literal("shopping.remove"), id }).strict(),
+  z.object({ type: z.literal("shopping.remove"), id: shoppingId }).strict(),
   z.object({
     type: z.literal("purchase"),
-    items: z.array(stockInput.extend({ quantity: positive, shoppingId: id.optional() }).strict()).min(1).max(40),
+    items: z.array(stockInput.extend({ quantity: positive, shoppingId: shoppingId.optional() }).strict()).min(1).max(40),
   }).strict(),
+  z.object({ type: z.literal("use"), ...consumption }).strict(),
   z.object({
+    // Keep existing fields in their original order: saved retry receipts hash
+    // the parsed JSON, including commands authorised before this update.
     type: z.literal("cook"), planId: id.optional(), title: label, date,
-    meal: z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]), servings: z.number().int().min(1).max(24),
-    consumed: z.array(z.object({ stockId: id, quantity: positive, unit }).strict()).min(1).max(40),
-    useReservedStock: z.boolean().default(false),
-    leftovers: z.object({ id, title: label, portions: z.number().int().min(1).max(24), bestBefore: date.nullable().default(null) }).strict().optional(),
+    meal: consumption.meal, servings: z.number().int().min(1).max(24),
+    consumed: consumption.consumed, useReservedStock: consumption.useReservedStock,
+    leftovers: z.object({ id, title: label, portions: positive.refine(n => n >= .125 && n <= 24), bestBefore: date.nullable().default(null) }).strict().optional(),
+    intake: intakeSchema.optional(),
   }).strict(),
   z.object({ type: z.literal("undo"), operationId: id }).strict(),
 ]);
@@ -57,7 +75,7 @@ export const foodStateSchema = z.object({
   shopping: z.array(shoppingInput.extend({ changedBy: id })),
 });
 type Change<T> = { id: string; before: T | null; after: T | null };
-export type MealRecord = { id: string; data: { title: string; date: string; meal: "Breakfast" | "Lunch" | "Dinner" | "Snack"; calories: number; protein: number; carbs: number; fat: number; nutritionKnown: boolean } };
+export type MealRecord = { id: string; data: { title: string; date: string; meal: "Breakfast" | "Lunch" | "Dinner" | "Snack"; calories: number; protein: number; carbs: number; fat: number; nutritionKnown: boolean } & Partial<ReturnType<typeof intakeRecord>> };
 export type FoodEffect = {
   type: FoodCommand["action"]["type"];
   stock: Change<Stock>[]; plans: Change<Plan>[]; shopping: Change<Shopping>[];
@@ -139,6 +157,13 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
   if (action.type === "stock.set") {
     const item = action.item;
     put(state.stock, { ...item, ingredient: ingredientName(item.ingredient), ...measured(item.quantity ?? 0, item.unit), quantity: item.quantity === null ? null : measured(item.quantity, item.unit).quantity, changedBy: operationId });
+  } else if (action.type === "stock.add") {
+    const seen = new Set(state.stock.map(item => item.id));
+    for (const item of action.items) {
+      if (seen.has(item.id)) throw new FoodError("A captured item already exists. Review your basket before adding it again.");
+      seen.add(item.id);
+      state.stock.push({ ...item, ingredient: ingredientName(item.ingredient), ...measured(item.quantity ?? 0, item.unit), quantity: item.quantity === null ? null : measured(item.quantity, item.unit).quantity, changedBy: operationId });
+    }
   } else if (action.type === "stock.remove") remove(state.stock, action.id);
   else if (action.type === "plan.set") {
     put(state.plans, { ...action.plan, ingredients: combine(action.plan.ingredients.map(item => ({ ingredient: ingredientName(item.ingredient), ...measured(item.quantity, item.unit) }))), changedBy: operationId });
@@ -151,6 +176,10 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
     const outside = state.plans.filter(item => !inWindow(item));
     if (action.plans.some(item => outside.some(other => other.id === item.id))) throw new FoodError("That meal belongs to another planning window. Review it before moving it.");
     state.plans = [...outside, ...action.plans.map(item => ({ ...item, ingredients: combine(item.ingredients.map(ingredient => ({ ingredient: ingredientName(ingredient.ingredient), ...measured(ingredient.quantity, ingredient.unit) }))), changedBy: operationId }))];
+  } else if (action.type === "plan.add") {
+    unique(action.plans.map(item => item.id));
+    if (action.plans.some(item => state.plans.some(saved => saved.id === item.id))) throw new FoodError("A proposed meal already exists. Refresh before adding it again.");
+    for (const item of action.plans) state.plans.push({ ...item, ingredients: combine(item.ingredients.map(ingredient => ({ ingredient: ingredientName(ingredient.ingredient), ...measured(ingredient.quantity, ingredient.unit) }))), changedBy: operationId });
   } else if (action.type === "plan.remove") remove(state.plans, action.id);
   else if (action.type === "shopping.set") put(state.shopping, { ...action.item, changedBy: operationId });
   else if (action.type === "shopping.remove") remove(state.shopping, action.id);
@@ -170,38 +199,43 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
         put(state.shopping, { ...shopping, done: true, changedBy: operationId });
       }
     }
-  } else if (action.type === "cook") {
+  } else if (action.type === "cook" || action.type === "use") {
     unique(action.consumed.map(item => item.stockId));
-    const plan = action.planId ? state.plans.find(item => item.id === action.planId) : undefined;
-    if (action.planId && !plan) throw new FoodError("This planned meal has changed. Refresh before cooking.");
-    if (plan && action.servings > plan.servings) throw new FoodError("Review the planned servings before cooking more.");
+    const planId = action.type === "cook" ? action.planId : undefined;
+    const plan = planId ? state.plans.find(item => item.id === planId) : undefined;
+    if (planId && !plan) throw new FoodError("This planned meal has changed. Refresh before cooking.");
+    if (action.type === "cook") {
+      if (plan && action.servings > plan.servings) throw new FoodError("Review the planned servings before cooking more.");
+      if ((action.leftovers?.portions ?? 0) + (action.intake?.portions ?? 0) > action.servings) throw new FoodError("Portions eaten by you and leftovers cannot exceed the servings made. Check those amounts.", 400);
+    }
     for (const used of action.consumed) {
       const lot = state.stock.find(item => item.id === used.stockId);
       const quantity = measured(used.quantity, used.unit);
       if (!lot || lot.quantity === null) throw new FoodError("Confirm the amount in your food basket before recording what you used.");
-      if (lot.unit !== quantity.unit) throw new FoodError("Use a matching unit for the amount you cooked.", 400);
+      if (lot.unit !== quantity.unit) throw new FoodError("Use a matching unit for the amount you used.", 400);
       if (quantity.quantity > lot.quantity) throw new FoodError("There is less in your recorded food basket than that. Check the amount first.");
       put(state.stock, { ...lot, quantity: round(lot.quantity - quantity.quantity), changedBy: operationId });
     }
-    if (plan) {
+    if (plan && action.type === "cook") {
       const remaining = plan.servings - action.servings;
       if (!remaining) remove(state.plans, plan.id);
       else put(state.plans, { ...plan, servings: remaining, ingredients: plan.ingredients.map(item => ({ ...item, quantity: round(item.quantity * remaining / plan.servings) })), changedBy: operationId });
     }
     if (!action.useReservedStock) {
-      const otherDemand = combine(current.plans.filter(item => item.id !== action.planId).flatMap(item => item.ingredients));
+      const otherDemand = combine(current.plans.filter(item => item.id !== planId).flatMap(item => item.ingredients));
       for (const needed of otherDemand) {
         const stockTotal = (source: FoodState) => round(source.stock.filter(item => key(item) === key(needed)).reduce((sum, item) => sum + (item.quantity ?? 0), 0));
         if (stockTotal(state) < Math.min(stockTotal(current), needed.quantity)) throw new FoodError("Some of this food is reserved for another meal. Review that change before using it.");
       }
     }
-    if (action.leftovers) {
-      if (state.stock.some(item => item.id === action.leftovers!.id)) throw new FoodError("Save leftovers as a new stock item.");
+    if (action.type === "cook" && action.leftovers) {
+      const leftoverId = action.leftovers.id;
+      if (state.stock.some(item => item.id === leftoverId)) throw new FoodError("Save leftovers as a new stock item.");
       put(state.stock, { id: action.leftovers.id, ingredient: ingredientName(action.leftovers.title), quantity: action.leftovers.portions, unit: "portion", bestBefore: action.leftovers.bestBefore, changedBy: operationId });
     }
-    meal = { id: `food-${operationId}`, data: { title: action.title, date: action.date, meal: action.meal, calories: 0, protein: 0, carbs: 0, fat: 0, nutritionKnown: false } };
+    meal = { id: `food-${operationId}`, data: { title: action.title, date: action.date, meal: action.meal, ...intakeRecord(action.intake, action.type === "cook" ? "prepared" : "used") } };
   } else if (action.type === "undo") {
-    if (!undoEffect || !["purchase", "cook"].includes(undoEffect.type)) throw new FoodError("Only a recorded purchase or cooking action can be undone here.", 400);
+    if (!undoEffect || !["purchase", "cook", "use", "stock.add"].includes(undoEffect.type)) throw new FoodError("Only a recorded capture, purchase, cooking or food-use action can be undone here.", 400);
     undoChanges(state.stock, undoEffect.stock, operationId);
     undoChanges(state.plans, undoEffect.plans, operationId);
     undoChanges(state.shopping, undoEffect.shopping, operationId);

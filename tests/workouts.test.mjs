@@ -42,3 +42,20 @@ test('sets count in reps or seconds, never both, and older reps-only sets stay v
   assert.equal(describeSet({exercise:'Squat',reps:8,kg:20}),'8 reps · 20 kg');
   assert.equal(elapsedMinutes(10_000),1);
 });
+
+test('a reviewed equipment load applies only to completed weighted steps, including both carry sides',()=>{
+  const steps = routineSteps(routines.find(r=>r.id==='one-kettlebell'));
+  // The person completed the warm-up and two carries, skipped the other steps,
+  // and substituted an unweighted option for a deadlift.
+  const done = [steps[0], steps[4], steps[5], swapStep(steps[2], 'hip-hinge-practice')];
+  const sets = completedSets(done, {'One kettlebell': 8});
+  assert.equal(sets.length, 4);
+  assert.deepEqual(sets.map(s=>s.kg), [0,8,8,0]);
+  assert.equal(sets[1].exercise, 'Kettlebell carry — left hand');
+  assert.equal(sets[2].exercise, 'Kettlebell carry — right hand');
+  assert.equal(sets[1].seconds, 20);
+  assert.equal(sets[2].seconds, 20);
+  assert.ok(!sets.some(s=>s.exercise==='Kettlebell deadlift'));
+  assert.equal(schemas.move.safeParse({title:'Partial kettlebell routine',date:'2026-10-08',minutes:5,sets}).success,true);
+  for (const kg of [-1, 501, NaN, Infinity]) assert.equal(completedSets([steps[4]], {'One kettlebell':kg})[0].kg,0);
+});

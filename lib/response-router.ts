@@ -12,9 +12,10 @@ export type ReplyDecision =
 
 // Topic step: Jev must be this confident and clearly ahead of the next topic (benchmark, 10 Oct 2026: at 0.8 no wrong
 // topic was accepted across 69 matchable phrases). Reply step: a topic's replies are written for the same situation, so
-// Jev's confidence spreads across several suitable ones; its top choice is accepted while "none fits" stays unlikely.
+// Jev's confidence spreads across several suitable ones; its top choice is accepted while "none fits" stays at or below
+// the limit (two-step diagnostic, 10 Oct 2026: 0.35 added four good matches and no wrong ones; above 0.35 added none).
 export const pickerThreshold = 0.8;
-export const noneFitLimit = 0.25;
+export const noneFitLimit = 0.35;
 export const pickerBudgetMs = 1800;
 export function foodCaptureMode(text: string): 'meal' | 'basket' | 'plan' | null {
   if (/\b(?:meal plan|plan (?:my |some |a few )?meals|what (?:can|could) i (?:make|cook))\b/i.test(text)) return 'plan';

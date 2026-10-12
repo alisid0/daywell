@@ -6,8 +6,8 @@ Owner request, 12 October 2026: make Daywell launch-ready for Google Play and th
 
 - **Paid only, with a demo and no free trial.** Anyone can download Daywell and try a demo. Using the real app needs a subscription, so store billing is part of version 1. This replaces the plan, made earlier the same day, for a free version 1 with subscriptions in a later update.
 - **Two plans,** decided later the same day, replacing a single plan at $19.99 a month:
-  - **£4.99 a month:** everything by hand. Eat, Move, Sleep and Relax records, plans, timers and the calendar, with no AI and no audio.
-  - **£9.99 a month:** adds AI and Daywell's recorded audio. The AI is a chat that knows the person's day and acts when they confirm, plus food-photo understanding and meal planning, with the consent and reporting controls below. The audio is sleep sounds, guided sessions, recorded replies and recorded workout cues.
+  - **£4.99 a month:** everything by hand. Eat, Move, Sleep and Relax records, plans, timers and the calendar, with no AI and no audio. Timer alerts still make a sound (owner confirmed).
+  - **£9.99 a month:** adds AI and Daywell's recorded audio. The AI is a chat that knows the person's day and acts when they confirm, plus food-photo understanding and meal planning, with the consent and reporting controls below. The audio is sleep sounds, guided sessions, recorded replies and recorded workout cues. The owner's "limited voice" means these recorded voices only, with no live voice chat (owner confirmed).
 - **No live voice in version 1, and no limits that paying users could reach.** Live AI voice and spoken food readouts cost money every time they're used, so they could only be offered with limits. The owner would rather leave them out than have paying users hit a limit. They can return when a voice can be offered without limits.
 - **Launch when the promise works.** Everything that the listing, the demo and the videos show must work on real phones before submission. Speed matters, but not at the cost of a feature that doesn't do what it says.
 - **Marketing starts with short videos** on Instagram, TikTok and YouTube Shorts. Affiliate partnerships with health brands, gyms and grocers come later.
@@ -19,7 +19,6 @@ Owner request, 12 October 2026: make Daywell launch-ready for Google Play and th
 | Decision | Recommendation | Why it matters |
 | --- | --- | --- |
 | Yearly prices | £39.99 and £79.99 | About a third less than paying monthly. After VAT and store fees, yearly subscribers bring in £2.36 and £4.72 a month. |
-| What "limited voice" means in the £9.99 plan | Daywell's recorded voices only: guided sessions, recorded replies and workout cues. No live voice chat. | This matches the decision to leave out live voice so that nobody hits a limit. |
 | Which AI model runs the chat | Test two or three low-cost models for tone and safety, starting with open models on Cloudflare | A typical AI user costs 20–40p a month and a heavy one £2–£3.70, well within the £7.08 a month that the £9.99 plan brings in. |
 | Billing service | RevenueCat | It handles both stores, renewals, refunds and restores, and supports Capacitor 8. It is free until $2,500 of revenue a month, then takes 1%. Building our own avoids the fee but adds about a week and more to test. It would process purchase records, so it goes in the privacy policy. |
 | Terms of use | A short Daywell terms page for both stores and the web, checked in the legal review | Both stores need terms and privacy links next to the purchase button. On iPhone, Apple's standard licence can apply alongside it. |

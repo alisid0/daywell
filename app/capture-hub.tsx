@@ -8,6 +8,7 @@ import type { FoodAction } from "@/lib/food-client";
 import type { AppState } from "./use-daywell";
 import type { MealProposal } from "@/lib/food-journey";
 import { PrivacyDetails } from "./privacy-details";
+import { AiReport } from "./ai-report";
 import { useFoodNarration } from "./use-food-narration";
 import { foodNarration, foodDraftDetail } from "@/lib/food-narration";
 import { PlanCoverage, PlanGuide } from "./food-plan-journey";
@@ -16,6 +17,11 @@ type Mode = "meal" | "basket" | "grocery" | "plan";
 type CaptureStart = { mode?: string; intent?: string; text?: string; planStart?: string; planCount?: number; planMeal?: string };
 type StockInput = Extract<FoodAction, { type: "stock.add" }>["items"][number];
 type Draft = { summary: string; question: string | null; entries: Entry[]; basket?: StockInput[]; plans?: MealProposal[]; transcript?: string };
+// Everything the AI wrote in a review, as one text for "Report this estimate".
+const reportText = (draft: Draft) => [draft.summary, draft.question ?? "",
+  ...draft.entries.map(entry => `${entry.data.title}: ${entry.kind === "food" ? foodDraftDetail(entry.data) : entry.data.quantity}`),
+  ...(draft.plans ?? []).map(plan => `${plan.title} (${plan.date}, ${plan.meal})`),
+  ...(draft.basket ?? []).map(item => `${item.ingredient}: ${item.quantity === null ? "amount to check" : `${item.quantity} ${item.unit}`}`)].filter(Boolean).join("\n");
 const choices: [Mode, string][] = [["meal", "Meal or drink"], ["basket", "Food basket"], ["grocery", "Shopping list"]];
 const capture = (mode: Mode, intent: "photo" | "voice") => window.dispatchEvent(new CustomEvent("daywell-capture", { detail: { mode, intent } }));
 
@@ -175,6 +181,7 @@ export function CaptureHub({ a }: { a: AppState }) {
           {!!result.plans?.length && a.food.snapshot && <PlanCoverage state={a.food.snapshot.state} plans={result.plans}/>}
           {result.basket?.map(item => <article className="capture-draft-item" key={item.id}><ShoppingBasket size={16}/><strong>{item.ingredient}</strong><small>{item.quantity === null ? "Amount to check" : `${item.quantity} ${item.unit}`}</small></article>)}
           {hasMeal && <><div className="capture-choices" role="group" aria-label="Adjust the portion shown">{[.5,2].map(factor=><button type="button" key={factor} disabled={busy || recording || uncertain} onClick={()=>{try{narration.clear();const entries=result.entries.map(entry=>entry.kind==="food"?resizeCapturedMeal(entry,factor):entry);setResult({...result,entries,summary:"Portion adjusted. "+entries.filter(entry=>entry.kind==="food").map(entry=>`${entry.data.title}: ${foodDraftDetail(entry.data)}`).join(". ")});setConsumed(false);}catch{setError("That portion is too small or large. Say a correction instead.");}}}>{factor===.5?"Half of the shown portion":"Twice the shown portion"}</button>)}</div><p className="food-caption">Nutrition is approximate. Say what changed if the portion looks wrong. Sugar stays unknown without an amount from you or a readable label.</p><label className="food-checkbox"><input type="checkbox" checked={consumed} disabled={busy || recording || uncertain} onChange={e => setConsumed(e.target.checked)}/>I consumed this and checked the portion shown</label></>}
+          <AiReport key={reportText(result)} source={result.plans?.length ? "meal-plan" : "food-estimate"} noun={result.plans?.length ? "plan" : "estimate"} text={reportText(result)}/>
         </section>}
         {busy && <p role="status">{uncertain ? "Checking your save…" : "One moment…"}</p>}
         {recording && <div className="capture-recording" role="status"><Mic/><span>Recording your description · {seconds}s (30s maximum)</span><button className="well-button" onClick={() => recorder.current?.stop()}><Square size={16}/>Finished speaking</button></div>}
@@ -187,7 +194,7 @@ export function CaptureHub({ a }: { a: AppState }) {
         </>}
       </>}
       {error && <p className="form-error" role="alert">{error}</p>}
-      <p className="food-caption">AI estimates. Nothing is saved until you confirm.</p><PrivacyDetails><p>Continuing with a photo or description sends it to OpenAI. Starting a voice description records up to 30 seconds and sends it when you finish. Tap Finished speaking whenever you’re ready.</p>{mode === "plan" && <p>Meal suggestions also use your saved basket and the amounts reserved for other meals.</p>}<p>Hear this shares the review text with ElevenLabs to read it aloud in Daywell’s voice. You can request up to 20 new readouts a day; replaying the same review does not use another.</p><p>Daywell saves the entries you confirm, not the original photo or recording. Provider processing and retention are covered by <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noreferrer">OpenAI’s privacy policy</a> and <a href="https://elevenlabs.io/privacy-policy" target="_blank" rel="noreferrer">ElevenLabs’ privacy policy</a>.</p></PrivacyDetails>
+      <p className="food-caption">{mode === "plan" ? "Asking for a plan sends your request, basket and reserved amounts to OpenAI." : "Your photo or description goes to OpenAI for an estimate."} Nothing is saved until you confirm.</p><PrivacyDetails><p>Continuing with a photo or description sends it to OpenAI. Starting a voice description records up to 30 seconds and sends it when you finish. Tap Finished speaking whenever you’re ready.</p>{mode === "plan" && <p>Meal suggestions also use your saved basket and the amounts reserved for other meals.</p>}<p>Hear this shares the review text with ElevenLabs to read it aloud in Daywell’s voice. You can request up to 20 new readouts a day; replaying the same review does not use another.</p><p>Daywell saves the entries you confirm, not the original photo or recording. Provider processing and retention are covered by <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noreferrer">OpenAI’s privacy policy</a> and <a href="https://elevenlabs.io/privacy-policy" target="_blank" rel="noreferrer">ElevenLabs’ privacy policy</a>.</p></PrivacyDetails>
     </DialogContent></Dialog>
   </>;
 }

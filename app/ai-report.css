@@ -1,0 +1,19 @@
+/* Report this reply, estimate or plan (Google Play's AI-generated content policy). Sizes follow Reading comfort. */
+.ai-report{margin-top:4px}
+.ai-report-toggle,.ai-report-cancel{display:inline-flex;align-items:center;min-height:44px;padding:8px 4px;background:none;border:0;color:var(--dw-muted,#7d536e);font-size:calc(14px*var(--rc-scale,1));font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.ai-report-form{display:grid;gap:12px;margin-top:8px;padding:16px;background:var(--dw-surface,#fff7fb);border:1px solid var(--dw-line,#d8b7cc);border-radius:18px;color:var(--dw-ink,#522d46);font-size:calc(15px*var(--rc-scale,1));line-height:1.5;text-align:left}
+.ai-report-form h3{margin:0;font-size:calc(17px*var(--rc-scale,1))}
+.ai-report-form p{margin:0;color:var(--dw-muted,#7d536e)}
+.ai-report-form fieldset{display:grid;gap:6px;margin:0;padding:0;border:0}
+.ai-report-form legend{margin-bottom:4px;padding:0;font-weight:700}
+.ai-report-choice{display:flex;align-items:center;gap:10px;min-height:44px;padding:4px 12px;border:1px solid var(--dw-line,#d8b7cc);border-radius:14px;cursor:pointer}
+.ai-report-choice:has(input:checked){border-color:var(--dw-accent,#803c65);background:var(--dw-soft,#edd0e2)}
+.ai-report-choice input{width:18px;height:18px;margin:0;accent-color:var(--dw-accent,#803c65)}
+.ai-report-note{display:grid;gap:6px;font-weight:700}
+.ai-report-note textarea{min-height:64px;padding:10px;border:1px solid var(--dw-line,#d8b7cc);border-radius:12px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font:inherit;font-weight:400;resize:vertical}
+.ai-report-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.ai-report-send{min-height:46px;padding:12px 20px;border:0;border-radius:14px;background:var(--dw-accent,#803c65);color:var(--dw-on-accent,#fff7fb);font-size:calc(15px*var(--rc-scale,1));font-weight:700;cursor:pointer}
+.ai-report-send:disabled{opacity:.7;cursor:progress}
+.ai-report-form .ai-report-error{color:var(--dw-error,#a3243b)}
+.ai-report-thanks{margin:8px 0 0;padding:10px 14px;border-radius:14px;background:var(--dw-soft,#edd0e2);color:var(--dw-ink,#522d46);font-size:calc(15px*var(--rc-scale,1))}
+.ai-report-toggle:focus-visible,.ai-report-cancel:focus-visible,.ai-report-send:focus-visible,.ai-report-choice:focus-within{outline:3px solid var(--dw-accent,#803c65);outline-offset:2px}

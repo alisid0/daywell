@@ -20,6 +20,7 @@ import "./appearance-studio.css";
 import "./wellbeing.css";
 import "./about-you.css";
 import "./sleep-sounds.css";
+import "./ai-report.css";
 import "./food.css";
 import "./capture.css";
 import "./audio-library.css";

@@ -1,0 +1,7 @@
+{
+  "description": "Daywell's Android and iPhone apps (owner decision, 12 October 2026). One Capacitor app opens the hosted Daywell service. Test builds open the owner-only private tester app; store builds set DAYWELL_APP_URL to the public service.",
+  "appId": "com.daywell.app",
+  "appName": "Daywell",
+  "testerUrl": "https://daywell-private.alisid1994.workers.dev",
+  "signInHosts": ["*.cloudflareaccess.com", "dash.cloudflare.com"]
+}

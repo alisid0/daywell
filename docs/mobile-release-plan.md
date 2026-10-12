@@ -6,6 +6,8 @@ Daywell is now being prepared for launch on both Google Play and the Apple App S
 
 **Working review deadline:** 5 November 2026, thirty days from the plan date. The owner has requested an early-November review deadline; confirmation of the exact day and whether it means submission or public availability is pending. Plan for an internal release review on 27 October and initial store submissions from 29 October where account eligibility permits. Store approval and public availability are separate milestones controlled in part by Apple and Google.
 
+**Store launch update, 12 October:** the owner asked for Google Play and App Store launch as soon as possible, with a free version 1, all built AI features, a workers.dev address for now, and Apple enrolment starting. The [store launch plan](store-launch.md) records these decisions, what each store needs and who does it. The [phone apps](mobile-app.md) now exist as Capacitor projects with GitHub builds.
+
 **Readiness update, 9 October:** the [latest launch assessment](launch-readiness-2026-10-09.md) supersedes earlier status and timing assumptions below. Private web hosting now works, but public paid/store launch remains blocked by accounts/data controls, unverified AI/device journeys, billing and native builds. Keep 5 November as a review checkpoint; the current conditional estimate for public Android and iPhone availability is 20 November–4 December, potentially later. Earlier October delivery dates are at-risk targets, not completed milestones or a guarantee of public launch.
 
 ## Current state and immediate blockers

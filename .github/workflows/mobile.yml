@@ -6,7 +6,7 @@ on:
   pull_request:
     paths: ['android/**', 'ios/**', 'mobile/**', 'capacitor.config.ts', 'scripts/mobile-sync.mjs', 'package.json', 'package-lock.json', '.github/workflows/mobile.yml']
   push:
-    branches: [main]
+    branches: [main, 'feat/mobile-**']
     paths: ['android/**', 'ios/**', 'mobile/**', 'capacitor.config.ts', 'scripts/mobile-sync.mjs', 'package.json', 'package-lock.json', '.github/workflows/mobile.yml']
   workflow_dispatch:
     inputs:

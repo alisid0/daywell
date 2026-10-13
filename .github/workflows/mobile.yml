@@ -1,0 +1,56 @@
+name: Phone apps
+# Builds Daywell's Android and iPhone apps on GitHub, so no Mac is needed (see docs/mobile-app.md).
+# Android: an installable test APK, downloadable from the run's artifacts. iPhone: a simulator build that proves the
+# project compiles; signed TestFlight builds are added once the Apple Developer account exists.
+on:
+  pull_request:
+    paths: ['android/**', 'ios/**', 'mobile/**', 'capacitor.config.ts', 'scripts/mobile-sync.mjs', 'package.json', 'package-lock.json', '.github/workflows/mobile.yml']
+  push:
+    branches: [main, 'feat/mobile-**']
+    paths: ['android/**', 'ios/**', 'mobile/**', 'capacitor.config.ts', 'scripts/mobile-sync.mjs', 'package.json', 'package-lock.json', '.github/workflows/mobile.yml']
+  workflow_dispatch:
+    inputs:
+      app_url:
+        description: Hosted Daywell service the app opens (leave blank for the private tester app)
+        required: false
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm run install:ci
+      - run: npm run mobile:sync -- android
+        env:
+          DAYWELL_APP_URL: ${{ inputs.app_url }}
+      - name: Build the test APK
+        working-directory: android
+        run: ./gradlew assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v7
+        with:
+          name: daywell-android-test
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
+  ios:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm run install:ci
+      - run: npm run mobile:sync -- ios
+        env:
+          DAYWELL_APP_URL: ${{ inputs.app_url }}
+      - name: Compile for the iPhone simulator (signing waits for the Apple Developer account)
+        run: xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build

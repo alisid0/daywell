@@ -6,7 +6,7 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 
 - **Database:** Cloudflare D1 `daywell-private-db`. It was created with the Western Europe location hint. A location hint isn't a promise that data stays in Europe; the public database should be created with D1's EU jurisdiction setting so that it does.
 - **Encryption and backups:** Cloudflare encrypts D1 at rest. Time Travel can restore the database to any point in the last 30 days, so deleted records can exist in restore points for up to 30 days. The privacy policy must say so. A restore must never bring back records from a closed account; see #47.
-- **Identity:** each person is a SHA-256 hash of Cloudflare Access's issuer and subject (`lib/cloudflare-access.ts`), checked against Access's signed token on every request. Request headers that claim an identity are removed first. Email addresses are not written to the database.
+- **Identity:** in the private test, each person is a SHA-256 hash of Cloudflare Access's issuer and subject (`lib/cloudflare-access.ts`), checked against Access's signed token on every request, and email addresses are not written to the database. In the public app, people sign in with emailed codes ([sign-in](sign-in.md)). Each account has a random ID, and its email address is kept in `accounts`. Either way, request headers that claim an identity are removed first.
 - **Isolation:** every query is scoped by `user_id` (reviewed 13 October).
 
 ## Tables
@@ -17,7 +17,10 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 | `entries` | Everything saved in the day: tasks, shopping, meals with calories and sugar, workouts, sleep nights, alarms, the timer, calendar events and private reflections | Yes. Meals, workouts and sleep are health data, and reflections may be very personal | Until the person deletes them; up to 20,000 a person | Yes / yes |
 | `food_spaces` | Food basket, meal plans and shopping, one record a person | Yes | Until changed or closed | Yes / yes |
 | `food_operations` | Each food change and how to undo it | Yes | **Forever today.** Owner decision 13 October: 365 days | Yes / yes |
-| `usage_limits` | Counts of paid AI uses in the current window | Low | Overwritten each window | Yes / yes |
+| `usage_limits` | Counts of paid AI uses in the current window. In the public app, also sign-in protection counts, keyed by a hashed address or network | Low | Overwritten each window; sign-in counts removed daily | Yes / yes |
+| `accounts` (public app) | Email address, random account ID, when it was created and last signed in | Yes | Until the account closes | **Not yet** / **not yet** |
+| `sign_in_codes` (public app) | Keyed hashes of an address and its code, expiry and tries | Pseudonymous | 10 minutes; removed daily | Not linked to an account / expires |
+| `sessions` (public app) | A hash of each device's session token, the account ID and times | Pseudonymous | 90 days after last use; removed daily | Not needed / removed with the account |
 | `account_closures` (#47) | A closed account's hashed ID, request ID and time | Pseudonymous | Kept, so old devices can't restore deleted records | Yes / kept by design |
 | `ai_reports` (#49) | Reported AI text, reason and optional note | Yes | 90 days | **Not yet** / **not yet** |
 

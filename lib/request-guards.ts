@@ -40,7 +40,8 @@ export function messageFor(error: unknown, fallback: string) {
 }
 
 // Per-user allowances, counted in fixed windows in the usage_limits table. Daily windows reset at midnight UTC.
-const day = 24 * 60 * 60 * 1000;
+const hour = 60 * 60 * 1000;
+const day = 24 * hour;
 export const limits = {
   voice: { windowMs: 10 * 60 * 1000, max: 6 },
   // Live conversations are paid by the minute, so each person, and everyone together, also has a daily cap.
@@ -49,6 +50,13 @@ export const limits = {
   capture: { windowMs: day, max: 20 },
   narration: { windowMs: day, max: 20 },
   picker: { windowMs: day, max: 120 },
+  // Sign-in protection, not usage limits: they stop code guessing and stop anyone using Daywell to send unwanted
+  // email. Rows are keyed by a keyed hash of the address or network address, never the address (docs/sign-in.md).
+  "sign-in-email-hour": { windowMs: hour, max: 5 },
+  "sign-in-email-day": { windowMs: day, max: 10 },
+  "sign-in-network": { windowMs: hour, max: 60 },
+  "sign-in-all": { windowMs: day, max: 20_000 },
+  "sign-in-try": { windowMs: day, max: 20 },
 } as const;
 export type LimitedFeature = keyof typeof limits;
 // The usage_limits row shared by everyone. No real sign-in ID is "*".

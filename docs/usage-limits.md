@@ -42,6 +42,10 @@ Daily limits reset at midnight UTC, which is 1 am in UK summer time. A limit nev
 4. A new paid feature adds its own allowance to `limits`, and a row to the tables above.
 5. When a pre-recorded reply fits a request, use it before starting a paid conversation.
 
+## Sign-in protection is not a usage limit
+
+The public app's sign-in also uses `usage_limits`, to stop code guessing and unwanted email. Normal use never meets these limits, and they never cap a paid feature. See [sign-in](sign-in.md) for the figures.
+
 ## Still to do
 
 - Capture validation now runs before paid calls. Explicit provider refusals and cancelled dispatches are refunded; a timeout after dispatch stays counted because provider billing is unknown. See [response routing](response-routing.md).

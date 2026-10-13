@@ -2,6 +2,8 @@
 
 The owner selected Cloudflare on 7 October 2026 and has created an account. This path prepares a private internet-accessible Daywell for phone testing. It uses Workers for the app, D1 for records, and Cloudflare Access for invited testers. The computers can be switched off after deployment. This is a staging foundation, not completed consumer authentication or an App Store/Google Play release.
 
+The public app, with email sign-in instead of Access, uses a separate profile, Worker and EU database. See [sign-in](sign-in.md).
+
 ## Security boundary
 
 `npm run cloudflare:build` uses `build/cloudflare-worker.ts`, separate from the Sites/local entry point. Every request, including static assets, passes through authentication. It verifies the Access JWT signature with the team's public keys, exact issuer, application audience, expiry, issued-at and person identity. The Worker replaces incoming identity headers with the verified identity before invoking the app. A stable issuer/subject hash scopes D1 records; changing an email does not create another account. Tokens and identities are not logged by this middleware.

@@ -4,6 +4,12 @@ declare namespace Cloudflare {
     DAYWELL_APP_ORIGIN?: string;
     CF_ACCESS_ISSUER?: string;
     CF_ACCESS_AUD?: string;
+    // Public app with email sign-in (docs/sign-in.md). The secret and review code are Worker secrets.
+    DAYWELL_AUTH_SECRET?: string;
+    DAYWELL_EMAIL_FROM?: string;
+    DAYWELL_REVIEW_EMAIL?: string;
+    DAYWELL_REVIEW_CODE?: string;
+    EMAIL?: SendEmail;
     ELEVENLABS_API_KEY?: string;
     ELEVENLABS_AGENT_ID?: string;
     DB?: D1Database;

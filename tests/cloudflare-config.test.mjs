@@ -20,6 +20,7 @@ test("owned build routes assets through authentication and excludes preview and 
   assert.equal(config.preview_urls, false);
   assert.equal(config.observability.enabled, false);
   assert.deepEqual(config.services, []);
+  assert.deepEqual(config.triggers, { crons: ["17 3 * * *"] });
   assert.equal(config.d1_databases[0].database_id, profile.databaseId);
   assert.equal(config.vars.DAYWELL_APP_ORIGIN, profile.appOrigin);
   assert.deepEqual(Object.keys(config.vars).sort(), ["CF_ACCESS_AUD", "CF_ACCESS_ISSUER", "DAYWELL_APP_ORIGIN"]);

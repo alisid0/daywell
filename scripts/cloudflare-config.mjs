@@ -37,6 +37,8 @@ export function readCloudflareConfig(path) {
     preview_urls: false,
     assets: { binding: "ASSETS", run_worker_first: true },
     observability: { enabled: false },
+    // Daily at 03:17 UTC: removes reports of AI replies older than 90 days.
+    triggers: { crons: ["17 3 * * *"] },
     vars: {
       DAYWELL_APP_ORIGIN: p.appOrigin,
       CF_ACCESS_ISSUER: p.accessIssuer,

@@ -87,7 +87,9 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
   const lock = useRef(false);
   const preparedPlan = useRef<{ actions: HostAction[]; items: Entry[] } | null>(null);
   const mounted = useRef(true);
-  const voice = useHostVoice(value => { setHeard(value); void receive(value); });
+  // How the latest request arrived, so a follow-up conversation offer matches it.
+  const inputVia = useRef<"voice" | "text">("text");
+  const voice = useHostVoice(value => { inputVia.current = "voice"; setHeard(value); void receive(value); });
   const agent = useElevenAgent({
     contextKey: JSON.stringify([a.timer, Math.ceil(a.remaining / 60), pending]),
     getContext: () => timerConversationContext(verifiedTimer.current, pendingRef.current?.map(describeAction) || []) + timerOutcome.current,
@@ -190,7 +192,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
       }
       if (decision.kind === "local") { say("Tell me the details of what you’d like to do."); return; }
       fallbackRequest.current = value;
-      if (agent.configured) { setReply("Let’s talk that through. Start a conversation when you’re ready."); setConsent(spoken ? "voice" : "text"); }
+      if (agent.configured) { setReply("Let’s talk that through. Start a conversation when you’re ready."); setConsent(inputVia.current); }
       else say("I can’t chat just now. You can still use your everyday tools or choose something to listen to.");
     } catch (problem) {
       if (mounted.current && responseEpoch.current === epoch && !controller.signal.aborted) setError(problem instanceof Error ? problem.message : "Couldn’t find a reply. Please try again.");
@@ -324,7 +326,7 @@ export function DaywellHost({ a, immersive = false, cozy = false, company = "qui
     say(`Here’s what I understood. ${request.actions.map(describeAction).join(". ")}. ${request.actions.some(action => action.type === "activity") && hasActivity && !finished ? "This will replace your current activity. " : ""}${agentActive ? "Press Do this to confirm." : "Say yes or press Do this."}`);
   }
   function sendText() {
-    voice.clearError();
+    voice.clearError(); inputVia.current = "text";
     const route = hostInputRoute(text, agent.status, aiChosen, busy || routing);
     if (route === "ignore") return;
     if (route === "agent") { const sent = text; void agent.send(sent).then(ok => { if(ok)setText(current => current === sent ? "" : current); }); }

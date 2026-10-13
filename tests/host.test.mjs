@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseHostRequest, entriesForActions, guidanceAt, canUndoHostChange, actionModule } from "../lib/host.ts";
+import { parseHostRequest, entriesForActions, guidanceAt, canUndoHostChange, actionModule, describeAction } from "../lib/host.ts";
 import { schemas } from "../lib/daywell.ts";
 
 test("greetings and help receive local replies without creating actions", () => {
@@ -26,6 +26,34 @@ test("one request routes shopping and focus without requiring a mascot name", ()
   assert.equal(plan.type, "plan");
   assert.deepEqual(plan.actions, [{ type: "grocery", titles: ["milk", "eggs"] }, { type: "activity", companion: "pip", title: "my email", minutes: 10 }]);
   assert.deepEqual(plan.actions.map(actionModule), ["grocery", "focus"]);
+});
+test("everyday shopping phrases become a shopping plan the person confirms", () => {
+  for (const [phrase, titles] of [
+    ["I need to buy eggs and chicken", ["eggs", "chicken"]],
+    ["I need to buy some eggs and chicken for dinner", ["eggs", "chicken"]],
+    ["We’re out of milk", ["milk"]],
+    ["I'm running low on bread and butter", ["bread", "butter"]],
+    ["We've run out of washing-up liquid", ["washing-up liquid"]],
+    ["Put oat milk on my shopping list", ["oat milk"]],
+    ["I have to buy apples, rice and tea", ["apples", "rice", "tea"]],
+    ["Need to buy bin bags", ["bin bags"]],
+    ["Get bread from the shop", ["bread"]],
+    ["Remind me to buy milk", ["milk"]],
+  ]) {
+    const plan = parseHostRequest(phrase);
+    assert.equal(plan.type, "plan", phrase);
+    assert.deepEqual(plan.actions, [{ type: "grocery", titles }], phrase);
+  }
+  assert.deepEqual(parseHostRequest("We're out of milk and I need to buy eggs").actions, [{ type: "grocery", titles: ["milk", "eggs"] }]);
+  assert.deepEqual(parseHostRequest("Add milk and focus for 10 minutes and buy eggs").actions.map(action => action.type), ["grocery", "activity"]);
+  assert.equal(describeAction({ type: "grocery", titles: ["eggs", "chicken"] }), "Add eggs and chicken to your shopping list");
+  assert.equal(describeAction({ type: "grocery", titles: ["apples", "rice", "tea"] }), "Add apples, rice and tea to your shopping list");
+  assert.equal(describeAction({ type: "grocery", titles: ["milk"] }), "Add milk to your shopping list");
+});
+test("phrases about the person, or that aren't about buying, are not shopping", () => {
+  for (const phrase of ["I'm out of energy", "I'm running out of time", "I'm out of patience today", "I need to get some sleep", "I need to pick up the kids", "I need a break", "Add milk and get going", "Remind me to buy milk tomorrow"]) {
+    assert.equal(parseHostRequest(phrase).type, "unknown", phrase);
+  }
 });
 test("unsupported compound requests and negative instructions never partially save", () => {
   for (const phrase of ["Add milk and remind me tomorrow", "Don't add milk", "Add milk and don't start a timer", "Focus for ten minutes and start a walk for fifteen minutes", "Set an alarm for 7", "Set an alarm for 7 am tomorrow", "Set an alarm for 29 pm", "Focus for 0 minutes", "Start a workout for 999 minutes", "Add milk then book a flight"]) {

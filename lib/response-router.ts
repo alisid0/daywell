@@ -20,7 +20,8 @@ export const pickerBudgetMs = 1800;
 export function foodCaptureMode(text: string): 'meal' | 'basket' | 'plan' | null {
   if (/\b(?:meal plan|plan (?:my |some |a few )?meals|what (?:can|could) i (?:make|cook))\b/i.test(text)) return 'plan';
   if (/\b(?:i (?:ate|consumed)|i had .+ (?:breakfast|lunch|dinner)|log (?:this|my) (?:meal|food))\b/i.test(text)) return 'meal';
-  if (/\b(?:in my (?:basket|fridge|pantry)|i (?:have|bought) .*(?:eggs?|noodles?|rice|pasta|milk|bread|chicken|vegetables?|apples?|bananas?))\b/i.test(text)) return 'basket';
+  // "I have to buy eggs" is shopping, not food already in the basket.
+  if (/\b(?:in my (?:basket|fridge|pantry)|i (?:have(?! (?:got )?to\b)|bought) .*(?:eggs?|noodles?|rice|pasta|milk|bread|chicken|vegetables?|apples?|bananas?))\b/i.test(text)) return 'basket';
   return null;
 }
 const normalise = (text: string) => text.toLowerCase().replace(/[’]/g, "'").replace(/[.!?,]+$/g, '').replace(/\s+/g, ' ').trim();

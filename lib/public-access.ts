@@ -148,7 +148,8 @@ async function signOut(request: Request, settings: Settings, token: string | nul
   }
   await endSession(settings.db, token);
   if (request.method === 'POST') return json({ ok: true }, 200, sessionClearing);
-  return new Response(null, { status: 303, headers: { Location: `${settings.origin}/`, 'Cache-Control': 'private, no-store', 'Set-Cookie': sessionClearing } });
+  // The sign-in page says they are signed out and that their records are kept.
+  return new Response(null, { status: 303, headers: { Location: `${settings.origin}/sign-in?signed_out=1`, 'Cache-Control': 'private, no-store', 'Set-Cookie': sessionClearing } });
 }
 
 export async function handlePublicCloudflareRequest(

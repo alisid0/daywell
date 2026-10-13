@@ -26,10 +26,14 @@ The app itself doesn't change. It still reads the `oai-authenticated-user-id` an
 | --- | --- |
 | `POST /api/sign-in/code` with `{ email }` | Emails a code |
 | `POST /api/sign-in/verify` with `{ email, code }` | Signs the person in and sets the session cookie |
-| `POST /api/sign-out`, or `GET /signout-with-chatgpt` from Daywell's own pages | Ends the session on this device |
+| `POST /api/sign-out`, or `GET /signout-with-chatgpt` from Daywell's own pages | Ends the session on this device, then shows the sign-in page saying they're signed out |
 | `GET /signin-with-chatgpt?return_to=/eat` | Signed in: back to that page. Signed out: to the sign-in page, `/sign-in`. The app's existing sign-in links use this. |
 
-The sign-in screens at `/sign-in` come next, once their preview is approved.
+The screens follow the preview approved on 13 October:
+- `app/sign-in/` asks for the email, then the code. The code field accepts the phone's own code suggestions.
+- A new account sees a welcome screen. Someone coming back returns to the page they were on.
+- Settings shows "Your account", with the address and Sign out (`app/your-account.tsx`).
+- `lib/sign-in-client.ts` turns the server's answers into the messages people see.
 
 ## Security
 
@@ -67,7 +71,9 @@ The owner does the steps that need their accounts or payment; Claude prepares an
 
 ## Still to do
 
-- The sign-in screens, after the preview is approved.
+- The welcome screen's button says Continue until the plan screen exists; then it becomes Choose a plan.
+- Once the demo exists: a Back to the demo link on the sign-in page, and "Start Daywell" opening `/sign-in?start=1`, which uses the Start wording.
+- Terms and privacy links under the form, once those pages exist.
 - A demo for signed-out visitors.
 - Plans and subscriptions (RevenueCat), including plan checks for recordings.
 - Account closure ([#47](https://github.com/alisid0/daywell/pull/47)) must include the new tables: export the `accounts` row, and delete it at closure. Deleting it also removes the account's sessions. The sign-in protection counts aren't linked to an account and are removed within a day.

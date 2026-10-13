@@ -16,7 +16,7 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 | `settings` | Name, tools, bedtime, reading and voice choices; About you: birth year, optional sex, height and weight history (only with `bodyConsentAt`), calorie tracking | Yes. Body details are health data | Until changed or the account closes | Yes / yes |
 | `entries` | Everything saved in the day: tasks, shopping, meals with calories and sugar, workouts, sleep nights, alarms, the timer, calendar events and private reflections | Yes. Meals, workouts and sleep are health data, and reflections may be very personal | Until the person deletes them; up to 20,000 a person | Yes / yes |
 | `food_spaces` | Food basket, meal plans and shopping, one record a person | Yes | Until changed or closed | Yes / yes |
-| `food_operations` | Each food change and how to undo it | Yes | **Forever: no limit today** | Yes / yes |
+| `food_operations` | Each food change and how to undo it | Yes | **Forever today.** Owner decision 13 October: 365 days | Yes / yes |
 | `usage_limits` | Counts of paid AI uses in the current window | Low | Overwritten each window | Yes / yes |
 | `account_closures` (#47) | A closed account's hashed ID, request ID and time | Pseudonymous | Kept, so old devices can't restore deleted records | Yes / kept by design |
 | `ai_reports` (#49) | Reported AI text, reason and optional note | Yes | 90 days | **Not yet** / **not yet** |
@@ -40,11 +40,11 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 ## Problems found on 13 October
 
 1. **Closure misses AI reports.** #47's `personalTables` and triggers don't include `ai_reports` from #49. After both merge, a closed account's reports aren't exported or deleted, and a late report can still be saved. Add the table to both.
-2. **Food history is kept forever.** `food_operations` grows with every food change, although undo only needs recent ones. Keep the latest 90 days, plus the newest receipt per operation needed for retries, and delete older rows on the daily schedule.
+2. **Food history is kept forever.** `food_operations` grows with every food change. Owner decision, 13 October: keep 365 days. Delete older rows on the daily schedule; undo and retries only ever need recent rows.
 3. **Shared devices keep other people's drafts.** #47 no longer clears other accounts' food drafts. If a session expires without signing out, the draft stays in that browser. Clear drafts older than 7 days, or any draft for another account, when someone else signs in.
 4. **Errors fail as raw pages.** In #47, a database error during the closure check gives a raw 500, or a crashed page, instead of the planned "couldn't check your account" message.
 5. **Refunds abort after closure.** In #47, a paid request in flight when an account closes can't return its allowance, because of the closure trigger, and shows a provider error instead of "account closed".
-6. **No written retention for chat or provider data.** `config/owner.json` has no retention period yet. That is an owner decision before launch.
+6. **No written retention for chat or provider data.** Owner decision, 13 October: 90 days for chat history and for provider-held conversations. Record this in `config/owner.json` and the privacy policy.
 
 The full review is in the 13 October session; the #47 items go to Codex.
 
@@ -55,10 +55,28 @@ These must exist before the plans and the chat launch. Each must be in the expor
 | New store | Fields | Kept for |
 | --- | --- | --- |
 | `subscriptions` | Store (Apple or Google), original transaction ID, product, plan (`basic` or `plus`), status, renewal or expiry time, last checked | While active, then as long as tax and refund rules need the record. Card details are never stored |
-| `chat_messages` | Who sent it, text, time, any plan it proposed | 30 days (owner to confirm), and clearable at any time |
-| `assistant_actions` | What the assistant changed, before and after, so Undo works, and whether the person confirmed it or it was a small thing done straight away | 30 days |
+| `chat_messages` | Who sent it, text, time, any plan it proposed | 90 days (owner decision), and clearable at any time |
+| `assistant_actions` | What the assistant changed, before and after, so Undo works, and whether the person confirmed it or it was a small thing done straight away | 90 days |
+| `safety_flags` | An exchange that an automatic check flagged: the message, the reply, the check's category and the model version | 90 days |
+| `ai_reports` changes (#49) | New reasons: made something up, said something Daywell shouldn't, did the wrong thing in the app, unsafe, offensive, other. Optionally the message that led to the reply | 90 days |
 | `consents` | Which consent (body details, chat, food AI, each provider), the wording version, when given and when withdrawn | As long as the account, as proof of consent |
 | `settings` fields | "What Daywell can see" switches and "Small things straight away" | With settings |
+
+## Using chats to improve Daywell
+
+Owner request, 13 October: use replies and requests to make the service better, and make sure people can report poor replies, including made-up answers (hallucinations) and replies that break Daywell's rules (jailbreaks). There are four sources, each with a clear basis:
+
+1. **Reports.** The person chooses to send a reply, a reason and, if they tick the box, the message before it. A report goes on every AI reply and on every change the assistant makes. Kept 90 days.
+2. **Automatic safety checks.** Every chat message and reply is checked by a safety classifier (Llama Guard on Cloudflare, about 0.02p a message) and by Daywell's own scope rules (`wellnessBoundary`, no medical advice). Flagged exchanges go to `safety_flags` for review. The chat consent says so.
+3. **"Help improve Daywell".** People can opt in to let the team read samples of their chats, with names and numbers removed, for up to 90 days. It is off until they turn it on. Food, sleep and body details are health data under UK GDPR, so this needs explicit consent, recorded in `consents`.
+4. **Anonymous counts for everyone.** These hold no text: requests not understood, reports by reason, flags by category, and how often plans are confirmed or undone.
+
+**How fixes happen.** Each week, review reports and flags.
+- A fixed problem becomes a test: a library of known bad prompts and expected safe replies, which runs before each release.
+- Made-up answers are reduced by answering from the person's own records, and by saying "I don't know" when the records don't hold the answer.
+- Rule-breaking replies are limited because the assistant can only act through Daywell's own checked tools. A tricked reply still can't delete an account, spend money or share data.
+
+**Not allowed:** selling chats, or letting outside AI companies train on them. Cloudflare's AI service doesn't train on customer data. Any future fine-tuning of Daywell's own model uses only opted-in, de-identified examples.
 
 ## Launch checks
 

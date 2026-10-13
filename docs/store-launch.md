@@ -11,16 +11,16 @@ Owner request, 12 October 2026: make Daywell launch-ready for Google Play and th
 - **No live voice in version 1, and no limits that paying users could reach.** Live AI voice and spoken food readouts cost money every time they're used, so they could only be offered with limits. The owner would rather leave them out than have paying users hit a limit. They can return when a voice can be offered without limits.
 - **Launch when the promise works.** Everything that the listing, the demo and the videos show must work on real phones before submission. Speed matters, but not at the cost of a feature that doesn't do what it says.
 - **Marketing starts with short videos** on Instagram, TikTok and YouTube Shorts. Affiliate partnerships with health brands, gyms and grocers come later.
-- **The public app uses a Cloudflare workers.dev address for now.** The app ID `com.daywell.app` is used on both stores. Confirm it before the first store upload; it cannot change afterwards.
+- **The public app's address is daywell.date** (owner, 13 October; it replaces the plan to use a workers.dev address). See the [13 October handover](handover/2026-10-13-launch-state.md). The app ID `com.daywell.app` is used on both stores. Confirm it before the first store upload; it cannot change afterwards.
 - **Apple Developer Program enrolment had not started.** The owner is enrolling as an organisation, with the same D-U-N-S number as the verified organisation Google Play account. The personal-account rule of 12 testers for 14 days should not apply to an organisation account; confirm this in Play Console.
 
 ## Decisions still needed
 
 | Decision | Recommendation | Why it matters |
 | --- | --- | --- |
-| Yearly prices | £39.99 and £79.99 | About a third less than paying monthly. After VAT and store fees, yearly subscribers bring in £2.36 and £4.72 a month. |
+| Yearly prices | **Decided 13 October:** £39.99 and £79.99 | About a third less than paying monthly. After VAT and store fees, yearly subscribers bring in £2.36 and £4.72 a month. |
 | Which AI model runs the chat | Test two or three low-cost models for tone and safety, starting with open models on Cloudflare | A typical AI user costs 20–40p a month and a heavy one £2–£3.70, well within the £7.08 a month that the £9.99 plan brings in. |
-| Billing service | RevenueCat | It handles both stores, renewals, refunds and restores, and supports Capacitor 8. It is free until $2,500 of revenue a month, then takes 1%. Building our own avoids the fee but adds about a week and more to test. It would process purchase records, so it goes in the privacy policy. |
+| Billing service | **Decided 13 October:** RevenueCat | It handles both stores, renewals, refunds and restores, and supports Capacitor 8. It is free until $2,500 of revenue a month, then takes 1%. Building our own avoids the fee but adds about a week and more to test. It would process purchase records, so it goes in the privacy policy. |
 | Terms of use | A short Daywell terms page for both stores and the web, checked in the legal review | Both stores need terms and privacy links next to the purchase button. On iPhone, Apple's standard licence can apply alongside it. |
 
 ## What the stores need

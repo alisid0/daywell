@@ -19,7 +19,7 @@ Read [the picture and voice workflow](docs/picture-and-voice-workflow.md). Food 
 ## Start every session
 
 1. Check the remote, current branch, working tree and unpublished commits. Fetch GitHub before editing.
-2. Read this file, the shared workflow, and the relevant GitHub pull request and handover. Continue the agreed feature branch, or start a new branch from current GitHub `main`.
+2. Read this file, the shared workflow, the newest dated handover in `docs/handover/`, and the relevant GitHub pull request. Continue the agreed feature branch, or start a new branch from current GitHub `main`.
 3. Fast-forward a clean checkout to its intended remote branch. Preserve local work if it has diverged; reconcile it without destructive resets, forced pushes or automatic stashing.
 4. Only then install changed dependencies as needed and start the preview. Identify its branch and commit when presenting it.
 

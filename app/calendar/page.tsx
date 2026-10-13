@@ -1,8 +1,8 @@
 import Daywell from "../daywell";
-import { requireChatGPTUser } from "../chatgpt-auth";
+import { accountOf, requireChatGPTUser } from "../chatgpt-auth";
 
 export const dynamic = "force-dynamic";
 export default async function CalendarPage() {
-  await requireChatGPTUser("/calendar");
-  return <Daywell initialView="calendar" />;
+  const user = await requireChatGPTUser("/calendar");
+  return <Daywell initialView="calendar" account={accountOf(user)} />;
 }

@@ -162,7 +162,7 @@ test('sign-out works from Daywell itself, but not from a link on another site', 
 
   const link = await call('/signout-with-chatgpt', { cookie, headers: { 'sec-fetch-site': 'same-origin' } });
   assert.equal(link.response.status, 303);
-  assert.equal(link.response.headers.get('location'), `${origin}/`);
+  assert.equal(link.response.headers.get('location'), `${origin}/sign-in?signed_out=1`);
   assert.equal(link.response.headers.get('set-cookie'), `${sessionCookie}=; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=0`);
   assert.equal(await readSession(db, token, clock), null);
 

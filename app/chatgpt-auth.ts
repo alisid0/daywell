@@ -58,7 +58,14 @@ export function chatGPTSignOutPath(returnTo = "/"): string {
   return `${SIGN_OUT_PATH}?return_to=${encodeURIComponent(safeReturnTo)}`;
 }
 
-function safeRelativeReturnPath(value: string): string {
+// What the settings panel shows about the signed-in account. Accounts from email sign-in (docs/sign-in.md)
+// have `dw:` IDs; the private test signs in through Cloudflare Access instead.
+export type Account = { email: string; emailSignIn: boolean };
+export function accountOf(user: ChatGPTUser): Account {
+  return { email: user.email, emailSignIn: user.userId.startsWith("dw:") };
+}
+
+export function safeRelativeReturnPath(value: string): string {
   if (!value.startsWith("/") || value.startsWith("//")) return "/";
 
   let url: URL;
@@ -77,7 +84,9 @@ function isReservedAuthPath(pathname: string): boolean {
   return (
     pathname === SIGN_IN_PATH ||
     pathname === SIGN_OUT_PATH ||
-    pathname === CALLBACK_PATH
+    pathname === CALLBACK_PATH ||
+    pathname === "/sign-in" ||
+    pathname.startsWith("/api/")
   );
 }
 

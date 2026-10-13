@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import {Toaster,toast} from "sonner";
 import {today,displayTime,type Entry} from "@/lib/daywell";
 import {useDaywell} from "./use-daywell";
+import type {Account} from "./chatgpt-auth";
 import {FocusCard,FoodCard,TaskRows,Empty} from "./parts";
 import {PillarWorkspace} from "./pillar-workspace";
 import {Dialogs} from "./dialogs";
@@ -28,7 +29,7 @@ export const modules=[{id:"alarm",name:"Alarm",icon:AlarmClock,color:"#e99a31",d
 // Focus, timers and alarms sit on Today now that the bottom bar holds Move, Eat, Sleep and Relax.
 const EXTRAS=[{id:"focus",name:"Focus",icon:ListChecks},{id:"clock",name:"Timers",icon:Timer},{id:"alarm",name:"Alarms",icon:AlarmClock}];
 function NavButton({onClick,children,...props}:any){const {setOpenMobile}=useSidebar();return <SidebarMenuButton {...props} onClick={()=>{onClick();setOpenMobile(false)}}>{children}</SidebarMenuButton>}
-export default function Daywell({showWelcome=false,initialView="today"}:{showWelcome?:boolean;initialView?:string}){const look=useDaywellStyle(),[choosingStyle,setChoosingStyle]=useState(false),[reviewingDesigns,setReviewingDesigns]=useState(false),showStyles=choosingStyle,cozy=look.style==="nook",immersive=look.style==="stillwater"||cozy;const a=useDaywell(showWelcome,initialView),{settings,active,enabled}=a,selected=modules.filter(m=>enabled(m.id));const dateLabel=new Date(a.now).toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
+export default function Daywell({showWelcome=false,initialView="today",account}:{showWelcome?:boolean;initialView?:string;account?:Account}){const look=useDaywellStyle(),[choosingStyle,setChoosingStyle]=useState(false),[reviewingDesigns,setReviewingDesigns]=useState(false),showStyles=choosingStyle,cozy=look.style==="nook",immersive=look.style==="stillwater"||cozy;const a=useDaywell(showWelcome,initialView),{settings,active,enabled}=a,selected=modules.filter(m=>enabled(m.id));const dateLabel=new Date(a.now).toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
 
  if(a.loaded&&a.welcome)return <><WelcomeFlow a={a}/><Toaster position="bottom-right" richColors/></>;
  if(a.loaded&&a.settings.onboarded&&a.settings.birthYear===null)return <><AboutYouPrompt a={a}/><Toaster position="bottom-right" richColors/></>;
@@ -45,7 +46,7 @@ export default function Daywell({showWelcome=false,initialView="today"}:{showWel
  {a.loaded&&active==="calendar"&&<CalendarWorkspace a={a}/>}
  {a.loaded&&active==="today"&&<button className="calendar-home-link" onClick={()=>{a.setCalendarArea("all");a.setActive("calendar")}}><CalendarDays size={19}/><span>Calendar & history<small>What’s next, and how far you’ve come</small></span><ChevronRight size={17}/></button>}
  {a.loaded&&active==="today"&&<details className="host-tools"><summary>Your tools & saved day<span>Here whenever you need them</span></summary><TodayTools a={a}/></details>}
- {a.loaded&&active!=="today"&&active!=="calendar"&&<PillarWorkspace key={active} a={a}/>}<footer className="page-footer"><Sun size={15}/>Small steps. Better days.</footer></div></main><Dialogs a={a} modules={modules}/>{a.loaded&&<CaptureHub a={a}/>}<Toaster position="bottom-right" richColors/></SidebarProvider>;
+ {a.loaded&&active!=="today"&&active!=="calendar"&&<PillarWorkspace key={active} a={a}/>}<footer className="page-footer"><Sun size={15}/>Small steps. Better days.</footer></div></main><Dialogs a={a} modules={modules} account={account}/>{a.loaded&&<CaptureHub a={a}/>}<Toaster position="bottom-right" richColors/></SidebarProvider>;
 }
 
 function TodayTools({a}:{a:ReturnType<typeof useDaywell>}){const {enabled,settings}=a,selected=modules.filter(m=>enabled(m.id)),tasks=filterTasks(a.entries,"today",today()),sleep=a.dayEntries("sleep").at(-1),movement=a.dayEntries("move").reduce((n,e)=>n+e.data.minutes,0),focused=a.dayEntries("session").reduce((n,e)=>n+e.data.minutes,0); function buildPlan(){const suggestions:Entry[]=[];if(!tasks.some(e=>!e.data.done))suggestions.push({id:crypto.randomUUID(),kind:"task",data:{title:"Choose and finish one meaningful priority",done:false,date:today(),minutes:25}});if(enabled("move"))suggestions.push({id:crypto.randomUUID(),kind:"task",data:{title:"Take a 15-minute walk",done:false,date:today(),minutes:15}});if(enabled("sleep"))suggestions.push({id:crypto.randomUUID(),kind:"task",data:{title:`Start winding down at ${displayTime(settings.bedtime)}`,done:false,date:today(),minutes:15}});a.setPlan(suggestions.filter(s=>!a.dayEntries("task").some(e=>e.data.title===s.data.title)))}

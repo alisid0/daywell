@@ -1,0 +1,32 @@
+/* Sign in or join with an emailed code, and Your account in settings (docs/sign-in.md). Sizes follow Reading comfort. */
+.sign-in{min-height:100vh;min-height:100dvh;display:grid;justify-items:center;align-content:start;padding:max(32px,env(safe-area-inset-top)) 16px max(32px,env(safe-area-inset-bottom));background:var(--dw-bg,#fae7ef);color:var(--dw-ink,#522d46);font-size:calc(16px*var(--rc-scale,1));line-height:1.5}
+.sign-in-card{width:100%;max-width:420px;padding-top:min(6vh,56px)}
+.sign-in-step{display:grid;gap:12px}
+.sign-in-friends{display:flex;justify-content:center;gap:6px}
+.sign-in h1{margin:0;text-align:center;font-size:calc(26px*var(--rc-scale,1));line-height:1.2;text-wrap:balance}
+.sign-in h1:focus{outline:none}
+.sign-in-lede{margin:0 0 4px;text-align:center;color:var(--dw-muted,#7d536e)}
+.sign-in-lede strong{color:var(--dw-ink,#522d46);overflow-wrap:anywhere}
+.sign-in label{font-size:calc(15px*var(--rc-scale,1));font-weight:700}
+.sign-in input{width:100%;min-height:52px;padding:10px 14px;border:2px solid var(--dw-line,#d8b7cc);border-radius:14px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font:inherit;font-size:calc(17px*var(--rc-scale,1))}
+.sign-in input:focus{outline:none;border-color:var(--dw-accent,#803c65);box-shadow:0 0 0 3px var(--dw-soft,#edd0e2)}
+.sign-in input[aria-invalid=true]{border-color:var(--dw-error,#a3243b)}
+.sign-in .sign-in-code{padding-left:calc(14px + .4em);text-align:center;font-size:calc(28px*var(--rc-scale,1));font-weight:700;letter-spacing:.4em;font-variant-numeric:tabular-nums}
+.sign-in-primary{display:block;width:100%;min-height:50px;padding:12px 20px;border:0;border-radius:999px;background:var(--dw-accent,#803c65);color:var(--dw-on-accent,#fff7fb);font:inherit;font-weight:700;text-align:center;text-decoration:none;cursor:pointer}
+.sign-in-primary:disabled{opacity:.6;cursor:default}
+.sign-in-text,.sign-in-back{min-height:44px;padding:8px 4px;border:0;background:none;color:var(--dw-accent,#803c65);font:inherit;font-weight:700;cursor:pointer}
+.sign-in-text{justify-self:center;text-decoration:underline;text-underline-offset:3px}
+.sign-in-text:disabled{color:var(--dw-muted,#7d536e);font-weight:600;text-decoration:none;cursor:default}
+.sign-in-back{justify-self:start;padding-left:0}
+.sign-in-problem,.sign-in-notice{margin:0;padding:10px 12px;border-radius:14px;font-weight:600}
+.sign-in-problem{background:var(--dw-error-soft,#fbe4d6);color:var(--dw-error-ink,#8a3b12)}
+.sign-in-notice{background:var(--dw-good-soft,#dcefe4);color:var(--dw-good,#2f6b4f)}
+.sign-in-fine{margin:0;text-align:center;font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#7d536e)}
+.sign-in :is(button,a):focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:2px}
+
+.your-account{display:grid;gap:6px;margin-top:20px;padding:16px;border:1px solid var(--dw-line,#d8b7cc);border-radius:18px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font-size:calc(15px*var(--rc-scale,1))}
+.your-account h3{margin:0;font-size:calc(17px*var(--rc-scale,1))}
+.your-account p{margin:0;overflow-wrap:anywhere}
+.your-account small{font-size:calc(14px*var(--rc-scale,1));line-height:1.45;color:var(--dw-muted,#7d536e)}
+.your-account-sign-out{justify-self:start;display:inline-flex;align-items:center;min-height:44px;margin-top:4px;padding:10px 20px;border:1px solid var(--dw-line,#d8b7cc);border-radius:999px;background:var(--dw-bg,#fae7ef);color:var(--dw-ink,#522d46);font-weight:700;text-decoration:none}
+.your-account-sign-out:focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:2px}

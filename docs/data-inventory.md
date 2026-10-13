@@ -57,6 +57,9 @@ These must exist before the plans and the chat launch. Each must be in the expor
 | `subscriptions` | Store (Apple or Google), original transaction ID, product, plan (`basic` or `plus`), status, renewal or expiry time, last checked | While active, then as long as tax and refund rules need the record. Card details are never stored |
 | `chat_messages` | Who sent it, text, time, any plan it proposed | 90 days (owner decision), and clearable at any time |
 | `assistant_actions` | What the assistant changed, before and after, so Undo works, and whether the person confirmed it or it was a small thing done straight away | 90 days |
+| `memories` | Lasting preferences the assistant learns, such as "prefers savoury breakfasts" or "trains in the evening", and when it learned them. The person sees, edits and deletes them in "Daywell remembers" | Until the person deletes them, or the account closes |
+| `daily_ideas` | Up to three suggestions a day, made from the last few days of food, drinks, muscles trained, sleep, plans and the to-do list | 7 days |
+| `entries` changes | Strength sessions record the muscle groups trained, food entries can be drinks, and the to-do list becomes part of the assistant's context | With the entry |
 | `safety_flags` | An exchange that an automatic check flagged: the message, the reply, the check's category and the model version | 90 days |
 | `ai_reports` changes (#49) | New reasons: made something up, said something Daywell shouldn't, did the wrong thing in the app, unsafe, offensive, other. Optionally the message that led to the reply | 90 days |
 | `consents` | Which consent (body details, chat, food AI, each provider), the wording version, when given and when withdrawn | As long as the account, as proof of consent |

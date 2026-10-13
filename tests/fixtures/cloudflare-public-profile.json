@@ -1,0 +1,9 @@
+{
+  "signIn": "email",
+  "workerName": "daywell-public-build-test",
+  "accountId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "databaseName": "daywell-public-build-test-db",
+  "databaseId": "22222222-2222-4222-8222-222222222222",
+  "appOrigin": "https://daywell-public-build-test.test",
+  "emailFrom": "sign-in@daywell-public-build-test.test"
+}

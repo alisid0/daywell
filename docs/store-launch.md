@@ -27,10 +27,10 @@ Owner request, 12 October 2026: make Daywell launch-ready for Google Play and th
 
 | Requirement | Status on 12 October | Owner of the work |
 | --- | --- | --- |
-| Public sign-up and sign-in | Only the owner can sign in, through Cloudflare Access. Email sign-in codes avoid Apple's extra login rule (4.8) that Google or Facebook sign-in would trigger. | Codex |
-| A reviewer account that signs in without an emailed code (Apple 2.1) | Not started. For example, one review address with a fixed code kept as a Cloudflare secret, holding no real data. | Codex |
+| Public sign-up and sign-in | 13 October: email codes, accounts and sessions are built behind the scenes ([sign-in](sign-in.md)); the sign-in screens follow their preview. The private test still uses Cloudflare Access. Email codes avoid Apple's extra login rule (4.8) that Google or Facebook sign-in would trigger. | Claude (owner, 13 October) |
+| A reviewer account that signs in without an emailed code (Apple 2.1) | Built: one review address with a fixed 6-digit code, both kept as Cloudflare secrets, holding no real data | Claude |
 | Subscriptions through Apple in-app purchase and Google Play Billing: two plans, each monthly or yearly, with upgrades, downgrades and Restore purchases (Apple 3.1.1, 3.1.2) | Not started | Claude, preview first |
-| The server checks which plan is active before any AI call, audio file or new saved record, and follows renewals, cancellations, refunds and failed payments | Not started. Audio files are public today, so the £9.99 audio needs a signed-in route. | Claude, with Codex's sign-in work |
+| The server checks which plan is active before any AI call, audio file or new saved record, and follows renewals, cancellations, refunds and failed payments | Not started. In the public app, recordings already need an account; checks for the plan come with subscriptions. | Claude |
 | A demo for people without a subscription: sample data, a sample chat and audio, with no AI calls and nothing saved | Not started | Claude, preview first |
 | Price, length, auto-renewal and what's included, shown before purchase, with links to the terms and privacy policy (Apple 3.1.2, Google subscriptions policy). The listing says that a subscription is needed (Apple 2.3.2). | Not started; needs the terms page | Claude drafts, owner approves |
 | Manage or cancel the subscription from inside the app (Google) | Not started | Claude |
@@ -87,7 +87,7 @@ Before submission:
 ## Order of work
 
 1. **Now:** the owner starts Apple enrolment, creates the app in Play Console, sends the operator name, contact email and transcript retention period, and makes the decisions above.
-2. **This week:** public sign-up and the reviewer account (Codex); native audio and notifications, plus a preview of the demo, the choice of two plans, subscription settings and the chat (Claude); the owner installs the Android test build.
+2. **This week:** public sign-up and the reviewer account (Claude since 13 October; the sign-in screens after their preview); native audio and notifications, plus a preview of the demo, the choice of two plans, subscription settings and the chat (Claude); the owner installs the Android test build.
 3. **After the preview is approved:** subscriptions, the demo and the chat, tested with test purchases once the store accounts exist; store listings and declarations.
 4. **Then:** the launch checks above, and an Android submission. TestFlight follows as soon as Apple approves the account, then the iPhone submission. Apple and Google set their own review times.
 

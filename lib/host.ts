@@ -20,6 +20,28 @@ export type HostRequest =
 
 const numbers: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, fifteen: 15, twenty: 20, "twenty five": 25, thirty: 30, forty: 40, "forty five": 45, sixty: 60 };
 const unknown = (message = 'Try “Add milk to my list”, “Focus on my email for ten minutes”, or “Help me wind down”. Nothing has changed.') : HostRequest => ({ type: "unknown", message });
+// Everyday ways of saying something needs buying. Each still becomes a plan the person confirms.
+const buyingPhrases = [
+  /^(?:add|buy) (.+?)(?: to (?:my |the )?(?:shopping |grocery )?list)?$/i,
+  /^(?:put|add) (.+?) on (?:my |the )?(?:shopping |grocery )?list$/i,
+  /^(?:(?:i|we)(?:'ve)? )?(?:really )?(?:need|have|want|ought|got|gotta|must)(?: to)? (?:buy|shop for) (.+)$/i,
+  /^(?:(?:i|we) )?(?:need|want)(?: to)? (?:get|pick up) (.+?) (?:from|at) the (?:shops?|store|supermarket)$/i,
+  /^(?:get|pick up|grab) (.+?) (?:from|at) the (?:shops?|store|supermarket)$/i,
+  /^(?:remind me to|remember to|don't forget to|do not forget to) buy (.+)$/i,
+];
+const runningOutPhrases = [
+  /^(?:(?:i|we)(?:'m|'re| am| are) )?(?:almost |nearly )?(?:out of|low on|running (?:low on|out of)) (.+)$/i,
+  /^(?:i|we)(?:'ve| have) (?:just )?run out of (.+)$/i,
+];
+// “Out of time” or “low on energy” are about the person, not the shopping.
+const notSupplies = /^(?:energy|time|patience|ideas|breath|money|cash|battery|charge|steam|motivation|luck|options|words|space|sleep|spoons|shape|practice|work|town|sorts|bed|it|control|my depth|my mind|reach|order|sight|focus)\b/i;
+function shoppingItems(clause: string) {
+  const plain = clause.replace(/[’‘]/g, "'");
+  for (const pattern of buyingPhrases) { const match = plain.match(pattern); if (match) return { items: match[1], runningOut: false }; }
+  for (const pattern of runningOutPhrases) { const match = plain.match(pattern); if (match) return { items: match[1], runningOut: true }; }
+  return null;
+}
+const listed = (items: string[]) => items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
 
 // Intentionally bounded commands: an unsupported clause never silently becomes a saved task.
 export function parseHostRequest(input: string): HostRequest {
@@ -65,19 +87,26 @@ export function parseHostRequest(input: string): HostRequest {
   ];
   for (const [pattern, module, kind] of destinations) if (pattern.test(text)) return { type: "open", module, kind };
   text = text.replace(/\b(twenty five|forty five|one|two|three|four|five|six|seven|eight|nine|ten|fifteen|twenty|thirty|forty|sixty)\b(?=\s*(?:-|\s)\s*min(?:ute)?s?\b)/gi, value => String(numbers[value.toLowerCase()]));
-  const clauses = text.split(/\s+(?:and then|then|and)\s+(?=(?:please )?(?:add\b|buy\b|focus\b|help me\b|start\b|set\b|remind\b|log\b|record\b|don't\b|do not\b|cancel\b|stop\b|show\b))/i);
+  const clauses = text.split(/\s+(?:and then|then|and)\s+(?=(?:please )?(?:add\b|buy\b|focus\b|help me\b|start\b|set\b|remind\b|log\b|record\b|don't\b|do not\b|cancel\b|stop\b|show\b|put\b|get\b|grab\b|pick up\b|remember\b|(?:i|we)(?:['’]ve)? (?:really )?(?:need|have|want|got|gotta|must)\b|(?:i|we)(?:['’]m|['’]re| am| are) (?:almost |nearly )?(?:out|low|running)\b|(?:i|we)(?:['’]ve| have) (?:just )?run\b))/i);
   const actions: HostAction[] = [];
   for (const raw of clauses) {
     const clause = raw.replace(/^please /i, "").trim();
     let match: RegExpMatchArray | null;
+    let shopping: ReturnType<typeof shoppingItems>;
     if ((match = clause.match(/^add (?:a )?(?:task|priority)(?: called| to)?[: ]+(.+)$/i)) || (match = clause.match(/^add (.+) to (?:my |the )?(?:tasks|priorities|to-do list)$/i))) {
       if (match[1].length > 160) return unknown("Keep your task title under 160 characters.");
       actions.push({ type: "task", title: match[1] });
-    } else if ((match = clause.match(/^(?:add|buy) (.+?)(?: to (?:my |the )?(?:shopping |grocery )?list)?$/i))) {
-      if (/\b(?:then|tomorrow|next week|don't|do not|remind|focus|workout|alarm)\b/i.test(match[1])) return unknown();
-      const titles = match[1].split(/,\s*(?:and\s+)?|\s+and\s+/i).map(x => x.trim()).filter(Boolean);
-      if (!titles.length || titles.length > 15 || titles.some(x => x.length > 160 || / to (?:my|the) /i.test(x))) return unknown();
-      actions.push({ type: "grocery", titles });
+    } else if ((shopping = shoppingItems(clause))) {
+      const { runningOut } = shopping;
+      const items = shopping.items.replace(/\s+for (?:dinner|lunch|breakfast|tea|supper|tonight|later|tomorrow|the weekend|this week|the week)$/i, "");
+      if (/\b(?:then|tomorrow|next week|don't|do not|remind|focus|workout|alarm)\b/i.test(items)) return unknown();
+      const titles = items.split(/,\s*(?:and\s+)?|\s+and\s+/i).map(x => x.trim().replace(/^(?:some|more|a bit of|a little) /i, "")).filter(Boolean);
+      if (!titles.length || titles.length > 15 || titles.some(x => x.length > 160 || / to (?:my|the) /i.test(x) || (runningOut && notSupplies.test(x)))) return unknown();
+      // One shopping line per request, however many clauses mention shopping.
+      const existing = actions.find(action => action.type === "grocery");
+      if (existing?.type === "grocery") existing.titles.push(...titles);
+      else actions.push({ type: "grocery", titles });
+      if (existing?.type === "grocery" && existing.titles.length > 15) return unknown("Try a few things at a time. Nothing has changed.");
     } else if ((match = clause.match(/^(?:help me |start )?focus(?: on (.+?))?(?: for (\d+)\s*(?:-|\s)?\s*min(?:ute)?s?)?$/i))) {
       actions.push({ type: "activity", companion: "pip", title: match[1] || "One thing at a time", minutes: match[2] ? Number(match[2]) : 10 });
     } else if ((match = clause.match(/^(?:help me |start (?:a )?)?(?:wind[ -]?down|unwind|relax)(?: for (\d+)\s*min(?:ute)?s?)?$/i))) {
@@ -106,7 +135,7 @@ export function actionModule(action: HostAction) {
 }
 export function describeAction(action: HostAction) {
   switch (action.type) {
-    case "grocery": return `Add ${action.titles.join(", ")} to your shopping list`;
+    case "grocery": return `Add ${listed(action.titles)} to your shopping list`;
     case "task": return `Add “${action.title}” to today’s priorities`;
     case "alarm": return `Set a one-time alarm for ${action.time} (keep Daywell open)`;
     case "activity": return action.companion === "pip" ? `Focus on ${action.title} for ${action.minutes} minutes` : action.companion === "luma" ? `Wind down for ${action.minutes} minutes` : action.companion === "tock" ? `Start a ${action.minutes}-minute timer${action.title === "Your timer" ? "" : ` for ${action.title.toLowerCase()}`}` : `Make time for ${action.title.toLowerCase()} (${action.minutes} minutes)`;

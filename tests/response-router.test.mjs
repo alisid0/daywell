@@ -35,6 +35,8 @@ test('food estimates and personal facts cannot be replaced by even a confident g
   }
   assert.equal(calls, 0);
   assert.equal(foodCaptureMode('I have 4 eggs and uncooked noodles'), 'basket');
+  assert.equal(foodCaptureMode('I have to buy eggs and chicken'), null);
+  assert.equal(foodCaptureMode('I have got to buy milk'), null);
   assert.equal(foodCaptureMode('I ate takeaway noodles'), 'meal');
   assert.equal(foodCaptureMode('What can I cook with my eggs?'), 'plan');
   assert.equal(foodCaptureMode('I would like a quiet moment'), null);

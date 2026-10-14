@@ -69,6 +69,15 @@ The owner does the steps that need their accounts or payment; Claude prepares an
    Changing it later doesn't sign anyone out, but codes already sent stop working.
 7. **Deploy** with `npx wrangler deploy --config dist/server/wrangler.json`. Then sign up with a real address on a phone, sign out, sign in again, and check that two accounts can't see each other's records.
 
+## Setup checkpoint, 13 October 2026
+
+- The owner registered **daywell.date** with Cloudflare Registrar. It renews in October 2027.
+- **daywell-db** was created in the dashboard with the EU jurisdiction (region Eastern Europe). It is empty; the migrations run with the first deployment.
+- Email Sending needs the Workers Paid plan ($5 a month plus usage, which includes email sending). The account is on Workers Free, so sending isn’t on yet.
+- The real public profile (`daywell`, app at `https://daywell.date`, sender `sign-in@daywell.date`) is kept in the ignored `cloudflare.public.local.json` on the owner’s Windows machine. Its build and Wrangler dry-run pass. Nothing is deployed.
+- Wrangler isn’t signed in on that machine. The public deployment needs these scopes: `account:read user:read workers:write workers_scripts:write workers_routes:write zone:read d1:write email_sending:write`.
+- Next: Workers Paid (owner), Wrangler sign-in (owner approves), `wrangler email sending enable daywell.date`, migrations, `DAYWELL_AUTH_SECRET`, then deployment on the owner’s go-ahead, and a real sign-up test.
+
 ## Still to do
 
 - The welcome screen's button says Continue until the plan screen exists; then it becomes Choose a plan.

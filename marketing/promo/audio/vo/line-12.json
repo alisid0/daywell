@@ -1,0 +1,62 @@
+{
+ "text": "Daywell is four ninety-nine a month. Daywell Plus is nine ninety-nine.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Daywell",
+   "start": 0.082,
+   "end": 0.562
+  },
+  {
+   "word": "is",
+   "start": 0.642,
+   "end": 0.802
+  },
+  {
+   "word": "four",
+   "start": 0.882,
+   "end": 1.122
+  },
+  {
+   "word": "ninety-nine",
+   "start": 1.162,
+   "end": 1.602
+  },
+  {
+   "word": "a",
+   "start": 1.682,
+   "end": 1.722
+  },
+  {
+   "word": "month.",
+   "start": 1.762,
+   "end": 2.322
+  },
+  {
+   "word": "Daywell",
+   "start": 2.482,
+   "end": 2.882
+  },
+  {
+   "word": "Plus",
+   "start": 3.122,
+   "end": 3.362
+  },
+  {
+   "word": "is",
+   "start": 3.442,
+   "end": 3.602
+  },
+  {
+   "word": "nine",
+   "start": 3.682,
+   "end": 3.842
+  },
+  {
+   "word": "ninety-nine.",
+   "start": 3.922,
+   "end": 4.882
+  }
+ ],
+ "heard": "Daywell is $4.99 a month. Daywell Plus is $9.99"
+}

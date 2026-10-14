@@ -1,0 +1,10 @@
+# Renders and mixes are rebuilt with one command each (see README); keep them out of git.
+/out/
+/audio/mix.wav
+/audio/mix-raw.wav
+# Samples and capture leftovers
+/audio/vo-samples/
+/audio/sfx-samples/
+/audio/voice-*.mp3
+/audio/sound-effects-preview.mp3
+/assets/shots/_*.png

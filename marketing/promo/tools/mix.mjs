@@ -1,0 +1,121 @@
+// Mixes the promo soundtrack in Node (deterministic, sample-exact) and masters it with FFmpeg:
+//   - Alice's voiceover lines at their start times (tools/voiceover-lines.mjs)
+//   - the music, ducked under the voice, muffled from the word "pause" until the soft section, from a gain envelope
+//   - every sound effect from data/cues.json (exported by `node render.mjs --cues`), placed so its peak (or its
+//     onset, for textures like typing) lands on the cue, normalised then set to the cue's level, optional pitch
+//   - Daywell's own "Waves on sand" under the night scene
+// Then two-pass loudnorm to -14 LUFS, a true-peak limiter (level=disabled) and a measurement of the result.
+//   node tools/mix.mjs            → audio/mix-raw.wav, audio/mix.wav
+import { spawn, spawnSync } from "node:child_process";
+import { readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { FFMPEG } from "./ffmpeg-path.mjs";
+import { repoRoot } from "./paths.mjs";
+import { lines } from "./voiceover-lines.mjs";
+
+const root = fileURLToPath(new URL("..", import.meta.url));
+const SR = 48000, LEN = 120, N = SR * LEN;
+const db = d => 10 ** (d / 20);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const smooth = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+
+function decode(file) {
+  return new Promise((resolve, reject) => {
+    const p = spawn(FFMPEG, ["-hide_banner", "-loglevel", "error", "-i", file, "-ac", "2", "-ar", String(SR), "-f", "f32le", "pipe:1"]);
+    const chunks = []; p.stdout.on("data", c => chunks.push(c)); p.on("error", reject);
+    p.on("close", code => code ? reject(Error(`decode ${file}: ${code}`)) : resolve(new Float32Array(Buffer.concat(chunks).buffer.slice(0))));
+  });
+}
+const outL = new Float32Array(N), outR = new Float32Array(N);
+// Per-category mono stems (for measuring the balance; nothing is written unless --stems)
+const STEMS = { vo: new Float32Array(N), music: new Float32Array(N), sfx: new Float32Array(N), amb: new Float32Array(N) };
+let stem = "vo";
+function add(buf, at, gain = 1, opts = {}) { // buf: interleaved stereo; at: seconds; gain: linear or (i)=>linear
+  const rate = opts.rate || 1, frames = Math.floor(buf.length / 2 / rate), start = Math.round(at * SR);
+  for (let i = 0; i < frames; i++) {
+    const j = start + i; if (j < 0 || j >= N) continue;
+    const pos = i * rate, k = Math.floor(pos), f = pos - k;
+    const l = buf[2 * k] * (1 - f) + (buf[2 * k + 2] ?? 0) * f, r = buf[2 * k + 1] * (1 - f) + (buf[2 * k + 3] ?? 0) * f;
+    const g = typeof gain === "function" ? gain(j / SR, i / SR) : gain;
+    outL[j] += l * g; outR[j] += r * g; STEMS[stem][j] += 0.5 * (l + r) * g;
+  }
+}
+const peakOf = buf => { let m = 0, at = 0; for (let i = 0; i < buf.length; i++) { const a = Math.abs(buf[i]); if (a > m) { m = a; at = i >> 1; } } return { peak: m, at: at / SR }; };
+const onsetOf = (buf, peak) => { const th = peak * db(-24); for (let i = 0; i < buf.length; i++) if (Math.abs(buf[i]) > th) return (i >> 1) / SR; return 0; };
+
+// ---- Voice
+const VO_GAIN = db(2);
+const voWindows = [];
+for (const [i, line] of lines.entries()) {
+  const n = String(i + 1).padStart(2, "0");
+  const buf = await decode(join(root, "audio", "vo", `line-${n}.mp3`));
+  const words = JSON.parse(readFileSync(join(root, "audio", "vo", `line-${n}.json`), "utf8")).words;
+  // Line 8 is the softly spoken "Still scrolling at nine?" over full-energy music, so it gets a lift and a deeper duck.
+  add(buf, line.at, VO_GAIN * (i === 7 ? db(3) : 1));
+  voWindows.push([line.at + words[0].start, line.at + words.at(-1).end, i === 7 ? db(-15) : null]);
+}
+
+stem = "music";
+// ---- Music: base level, ducked under the voice, muffled for the pause
+const MUSIC_BASE = db(-9), DUCK = db(-9);
+// How much of the music remains (1 = none ducked): each line ducks to its own depth (default DUCK).
+const keepAt = t => { let keep = 1; for (const [a, b, depth] of voWindows) { const d = smooth((t - (a - 0.18)) / 0.15) * (1 - smooth((t - (b + 0.2)) / 0.45)); keep = Math.min(keep, 1 - (1 - (depth ?? DUCK)) * d); } return keep; };
+const duckAt = t => (1 - keepAt(t)) / (1 - DUCK);
+const PAUSE_IN = 61.44, PAUSE_OUT = 72.0; // the word "pause" → the music's own soft section
+const muffle = t => smooth((t - PAUSE_IN) / 0.3) * (1 - smooth((t - (PAUSE_OUT - 0.4)) / 0.6));
+const music = await decode(join(root, "audio", "music", "take1.mp3"));
+// A lowpassed copy (two RBJ biquads at 600 Hz) for the muffled stretch
+function lowpass(buf, fc) {
+  const out = new Float32Array(buf.length), w0 = 2 * Math.PI * fc / SR, cos = Math.cos(w0), alpha = Math.sin(w0) / (2 * Math.SQRT1_2);
+  const b0 = (1 - cos) / 2 / (1 + alpha), b1 = (1 - cos) / (1 + alpha), b2 = b0, a1 = -2 * cos / (1 + alpha), a2 = (1 - alpha) / (1 + alpha);
+  for (let ch = 0; ch < 2; ch++) { let x1 = 0, x2 = 0, y1 = 0, y2 = 0; for (let i = ch; i < buf.length; i += 2) { const x = buf[i], y = b0 * x + b1 * x1 + b2 * x2 - a1 * y1 - a2 * y2; x2 = x1; x1 = x; y2 = y1; y1 = y; out[i] = y; } }
+  return out;
+}
+const music2 = lowpass(lowpass(music, 600), 600);
+add(music, 0, t => MUSIC_BASE * keepAt(t) * (1 - muffle(t)));
+add(music2, 0, t => MUSIC_BASE * db(-3) * (1 - (1 - DUCK) * duckAt(t) * 0.6) * muffle(t));
+
+stem = "sfx";
+// ---- Sound effects from the film's own cue list
+const cues = JSON.parse(readFileSync(join(root, "data", "cues.json"), "utf8"));
+const ONSET = new Set(["typing", "scroll", "stars", "shimmer"]); // textures start on the cue; hits peak on it
+const cache = {};
+for (const c of cues) {
+  if (!cache[c.sound]) { const buf = await decode(join(root, "audio", "sfx", `${c.sound}.mp3`)); const { peak, at } = peakOf(buf); cache[c.sound] = { buf, peak, at, onset: onsetOf(buf, peak) }; }
+  const s = cache[c.sound], rate = c.rate || 1;
+  const anchor = (ONSET.has(c.sound) ? s.onset : s.at) / rate;
+  add(s.buf, c.t - anchor, db(-1) / s.peak * db(c.gain), { rate });
+}
+
+stem = "amb";
+// ---- Daywell's own sleep sound under the night
+const waves = await decode(join(repoRoot, "public", "sleep-sounds", "waves-on-sand-31753bac13ad.mp3"));
+const W0 = 75.6, W1 = 87.4, wp = peakOf(waves).peak;
+add(waves, W0, (t, local) => (db(-14) / wp) * smooth((t - W0) / 1.8) * (1 - smooth((t - (W1 - 2.4)) / 2.4)) * (t < W1 ? 1 : 0));
+
+// ---- Write the raw mix, then master it
+function wav(path, L, R) {
+  const data = Buffer.alloc(N * 8); for (let i = 0; i < N; i++) { data.writeFloatLE(L[i], i * 8); data.writeFloatLE(R[i], i * 8 + 4); }
+  const h = Buffer.alloc(44); h.write("RIFF", 0); h.writeUInt32LE(36 + data.length, 4); h.write("WAVE", 8); h.write("fmt ", 12); h.writeUInt32LE(16, 16);
+  h.writeUInt16LE(3, 20); h.writeUInt16LE(2, 22); h.writeUInt32LE(SR, 24); h.writeUInt32LE(SR * 8, 28); h.writeUInt16LE(8, 32); h.writeUInt16LE(32, 34); h.write("data", 36); h.writeUInt32LE(data.length, 40);
+  writeFileSync(path, Buffer.concat([h, data]));
+}
+const raw = join(root, "audio", "mix-raw.wav"), out = join(root, "audio", "mix.wav");
+wav(raw, outL, outR);
+const pass1 = spawnSync(FFMPEG, ["-hide_banner", "-i", raw, "-af", "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json", "-f", "null", "-"], { encoding: "utf8" }).stderr;
+const m = JSON.parse(pass1.slice(pass1.lastIndexOf("{"), pass1.lastIndexOf("}") + 1));
+const af = `loudnorm=I=-14:TP=-1.5:LRA=11:linear=true:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset},alimiter=limit=0.891:level=disabled:attack=5:release=60`;
+const r2 = spawnSync(FFMPEG, ["-hide_banner", "-loglevel", "error", "-y", "-i", raw, "-af", af, "-ar", String(SR), "-c:a", "pcm_s24le", out], { encoding: "utf8" });
+if (r2.status !== 0) throw Error(r2.stderr);
+const meas = spawnSync(FFMPEG, ["-hide_banner", "-i", out, "-af", "ebur128=peak=true:framelog=quiet", "-f", "null", "-"], { encoding: "utf8" }).stderr;
+const I = meas.match(/I:\s+(-?[\d.]+) LUFS/g)?.at(-1), TP = meas.match(/Peak:\s+(-?[\d.]+) dBFS/g)?.at(-1);
+// Balance report: voice against music in each line, and each effect's peak against the bed around its cue (pre-master dB).
+const rms = (a, t0, t1) => { let s2 = 0, n = 0; for (let i = Math.max(0, Math.round(t0 * SR)); i < Math.min(N, Math.round(t1 * SR)); i++) { s2 += a[i] * a[i]; n++; } return 10 * Math.log10(s2 / Math.max(1, n) + 1e-12); };
+const pk = (a, t0, t1) => { let m = 0; for (let i = Math.max(0, Math.round(t0 * SR)); i < Math.min(N, Math.round(t1 * SR)); i++) m = Math.max(m, Math.abs(a[i])); return 20 * Math.log10(m + 1e-12); };
+const voVsMusic = voWindows.map(([a, b], i) => `${i + 1}:${(rms(STEMS.vo, a, b) - rms(STEMS.music, a, b)).toFixed(1)}`).join(" ");
+console.log("voice minus music per line (dB):", voVsMusic);
+console.log("music between lines (dB):", [[5.2, 6.9], [24, 28], [43.4, 46.4], [52.6, 58.4], [65.6, 72.4], [80, 88], [95, 98.2]].map(([a, b]) => `${a}-${b}:${rms(STEMS.music, a, b).toFixed(1)}`).join(" "));
+const bed = t => { const v = x => 10 ** (rms(x, t - 0.25, t + 0.25) / 10); return 10 * Math.log10(v(STEMS.vo) + v(STEMS.music) + v(STEMS.amb) + 1e-12); };
+console.log("effect peak minus bed rms (dB):", cues.map(c => `${c.sound}@${c.t}:${(pk(STEMS.sfx, c.t - 0.12, c.t + 0.12) - bed(c.t)).toFixed(0)}`).join(" "));
+console.log(JSON.stringify({ voiceLines: lines.length, cues: cues.length, rawIntegrated: m.input_i, rawTruePeak: m.input_tp, master: { I, TP } }));

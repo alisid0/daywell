@@ -1,0 +1,77 @@
+{
+  "note": "Owner asked for typical upbeat promo music (14 Oct 2026). 120 BPM so a bar is exactly 2 s; each chunk lines up with the film's scenes. It dips (still with a pulse) for the 9 pm pause and bedtime, then comes back at dawn.",
+  "model_id": "music_v2_5",
+  "seed": 2026,
+  "chunks": [
+    {
+      "text": "[Intro]\n{building quickly into the drop}",
+      "duration_ms": 6000,
+      "positive_styles": ["upbeat feel-good pop", "bright advert music", "instrumental", "120 BPM", "D major", "ticking hi-hats", "staccato synth plucks building", "rising filter sweep", "snare build into the drop", "modern clean production"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "choir", "dark", "aggressive", "distorted", "dubstep"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Main theme]",
+      "duration_ms": 12000,
+      "positive_styles": ["full upbeat groove", "punchy four-on-the-floor kick", "handclaps on 2 and 4", "bright acoustic guitar strums", "warm bass", "catchy synth pluck hook", "120 BPM", "D major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "dark", "aggressive"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Verse]",
+      "duration_ms": 20000,
+      "positive_styles": ["steady upbeat groove", "lighter arrangement", "plucky guitar", "handclaps", "leaves space for a voiceover", "120 BPM", "D major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "busy lead melody"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Build]",
+      "duration_ms": 8000,
+      "positive_styles": ["rising energy", "snare roll build", "riser", "anticipation", "120 BPM", "D major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Chorus]",
+      "duration_ms": 14000,
+      "positive_styles": ["big uplifting chorus", "full band energy", "bright synth lead hook", "handclaps", "joyful and positive", "120 BPM", "D major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "aggressive"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Breakdown]",
+      "duration_ms": 14000,
+      "positive_styles": ["soft breakdown", "half-time feel", "warm pads", "gentle plucks", "light shaker", "calm but still moving", "120 BPM", "D major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "heavy drums"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Night]",
+      "duration_ms": 14000,
+      "positive_styles": ["minimal and dreamy", "soft filtered pulse", "warm low pads", "very gentle", "quiet", "120 BPM", "D major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "loud drums", "bright lead"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Build back]",
+      "duration_ms": 10000,
+      "positive_styles": ["morning energy returns", "drums build back in", "bright guitar", "rising", "120 BPM", "D major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Final chorus]",
+      "duration_ms": 12000,
+      "positive_styles": ["final chorus", "biggest upbeat energy", "handclaps", "bright synth hook", "uplifting", "120 BPM", "D major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "aggressive"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Outro]\n{one big final chord at the start, then let it ring out and fade}",
+      "duration_ms": 10000,
+      "positive_styles": ["final big hit then a clean ending", "warm ringing tail", "resolves on the tonic", "120 BPM", "D major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "abrupt cut"],
+      "context_adherence": "high"
+    }
+  ]
+}

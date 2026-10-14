@@ -1,0 +1,72 @@
+{
+ "text": "Your day is booked for everyone else. So make a date with yourself.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Your",
+   "start": 0.16,
+   "end": 0.32
+  },
+  {
+   "word": "day",
+   "start": 0.4,
+   "end": 0.56
+  },
+  {
+   "word": "is",
+   "start": 0.64,
+   "end": 0.88
+  },
+  {
+   "word": "booked",
+   "start": 0.96,
+   "end": 1.2
+  },
+  {
+   "word": "for",
+   "start": 1.28,
+   "end": 1.44
+  },
+  {
+   "word": "everyone",
+   "start": 1.52,
+   "end": 1.92
+  },
+  {
+   "word": "else.",
+   "start": 2,
+   "end": 2.6
+  },
+  {
+   "word": "So",
+   "start": 2.64,
+   "end": 3.04
+  },
+  {
+   "word": "make",
+   "start": 3.12,
+   "end": 3.2
+  },
+  {
+   "word": "a",
+   "start": 3.36,
+   "end": 3.44
+  },
+  {
+   "word": "date",
+   "start": 3.52,
+   "end": 3.6
+  },
+  {
+   "word": "with",
+   "start": 3.68,
+   "end": 3.76
+  },
+  {
+   "word": "yourself.",
+   "start": 3.84,
+   "end": 4.72
+  }
+ ],
+ "heard": "Your day is booked for everyone else, so make a date with yourself"
+}

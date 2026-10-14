@@ -99,6 +99,8 @@ export async function handlePrivateCloudflareRequest(
   trustedHeaders.delete("cf-access-jwt-assertion");
   trustedHeaders.set("oai-authenticated-user-id", userId);
   trustedHeaders.set("oai-authenticated-user-email", email);
+  // The private test is for the owner and invited testers, who get every feature (docs/plans.md).
+  trustedHeaders.set("oai-authenticated-user-plan", "plus");
   const response = await next(new Request(request, { headers: trustedHeaders }));
   const protectedResponse = new Response(response.body, response);
   protectedResponse.headers.set("Cache-Control", "private, no-store");

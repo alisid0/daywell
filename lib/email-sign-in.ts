@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { everyone, limitWindow, returnAllowances, takeAllowances, type LimitedFeature } from './request-guards.ts';
+import { liveSubscriptions, parsePlan, type Plan } from './plans.ts';
 
 // Email sign-in for the public app (owner, 13 October 2026). A person types their address, gets a 6-digit code by
 // email and types it back; their first code creates the account. There are no passwords, and no Google or Facebook
@@ -134,17 +135,18 @@ export async function verifySignInCode(db: Store, settings: SignInSettings, inpu
   return { status: 'signed-in', token, userId: account.user_id, created: account.user_id === candidate };
 }
 
-export type Session = { userId: string; email: string; extended: boolean };
-// `extended` means the session was renewed for another 90 days, so the cookie should be sent again.
+export type Session = { userId: string; email: string; plan: Plan; extended: boolean };
+// `extended` means the session was renewed for another 90 days, so the cookie should be sent again. The plan comes
+// from the same query, so checking a request costs one database read.
 export async function readSession(db: Pick<D1Database, 'prepare'>, token: string | null | undefined, now = Date.now()): Promise<Session | null> {
   if (!token || !tokenPattern.test(token)) return null;
   const tokenHash = await sha256(token);
-  const row = await db.prepare('SELECT s.user_id AS userId, a.email AS email, s.seen_at AS seenAt FROM sessions s JOIN accounts a ON a.user_id=s.user_id WHERE s.token_hash=? AND s.expires_at>?')
-    .bind(tokenHash, now).first<{ userId: string; email: string; seenAt: number }>();
+  const row = await db.prepare(`SELECT s.user_id AS userId, a.email AS email, s.seen_at AS seenAt, (SELECT plan FROM subscriptions WHERE user_id=s.user_id AND ${liveSubscriptions} LIMIT 1) AS plan FROM sessions s JOIN accounts a ON a.user_id=s.user_id WHERE s.token_hash=?1 AND s.expires_at>?2`)
+    .bind(tokenHash, now).first<{ userId: string; email: string; seenAt: number; plan: string | null }>();
   if (!row) return null;
   const extended = now - Number(row.seenAt) >= extendAfterMs;
   if (extended) await db.prepare('UPDATE sessions SET seen_at=?, expires_at=? WHERE token_hash=?').bind(now, now + sessionLifetimeMs, tokenHash).run();
-  return { userId: row.userId, email: row.email, extended };
+  return { userId: row.userId, email: row.email, plan: parsePlan(row.plan) ?? 'none', extended };
 }
 
 export async function endSession(db: Pick<D1Database, 'prepare'>, token: string | null | undefined) {

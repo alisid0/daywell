@@ -1,4 +1,5 @@
 import { env } from "cloudflare:workers";
+import { allows, planBlocked } from "@/lib/plans";
 import { getChatGPTUser } from "@/app/chatgpt-auth";
 import { database } from "@/db/store";
 import { allowedVoiceOrigin, safeSignedUrl, voiceConfig } from "@/lib/voice-tools";
@@ -18,6 +19,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const user = await getChatGPTUser();
   if(!user) return json({error:"Sign in to start a conversation."},401);
+  if(!allows(user.plan,"ai")) return planBlocked("ai");
   if(!allowedVoiceOrigin(request)) return json({error:"Start your conversation from Daywell."},403);
   if(!voiceConfig(env.ELEVENLABS_API_KEY,env.ELEVENLABS_AGENT_ID)) return json({error:"Conversation is unavailable right now. Your other tools are ready to use."},503);
   // A start counts only once ElevenLabs hands back a conversation; any failure before that gives the uses back.

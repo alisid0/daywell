@@ -46,7 +46,7 @@ The screens follow the preview approved on 13 October:
 - **The cookie** is `__Host-daywell-session`: secure, HttpOnly, same-site Lax, for the whole app. While a session is in use it's renewed once a day.
 - **Identity.** Identity headers sent by a browser are always removed. The session cookie never reaches the app.
 - **Requests from other sites.** Sign-in requests must be same-site JSON. Another site can't sign someone out. Other sites can't show Daywell inside a frame.
-- **Recordings.** `/audio-library/`, `/guided-audio/` and `/sleep-sounds/` need an account. Checks for the Plus plan come with subscriptions.
+- **Recordings.** `/audio-library/`, `/guided-audio/` and `/sleep-sounds/` need Daywell Plus. See [plans](plans.md).
 - **Logs.** Nothing is logged: no addresses, codes or tokens.
 
 ## The App Review account
@@ -80,7 +80,6 @@ The owner does the steps that need their accounts or payment; Claude prepares an
 
 ## Still to do
 
-- The welcome screen's button says Continue until the plan screen exists; then it becomes Choose a plan.
 - Once the demo exists: a Back to the demo link on the sign-in page, and "Start Daywell" opening `/sign-in?start=1`, which uses the Start wording.
 - Terms and privacy links under the form, once those pages exist.
 - A demo for signed-out visitors.

@@ -9,6 +9,8 @@ declare namespace Cloudflare {
     DAYWELL_EMAIL_FROM?: string;
     DAYWELL_REVIEW_EMAIL?: string;
     DAYWELL_REVIEW_CODE?: string;
+    // Tester addresses who can switch plans without paying until store purchases exist (docs/plans.md).
+    DAYWELL_PLAN_TESTERS?: string;
     EMAIL?: SendEmail;
     ELEVENLABS_API_KEY?: string;
     ELEVENLABS_AGENT_ID?: string;

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { CompanionPortrait } from "@/components/daywell-companions";
 import { cantCheck, cantSend, codeDigits, codeProblem, looksLikeEmail, signInRequest } from "@/lib/sign-in-client";
+import { paidPlans, plans } from "@/lib/plans";
 
 // Sign in or join with an emailed code (approved preview, 13 October 2026; docs/sign-in.md).
 // `starting` is the wording for people who tapped "Start Daywell"; both paths sign in or create the account.
@@ -99,8 +100,9 @@ export default function SignIn({ returnTo = "/", signedOut = false, starting = f
       {step === "welcome" && <div className="sign-in-step">
         <div className="sign-in-friends" aria-hidden="true">{(["luma", "pip", "bounce", "nori"] as const).map(id => <CompanionPortrait key={id} id={id} size={60} decorative eager />)}</div>
         <h1 id="sign-in-title" ref={welcome} tabIndex={-1}>Welcome to Daywell</h1>
-        <p className="sign-in-lede">Your account is ready.</p>
-        <a className="sign-in-primary" href={returnTo}>Continue</a>
+        <p className="sign-in-lede">Your account is ready. Choose a plan to start. You can change it at any time.</p>
+        <ul className="sign-in-plans">{paidPlans.map(id => <li key={id}>{plans[id].name}<span>{plans[id].prices.month} a month</span></li>)}</ul>
+        <a className="sign-in-primary" href={`/plans?return_to=${encodeURIComponent(returnTo)}`}>Choose a plan</a>
       </div>}
     </div>
   </main>;

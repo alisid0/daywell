@@ -160,7 +160,7 @@ test('a session lasts 90 days from its last use, is renewed once a day, and can 
   const { db, rows } = signInStore(), box = mailbox(), options = settings(box);
   await sendSignInCode(db, options, { email: 'ali@example.com' }, now);
   const { token, userId } = await verifySignInCode(db, options, { email: 'ali@example.com', code: box.code() }, now);
-  assert.deepEqual(await readSession(db, token, now + hour), { userId, email: 'ali@example.com', extended: false });
+  assert.deepEqual(await readSession(db, token, now + hour), { userId, email: 'ali@example.com', plan: 'none', extended: false });
   assert.equal((await readSession(db, token, now + 2 * day)).extended, true);
   assert.equal(rows('sessions')[0].expires_at, now + 2 * day + sessionLifetimeMs);
   assert.equal((await readSession(db, token, now + 2 * day + hour)).extended, false);

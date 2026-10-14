@@ -1,5 +1,6 @@
 import { appName, emailSchema, endSession, readSession, sendSignInCode, sessionLifetimeMs, verifySignInCode, type Session, type SignInEmail, type SignInSettings } from './email-sign-in.ts';
 import { readLimited, sameOrigin } from './request-guards.ts';
+import { allows, planMessages } from './plans.ts';
 
 // The public app's front door (docs/sign-in.md). Like lib/cloudflare-access.ts for the private test, it is the only
 // place identity is set: headers that claim an identity are removed, and the signed-in person's are added only after
@@ -22,7 +23,7 @@ const sessionClearing = `${sessionCookie}=; ${cookieAttributes}; Max-Age=0`;
 
 // Built files that hold nothing personal (scripts, styles, fonts and pictures) skip the session lookup.
 const publicFiles = /^\/(?:_next\/static\/|companions\/|fonts\/|scenes\/)|^\/[\w-]+\.(?:svg|png|jpe?g|webp|ico|txt|webmanifest)$/;
-// Recordings are part of what people pay for, so they need an account. Plan checks come with subscriptions.
+// Daywell's recordings come with Daywell Plus (docs/plans.md).
 const recordings = /^\/(?:audio-library|guided-audio|sleep-sounds)\//;
 
 const messages = {
@@ -88,6 +89,7 @@ function forward(request: Request, session: Session | null) {
   if (session) {
     headers.set('oai-authenticated-user-id', session.userId);
     headers.set('oai-authenticated-user-email', session.email);
+    headers.set('oai-authenticated-user-plan', session.plan);
   }
   return new Request(request, { headers });
 }
@@ -187,7 +189,10 @@ export async function handlePublicCloudflareRequest(
     return new Response(null, { status: 303, headers: { Location: `${settings.origin}${location}`, 'Cache-Control': 'private, no-store' } });
   }
   const recording = recordings.test(url.pathname);
-  if (recording && !session) return plain('Sign in to play recordings.', 401);
+  if (recording) {
+    if (!session) return plain('Sign in to play recordings.', 401);
+    if (!allows(session.plan, 'recordings')) return plain(planMessages.recordings, 402);
+  }
   const answer = await next(forward(request, session));
   // Recording names include a hash of their content, so a signed-in device may keep them for a week.
   const kept = recording && (answer.status === 200 || answer.status === 206);

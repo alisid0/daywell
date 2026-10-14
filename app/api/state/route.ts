@@ -1,4 +1,5 @@
 import { validateHostChange } from "@/lib/host-change";
+import { allows, planBlocked } from "@/lib/plans";
 import { getChatGPTUser } from "@/app/chatgpt-auth";
 import { database } from "@/db/store";
 import { saveEntries } from "@/db/entry-store";
@@ -54,6 +55,7 @@ export async function POST(req: Request) {
       return json({ ok: true, data });
     }
     if (body.action === "upsert" || body.action === "host-change") {
+      if (!allows(user.plan, "save")) return planBlocked("save");
       const change = body.action === "host-change" ? validateHostChange(body) : { entries: validateSavedEntries(body.entries), removeIds: [] };
       if (!await hasRoom(db, user.userId, change.entries.map(entry => entry.id))) return json({ error: FULL }, 413);
       await saveEntries(db, user.userId, change.entries, change.removeIds);

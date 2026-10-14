@@ -21,6 +21,9 @@
 .sign-in-problem,.sign-in-notice{margin:0;padding:10px 12px;border-radius:14px;font-weight:600}
 .sign-in-problem{background:var(--dw-error-soft,#fbe4d6);color:var(--dw-error-ink,#8a3b12)}
 .sign-in-notice{background:var(--dw-good-soft,#dcefe4);color:var(--dw-good,#2f6b4f)}
+.sign-in-plans{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.sign-in-plans li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 8px;padding:10px 12px;border:1px solid var(--dw-line,#d8b7cc);border-radius:16px;background:var(--dw-surface,#fff7fb);font-weight:700}
+.sign-in-plans span{font-variant-numeric:tabular-nums;white-space:nowrap}
 .sign-in-fine{margin:0;text-align:center;font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#7d536e)}
 .sign-in :is(button,a):focus-visible{outline:3px solid var(--dw-accent,#803c65);outline-offset:2px}
 

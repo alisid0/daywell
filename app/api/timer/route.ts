@@ -1,4 +1,5 @@
 import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { allows, planBlocked } from '@/lib/plans';
 import { database } from '@/db/store';
 import { readLimited, sameOrigin } from '@/lib/request-guards';
 import { readSavedTimer, startSavedTimer, timerStartSchema } from '@/lib/timer-store';
@@ -16,6 +17,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const user = await getChatGPTUser();
   if (!user) return json({ error: 'Sign in to start your timer.' }, 401);
+  if (!allows(user.plan, 'save')) return planBlocked('save');
   if (!sameOrigin(request)) return json({ error: 'Request origin is not allowed.' }, 403);
   try {
     const raw = await readLimited(request, 2000);

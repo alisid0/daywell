@@ -1,4 +1,4 @@
-// An in-memory stand-in for D1 holding the usage_limits and email sign-in tables, for the sign-in tests.
+// An in-memory stand-in for D1 holding the usage_limits, email sign-in and subscriptions tables.
 import { readFileSync } from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
 
@@ -10,6 +10,7 @@ export function signInStore() {
   sqlite.exec('PRAGMA foreign_keys=ON');
   sqlite.exec(migration('0001_usage_limits.sql'));
   sqlite.exec(migration('0006_email_sign_in.sql'));
+  sqlite.exec(migration('0007_subscriptions.sql'));
   const statement = (sql, values = []) => ({
     bind: (...next) => statement(sql, next),
     first: async () => sqlite.prepare(sql).get(...values) ?? null,

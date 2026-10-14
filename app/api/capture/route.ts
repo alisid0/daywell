@@ -1,4 +1,5 @@
 import {env} from "cloudflare:workers";
+import {allows,planBlocked} from "@/lib/plans";
 import {getChatGPTUser} from "@/app/chatgpt-auth";
 import {database} from "@/db/store";
 import {defaults} from "@/lib/daywell";
@@ -14,7 +15,7 @@ import {paidRequest,AllowanceError} from "@/lib/paid-request";
 export const dynamic="force-dynamic";
 const json=(value:unknown,status=200)=>Response.json(value,{status,headers:{"Cache-Control":"no-store"}});
 export async function GET(){if(!await getChatGPTUser())return json({error:"Please sign in."},401);return json({connected:!!env.OPENAI_API_KEY});}
-export async function POST(req:Request){const user=await getChatGPTUser();if(!user)return json({error:"Please sign in."},401);if(!sameOrigin(req))return json({error:"Request origin is not allowed."},403);if(!env.OPENAI_API_KEY)return json({error:"Photo and voice recognition are unavailable right now. Your photo or recording has not been sent.",code:"AI_NOT_CONNECTED"},503);
+export async function POST(req:Request){const user=await getChatGPTUser();if(!user)return json({error:"Please sign in."},401);if(!allows(user.plan,"ai"))return planBlocked("ai");if(!sameOrigin(req))return json({error:"Request origin is not allowed."},403);if(!env.OPENAI_API_KEY)return json({error:"Photo and voice recognition are unavailable right now. Your photo or recording has not been sent.",code:"AI_NOT_CONNECTED"},503);
  const raw=await readLimited(req,12*1024*1024);if(!raw)return json({error:"Please use a smaller photo or a shorter recording."},413);
  let form:FormData,input:ReturnType<typeof captureInput>;
  try{form=await new Response(raw,{headers:{"content-type":req.headers.get("content-type")||""}}).formData();input=captureInput(form);}

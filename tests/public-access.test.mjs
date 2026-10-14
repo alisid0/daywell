@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { handlePublicCloudflareRequest, sessionCookie } from '../lib/public-access.ts';
 import { readSession } from '../lib/email-sign-in.ts';
+import { setTestPlan } from '../lib/plan-store.ts';
 import { signInStore, testSecret } from './fixtures/sign-in-db.mjs';
 
 const origin = 'https://daywell-public.test', day = 86_400_000;
@@ -187,8 +188,8 @@ test('the sign-in link sends signed-out people to the sign-in page and keeps ret
   assert.equal(back.response.headers.get('location'), `${origin}/eat`);
 });
 
-test('built files skip the session and keep their caching; recordings need an account', async () => {
-  const { call, signIn } = setup();
+test('built files skip the session and keep their caching; recordings need Daywell Plus', async () => {
+  const { call, signIn, db, rows } = setup();
   const { cookie } = await signIn();
   for (const path of ['/_next/static/chunks/app.js', '/fonts/lexend.woff2', '/companions/fox.png', '/favicon.svg']) {
     const { response, received } = await call(path, { cookie });
@@ -200,9 +201,35 @@ test('built files skip the session and keep their caching; recordings need an ac
   const signedOut = await call('/sleep-sounds/forest-night-daa3cc2ffc25.mp3');
   assert.equal(signedOut.response.status, 401);
   assert.equal(signedOut.received, undefined);
-  const signedIn = await call('/sleep-sounds/forest-night-daa3cc2ffc25.mp3', { cookie });
-  assert.equal(signedIn.response.status, 200);
-  assert.equal(signedIn.response.headers.get('cache-control'), 'private, max-age=604800');
+  const userId = rows('accounts')[0].user_id;
+  for (const plan of ['none', 'daywell']) {
+    await setTestPlan(db, userId, plan, clock);
+    const refused = await call('/sleep-sounds/forest-night-daa3cc2ffc25.mp3', { cookie });
+    assert.equal(refused.response.status, 402, plan);
+    assert.equal(refused.body, 'Recordings come with Daywell Plus.');
+    assert.equal(refused.received, undefined);
+  }
+  await setTestPlan(db, userId, 'plus', clock);
+  const plus = await call('/sleep-sounds/forest-night-daa3cc2ffc25.mp3', { cookie });
+  assert.equal(plus.response.status, 200);
+  assert.equal(plus.response.headers.get('cache-control'), 'private, max-age=604800');
+});
+
+test('the app is told each person’s plan, and a plan header from the browser is ignored', async () => {
+  const { call, signIn, db, rows } = setup();
+  const { cookie } = await signIn();
+  const plan = async headers => (await call('/api/state', { cookie, headers })).received.headers.get('oai-authenticated-user-plan');
+  assert.equal(await plan({}), 'none', 'a new account has no plan');
+  assert.equal(await plan({ 'oai-authenticated-user-plan': 'plus' }), 'none', 'claiming a plan does nothing');
+  const userId = rows('accounts')[0].user_id;
+  await setTestPlan(db, userId, 'daywell', clock);
+  assert.equal(await plan({}), 'daywell');
+  await setTestPlan(db, userId, 'plus', clock);
+  assert.equal(await plan({}), 'plus');
+  clock += 31 * day;
+  assert.equal(await plan({}), 'none', 'a test plan ends after 30 days');
+  const signedOut = await call('/api/state', { headers: { 'oai-authenticated-user-plan': 'plus' } });
+  assert.equal(signedOut.received.headers.get('oai-authenticated-user-plan'), null);
 });
 
 test('a session in use is renewed once a day, and the cookie is sent again', async () => {

@@ -40,12 +40,14 @@ test("private hosting rejects unauthenticated requests including mock cookie and
 test("valid Access identity replaces every untrusted identity header and preserves request body", async () => {
   const { received, response } = await inspect(request(await sign(), "/api/state", {
     "oai-authenticated-user-id": "victim", "oai-authenticated-user-email": "victim@test.invalid",
-    "oai-authenticated-user-full-name": "Pretend Owner", "oai-authenticated-user-full-name-encoding": "percent-encoded-utf-8",
+    "oai-authenticated-user-full-name": "Pretend Owner", "oai-authenticated-user-full-name-encoding": "percent-encoded-utf-8", "oai-authenticated-user-plan": "none",
     "Content-Type": "application/json", Origin: env.DAYWELL_APP_ORIGIN,
   }, "POST", '{"value":"my record"}'));
   assert.equal(response.status, 200);
   assert.match(received.headers.get("oai-authenticated-user-id"), /^cf-access:[a-f0-9]{64}$/);
   assert.equal(received.headers.get("oai-authenticated-user-email"), "one@test.invalid");
+  // The private test is for the owner and invited testers, who get every feature.
+  assert.equal(received.headers.get("oai-authenticated-user-plan"), "plus");
   assert.equal(received.headers.get("oai-authenticated-user-full-name"), null);
   assert.equal(received.headers.get("oai-authenticated-user-full-name-encoding"), null);
   assert.equal(received.headers.get("cf-access-jwt-assertion"), null);

@@ -1,4 +1,5 @@
 import { env } from 'cloudflare:workers';
+import { allows, planBlocked } from '@/lib/plans';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 import { database } from '@/db/store';
 import { narrationInput } from '@/lib/food-narration';
@@ -12,6 +13,7 @@ const json = (error: string, status: number) => Response.json({error},{status,he
 export async function POST(request: Request) {
   const user = await getChatGPTUser();
   if (!user) return json('Sign in to hear your food review.',401);
+  if (!allows(user.plan, 'ai')) return planBlocked('ai');
   if (!allowedVoiceOrigin(request)) return json('Start the readout from Daywell.',403);
   const raw = await readLimited(request,10000);
   if (!raw) return json('That review is too long to read aloud.',413);

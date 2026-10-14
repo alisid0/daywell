@@ -20,6 +20,7 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 | `usage_limits` | Counts of paid AI uses in the current window. In the public app, also sign-in protection counts, keyed by a hashed address or network | Low | Overwritten each window; sign-in counts removed daily | Yes / yes |
 | `accounts` (public app) | Email address, random account ID, when it was created and last signed in | Yes | Until the account closes | **Not yet** / **not yet** |
 | `sign_in_codes` (public app) | Keyed hashes of an address and its code, expiry and tries | Pseudonymous | 10 minutes; removed daily | Not linked to an account / expires |
+| `subscriptions` (public app) | Store (App Store, Google Play or test), product, plan (`daywell` or `plus`), status, when it ends and whether it renews. Card details are never stored. See [plans](plans.md) | Yes | While active, then as long as tax and refund rules need the record | **Not yet** / removed with the account |
 | `sessions` (public app) | A hash of each device's session token, the account ID and times | Pseudonymous | 90 days after last use; removed daily | Not needed / removed with the account |
 | `account_closures` (#47) | A closed account's hashed ID, request ID and time | Pseudonymous | Kept, so old devices can't restore deleted records | Yes / kept by design |
 | `ai_reports` (#49) | Reported AI text, reason and optional note | Yes | 90 days | **Not yet** / **not yet** |
@@ -57,7 +58,6 @@ These must exist before the plans and the chat launch. Each must be in the expor
 
 | New store | Fields | Kept for |
 | --- | --- | --- |
-| `subscriptions` | Store (Apple or Google), original transaction ID, product, plan (`basic` or `plus`), status, renewal or expiry time, last checked | While active, then as long as tax and refund rules need the record. Card details are never stored |
 | `chat_messages` | Who sent it, text, time, any plan it proposed | 90 days (owner decision), and clearable at any time |
 | `assistant_actions` | What the assistant changed, before and after, so Undo works, and whether the person confirmed it or it was a small thing done straight away | 90 days |
 | `memories` | Lasting preferences the assistant learns, such as "prefers savoury breakfasts" or "trains in the evening", and when it learned them. The person sees, edits and deletes them in "Daywell remembers" | Until the person deletes them, or the account closes |

@@ -1,4 +1,5 @@
 import { env } from 'cloudflare:workers';
+import { allows, planBlocked } from '@/lib/plans';
 import { z } from 'zod';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 import { database } from '@/db/store';
@@ -20,6 +21,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const user = await getChatGPTUser();
   if (!user) return json({ error: 'Please sign in.' }, 401);
+  if (!allows(user.plan, 'ai')) return planBlocked('ai');
   if (!sameOrigin(request)) return json({ error: 'Use Daywell to send your request.' }, 403);
   const raw = await readLimited(request, 4096);
   if (!raw) return json({ error: 'Try a shorter request.' }, 413);

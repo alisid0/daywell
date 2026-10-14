@@ -1,16 +1,20 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { parsePlan, type Plan } from "@/lib/plans";
 
 export type ChatGPTUser = {
   userId: string;
   displayName: string;
   email: string;
   fullName: string | null;
+  // Set by the hosting's front door (docs/plans.md).
+  plan: Plan;
 };
 
 const USER_ID_HEADER = "oai-authenticated-user-id";
 const USER_EMAIL_HEADER = "oai-authenticated-user-email";
 const USER_FULL_NAME_HEADER = "oai-authenticated-user-full-name";
+const USER_PLAN_HEADER = "oai-authenticated-user-plan";
 const USER_FULL_NAME_ENCODING_HEADER =
   "oai-authenticated-user-full-name-encoding";
 const PERCENT_ENCODED_UTF8 = "percent-encoded-utf-8";
@@ -31,12 +35,23 @@ export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
       ? safeDecodeURIComponent(encodedFullName)
       : null;
 
+  // The local preview has no subscriptions, so it gets every feature. Hosted, a missing plan means none.
+  const plan = parsePlan(requestHeaders.get(USER_PLAN_HEADER)) ?? (import.meta.env.DEV ? "plus" : "none");
+
   return {
     userId,
     displayName: fullName ?? email,
     email,
     fullName,
+    plan,
   };
+}
+
+// Daywell itself needs a plan (paid-only, owner decision, 12 October 2026). Without one, people choose a plan first.
+export async function requirePlanUser(returnTo: string): Promise<ChatGPTUser> {
+  const user = await requireChatGPTUser(returnTo);
+  if (user.plan === "none") redirect(`/plans?return_to=${encodeURIComponent(safeRelativeReturnPath(returnTo))}`);
+  return user;
 }
 
 export async function requireChatGPTUser(
@@ -60,9 +75,9 @@ export function chatGPTSignOutPath(returnTo = "/"): string {
 
 // What the settings panel shows about the signed-in account. Accounts from email sign-in (docs/sign-in.md)
 // have `dw:` IDs; the private test signs in through Cloudflare Access instead.
-export type Account = { email: string; emailSignIn: boolean };
+export type Account = { email: string; emailSignIn: boolean; plan: Plan };
 export function accountOf(user: ChatGPTUser): Account {
-  return { email: user.email, emailSignIn: user.userId.startsWith("dw:") };
+  return { email: user.email, emailSignIn: user.userId.startsWith("dw:"), plan: user.plan };
 }
 
 export function safeRelativeReturnPath(value: string): string {

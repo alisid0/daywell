@@ -22,6 +22,7 @@ import "./about-you.css";
 import "./sleep-sounds.css";
 import "./ai-report.css";
 import "./sign-in.css";
+import "./plans.css";
 import "./food.css";
 import "./capture.css";
 import "./audio-library.css";

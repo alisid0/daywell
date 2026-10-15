@@ -1,41 +1,23 @@
-// How food looks in Eat: an icon and a soft colour family for each kind of ingredient or meal, and gentle wording for
-// pack-date reminders. Colours are mixed from the palette in food.css (food-tone-*), so every look stays readable.
-import { Apple, Banana, Bean, Beef, Candy, Carrot, Cherry, Citrus, Cookie, Croissant, Drumstick, Egg, Fish, Grape, LeafyGreen, Milk, Nut, Package, Salad, Sandwich, Soup, Wheat, type LucideIcon } from "lucide-react";
+// How food looks in Eat: one icon and one soft colour per supermarket aisle (lib/food-aisles.ts decides the aisle),
+// looks for the four meals, and gentle wording for pack-date reminders. Colours are mixed from the palette in food.css
+// (food-tone-*), so every look stays readable.
+import { Apple, Bean, Carrot, CookingPot, Cookie, Croissant, CupSoda, Drumstick, Fish, Leaf, Milk, Package, Sandwich, ShoppingBasket, Snowflake, Soup, SprayCan, Wheat, type LucideIcon } from "lucide-react";
+import { aisleFor, aisleIds, aisleNames, type AisleId } from "@/lib/food-aisles";
 
-export type FoodTone = "grain" | "green" | "fruit" | "dairy" | "protein" | "meal" | "other";
-// First match wins, so more specific names come first ("egg noodles" are noodles; "berry oats" are oats).
-const kinds: [RegExp, LucideIcon, FoodTone][] = [
-  [/noodle|pasta|spaghetti/, Wheat, "grain"],
-  [/\beggs?\b/, Egg, "dairy"],
-  [/\boats?\b|porridge|granola|muesli/, Wheat, "grain"],
-  [/\bbowl\b/, Salad, "green"],
-  [/milk|cream|yog(h)?urt|butter|cheese|kefir/, Milk, "dairy"],
-  [/rice|bread|toast|loaf|sourdough|couscous|flour|quinoa|wrap|tortilla|cereal|bagel|barley|grain/, Wheat, "grain"],
-  [/croissant|pastry|muffin|pancake/, Croissant, "grain"],
-  [/spinach|lettuce|kale|greens|rocket|cabbage|herb|basil|parsley|coriander|leaf/, LeafyGreen, "green"],
-  [/salad|cucumber|broccoli|courgette|\bpeas?\b|avocado|asparagus/, Salad, "green"],
-  [/chilli|soup|stew|curry|leftover|casserole|bolognese|lasagne|risotto/, Soup, "meal"],
-  [/carrot|onion|potato|pepper|tomato|garlic|mushroom|squash|sweetcorn|\bcorn\b|leek|celery|beetroot|aubergine|vegetable/, Carrot, "green"],
-  [/banana/, Banana, "fruit"],
-  [/lemon|lime|orange|grapefruit|citrus|clementine/, Citrus, "fruit"],
-  [/grape/, Grape, "fruit"],
-  [/berr|cherr/, Cherry, "fruit"],
-  [/apple|pear|peach|plum|mango|melon|kiwi|fruit/, Apple, "fruit"],
-  [/chicken|turkey|drumstick/, Drumstick, "protein"],
-  [/beef|mince|lamb|pork|steak|bacon|sausage|\bham\b/, Beef, "protein"],
-  [/fish|salmon|tuna|\bcod\b|prawn|shrimp|mackerel|sardine/, Fish, "protein"],
-  [/bean|chickpea|lentil|tofu|tempeh|hummus/, Bean, "protein"],
-  [/\bnuts?\b|almond|cashew|peanut|seed/, Nut, "protein"],
-  [/sandwich|toastie|burger|pizza|roll\b/, Sandwich, "meal"],
-  [/biscuit|cookie|cake|chocolate/, Cookie, "other"],
-  [/sweet|candy|sugar|honey|\bjam\b/, Candy, "other"],
-];
-export function foodKind(name: string, unit?: string): { Icon: LucideIcon; tone: FoodTone } {
-  const lower = name.toLowerCase();
-  for (const [pattern, Icon, tone] of kinds) if (pattern.test(lower)) return { Icon, tone };
-  return unit === "portion" ? { Icon: Soup, tone: "meal" } : { Icon: Package, tone: "other" };
-}
+export type FoodTone = "green" | "fruit" | "meat" | "sea" | "dairy" | "grain" | "meal" | "treat" | "other";
+export type Aisle = { id: AisleId; name: string; Icon: LucideIcon; tone: FoodTone };
+const looks: Record<AisleId, [LucideIcon, FoodTone]> = {
+  fruit: [Apple, "fruit"], vegetables: [Carrot, "green"], herbs: [Leaf, "green"], bakery: [Croissant, "grain"], meat: [Drumstick, "meat"],
+  fish: [Fish, "sea"], dairy: [Milk, "dairy"], ready: [CookingPot, "meal"], grains: [Wheat, "grain"], beans: [Bean, "green"],
+  cupboard: [Package, "other"], frozen: [Snowflake, "sea"], drinks: [CupSoda, "sea"], snacks: [Cookie, "treat"], household: [SprayCan, "other"],
+  other: [ShoppingBasket, "other"],
+};
+const aisles = Object.fromEntries(aisleIds.map(id => [id, { id, name: aisleNames[id], Icon: looks[id][0], tone: looks[id][1] }])) as Record<AisleId, Aisle>;
+export const aisleOf = (name: string, unit?: string): Aisle => aisles[aisleFor(name, unit)];
+// Where an aisle comes on a walk round the shop (for sorting and grouping).
+export const aisleRank = (aisle: Aisle) => aisleIds.indexOf(aisle.id);
 
+// Meals have their own looks, used for the day's plate, planned meals, recipe ideas and the meal story.
 export const mealLooks = {
   Breakfast: { Icon: Croissant, tone: "dairy" },
   Lunch: { Icon: Sandwich, tone: "green" },

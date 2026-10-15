@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, type ReactNode } from "react";
 import { ArrowRight, CalendarDays, Check, Clock, History, Info, ListChecks, Pencil, Plus, ShoppingBasket, Trash2, Undo2 } from "lucide-react";
-import { dayBadge, foodKind, mealLooks, quantityText, reminder, unitText } from "./food-look";
+import { aisleOf, aisleRank, dayBadge, mealLooks, quantityText, reminder, unitText } from "./food-look";
 import { CompanionPortrait } from "@/components/daywell-companions";
 import { today } from "@/lib/daywell";
 import { ingredientName, type Plan, type Stock } from "@/lib/food";
@@ -65,7 +65,7 @@ export function FoodSpace({ a }: { a: AppState }) {
       {f.view === "basket" && <>
         <div className="food-invitation"><span className="food-invitation-icon" aria-hidden><ShoppingBasket size={26}/></span><div><h2>Start with what you have.</h2><p>Show your ingredients above, or add one here. Unsure of an amount? Leave it to check later. Planning won’t use it up. Record what you cook, eat or use.</p></div><button className="well-button" onClick={() => f.open(stockAction())}><Plus size={17}/>Add ingredient</button></div>
         {state.stock.length ? <><div className="food-shelf-title"><h2>In your basket</h2><span className="food-count">{state.stock.length} {state.stock.length === 1 ? "item" : "items"}</span></div>
-          <div className="food-pantry">{state.stock.map(lot => <BasketItem key={lot.id} lot={lot} f={f}/>)}</div></> : <p className="well-empty">An empty basket is a fresh start. Add what’s in your cupboard or fridge, one thing at a time.</p>}
+          <div className="food-pantry">{[...state.stock].sort((x, y) => aisleRank(aisleOf(x.ingredient, x.unit)) - aisleRank(aisleOf(y.ingredient, y.unit))).map(lot => <BasketItem key={lot.id} lot={lot} f={f}/>)}</div></> : <p className="well-empty">An empty basket is a fresh start. Add what’s in your cupboard or fridge, one thing at a time.</p>}
         {f.snapshot!.overview.inventory.some(row => row.required > 0) && <section className="well-card"><h2>A little set aside</h2><p>Across all your planned meals. These totals combine matching ingredients and units; nothing has been used yet.</p>{f.snapshot!.overview.inventory.filter(row => row.required > 0).map(row => <div className="well-record" key={`${row.ingredient}-${row.unit}`}><div><strong>{row.ingredient}</strong><small>{amount(row.knownOnHand, row.unit)} confirmed · {amount(row.reserved, row.unit)} reserved · {amount(row.available, row.unit)} free{row.unknownQuantity ? " · another amount needs checking" : ""}</small></div></div>)}</section>}
         <button className="well-text-button" onClick={() => f.setView("meals")}>Plan from my basket<ArrowRight size={17}/></button>
       </>}
@@ -77,15 +77,15 @@ export function FoodSpace({ a }: { a: AppState }) {
   </section>;
 }
 
-// One ingredient in the basket: its kind at a glance, the amount, any pack-date reminder, and what you can do with it.
+// One ingredient in the basket: its aisle at a glance, the amount, any pack-date reminder, and what you can do with it.
 function BasketItem({ lot, f }: { lot: Stock; f: Food }) {
-  const { Icon, tone } = foodKind(lot.ingredient, lot.unit);
+  const aisle = aisleOf(lot.ingredient, lot.unit), { Icon, tone } = aisle;
   const note = lot.bestBefore ? reminder(lot.bestBefore, today()) : null;
   const edit = () => f.open({ type: "stock.set", item: withoutChange(lot) });
   return <article className={`food-item food-tone-${tone}`}>
     <div className="food-item-top"><span className="food-item-icon" aria-hidden><Icon size={24}/></span>
       <div className="food-item-tools"><button className="food-icon-button" aria-label={`Edit ${lot.ingredient}`} onClick={edit}><Pencil size={16}/></button><button className="food-icon-button" aria-label={`Remove ${lot.ingredient}`} onClick={() => f.open({ type: "stock.remove", id: lot.id })}><Trash2 size={16}/></button></div></div>
-    <h3>{lot.ingredient}</h3>
+    <span className="food-aisle">{aisle.name}</span><h3>{lot.ingredient}</h3>
     {lot.quantity === null ? <p className="food-item-amount is-unknown">Amount to check</p> : <p className="food-item-amount"><strong>{quantityText(lot.quantity)}</strong> {unitText(lot.unit, lot.quantity)}</p>}
     {note && <span className={`food-reminder is-${note.state}`}>{note.state === "past" ? <History size={13} aria-hidden/> : <Clock size={13} aria-hidden/>}{note.text}</span>}
     {lot.quantity === null ? <button className="food-item-use" onClick={edit}>Check amount</button>
@@ -121,8 +121,8 @@ function MealPlans({ f }: { f: Food }) {
       <ul className="food-chips" aria-label="Ingredients">{plan.ingredients.map((item, index) => <li key={index}>{item.ingredient} <small>{amount(item.quantity, item.unit)}</small></li>)}</ul><div className="well-actions"><button className="well-button" onClick={() => f.open({ type: "cook", planId: plan.id, title: plan.title, date: today(), meal: plan.meal, servings: plan.servings, consumed: suggestedConsumption(plan, state.stock), useReservedStock: false })}>I made this</button><button className="well-text-button" onClick={() => f.open({ type: "plan.set", plan: withoutChange(plan) })}>Edit meal</button><button className="well-text-button" aria-label={`Remove plan ${plan.title}`} onClick={() => f.open({ type: "plan.remove", id: plan.id })}>Remove</button></div></div></article>; })}
     {!plans.length && <p className="well-empty">Nothing planned for these dates yet. One meal is plenty to begin with.</p>}
     <div className="well-section-title"><h2>A little inspiration</h2></div><p>Three simple starting ideas. Review ingredients, portions and your own dietary needs before adding a meal.</p>
-    <div className="food-recipe-grid">{recipeIdeas.map(recipe => { const { Icon, tone } = foodKind(recipe.title); return <article className={`food-recipe food-tone-${tone}`} key={recipe.id}>
-      <div className="food-recipe-top"><span className="food-item-icon" aria-hidden><Icon size={24}/></span><span className="food-time"><Clock size={13} aria-hidden/>{recipe.time}</span></div>
+    <div className="food-recipe-grid">{recipeIdeas.map(recipe => { const meal = recipe.id === "oats" ? "Breakfast" : "Dinner", { Icon, tone } = mealLooks[meal]; return <article className={`food-recipe food-tone-${tone}`} key={recipe.id}>
+      <div className="food-recipe-top"><span className="food-meal-chip"><span className="food-item-icon" aria-hidden><Icon size={24}/></span>{meal}</span><span className="food-time"><Clock size={13} aria-hidden/>{recipe.time}</span></div>
       <h3>{recipe.title}</h3><ul className="food-chips" aria-label="Ingredients">{recipe.ingredients.map(item => <li key={item}>{item}</li>)}</ul>
       <details><summary>How to make it</summary><ol>{recipe.steps.map(step => <li key={step}>{step}</li>)}</ol><small>{recipe.note}</small></details>
       <button className="well-button well-secondary" onClick={() => newPlan(recipe.id)}>Review & plan<ArrowRight size={16}/></button></article>; })}</div>
@@ -132,22 +132,25 @@ function MealPlans({ f }: { f: Food }) {
 
 function Shopping({ f }: { f: Food }) {
   const overview = f.snapshot!.overview, notes = f.snapshot!.state.shopping;
+  // Grouped by aisle, in the order you'd walk the shop.
+  const groups = [...new Map(overview.toBuy.map(row => [aisleOf(row.ingredient, row.unit).id, aisleOf(row.ingredient, row.unit)])).values()]
+    .sort((x, y) => aisleRank(x) - aisleRank(y)).map(aisle => ({ aisle, rows: overview.toBuy.filter(row => aisleOf(row.ingredient, row.unit).id === aisle.id) }));
   return <><section className="food-list">
       <div className="food-list-head"><span className="food-invitation-icon" aria-hidden><ListChecks size={24}/></span><div><h2>Just what’s missing.</h2><p>Based on all saved meal plans and confirmed amounts in your basket. Put away the actual pack size you bought.</p></div></div>
-      {overview.toBuy.length ? <><div className="food-list-caption"><p className="food-caption">Tick an item when you’ve bought it, then put it away.</p><span className="food-count">{overview.toBuy.length} to pick up</span></div><ul className="food-checklist">{overview.toBuy.map(row => { const { Icon, tone } = foodKind(row.ingredient, row.unit); return <li className={`food-tone-${tone}`} key={`${row.ingredient}-${row.unit}`}>
-        {row.needsCheck ? <span className="food-check is-info" aria-hidden><Info size={18}/></span> : <button className="food-check" aria-label={`I bought ${row.ingredient}`} onClick={() => f.open(purchaseAction(row.ingredient, row.toBuy ?? 0, row.unit))}><Check size={20}/></button>}
-        <span className="food-item-icon is-small" aria-hidden><Icon size={18}/></span>
-        <div className="food-check-text"><strong>{row.ingredient}</strong><small>{row.needsCheck ? `Check your basket amount in ${row.unit} first; we won’t guess a shortage.` : `${amount(row.toBuy, row.unit)} needed`}</small></div>
-        {row.needsCheck && <button className="well-text-button" onClick={() => f.setView("basket")}>Check basket</button>}
-      </li>; })}</ul></> : <p className="well-empty">{f.snapshot!.state.plans.length ? "Your confirmed amounts cover the planned ingredients. Check your packs before you cook." : "Plan a meal and your missing ingredients will appear here."}</p>}
+      {overview.toBuy.length ? <><div className="food-list-caption"><p className="food-caption">Tick an item when you’ve bought it, then put it away.</p><span className="food-count">{overview.toBuy.length} to pick up</span></div>
+        {groups.map(({ aisle, rows }) => <section className={`food-aisle-group food-tone-${aisle.tone}`} key={aisle.id} aria-label={aisle.name}><h3 className="food-aisle-title"><span className="food-item-icon is-small" aria-hidden><aisle.Icon size={17}/></span>{aisle.name}</h3><ul className="food-checklist is-grouped">{rows.map(row => <li key={`${row.ingredient}-${row.unit}`}>
+          {row.needsCheck ? <span className="food-check is-info" aria-hidden><Info size={18}/></span> : <button className="food-check" aria-label={`I bought ${row.ingredient}`} onClick={() => f.open(purchaseAction(row.ingredient, row.toBuy ?? 0, row.unit))}><Check size={20}/></button>}
+          <div className="food-check-text"><strong>{row.ingredient}</strong><small>{row.needsCheck ? `Check your basket amount in ${row.unit} first; we won’t guess a shortage.` : `${amount(row.toBuy, row.unit)} needed`}</small></div>
+          {row.needsCheck && <button className="well-text-button" onClick={() => f.setView("basket")}>Check basket</button>}
+        </li>)}</ul></section>)}</> : <p className="well-empty">{f.snapshot!.state.plans.length ? "Your confirmed amounts cover the planned ingredients. Check your packs before you cook." : "Plan a meal and your missing ingredients will appear here."}</p>}
       <button className="well-button well-secondary food-list-action" onClick={() => f.open(purchaseAction())}><ShoppingBasket size={17}/>Put shopping away</button>
     </section>
     <section className="food-list"><div className="food-list-head"><div><h2>Your shopping notes</h2><p>Everything you tell Daywell or add here, including earlier notes. For food, record the pack you actually bought. For household items, just tick the note.</p></div></div>
-      <ul className="food-checklist is-notes">{notes.map(item => <li className={item.done ? "is-done" : undefined} key={item.id}>
+      <ul className="food-checklist is-notes">{notes.map(item => { const aisle = aisleOf(item.title); return <li className={`food-tone-${aisle.tone}${item.done ? " is-done" : ""}`} key={item.id}>
         <button className={`food-check${item.done ? " is-checked" : ""}`} aria-label={item.done ? `${item.title} is picked up. Change this note` : `Tick ${item.title} as picked up`} onClick={() => f.open({ type: "shopping.set", item: { ...withoutChange(item), done: !item.done } })}><Check size={20}/></button>
-        <div className="food-check-text"><strong>{item.title}</strong><small>{item.quantity}{item.done ? " · picked up" : ""}</small></div>
+        <div className="food-check-text"><strong><span className="food-item-icon is-tiny" aria-hidden><aisle.Icon size={14}/></span>{item.title}</strong><small>{item.quantity}{item.done ? " · picked up" : ""}</small></div>
         <div className="food-check-tools">{!item.done && <button className="well-text-button" onClick={() => f.open({ type: "purchase", items: [{ id: crypto.randomUUID(), ingredient: item.title.slice(0,120), quantity: 0, unit: "g", bestBefore: null, shoppingId: item.id }] })}>Put bought food away</button>}<button className="food-icon-button" aria-label={`Edit note ${item.title}`} onClick={() => f.open({ type: "shopping.set", item: withoutChange(item) })}><Pencil size={16}/></button><button className="food-icon-button" aria-label={`Remove note ${item.title}`} onClick={() => f.open({ type: "shopping.remove", id: item.id })}><Trash2 size={16}/></button></div>
-      </li>)}</ul>
+      </li>; })}</ul>
       {!notes.length && <p className="well-empty">No notes yet. Anything you add here stays until you remove it.</p>}
       <button className="food-add-row" onClick={() => f.open({ type: "shopping.set", item: { id: crypto.randomUUID(), title: "", quantity: "1", done: false } })}><Plus size={18}/>Add a note</button>
     </section>

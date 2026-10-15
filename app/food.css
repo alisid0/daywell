@@ -21,7 +21,14 @@
 /* Eat, designed (Oct 2026): tiles for the basket, a plate for the day, checklists for shopping. Every colour is mixed
    from the palette tokens, so each look (light or dark) keeps its own feel. Tones give each kind of food a soft hue. */
 .food-space{--tone:#d3bccb}
-.food-tone-grain{--tone:#e7c36f}.food-tone-green{--tone:#8fcf9b}.food-tone-fruit{--tone:#f29a8e}.food-tone-dairy{--tone:#f4d36e}.food-tone-protein{--tone:#f3ab8b}.food-tone-meal{--tone:#bba6e6}.food-tone-other{--tone:#d3bccb}
+.food-tone-grain{--tone:#e7c36f}.food-tone-green{--tone:#8fcf9b}.food-tone-fruit{--tone:#f29a8e}.food-tone-dairy{--tone:#f4d36e}.food-tone-meat{--tone:#f0a58f}.food-tone-sea{--tone:#93c6e6}.food-tone-meal{--tone:#bba6e6}.food-tone-treat{--tone:#f2a7c8}.food-tone-other{--tone:#d3bccb}
+.food-item-icon.is-tiny{display:inline-grid;width:24px;height:24px;border-radius:8px;margin-right:8px;vertical-align:-5px}
+.food-aisle{font-size:calc(12px*var(--rc-scale,1));font-weight:700;letter-spacing:.02em;color:var(--well-muted);margin-top:6px}
+.food-space .food-aisle+h3{margin-top:0}
+.food-aisle-group{margin-top:10px}
+.food-space .food-aisle-title{display:flex;align-items:center;gap:10px;margin:14px 0 2px;font-family:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:800;color:var(--well-muted)}
+.food-checklist.is-grouped li{grid-template-columns:auto minmax(0,1fr) auto}
+.food-recipe-top .food-meal-chip{gap:10px}
 .food-item-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:16px;flex-shrink:0;background:color-mix(in srgb,var(--tone) 42%,var(--well-surface));color:var(--well-ink)}
 .food-item-icon.is-small{width:38px;height:38px;border-radius:13px}
 .food-count{flex-shrink:0;align-self:center;font-size:calc(13px*var(--rc-scale,1));font-weight:700;color:var(--well-ink);padding:5px 11px;border-radius:999px;background:color-mix(in srgb,var(--well-accent) 12%,var(--well-surface))}

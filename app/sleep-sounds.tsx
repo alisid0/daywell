@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
+import { soundLook } from "./area-look";
 import { FADE_OUT_SECONDS, linearGain, loopPoints, sleepSoundGroups, sleepSoundUrl, sleepSounds, stopAfterMinutes, stopPlan, type SleepSound } from "@/lib/sleep-sounds";
 
 type Engine = { context: AudioContext; master: GainNode; buffers: Map<string, Promise<AudioBuffer>> };
@@ -125,8 +126,8 @@ export function SleepSounds() {
     <h2 id="sleep-sounds-title">Sounds for rest and sleep</h2>
     {sleepSoundGroups.map(group => <div className="sleep-sounds-group" key={group.id}>
       <p id={`sleep-sounds-${group.id}`}>{group.label}</p>
-      <div className="sleep-sounds-chips" role="group" aria-labelledby={`sleep-sounds-${group.id}`}>
-        {sleepSounds.filter(sound => sound.group === group.id).map(sound => <button key={sound.id} type="button" aria-pressed={selected === sound.id} onClick={() => choose(sound.id)}>{sound.label}</button>)}
+      <div className="sleep-sounds-chips sleep-sounds-tiles" role="group" aria-labelledby={`sleep-sounds-${group.id}`}>
+        {sleepSounds.filter(sound => sound.group === group.id).map(sound => { const look = soundLook(sound.label); return <button key={sound.id} type="button" className={`area-tone-${look.tone}`} aria-pressed={selected === sound.id} onClick={() => choose(sound.id)}><span className="area-icon is-small" aria-hidden><look.Icon size={17} /></span>{sound.label}</button>; })}
       </div>
     </div>)}
     <div className="sleep-sounds-row">
@@ -135,7 +136,7 @@ export function SleepSounds() {
     </div>
     <div className="sleep-sounds-group">
       <p id="sleep-sounds-stop">Stop after</p>
-      <div className="sleep-sounds-chips" role="group" aria-labelledby="sleep-sounds-stop">
+      <div className="sleep-sounds-chips sleep-sounds-segment" role="group" aria-labelledby="sleep-sounds-stop">
         {stopAfterMinutes.map(minutes => <button key={minutes} type="button" aria-pressed={stopAfter === minutes} onClick={() => changeStopAfter(minutes)}>{stopLabel(minutes)}</button>)}
       </div>
     </div>

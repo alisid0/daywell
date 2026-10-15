@@ -1,7 +1,8 @@
 "use client";
 import { PrivacyDetails } from "./privacy-details";
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUp, Pause, Play, RotateCcw, SkipForward, Mic, Volume2 } from "lucide-react";
+import { ArrowDown, ArrowUp, Clock, Pause, Play, RotateCcw, SkipForward, Mic, Volume2 } from "lucide-react";
+import { whereLooks } from "./area-look";
 import { CompanionPortrait } from "@/components/daywell-companions";
 import { CompanionMotionControl } from "@/components/companion-motion-preference";
 import { companions } from "@/lib/companions";
@@ -23,12 +24,12 @@ export function MoveRoutines({ onLog }: { onLog: LogRoutine }) {
   return <div className="move-routines">
     <div className="well-section-title"><h2>Your training partner</h2></div>
     <p>Choose a routine. Bounce takes it one step at a time, with spoken cues when you want them. No photos needed.</p>
-    <div className="well-tabs" role="group" aria-label="Where you'll move">{filters.map(([id, label]) => <button key={id} type="button" aria-pressed={where === id} onClick={() => {setWhere(id);setExpanded(false);}}>{label}</button>)}</div>
-    <div className="routine-grid">{(expanded?shown:shown.slice(0,4)).map(r => <article key={r.id} className="routine-card">
+    <div className="well-tabs move-filters" role="group" aria-label="Where you'll move">{filters.map(([id, label]) => { const { Icon } = whereLooks[id]; return <button key={id} type="button" aria-pressed={where === id} onClick={() => {setWhere(id);setExpanded(false);}}><Icon size={16} aria-hidden />{label}</button>; })}</div>
+    <div className="routine-grid">{(expanded?shown:shown.slice(0,4)).map(r => { const place = whereLooks[r.where]; return <article key={r.id} className={`routine-card area-tone-${place.tone}`}>
       <CompanionPortrait id={r.companion} size={64} decorative />
-      <div><h3>{r.name}</h3><small>{r.minutes} min · {levelLabels[r.level]} · {whereLabels[r.where]}</small><p>{r.when}</p></div>
-      <button type="button" className="well-button well-secondary" aria-label={`Start ${r.name}`} onClick={() => setActive(r)}>Start</button>
-    </article>)}</div>
+      <div><h3>{r.name}</h3><ul className="area-chips" aria-label="About this routine"><li><Clock size={13} aria-hidden />{r.minutes} min</li><li>{levelLabels[r.level]}</li><li><place.Icon size={13} aria-hidden />{whereLabels[r.where]}</li></ul><p>{r.when}</p></div>
+      <button type="button" className="well-button routine-start" aria-label={`Start ${r.name}`} onClick={() => setActive(r)}><Play size={15} aria-hidden />Start</button>
+    </article>; })}</div>
     {shown.length>4&&<button type="button" className="well-text-button" onClick={()=>setExpanded(!expanded)}>{expanded?"Show fewer routines":`More routines (${shown.length-4})`}</button>}
   </div>;
 }

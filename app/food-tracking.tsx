@@ -7,14 +7,16 @@ import { activitySources, resizeIntakePortions, intakeRecord, nutritionSources, 
 import type { AppState } from "./use-daywell";
 import { Plus } from "lucide-react";
 import { mealLooks } from "./food-look";
+import { moveKind } from "./area-look";
 
 const kcal = (value: number) => value.toLocaleString("en-GB", { maximumFractionDigits: 1 });
 export function DailyNutrition({ a, area }: { a: AppState; area: "eat" | "move" }) {
   const [date, setDate] = useState(today());
   const total = nutritionSummary(a.entries, date);
   const guide = calorieGuide(a.settings);
+  const moves = area === "move" ? a.by("move").filter(entry => entry.data.date === date) : [];
   function log(kind: "food" | "move", meal?: keyof typeof mealLooks) { a.openEditor(kind); a.setDraft((draft: Record<string, unknown>) => ({ ...draft, date, ...(meal ? { meal } : {}) })); }
-  return <section className={`well-card nutrition-day${area === "eat" ? " food-today" : ""}`} aria-label={area === "eat" ? "Food record" : "Movement record"}>
+  return <section className="well-card nutrition-day food-today" aria-label={area === "eat" ? "Food record" : "Movement record"}>
     <div className="food-toolbar"><div><span className="food-eyebrow">Your record, at your pace</span><h2>Your {area === "eat" ? "food" : "movement"} {date === today() ? "today" : "record"}</h2></div><label className="food-date">Record date<input type="date" required max={today()} value={date} onChange={event => { if(event.target.value) setDate(event.target.value); }}/></label></div>
     {area === "eat" ? <>
       {/* The day as a plate of four meals: what's logged in each, and a tap to add to it. */}
@@ -38,9 +40,11 @@ export function DailyNutrition({ a, area }: { a: AppState; area: "eat" | "move" 
         </li>)}</ul>
       </details>
     </> : <>
-      <div className="nutrition-totals">
-        <div><span>Movement logged</span><strong>{total.activities ? kcal(total.movementMinutes) : "—"}<small>{total.activities ? " minutes" : " none added"}</small></strong><p>{total.activities} {total.activities === 1 ? "activity" : "activities"}</p></div>
-        {a.settings.calorieTracking && <div><span>Activity calories burned</span><strong>{total.burnedCount ? kcal(total.burned) : "—"}<small>{total.burnedCount ? " kcal estimated" : " none added"}</small></strong><p>{total.burnedCount} of {total.activities} activities have estimates{total.unknownActivity > 0 ? ` · ${total.unknownActivity} without calories` : ""}</p></div>}
+      {/* The day's moves, each with its kind, then the quiet numbers. */}
+      {moves.length > 0 && <ul className="area-today" aria-label="Your moves on this date">{moves.map(entry => { const kind = moveKind(entry.data.title, Array.isArray(entry.data.sets)); return <li key={entry.id} className={`area-tone-${kind.tone}`}><span className="area-icon is-small" aria-hidden><kind.Icon size={17}/></span><span><strong>{entry.data.title}</strong><small>{entry.data.minutes} min</small></span></li>; })}</ul>}
+      <div className={`food-stats${a.settings.calorieTracking ? "" : " is-single"}`}>
+        <div className="food-stat"><span>Movement logged</span><strong>{total.activities ? kcal(total.movementMinutes) : "—"}</strong><small>{total.activities ? "minutes" : "none added"}</small><p>{total.activities} {total.activities === 1 ? "activity" : "activities"}</p></div>
+        {a.settings.calorieTracking && <div className="food-stat"><span>Activity calories burned</span><strong>{total.burnedCount ? kcal(total.burned) : "—"}</strong><small>{total.burnedCount ? "kcal estimated" : "none added"}</small><p>{total.burnedCount} of {total.activities} activities have estimates{total.unknownActivity > 0 ? ` · ${total.unknownActivity} without calories` : ""}</p></div>}
       </div>
       {a.settings.calorieTracking && <p className="food-caption">Optional estimates for the activities you log, not all energy your body uses. You don’t need to balance these against food.</p>}
     </>}

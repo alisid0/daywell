@@ -205,6 +205,16 @@ test('built files skip the session and keep their caching; recordings need an ac
   assert.equal(signedIn.response.headers.get('cache-control'), 'private, max-age=604800');
 });
 
+test('the web app manifest and icons load before signing in, so phones can add Daywell to the home screen', async () => {
+  const { call } = setup();
+  for (const path of ['/manifest.webmanifest', '/icon.svg', '/icon-192.png', '/icon-512.png', '/icon-maskable-512.png', '/apple-touch-icon.png']) {
+    const { response, received } = await call(path);
+    assert.equal(response.status, 200, path);
+    assert.ok(received, `${path} reaches the static files`);
+    assert.deepEqual(identity(received), [null, null], path);
+  }
+});
+
 test('a session in use is renewed once a day, and the cookie is sent again', async () => {
   const { call, signIn } = setup();
   const { cookie } = await signIn();

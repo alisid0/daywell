@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "Daywell",
+  "short_name": "Daywell",
+  "description": "Small, calm steps for the everyday basics: moving, eating, sleeping and switching off.",
+  "lang": "en-GB",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fae7ef",
+  "theme_color": "#fae7ef",
+  "categories": ["health", "lifestyle"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Daywell's app icon: the sun mark from the app header, in Daywell's warm white, on the accent plum.
+       Full-bleed so phones can apply their own corner shape; the mark sits inside the maskable safe zone. -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#934a77"/>
+      <stop offset="1" stop-color="#6f3157"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.47" r="0.42">
+      <stop offset="0" stop-color="#ffd9ea" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffd9ea" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#g)"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+  <g transform="translate(512 512) scale(29) translate(-12 -12)" fill="none" stroke="#fff7fb" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+  </g>
+</svg>

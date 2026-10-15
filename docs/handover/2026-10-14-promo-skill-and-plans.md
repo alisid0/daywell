@@ -13,8 +13,8 @@ Branches:
   feat/plans at 6c2ce1d: the two plans (pushed on 14 Oct). No PR yet, see section 2.
 What changed: a 120 s vertical promo built in code (real app screens, ElevenLabs voice, music and sound effects),
   a reusable promo-video skill, and an app bug found on the way (section 4).
-Checks: the promo's delivered MP4 passed the spec, loudness and glitch checks (section 1). No app code changed on
-  this branch.
+Checks: the delivered v2 MP4 passed the spec, loudness (-14.2 LUFS, -1.0 dBTP) and glitch checks (section 1).
+  No app code changed on this branch.
 Not yet verified: the promo on real phones and on each platform's upload; the owner hasn't seen v2 yet.
 Next step: the owner watches v2 and gives notes. Open the plans PR. Fix the invisible capture-sheet buttons.
 ```
@@ -34,7 +34,16 @@ Next step: the owner watches v2 and gives notes. Open the plans PR. Fix the invi
   the tools. Renders and mixes are not (git-ignored). `marketing/promo/README.md` has the commands. On a new
   machine, run `npm run install:ci`, install Chrome and FFmpeg, then from `marketing/promo` run
   `node render.mjs --cues && node tools/mix.mjs && node render.mjs` (about 11 minutes).
-- **QA of the delivered v2:** the spec, loudness, storyboard and glitch scan results are in the PR description.
+- **QA of the delivered v2** (`tools/qa.mjs`, 14 Oct):
+  - **Spec:** H.264 High, 1080×1920, 60 fps, yuv420p, BT.709 limited range; AAC 48 kHz stereo; exactly 2:00; 60 MB.
+  - **Loudness:** -14.2 LUFS, true peak -1.0 dBFS, LRA 5.4 LU.
+  - **Glitch scan:** no unplanned jumps and no one-frame flashes.
+  - **Mix balance:** the voice sits 8–12 dB over the music in every line, and every sound effect stands clear of the
+    bed.
+  - **Still stretches:** the night (about 79–87 s) is a deliberate dark, quiet hold with the waves sound. It's the
+    first thing to tighten if it feels long on social. The end card holds for its last 6 s.
+  - **Repo copy:** the tools were made portable (`tools/paths.mjs`), and rendering stills from the repo copy was
+    tested.
 - **Before posting:**
   1. **Wait for version 1 and re-capture.** Post only when version 1 ships, and re-capture the screens then. A few
      small controls leaving version 1 are visible: "Hear this", the meal-plan microphone, "Tap to give a command".

@@ -1,27 +1,29 @@
-// Renders index.html (the seek(t) film) with system Chrome over the DevTools protocol, and encodes with FFmpeg.
-//   node render.mjs --stills=1.5,12,19.4      PNG stills at those seconds → out/stills/t012.00.png …
-//   node render.mjs --cues                     writes data/cues.json (the film's sound cues, for tools/mix.mjs)
-//   node render.mjs [--fps=60] [--from=0 --to=120] [--name=daywell-promo-v2]
-//                                              the film → out/<name>.mp4 (never overwrites: adds -b, -c …),
-//                                              with audio/mix.wav as its sound when it exists
+// Renders a film's index.html (a seek(t) film) with system Chrome over the DevTools protocol, and encodes with FFmpeg.
+// Serves the whole promo folder, so the shorts can share the engine, mascots, fonts and sound effects.
+//   node render.mjs [--film=shorts/eat] --stills=1.5,12,19.4   PNG stills at those seconds → <film>/out/stills/t012.00.png …
+//   node render.mjs [--film=shorts/eat] --cues                  writes <film>/data/cues.json (sound cues, for tools/mix.mjs)
+//   node render.mjs [--film=shorts/eat] [--fps=60] [--from=0 --to=120] [--name=…]
+//                                              the film → <film>/out/<name>.mp4 (never overwrites: adds -b, -c …),
+//                                              with <film>/audio/mix.wav as its sound when it exists
 import { spawn } from "node:child_process";
 import { createServer } from "node:http";
 import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
-import { fileURLToPath } from "node:url";
 import { FFMPEG } from "./tools/ffmpeg-path.mjs";
-import { CHROME, TMP } from "./tools/paths.mjs";
+import { CHROME, TMP, promoRoot, filmRoot, filmPath, film } from "./tools/paths.mjs";
 
-const root = fileURLToPath(new URL(".", import.meta.url));
-const chrome = CHROME;
+const root = promoRoot;
 const arg = name => process.argv.find(a => a.startsWith(`--${name}=`))?.split("=")[1];
 const has = name => process.argv.includes(`--${name}`);
 const stills = arg("stills")?.split(",").map(Number);
 const fps = Number(arg("fps") || 60), from = Number(arg("from") || 0);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+// Stills and cues run in their own slot (ports and Chrome profile), so they can run while a full render does;
+// RENDER_SLOT=2, 3 … lets more full renders run side by side.
+const slot = Number(process.env.RENDER_SLOT ?? (stills || has("cues") ? 1 : 0));
 const exists = async p => { try { await stat(p); return true; } catch { return false; } };
 
-const types = { ".html": "text/html", ".js": "text/javascript", ".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg", ".woff2": "font/woff2", ".mp3": "audio/mpeg", ".json": "application/json" };
+const types = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg", ".woff2": "font/woff2", ".mp3": "audio/mpeg", ".json": "application/json" };
 const server = createServer(async (req, res) => {
   try {
     const path = normalize(join(root, decodeURIComponent(new URL(req.url, "http://local").pathname)));
@@ -31,10 +33,10 @@ const server = createServer(async (req, res) => {
     res.end(body);
   } catch { res.writeHead(404); res.end(); }
 });
-await new Promise(r => server.listen(8791, "127.0.0.1", r));
+await new Promise(r => server.listen(8791 + slot, "127.0.0.1", r));
 
-const port = 9371;
-const proc = spawn(chrome, ["--headless=new", `--remote-debugging-port=${port}`, `--user-data-dir=${join(TMP, "render")}`, "--no-first-run", "--no-default-browser-check", "--hide-scrollbars", "--force-color-profile=srgb", "--disable-gpu-vsync", "--window-size=1080,1920", "about:blank"], { stdio: "ignore" });
+const port = 9371 + slot;
+const proc = spawn(CHROME, ["--headless=new", `--remote-debugging-port=${port}`, `--user-data-dir=${join(TMP, `render-${slot}`)}`, "--no-first-run", "--no-default-browser-check", "--hide-scrollbars", "--force-color-profile=srgb", "--disable-gpu-vsync", "--window-size=1080,1920", "about:blank"], { stdio: "ignore" });
 let target;
 for (let i = 0; i < 60 && !target; i++) { await sleep(200); try { target = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()).find(t => t.type === "page"); } catch { /* starting */ } }
 if (!target) throw new Error("Chrome did not start");
@@ -51,9 +53,10 @@ const evaluate = async expression => {
 };
 await send("Page.enable"); await send("Runtime.enable");
 listeners.push(msg => { if (msg.method === "Runtime.exceptionThrown") console.error("page error:", msg.params.exceptionDetails?.exception?.description?.slice(0, 300)); });
+listeners.push(msg => { if (msg.method === "Runtime.consoleAPICalled" && ["error", "warning"].includes(msg.params.type)) console.error(`page ${msg.params.type}:`, msg.params.args.map(a => a.value ?? a.description).join(" ").slice(0, 300)); });
 await send("Emulation.setDeviceMetricsOverride", { width: 1080, height: 1920, deviceScaleFactor: 1, mobile: false });
 const loaded = once("Page.loadEventFired");
-await send("Page.navigate", { url: "http://127.0.0.1:8791/index.html" });
+await send("Page.navigate", { url: `http://127.0.0.1:${8791 + slot}/${filmPath ? `${filmPath}/` : ""}index.html` });
 await loaded;
 const duration = await evaluate("window.ready.then(() => window.duration)");
 console.log("film length", duration);
@@ -62,23 +65,23 @@ const frameAt = t => evaluate(`seek(${t.toFixed(5)}); new Promise(r => requestAn
 
 if (has("cues")) {
   const cues = await evaluate("window.cues");
-  await mkdir(join(root, "data"), { recursive: true });
-  await writeFile(join(root, "data", "cues.json"), JSON.stringify(cues, null, 1));
+  await mkdir(join(filmRoot, "data"), { recursive: true });
+  await writeFile(join(filmRoot, "data", "cues.json"), JSON.stringify(cues, null, 1));
   console.log("cues", cues.length);
 } else if (stills) {
-  await mkdir(join(root, "out", "stills"), { recursive: true });
+  await mkdir(join(filmRoot, "out", "stills"), { recursive: true });
   for (const t of stills) {
     await frameAt(t);
     const shot = await send("Page.captureScreenshot", { format: "png" });
-    await writeFile(join(root, "out", "stills", `t${t.toFixed(2).padStart(6, "0")}.png`), Buffer.from(shot.result.data, "base64"));
+    await writeFile(join(filmRoot, "out", "stills", `t${t.toFixed(2).padStart(6, "0")}.png`), Buffer.from(shot.result.data, "base64"));
   }
   console.log("stills", stills.length);
 } else {
-  await mkdir(join(root, "out"), { recursive: true });
-  const base = arg("name") || "daywell-promo-v2";
-  let out = join(root, "out", `${base}.mp4`), n = 0;
-  while (await exists(out)) out = join(root, "out", `${base}-${String.fromCharCode(98 + n++)}.mp4`);
-  const mix = join(root, "audio", "mix.wav"), withSound = await exists(mix);
+  await mkdir(join(filmRoot, "out"), { recursive: true });
+  const base = arg("name") || film.name;
+  let out = join(filmRoot, "out", `${base}.mp4`), n = 0;
+  while (await exists(out)) out = join(filmRoot, "out", `${base}-${String.fromCharCode(98 + n++)}.mp4`);
+  const mix = join(filmRoot, "audio", "mix.wav"), withSound = await exists(mix);
   const args = ["-y", "-hide_banner", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(fps), "-c:v", "mjpeg", "-i", "pipe:0"];
   if (withSound) args.push("-ss", String(from), "-i", mix);
   args.push("-map", "0:v");

@@ -1,0 +1,62 @@
+{
+ "text": "And from anywhere in Daywell, Just rest is one tap away.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "And",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "from",
+   "start": 0.322,
+   "end": 0.562
+  },
+  {
+   "word": "anywhere",
+   "start": 0.642,
+   "end": 1.042
+  },
+  {
+   "word": "in",
+   "start": 1.122,
+   "end": 1.202
+  },
+  {
+   "word": "Daywell,",
+   "start": 1.282,
+   "end": 1.962
+  },
+  {
+   "word": "Just",
+   "start": 2.162,
+   "end": 2.402
+  },
+  {
+   "word": "rest",
+   "start": 2.482,
+   "end": 2.882
+  },
+  {
+   "word": "is",
+   "start": 2.962,
+   "end": 3.202
+  },
+  {
+   "word": "one",
+   "start": 3.282,
+   "end": 3.442
+  },
+  {
+   "word": "tap",
+   "start": 3.522,
+   "end": 3.762
+  },
+  {
+   "word": "away.",
+   "start": 3.842,
+   "end": 4.722
+  }
+ ],
+ "heard": "And from anywhere in Daywell, just rest is one tap away."
+}

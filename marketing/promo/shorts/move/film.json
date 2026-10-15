@@ -1,0 +1,10 @@
+{
+  "name": "daywell-short-move",
+  "length": 120,
+  "music": "take1.mp3",
+  "mix": {
+    "voiceDb": 2,
+    "musicDb": -9,
+    "duckDb": -9
+  }
+}

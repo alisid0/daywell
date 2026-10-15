@@ -1,19 +1,22 @@
 // Captures real Daywell screens from the preview harness (port 5196, ?promo=1 sample week) at phone size,
 // following scripted steps, and records the box of every control the film's finger will touch.
-//   node tools/capture.mjs [shot names, comma separated]      capture shots from tools/capture-plan.mjs
-//   node tools/capture.mjs --explore <query> [steps json]       list visible controls after steps (for writing plans)
-// Output: assets/shots/<name>.png (780×1688, i.e. 390×844 at 2×) and assets/shots/shots.json (boxes in CSS px).
+//   node tools/capture.mjs [--film=shorts/eat] [shot names, comma separated]   capture shots from the film's capture-plan.mjs
+//   node tools/capture.mjs [--film=…] --explore <query> [steps json] [WxH]      list visible controls after steps
+// Output: <film>/assets/shots/<name>.png (780×1688, i.e. 390×844 at 2×) and shots.json (boxes in CSS px).
+// A plan group can set `viewport: { width, height, scale, mobile }` (a laptop-sized capture, say) and `base` (another
+// page than the harness).
 import { spawn } from "node:child_process";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { join } from "node:path";
-import { CHROME, TMP } from "./paths.mjs";
+import { pathToFileURL } from "node:url";
+import { CHROME, TMP, filmRoot, filmFile, args } from "./paths.mjs";
 
-const root = fileURLToPath(new URL("..", import.meta.url));
-const outDir = join(root, "assets", "shots");
+const outDir = join(filmRoot, "assets", "shots");
 mkdirSync(outDir, { recursive: true });
 const chrome = CHROME;
-const port = 9362, base = "http://localhost:5196/";
+const port = 9362, harness = "http://localhost:5196/";
+let base = harness;
+const PHONE = { width: 390, height: 844, scale: 2, mobile: true };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 const proc = spawn(chrome, ["--headless=new", `--remote-debugging-port=${port}`, `--user-data-dir=${join(TMP, "capture")}`, "--no-first-run", "--no-default-browser-check", "--hide-scrollbars", "--force-color-profile=srgb", "--autoplay-policy=no-user-gesture-required", "--mute-audio", "about:blank"], { stdio: "ignore" });
@@ -33,8 +36,14 @@ const evaluate = async expression => {
 };
 await send("Page.enable"); await send("Runtime.enable"); await send("DOM.enable");
 listeners.push(m => { if (m.method === "Runtime.exceptionThrown") console.error("page error:", m.params.exceptionDetails?.exception?.description?.slice(0, 200)); });
-await send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 2, mobile: true });
-await send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 });
+let viewportNow = null;
+async function setViewport(v = PHONE) {
+  if (JSON.stringify(v) === JSON.stringify(viewportNow)) return;
+  await send("Emulation.setDeviceMetricsOverride", { width: v.width, height: v.height, deviceScaleFactor: v.scale ?? 2, mobile: v.mobile ?? false });
+  await send("Emulation.setTouchEmulationEnabled", { enabled: !!v.mobile, maxTouchPoints: v.mobile ? 5 : 1 });
+  viewportNow = v;
+}
+await setViewport();
 
 // In-page helpers: find a visible element by text or selector, click it, type into it, measure it.
 const helpers = `
@@ -142,22 +151,32 @@ async function shot(name) {
   writeFileSync(join(outDir, `${name}.png`), Buffer.from(s.result.data, "base64"));
 }
 
-const args = process.argv.slice(2);
 if (args[0] === "--explore") {
+  const [w, h] = (args[3] || "").split("x").map(Number);
+  if (w && h) await setViewport({ width: w, height: h, scale: 1, mobile: false });
+  await setClock(process.env.CLOCK || null); // clean storage (and the sample day's clock, if CLOCK is set)
   await open(args[1]);
-  if (args[2]) await runSteps(JSON.parse(args[2]), {});
+  if (args[2]) await runSteps(JSON.parse(args[2].startsWith("@") ? readFileSync(args[2].slice(1), "utf8") : args[2]), {}); // @file.json for steps with backslashes
   await shot("_explore");
+  // The whole page at half scale, for planning: _explore-full.png (FULL=1).
+  if (process.env.FULL) {
+    const [w, h] = await evaluate("[innerWidth, document.documentElement.scrollHeight]");
+    const s = await send("Page.captureScreenshot", { format: "png", captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height: Math.min(h, 6000), scale: 0.5 } });
+    writeFileSync(join(outDir, "_explore-full.png"), Buffer.from(s.result.data, "base64"));
+  }
   const list = await evaluate(`[...document.querySelectorAll('button, a, [role=button], [role=tab], input, textarea, select, summary, h1, h2')].filter(__vis).map(el => ({ tag: el.tagName.toLowerCase(), text: (el.innerText || el.value || el.getAttribute('aria-label') || el.placeholder || '').trim().replace(/\\s+/g, ' ').slice(0, 70), ...__box(el) }))`);
   for (const e of list) console.log(`${e.tag.padEnd(8)} ${String(e.x).padStart(6)} ${String(e.y).padStart(7)} ${String(e.w).padStart(6)}x${String(e.h).padEnd(6)} ${e.text}`);
   console.log("scrollY", await evaluate("scrollY"), "docHeight", await evaluate("document.documentElement.scrollHeight"));
 } else {
-  const { plan } = await import(`./capture-plan.mjs?${Date.now()}`);
+  const { plan } = await import(`${pathToFileURL(filmFile("capture-plan.mjs")).href}?${Date.now()}`);
   const only = args[0] ? new Set(args[0].split(",")) : null;
   const jsonPath = join(outDir, "shots.json");
   const all = existsSync(jsonPath) ? JSON.parse(readFileSync(jsonPath, "utf8")) : {};
   for (const group of plan) {
     const names = group.shots.map(s => s.name);
     if (only && !names.some(n => only.has(n))) continue;
+    await setViewport(group.viewport);
+    base = group.base || harness;
     await setClock(group.clock);
     await open(group.query);
     for (const s of group.shots) {

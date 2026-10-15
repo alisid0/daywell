@@ -1,0 +1,62 @@
+{
+ "text": "Look back at your week in a gentle journal. No scores.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "Look",
+   "start": 0.16,
+   "end": 0.32
+  },
+  {
+   "word": "back",
+   "start": 0.4,
+   "end": 0.56
+  },
+  {
+   "word": "at",
+   "start": 0.64,
+   "end": 0.72
+  },
+  {
+   "word": "your",
+   "start": 0.8,
+   "end": 0.88
+  },
+  {
+   "word": "week",
+   "start": 0.96,
+   "end": 1.28
+  },
+  {
+   "word": "in",
+   "start": 1.36,
+   "end": 1.44
+  },
+  {
+   "word": "a",
+   "start": 1.52,
+   "end": 1.6
+  },
+  {
+   "word": "gentle",
+   "start": 1.68,
+   "end": 2.16
+  },
+  {
+   "word": "journal.",
+   "start": 2.24,
+   "end": 2.84
+  },
+  {
+   "word": "No",
+   "start": 3.04,
+   "end": 3.2
+  },
+  {
+   "word": "scores.",
+   "start": 3.28,
+   "end": 3.92
+  }
+ ],
+ "heard": "Look back at your week in a gentle journal. No scores"
+}

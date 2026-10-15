@@ -1,0 +1,72 @@
+{
+ "text": "It's the same account everywhere: your phone, your laptop and the Daywell app.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "It's",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "the",
+   "start": 0.322,
+   "end": 0.482
+  },
+  {
+   "word": "same",
+   "start": 0.602,
+   "end": 0.722
+  },
+  {
+   "word": "account",
+   "start": 0.922,
+   "end": 1.122
+  },
+  {
+   "word": "everywhere:",
+   "start": 1.282,
+   "end": 1.962
+  },
+  {
+   "word": "your",
+   "start": 2.082,
+   "end": 2.242
+  },
+  {
+   "word": "phone,",
+   "start": 2.322,
+   "end": 2.762
+  },
+  {
+   "word": "your",
+   "start": 2.882,
+   "end": 2.962
+  },
+  {
+   "word": "laptop",
+   "start": 3.042,
+   "end": 3.602
+  },
+  {
+   "word": "and",
+   "start": 3.682,
+   "end": 3.842
+  },
+  {
+   "word": "the",
+   "start": 3.922,
+   "end": 4.082
+  },
+  {
+   "word": "Daywell",
+   "start": 4.202,
+   "end": 4.482
+  },
+  {
+   "word": "app.",
+   "start": 4.642,
+   "end": 4.962
+  }
+ ],
+ "heard": "It's the same account everywhere, your phone, your laptop, and the Daywell app"
+}

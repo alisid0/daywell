@@ -1,0 +1,245 @@
+{
+  "note": "Owner chose upbeat music for all five shorts (15 Oct 2026). 120 BPM so a bar is exactly 2 s; chunks follow the film's sections (hook, the title's drop at 6 s, chapters, a build into the recap at 96 s, the close at 110 s).",
+  "model_id": "music_v2_5",
+  "seed": 2026,
+  "chunks": [
+    {
+      "text": "[Intro]\n{building quickly into the drop}",
+      "duration_ms": 6000,
+      "positive_styles": [
+        "dreamy upbeat electro-pop",
+        "warm synth pads",
+        "soft four-on-the-floor kick",
+        "glassy plucks",
+        "twinkling bells",
+        "ticking hi-hats",
+        "rising filter sweep",
+        "snare build into the drop",
+        "modern clean production",
+        "120 BPM",
+        "F major",
+        "instrumental"
+      ],
+      "negative_styles": [
+        "vocals",
+        "singing",
+        "lyrics",
+        "humming",
+        "choir",
+        "dark",
+        "aggressive",
+        "distorted",
+        "dubstep"
+      ],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Main theme]",
+      "duration_ms": 6000,
+      "positive_styles": [
+        "dreamy upbeat electro-pop",
+        "warm synth pads",
+        "soft four-on-the-floor kick",
+        "glassy plucks",
+        "twinkling bells",
+        "the drop",
+        "full upbeat groove",
+        "catchy hook",
+        "four-on-the-floor kick",
+        "120 BPM",
+        "F major",
+        "instrumental"
+      ],
+      "negative_styles": [
+        "vocals",
+        "singing",
+        "lyrics",
+        "humming",
+        "choir",
+        "dark",
+        "aggressive",
+        "distorted",
+        "dubstep"
+      ],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Verse]",
+      "duration_ms": 24000,
+      "positive_styles": [
+        "dreamy upbeat electro-pop",
+        "warm synth pads",
+        "soft four-on-the-floor kick",
+        "glassy plucks",
+        "twinkling bells",
+        "steady upbeat groove",
+        "lighter arrangement",
+        "leaves space for a voiceover",
+        "120 BPM",
+        "F major",
+        "instrumental"
+      ],
+      "negative_styles": [
+        "vocals",
+        "singing",
+        "lyrics",
+        "humming",
+        "choir",
+        "dark",
+        "aggressive",
+        "distorted",
+        "dubstep",
+        "busy lead melody"
+      ],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Verse 2]",
+      "duration_ms": 24000,
+      "positive_styles": [
+        "dreamy upbeat electro-pop",
+        "warm synth pads",
+        "soft four-on-the-floor kick",
+        "glassy plucks",
+        "twinkling bells",
+        "steady upbeat groove",
+        "a new counter-melody layer",
+        "leaves space for a voiceover",
+        "120 BPM",
+        "F major",
+        "instrumental"
+      ],
+      "negative_styles": [
+        "vocals",
+        "singing",
+        "lyrics",
+        "humming",
+        "choir",
+        "dark",
+        "aggressive",
+        "distorted",
+        "dubstep",
+        "busy lead melody"
+      ],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Verse 3]",
+      "duration_ms": 24000,
+      "positive_styles": [
+        "dreamy upbeat electro-pop",
+        "warm synth pads",
+        "soft four-on-the-floor kick",
+        "glassy plucks",
+        "twinkling bells",
+        "steady upbeat groove",
+        "variation in the drums",
+        "leaves space for a voiceover",
+        "120 BPM",
+        "F major",
+        "instrumental"
+      ],
+      "negative_styles": [
+        "vocals",
+        "singing",
+        "lyrics",
+        "humming",
+        "choir",
+        "dark",
+        "aggressive",
+        "distorted",
+        "dubstep",
+        "busy lead melody"
+      ],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Build]",
+      "duration_ms": 12000,
+      "positive_styles": [
+        "dreamy upbeat electro-pop",
+        "warm synth pads",
+        "soft four-on-the-floor kick",
+        "glassy plucks",
+        "twinkling bells",
+        "rising energy",
+        "snare roll build",
+        "anticipation",
+        "120 BPM",
+        "F major",
+        "instrumental"
+      ],
+      "negative_styles": [
+        "vocals",
+        "singing",
+        "lyrics",
+        "humming",
+        "choir",
+        "dark",
+        "aggressive",
+        "distorted",
+        "dubstep"
+      ],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Chorus]",
+      "duration_ms": 14000,
+      "positive_styles": [
+        "dreamy upbeat electro-pop",
+        "warm synth pads",
+        "soft four-on-the-floor kick",
+        "glassy plucks",
+        "twinkling bells",
+        "big uplifting chorus",
+        "joyful and positive",
+        "full energy",
+        "120 BPM",
+        "F major",
+        "instrumental"
+      ],
+      "negative_styles": [
+        "vocals",
+        "singing",
+        "lyrics",
+        "humming",
+        "choir",
+        "dark",
+        "aggressive",
+        "distorted",
+        "dubstep"
+      ],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Outro]\n{one big final chord at the start, then let it ring out and fade}",
+      "duration_ms": 10000,
+      "positive_styles": [
+        "dreamy upbeat electro-pop",
+        "warm synth pads",
+        "soft four-on-the-floor kick",
+        "glassy plucks",
+        "twinkling bells",
+        "final big hit then a clean ending",
+        "warm ringing tail",
+        "resolves on the tonic",
+        "120 BPM",
+        "F major",
+        "instrumental"
+      ],
+      "negative_styles": [
+        "vocals",
+        "singing",
+        "lyrics",
+        "humming",
+        "choir",
+        "dark",
+        "aggressive",
+        "distorted",
+        "dubstep",
+        "abrupt cut"
+      ],
+      "context_adherence": "high"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+ "text": "When it's time, Luma keeps you quiet company. You can leave the day here.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "When",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "it's",
+   "start": 0.322,
+   "end": 0.482
+  },
+  {
+   "word": "time,",
+   "start": 0.562,
+   "end": 1.162
+  },
+  {
+   "word": "Luma",
+   "start": 1.362,
+   "end": 1.762
+  },
+  {
+   "word": "keeps",
+   "start": 1.802,
+   "end": 2.002
+  },
+  {
+   "word": "you",
+   "start": 2.082,
+   "end": 2.242
+  },
+  {
+   "word": "quiet",
+   "start": 2.402,
+   "end": 2.722
+  },
+  {
+   "word": "company.",
+   "start": 2.802,
+   "end": 3.562
+  },
+  {
+   "word": "You",
+   "start": 3.842,
+   "end": 3.922
+  },
+  {
+   "word": "can",
+   "start": 4.002,
+   "end": 4.162
+  },
+  {
+   "word": "leave",
+   "start": 4.242,
+   "end": 4.482
+  },
+  {
+   "word": "the",
+   "start": 4.562,
+   "end": 4.642
+  },
+  {
+   "word": "day",
+   "start": 4.802,
+   "end": 4.962
+  },
+  {
+   "word": "here.",
+   "start": 5.042,
+   "end": 5.442
+  }
+ ],
+ "heard": "When it's time, Luma keeps you quiet company. You can leave the day here"
+}

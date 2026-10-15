@@ -1,0 +1,52 @@
+{
+ "text": "Bedtime came and went again? Let the day soften.",
+ "tag": "[Playful, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Bedtime",
+   "start": 0.16,
+   "end": 0.64
+  },
+  {
+   "word": "came",
+   "start": 0.72,
+   "end": 0.96
+  },
+  {
+   "word": "and",
+   "start": 1.04,
+   "end": 1.12
+  },
+  {
+   "word": "went",
+   "start": 1.24,
+   "end": 1.36
+  },
+  {
+   "word": "again?",
+   "start": 1.6,
+   "end": 2.12
+  },
+  {
+   "word": "Let",
+   "start": 2.4,
+   "end": 2.56
+  },
+  {
+   "word": "the",
+   "start": 2.64,
+   "end": 2.72
+  },
+  {
+   "word": "day",
+   "start": 2.8,
+   "end": 3.04
+  },
+  {
+   "word": "soften.",
+   "start": 3.12,
+   "end": 3.68
+  }
+ ],
+ "heard": "Bedtime came and went again? Let the day soften"
+}

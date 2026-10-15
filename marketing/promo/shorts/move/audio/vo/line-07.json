@@ -1,0 +1,57 @@
+{
+ "text": "Stop early? Save what you really did. It still counts.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Stop",
+   "start": 0.162,
+   "end": 0.402
+  },
+  {
+   "word": "early?",
+   "start": 0.482,
+   "end": 1.202
+  },
+  {
+   "word": "Save",
+   "start": 1.282,
+   "end": 1.522
+  },
+  {
+   "word": "what",
+   "start": 1.602,
+   "end": 1.682
+  },
+  {
+   "word": "you",
+   "start": 1.762,
+   "end": 1.922
+  },
+  {
+   "word": "really",
+   "start": 2.002,
+   "end": 2.322
+  },
+  {
+   "word": "did.",
+   "start": 2.442,
+   "end": 2.802
+  },
+  {
+   "word": "It",
+   "start": 2.882,
+   "end": 3.042
+  },
+  {
+   "word": "still",
+   "start": 3.122,
+   "end": 3.362
+  },
+  {
+   "word": "counts.",
+   "start": 3.602,
+   "end": 4.242
+  }
+ ],
+ "heard": "Stop early? Save what you really did. It still counts"
+}

@@ -1,0 +1,57 @@
+{
+ "text": "Look back at your meals and your week, without judgement.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Look",
+   "start": 0.304,
+   "end": 0.32
+  },
+  {
+   "word": "back",
+   "start": 0.44,
+   "end": 0.56
+  },
+  {
+   "word": "at",
+   "start": 0.6,
+   "end": 0.64
+  },
+  {
+   "word": "your",
+   "start": 0.72,
+   "end": 0.88
+  },
+  {
+   "word": "meals",
+   "start": 0.92,
+   "end": 1.36
+  },
+  {
+   "word": "and",
+   "start": 1.44,
+   "end": 1.6
+  },
+  {
+   "word": "your",
+   "start": 1.68,
+   "end": 1.84
+  },
+  {
+   "word": "week,",
+   "start": 2,
+   "end": 2.4
+  },
+  {
+   "word": "without",
+   "start": 2.64,
+   "end": 2.88
+  },
+  {
+   "word": "judgement.",
+   "start": 3,
+   "end": 4
+  }
+ ],
+ "heard": "Look back at your meals and your week without judgment"
+}

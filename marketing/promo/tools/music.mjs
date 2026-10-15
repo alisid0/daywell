@@ -1,16 +1,14 @@
-// Composes the promo music with ElevenLabs Music from tools/music-plan.json (one chunk per group of scenes).
-//   node tools/music.mjs <path to .dev.vars> [take name, default "take1"] [seed]
-// Writes audio/music/<take>.mp3 and never overwrites an earlier take. The key is never printed.
+// Composes a film's music with ElevenLabs Music from its music-plan.json (one chunk per group of scenes).
+//   node tools/music.mjs [--film=shorts/eat] [path to .dev.vars, or "-" for the repo's] [take name, default "take1"] [seed]
+// Writes <film>/audio/music/<take>.mp3 and never overwrites an earlier take. The key is never printed.
 import { readFile, writeFile, mkdir, stat } from "node:fs/promises";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
-import { SECRETS } from "./paths.mjs";
+import { SECRETS, filmRoot, filmFile, args } from "./paths.mjs";
 
-const root = fileURLToPath(new URL("..", import.meta.url));
-const [varsArg, take = "take1", seedArg] = process.argv.slice(2);
-const varsPath = varsArg && varsArg !== "-" ? varsArg : SECRETS; // pass "-" for the repo's .dev.vars
-const plan = JSON.parse(await readFile(join(root, "tools", "music-plan.json"), "utf8"));
-const out = join(root, "audio", "music", `${take}.mp3`);
+const [varsArg, take = "take1", seedArg] = args;
+const varsPath = varsArg && varsArg !== "-" ? varsArg : SECRETS;
+const plan = JSON.parse(await readFile(filmFile("music-plan.json"), "utf8"));
+const out = join(filmRoot, "audio", "music", `${take}.mp3`);
 try { await stat(out); throw Error(`${take} already exists; pick a new take name.`); } catch (e) { if (e.code !== "ENOENT") throw e; }
 
 const vars = await readFile(varsPath, "utf8");
@@ -30,7 +28,7 @@ const r = await fetch("https://api.elevenlabs.io/v1/music?output_format=mp3_4800
 });
 if (!r.ok) { console.log("HTTP", r.status, (await r.text()).slice(0, 1500)); process.exit(1); }
 const audio = Buffer.from(await r.arrayBuffer());
-await mkdir(join(root, "audio", "music"), { recursive: true });
+await mkdir(join(filmRoot, "audio", "music"), { recursive: true });
 await writeFile(out, audio);
 const songId = r.headers.get("song-id") || r.headers.get("x-song-id");
 const after = await (await fetch("https://api.elevenlabs.io/v1/user/subscription", { headers: auth, signal: AbortSignal.timeout(20000) })).json();

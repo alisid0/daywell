@@ -1,0 +1,52 @@
+{
+ "text": "Here's how to use Daywell as a web app.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Here's",
+   "start": 0.16,
+   "end": 0.4
+  },
+  {
+   "word": "how",
+   "start": 0.48,
+   "end": 0.56
+  },
+  {
+   "word": "to",
+   "start": 0.6,
+   "end": 0.64
+  },
+  {
+   "word": "use",
+   "start": 0.72,
+   "end": 0.96
+  },
+  {
+   "word": "Daywell",
+   "start": 1.04,
+   "end": 1.6
+  },
+  {
+   "word": "as",
+   "start": 1.64,
+   "end": 1.68
+  },
+  {
+   "word": "a",
+   "start": 1.92,
+   "end": 1.973
+  },
+  {
+   "word": "web",
+   "start": 2.027,
+   "end": 2.08
+  },
+  {
+   "word": "app.",
+   "start": 2.16,
+   "end": 2.88
+  }
+ ],
+ "heard": "Here's how to use Daywell as a web app"
+}

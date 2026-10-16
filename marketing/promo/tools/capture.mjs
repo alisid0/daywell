@@ -14,7 +14,7 @@ import { CHROME, TMP, filmRoot, filmFile, args } from "./paths.mjs";
 const outDir = join(filmRoot, "assets", "shots");
 mkdirSync(outDir, { recursive: true });
 const chrome = CHROME;
-const port = 9362, harness = "http://localhost:5196/";
+const port = 9362, harness = process.env.HARNESS || "http://localhost:5196/"; // HARNESS=http://localhost:5194/ for another preview
 let base = harness;
 const PHONE = { width: 390, height: 844, scale: 2, mobile: true };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -65,6 +65,7 @@ async function runSteps(steps, boxes) {
   for (const step of steps) {
     const [kind, arg, extra] = step;
     if (kind === "wait") await sleep(arg);
+    else if (kind === "helpers") await evaluate(helpers); // after a page reloads itself, so __find and friends exist again
     else if (kind === "eval") await evaluate(arg);
     else if (kind === "print") console.log("print:", JSON.stringify(await evaluate(arg)));
     else if (kind === "scroll") await evaluate(`(() => { const el = __find(${JSON.stringify(arg)}, true); if (!el) throw Error('not found: ' + ${JSON.stringify(arg)}); el.scrollIntoView({ block: ${JSON.stringify(extra || "center")}, behavior: 'instant' }); return true; })()`);

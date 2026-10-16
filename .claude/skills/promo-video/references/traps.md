@@ -42,6 +42,30 @@ Read this before building or debugging.
 - **Template literals don't survive the shell.** Writing JS with backticks through `node -e "…"` in bash is
   mangled by command substitution. Edit files with the editor, or write a script file.
 
+## The shorts (October 2026)
+
+- **A field that submits itself spoils its last crop.** The sixth digit of the sign-in code signs in at once, so
+  the last typing crop caught the page mid-reload, blank. Capture the finished state separately: set the value from
+  script without an input event (an `eval` step), then crop it and take a full shot.
+- **A drawn screen must outlast the next card.** A chapter card covers the phone only once it has opened (about 1 s
+  after its bar). A drawing that ends before then leaves an empty screen under the opening card. Keep each
+  chapter's drawing until the next card has covered the phone.
+- **"scroll" is only for real page scrolls.** A list scrolled inside a dialog jumped, because the two captures
+  don't overlap as one page. Use "slide" there.
+- **"Still" needs a longer look.** Comparing each frame with the one before calls a slow drift or a breathing ring
+  "still". Compare with the frame half a second earlier. Holds while a bubble is read still froze, so the shorts
+  engine now pushes in slowly during any hold over 2.6 s, and the bubble's helper nods.
+- **Wide shots pivot on the focus point.** Below zoom 1, the camera keeps its focus point fixed, not the middle of
+  the frame. A slow push-in then drifts everything away from that point, so leave a margin on the far side.
+- **Renders side by side fight over ports and the Chrome profile.** Give each one its own `RENDER_SLOT`. On a busy
+  machine Chrome can also take over 10 s to start, so `render.mjs` waits up to a minute, and lets Chrome exit
+  before the next render in that slot.
+- **Exact text matches break when the UI adds counts.** A tab whose label gained a count no longer matched its name
+  exactly. The October redesign shows counts with CSS (`data-count`), so capture plans can match the name alone.
+- **The script can drift from the app.** "One tap" took two, "Undo" was "edit", "be in bed" was "Wake up at", and
+  "from anywhere" was only from Home. Check each line against the screen it plays over while capturing, and ask
+  the owner before changing an approved line.
+
 ## Sound
 
 - **The music isn't the plan.** In Daywell's take the drop came 2 s late and the breakdown 12 s late, so measure
@@ -51,3 +75,5 @@ Read this before building or debugging.
 - **Quiet lines vanish under loud music.** A softly spoken line over full-energy music sat only 3.6 dB above it.
   Give that line a lift (+3 dB) and a deeper duck (-15 dB).
 - **Some effects start late.** Place hits by their peak and textures (typing, scrolling, sparkles) by their onset.
+- **The encoder moves the peaks.** A master at -2.4 dBTP came out of 192 kbps AAC at -0.1 dBTP, from one sharp
+  drum hit. Lowering the ceiling isn't enough on its own; encode at 256 kbps, and measure the delivered MP4.

@@ -57,6 +57,9 @@ window.Short = cfg => {
   const D = window.FILM_DATA, DURATION = 120;
   const helper = cfg.helper, mascot = n => `${ROOT}assets/mascots/${n}.webp`, portrait = n => `${ROOT}assets/mascots/${n}/portrait.webp`;
   document.documentElement.style.setProperty("--area", cfg.color);
+  // A chapter's badge says which plan includes it; a film (cfg.badge) or a chapter (c.badge) can say something else
+  // in the same place, as { icon, label }.
+  const planOf = c => ({ ...PLAN[c.plan], ...cfg.badge, ...c.badge });
   const stage = $("stage");
   stage.innerHTML = `
     <div id="sky" class="layer"><div class="blob" id="blobA"></div><div class="blob" id="blobB"></div><div id="stars" class="layer"></div><div id="moon" class="abs"></div></div>
@@ -91,8 +94,10 @@ window.Short = cfg => {
     const z = zoom ?? clamp(Math.min(960 / r.w, 900 / r.h), 1, 2.3);
     CAMK.push([t, r.x + r.w / 2, r.y + r.h / 2, z, w]);
   }
+  const HOLDS = []; // filled once the timeline is known: slow push-ins while the camera holds still
+  const holdDrift = t => { let d = 0; for (const h of HOLDS) if (t > h.a) d += h.amp * eio(prog(t, h.a, h.b)) * (1 - spring(t - h.b, h.w, 1)); return d; };
   const camAt = t => {
-    const z = Math.exp(cam.lz.at(t)), cx = cam.x.at(t), cy = cam.y.at(t);
+    const z = Math.exp(cam.lz.at(t) + holdDrift(t)), cx = cam.x.at(t), cy = cam.y.at(t);
     const k = clamp((z - 1) / 0.25); // at zoom 1 the world is untransformed; as zoom grows the focus point moves to A
     return { cx, cy, z, ax: lerp(cx, A.x, k), ay: lerp(cy, A.y, k) };
   };
@@ -109,6 +114,13 @@ window.Short = cfg => {
     cue(t, "tap", -13, opts.rate || 1);
   }
   const hl = (t, shot, name, hold = 1.4) => TL.hls.push({ t, b: box(shot, name), until: hold, soft: true });
+  // A tap on something drawn rather than captured: x, y, w, h in app CSS px on the phone screen.
+  function tapAt(t, x, y, w = 44, h = 44, opts = {}) {
+    TL.taps.push({ t, x: SCR.x + (x + w / 2) * K, y: SCR.y + (y + h / 2) * K });
+    if (opts.hl !== false) TL.hls.push({ t, b: { x, y, w, h }, until: opts.hold ?? 0.3 });
+    cue(t, "tap", -13, opts.rate || 1);
+  }
+  const camWorld = (t, x, y, z, w = 5.4) => CAMK.push([t, x, y, z, w]);
   function typing(t0, t1, shot, crop, sound = true) {
     const c = box(shot, `${crop}:clip`);
     TL.typing.push({ t0, t1, crop, c });
@@ -121,7 +133,7 @@ window.Short = cfg => {
   const word = (n, w, k = 0) => { const line = D.vo[n - 1]; const hits = line.words.filter(x => clean(x.w) === clean(w)); if (!hits[k]) throw Error(`no word ${n}:${w}`); return hits[k].t; };
   // A custom drawing on the phone screen (560×1212 film px), shown from t0 to t1: draw(t, el) runs every frame.
   const layer = (t0, t1, html, draw, fade = 0.18) => { TL.layers.push({ t0, t1, html, draw, fade }); };
-  const api = { S, tap, hl, typing, ticks, bubble, cue, flash, word, camTo, camFull, R, layer, K, SCR, wr, box, spring, prog, eio, eout, lerp, clamp, kf, vis, px, setStyle, make, icon: window.icon, ROOT, mascot, portrait };
+  const api = { S, tap, tapAt, hl, typing, ticks, bubble, cue, flash, word, camTo, camFull, camWorld, R, layer, worldArt: $("worldArt"), K, SCR, wr, box, spring, prog, eio, eout, lerp, clamp, kf, vis, px, setStyle, make, icon: window.icon, ROOT, mascot, portrait };
 
   // ---------- Built-in sections
   const CH = cfg.chapters, RC = { t: 96, ...cfg.recap }, CL = { t: 110, ...cfg.close };
@@ -137,11 +149,12 @@ window.Short = cfg => {
   camFull(0);
   // Chapters: the card drops on the bar (t), opens into the first screen by t + 1.
   const CARD = { drop: 0.32, open0: 0.3, open1: 1.0 };
-  for (const c of CH) { camFull(c.t - CARD.drop - 0.75); cue(c.t - CARD.drop, "card-drop", -11); S(c.t + CARD.open1, c.shot, "cut"); cue(c.t + CARD.open0, "whoosh", -16); }
+  for (const c of CH) { camFull(c.t - CARD.drop - 0.75); cue(c.t - CARD.drop, "card-drop", -11); if (c.shot) S(c.t + CARD.open1, c.shot, "cut"); cue(c.t + CARD.open0, "whoosh", -16); }
   // Recap and close
   const rows = RC.rows || CH.map(c => ({ text: c.recap || c.title, plan: c.plan }));
   const ROW_T = rows.map((_, i) => RC.t + 0.35 + i * 0.3);
-  cue(RC.t - 0.05, "swoosh", -16); ROW_T.forEach((t, i) => cue(t, "tick", -17, 1 + i * 0.045));
+  cue(RC.t - 0.05, "swoosh", -16);
+  if (RC.areas) RC.areas.forEach((ar, i) => cue(ar.at, "pop", -14, 1 + i * 0.07)); else ROW_T.forEach((t, i) => cue(t, "tick", -17, 1 + i * 0.045));
   const PRICE_T = RC.pricesAt ?? RC.t + 7.6; if (RC.prices !== false) [0, 0.25].forEach((d, i) => cue(PRICE_T + d, "pop", -14, 1 + i * 0.1));
   cue(CL.t - 0.3, "whoosh", -18); cue(CL.t, "logo-hit", -5); cue(CL.t + 0.05, "shimmer", -14);
   if (CL.priceAt) cue(CL.priceAt, "pop", -15);
@@ -151,6 +164,12 @@ window.Short = cfg => {
   cfg.script?.(api);
 
   CAMK.sort((a, b) => a[0] - b[0]).forEach(([t, x, y, z, w]) => { cam.x.to(t, x, w, 1); cam.y.to(t, y, w, 1); cam.lz.to(t, Math.log(z), w, 1); });
+  // Wherever the camera holds for over 2.6 s (after the phone is up), it pushes in slowly, up to 4%, and the next
+  // move releases it, so a held screen (a bubble being read, say) never sits frozen.
+  for (let i = 0; i < CAMK.length - 1; i++) {
+    const [t0] = CAMK[i], [t1, , , , w1] = CAMK[i + 1];
+    if (t0 >= PHONE_IN + 1 && t1 - t0 > 2.6) HOLDS.push({ a: t0 + 0.9, b: t1, w: w1, amp: Math.min(0.04, 0.012 * (t1 - t0 - 0.9)) });
+  }
   TL.screens.sort((a, b) => a.t - b.t);
   for (const h of TL.hls) { const next = TL.screens.find(x => x.t > h.t + 0.001); if (next) h.until = Math.min(h.until, Math.max(0.04, next.t - h.t - 0.2)); }
   TL.taps.sort((a, b) => a.t - b.t);
@@ -159,7 +178,7 @@ window.Short = cfg => {
   // ---------- Build the DOM
   const IMG = n => `assets/shots/${n}.png`;
   const shotsEl = $("shots"), shotImgs = {};
-  const usedShots = new Set([...TL.screens.map(s => s.shot), ...CH.map(c => c.shot)]);
+  const usedShots = new Set([...TL.screens.map(s => s.shot), ...CH.filter(c => c.shot).map(c => c.shot)]);
   for (const n of usedShots) { const im = make("img", "shot", shotsEl); im.src = IMG(n); im.alt = ""; shotImgs[n] = im; }
   for (const ty of TL.typing) {
     ty.imgs = ty.c.counts.map(n => { const im = make("img", "crop", shotsEl); im.src = IMG(`${ty.crop}-${String(n).padStart(2, "0")}`); im.alt = "";
@@ -187,14 +206,20 @@ window.Short = cfg => {
   const tWord = make("div", "word", titleEl, cfg.name), tWith = make("div", "with", titleEl, `<i><img src="${portrait(helper)}" alt=""></i><span>${TT.withText || `with ${cfg.helperName}`}</span>`);
   // Event card
   const card = $("card"), cardFill = card.querySelector(".fill"), cardInner = card.querySelector(".inner"), cardLab = card.querySelector(".lab"), cardPor = card.querySelector(".por");
-  const cardInnerImgs = {};
-  for (const c of CH) { const im = make("img", null, cardInner); im.src = IMG(c.shot); im.alt = ""; Object.assign(im.style, { position: "absolute", left: "0", top: "0", width: "560px", height: "1212px", opacity: "0" }); cardInnerImgs[c.shot] = im; }
+  const cardInnerEls = CH.map(c => {
+    const el = c.inner ? make("div", null, cardInner, c.inner) : make("img", null, cardInner);
+    if (!c.inner) { el.src = IMG(c.shot); el.alt = ""; }
+    Object.assign(el.style, { position: "absolute", left: "0", top: "0", width: "560px", height: "1212px", opacity: "0", overflow: "hidden" });
+    return el;
+  });
   // Badges
-  const badgeEls = CH.map((c, i) => { const p = PLAN[c.plan]; const d = make("div", `pill plan-${c.plan}`, $("badge"), `<i>${window.icon(p.icon, 28, 2.4)}</i><span>${p.label}</span>`); const next = CH[i + 1]?.t ?? RC.t; return { d, t0: c.t + 0.75, t1: next - CARD.drop - 0.25 }; });
+  const badgeEls = CH.map((c, i) => { const p = planOf(c); const d = make("div", `pill plan-${c.plan}`, $("badge"), `<i>${window.icon(p.icon, 28, 2.4)}</i><span>${p.label}</span>`); const next = CH[i + 1]?.t ?? RC.t; return { d, t0: c.t + 0.75, t1: next - CARD.drop - 0.25 }; });
   // Recap
   const recap = $("recap");
   make("div", "head", recap, `<i><img src="${portrait(helper)}" alt=""></i><b>${RC.title || `Included in ${cfg.name}`}</b>`);
-  const rowEls = rows.map(r => { const p = PLAN[r.plan]; const d = make("div", "row", recap, `<div class="glow"></div><div class="tick">${window.icon("check", 32, 3)}</div><div class="t">${r.text}</div><div class="p plan-${r.plan}">${p.short}</div>`); return { d, plan: r.plan, glow: d.querySelector(".glow"), tick: d.querySelector(".tick") }; });
+  const areaEls = (RC.areas || []).map(ar => { const d = make("div", "recap-area", recap, `<i><img src="${portrait(ar.helper)}" alt=""></i><b>${ar.name}</b><small>with ${ar.helperName}</small>`); d.style.setProperty("--area", ar.color); return { d, at: ar.at }; });
+  if (areaEls.length) { const grid = make("div", "recap-areas", recap); areaEls.forEach(({ d }) => grid.appendChild(d)); if (RC.foot) make("p", "recap-foot", recap, RC.foot); }
+  const rowEls = (RC.areas ? [] : rows).map(r => { const p = PLAN[r.plan]; const d = make("div", "row", recap, `<div class="glow"></div><div class="tick">${window.icon("check", 32, 3)}</div><div class="t">${r.text}</div><div class="p plan-${r.plan}">${p.short}</div>`); return { d, plan: r.plan, glow: d.querySelector(".glow"), tick: d.querySelector(".tick") }; });
   const pricesEl = RC.prices !== false ? make("div", "prices", recap, `<div class="price plan-daywell"><b>Daywell</b><span>£4.99 <small>a month</small></span></div><div class="price plan-plus"><b>Daywell Plus</b><span>£9.99 <small>a month</small></span></div>`) : null;
   const priceEls = pricesEl ? [...pricesEl.children] : [];
   // Close
@@ -346,12 +371,12 @@ window.Short = cfg => {
     Object.assign(card.style, { left: px(x), top: px(y), width: px(w), height: px(h), borderRadius: px(r) });
     setStyle(card, prog(t, t0 - CARD.drop - 0.05, t0 - CARD.drop + 0.08));
     cardFill.style.background = active.color || cfg.color; cardFill.style.opacity = (1 - prog(m, 0.45, 0.95)).toFixed(3);
-    for (const s in cardInnerImgs) cardInnerImgs[s].style.opacity = s === active.shot ? prog(m, 0.3, 0.8).toFixed(3) : "0";
+    cardInnerEls.forEach((el, i) => { el.style.opacity = i === idx ? prog(m, 0.3, 0.8).toFixed(3) : "0"; });
     cardInner.style.opacity = "1"; cardInner.style.left = px(SCR.x - x); cardInner.style.top = px(SCR.y - y);
     const lv = vis(t, t0 - CARD.drop + 0.05, t0 + CARD.open0 - 0.05, 0.14);
     cardLab.querySelector(".num").textContent = String(idx + 1); cardLab.querySelector("b").textContent = active.title;
-    const small = cardLab.querySelector("small"), want = `${window.icon(PLAN[active.plan].icon, 26, 2.6)}${PLAN[active.plan].label}`;
-    if (small.dataset.plan !== active.plan) { small.innerHTML = want; small.dataset.plan = active.plan; }
+    const small = cardLab.querySelector("small"), p = planOf(active);
+    if (small.dataset.key !== p.label) { small.innerHTML = `${window.icon(p.icon, 26, 2.6)}${p.label}`; small.dataset.key = p.label; }
     setStyle(cardLab, lv.o, `translateY(${px(lv.dy)})`, `blur(${lv.b.toFixed(2)}px)`);
     const pi = cardPor.querySelector("img"), src = portrait(active.helper || helper); if (pi.getAttribute("src") !== src) pi.setAttribute("src", src);
     setStyle(cardPor, lv.o, `scale(${(0.7 + 0.3 * lv.e).toFixed(4)})`);
@@ -392,6 +417,8 @@ window.Short = cfg => {
     TL.bubbles.forEach((b, i) => {
       const e = bubbleEls[i], pop = spring(t - b.t0, 16, 0.7), out = prog(t, b.t1 - 0.2, b.t1);
       e.style.left = "70px"; e.style.top = "1330px";
+      // The helper nods along inside its circle while the bubble is up.
+      e.firstChild.firstChild.style.transform = `translateY(${px(Math.sin(t * 2.8 + i) * 4)}) rotate(${(Math.sin(t * 1.4 + i) * 2.5).toFixed(2)}deg) scale(1.08)`;
       setStyle(e, prog(t, b.t0 - 0.02, b.t0 + 0.08) * (1 - out), `scale(${(0.6 + 0.4 * pop).toFixed(4)}) translateY(${px(out * 20)})`, out > 0 ? `blur(${(out * 6).toFixed(2)}px)` : "none");
     });
   }
@@ -417,7 +444,8 @@ window.Short = cfg => {
   function drawRecap(t) {
     const inn = spring(t - RC.t, 12, 0.8), out = eio(prog(t, CL.t - 0.45, CL.t - 0.05));
     const on = t > RC.t - 0.05 && t < CL.t;
-    setStyle(recap, on ? prog(t, RC.t - 0.02, RC.t + 0.12) * (1 - out) : 0, `translateY(${px((1 - inn) * 420 - out * 120)}) scale(${(1 - out * 0.35).toFixed(4)})`, out > 0 ? `blur(${(out * 10).toFixed(2)}px)` : "none");
+    const breathe = 1 + 0.025 * eio(prog(t, PRICE_T + 0.6, CL.t - 0.4)); // a slow push in while the prices hold, so it never sits frozen
+    setStyle(recap, on ? prog(t, RC.t - 0.02, RC.t + 0.12) * (1 - out) : 0, `translateY(${px((1 - inn) * 420 - out * 120)}) scale(${((1 - out * 0.35) * breathe).toFixed(4)})`, out > 0 ? `blur(${(out * 10).toFixed(2)}px)` : "none");
     if (!on) return;
     rowEls.forEach((r, i) => {
       const land = spring(t - ROW_T[i], 18, 0.75), tk = spring(t - ROW_T[i] - 0.08, 20, 0.55);
@@ -426,6 +454,7 @@ window.Short = cfg => {
       const [g0, g1] = RC.glow?.[r.plan] || [0, 0];
       setStyle(r.glow, prog(t, g0, g0 + 0.25) * (1 - prog(t, g1, g1 + 0.35)));
     });
+    areaEls.forEach(({ d, at }, i) => { const pop = spring(t - at, 16, 0.62); setStyle(d, prog(t, at - 0.03, at + 0.07), `translateY(${px((1 - pop) * 40)}) scale(${(0.6 + 0.4 * pop).toFixed(4)}) rotate(${((1 - pop) * (i % 2 ? 5 : -5)).toFixed(2)}deg)`); });
     priceEls.forEach((p, i) => { const pop = spring(t - (PRICE_T + i * 0.25), 16, 0.68); setStyle(p, prog(t, PRICE_T + i * 0.25 - 0.02, PRICE_T + i * 0.25 + 0.08), `translateY(${px((1 - pop) * 30)}) scale(${(0.7 + 0.3 * pop).toFixed(4)})`); });
   }
 
@@ -439,7 +468,7 @@ window.Short = cfg => {
     setStyle(endPrice, prog(t, pa - 0.02, pa + 0.08), `translateY(${px((1 - pp) * 30)}) scale(${(0.7 + 0.3 * pp).toFixed(4)})`);
     const ha = CL.helperAt ?? CL.t + 2.4, hp = spring(t - ha, 14, 0.6);
     setStyle(endHelper, prog(t, ha - 0.02, ha + 0.08), `translateY(${px((1 - hp) * 200 + Math.sin(t * 2.2) * 8)}) scale(${(0.6 + 0.4 * hp).toFixed(4)})`);
-    const drift = 1 + 0.015 * prog(t, CL.t + 0.5, DURATION);
+    const drift = 1 + 0.035 * eio(prog(t, CL.t + 0.5, DURATION));
     endcard.style.transform = `scale(${drift.toFixed(4)})`; endcard.style.transformOrigin = "540px 960px";
   }
 

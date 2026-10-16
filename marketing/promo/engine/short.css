@@ -109,3 +109,12 @@ svg { display: block; }
 .bubble i { flex: none; width: 132px; height: 132px; border-radius: 50%; overflow: hidden; background: var(--area); }
 .bubble i img { width: 100%; height: 100%; object-fit: cover; }
 .bubble span { font-size: 44px; font-weight: 700; line-height: 1.22; color: var(--ink); }
+
+/* The finale as the four areas (the web film): a tile for each, with its helper */
+.recap-areas{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:10px 40px 20px}
+.recap-area{display:flex;flex-direction:column;align-items:center;gap:6px;padding:26px 16px 22px;border-radius:36px;background:color-mix(in srgb,var(--area) 38%,#fff7fb);box-shadow:0 14px 30px rgba(82,45,70,.12);opacity:0}
+.recap-area i{width:150px;height:150px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.55)}
+.recap-area i img{width:100%;height:100%;object-fit:cover}
+.recap-area b{font-size:52px;font-weight:800;letter-spacing:-.02em;color:#4b2340}
+.recap-area small{font-size:28px;font-weight:700;color:rgba(75,35,64,.72)}
+.recap-foot{margin:6px 40px 40px;text-align:center;font-size:38px;font-weight:800;color:var(--ink)}

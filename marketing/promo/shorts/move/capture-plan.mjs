@@ -57,6 +57,7 @@ export const plan = [
     { name: "m6-form", steps: [["click", "A walk or other activity", "walk"], ["wait", 1200], ["boxAs", "css=[role=dialog] input", "name"]] },
     { name: "m6-typed", steps: [["typeShots", "css=[role=dialog] input", "Dance in the kitchen", 2, "m6-typing"], ["wait", 200], ["boxAs", "Save entry", "save"]] },
     { name: "m6-saved", steps: [["click", "Save entry", "save"], ["wait", 1500], ["scrollY", "Your movement today", 110], ["wait", 300], ["boxMaybe", "Dance in the kitchen", "entry"]] },
+    { name: "m6-story", steps: [["scrollY", "Your movement story", 110], ["wait", 300], ["boxMaybe", "css=.area-record", "entry"]] },
   ] },
   // Chapter 7: no plan? Fifteen minutes with Bounce; then look back at the week, with no streaks (Daywell).
   { query: "view=move&promo=1&still", clock: "2026-10-14T17:45:00", shots: [

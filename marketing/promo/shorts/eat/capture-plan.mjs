@@ -7,7 +7,7 @@ import { repoRoot } from "../../tools/paths.mjs";
 // The meal photo: a stand-in from the app itself until the owner supplies a real one.
 const photo = process.env.PROMO_PHOTO || join(repoRoot, "public", "grain-bowl.jpg");
 // Tags a basket card (by ingredient) and one of its buttons, so the finger can find them.
-const tagStock = (ingredient, button, as) => `(() => { const card = [...document.querySelectorAll('article.food-stock')].find(c => c.querySelector('h3')?.innerText.trim() === '${ingredient}'); if (!card) throw Error('no ${ingredient}'); card.setAttribute('data-promo', '${as}-card'); const b = [...card.querySelectorAll('button')].find(x => x.innerText.trim() === '${button}'); b.setAttribute('data-promo', '${as}'); return true; })()`;
+const tagStock = (ingredient, button, as) => `(() => { const card = [...document.querySelectorAll('article.food-item')].find(c => c.querySelector('h3')?.innerText.trim().toLowerCase() === '${ingredient}'); if (!card) throw Error('no ${ingredient}'); card.setAttribute('data-promo', '${as}-card'); const b = [...card.querySelectorAll('button')].find(x => x.innerText.trim() === '${button}'); b.setAttribute('data-promo', '${as}'); return true; })()`;
 const edit = "css=button[aria-label='Edit Salmon & quinoa bowl']";
 const handFood = "css=[role=dialog] input[placeholder^=\"e.g.\"]";
 
@@ -39,7 +39,7 @@ export const plan = [
     { name: "e3-two", steps: [["type", "css=.food-form-grid input[type=number]", "2"], ["wait", 300], ["boxAs", "css=.food-form-grid input[type=number]", "amount"]] },
     { name: "e3-typed", steps: [["scroll", "checked the amount actually used", "center"], ["wait", 300], ["click", "checked the amount actually used", "checked"], ["wait", 300], ["boxAs", "Save food used", "save"]] },
     { name: "e3-saved", steps: [["click", "Save food used", "save"], ["wait", 1800], ["scrollY", "Meal remembered", 120], ["wait", 300], ["boxMaybe", "Meal remembered", "notice"], ["boxMaybe", "=Undo", "undo"]] },
-    { name: "e3-egg", steps: [["eval", tagStock("egg", "Adjust", "egg-adjust")], ["scrollY", "css=[data-promo=egg-adjust-card]", 300], ["wait", 300], ["boxAs", "css=[data-promo=egg-adjust-card]", "card"]] },
+    { name: "e3-egg", steps: [["eval", tagStock("egg", "I ate / used some", "egg-adjust")], ["scrollY", "css=[data-promo=egg-adjust-card]", 300], ["wait", 300], ["boxAs", "css=[data-promo=egg-adjust-card]", "card"]] },
   ] },
   // Chapters 4 and 5: what can my basket make? (Plus), then just what's missing, bought and put away (Daywell).
   { query: "view=eat&promo=1&still", clock: "2026-10-14T17:30:00", shots: [
@@ -50,20 +50,26 @@ export const plan = [
     { name: "e4-result", steps: [["click", "=Continue", "continue"], ["wait", 3000], ["boxMaybe", "=Vegetable chilli with rice", "meal1"]] },
     { name: "e4-result2", steps: [["scroll", "Review meals & save", "center"], ["wait", 400], ["boxAs", "Review meals & save", "review"], ["boxMaybe", "2 of 3 meals covered", "coverage"]] },
     { name: "e4-review", steps: [["click", "Review meals & save", "review"], ["wait", 2500], ["scroll", "Save these meals", "center"], ["wait", 400], ["boxAs", "Save these meals", "save"]] },
-    { name: "e5-saved", steps: [["click", "Save these meals", "save"], ["wait", 2500], ["scroll", "=Shopping", "center"], ["click", "=Shopping", "tab"], ["wait", 1500], ["scrollY", "Just what’s missing.", 110], ["wait", 300], ["boxMaybe", "=spring onion", "onion"], ["boxMaybe", "=lime", "lime"], ["boxAs", "=I bought this", "bought"], ["boxAs", "Put shopping away", "away"]] },
-    { name: "e5-purchase", steps: [["click", "=I bought this", "bought"], ["wait", 1200], ["scrollY", "Enter what you actually bought", 120], ["wait", 300], ["boxAs", "Add bought food to basket", "add"]] },
-    { name: "e5-added", steps: [["click", "Add bought food to basket", "add"], ["wait", 1800], ["scrollY", "Saved to your food basket", 160], ["wait", 300], ["boxMaybe", "Saved to your food basket", "notice"], ["boxMaybe", "=I bought this", "bought"], ["boxMaybe", "Put shopping away", "away"]] },
+    { name: "e5-saved", steps: [["click", "Save these meals", "save"], ["wait", 2500], ["scroll", "=Shopping", "center"], ["click", "=Shopping", "tab"], ["wait", 1500], ["scrollY", "Just what’s missing.", 110], ["wait", 300], ["boxMaybe", "spring onion", "onion"], ["boxMaybe", "lime", "lime"], ["boxAs", "css=button[aria-label='I bought spring onion']", "bought"], ["boxAs", "Put shopping away", "away"]] },
+    { name: "e5-purchase", steps: [["click", "css=button[aria-label='I bought spring onion']", "bought"], ["wait", 1200], ["scrollY", "Enter what you actually bought", 120], ["wait", 300], ["boxAs", "Add bought food to basket", "add"]] },
+    { name: "e5-added", steps: [["click", "Add bought food to basket", "add"], ["wait", 1800], ["scrollY", "Saved to your food basket", 160], ["wait", 300], ["boxMaybe", "Saved to your food basket", "notice"], ["boxMaybe", "Put shopping away", "away"]] },
+    // The spring onion, now in the basket.
+    { name: "e5-basket", steps: [["click", "=Food basket", "tab"], ["wait", 1200], ["eval", tagStock("spring onion", "I ate / used some", "onion")], ["scrollY", "css=[data-promo=onion-card]", 300], ["wait", 300], ["boxAs", "css=[data-promo=onion-card]", "card"]] },
   ] },
   // Chapter 6: plans by hand, and ideas from Nori's recipes (Daywell).
   { query: "view=eat&promo=1&still", clock: "2026-10-14T18:30:00", shots: [
     { name: "e6-next", steps: [["click", "=Next meals", "next"], ["wait", 1200], ["scrollY", "A few days, gently planned.", 140], ["wait", 300], ["boxAs", "=Plan these 3 days", "days"]] },
     { name: "e6-days", steps: [["click", "=Plan these 3 days", "days"], ["wait", 1200], ["scrollY", "Your next 3 days, at your pace.", 90], ["wait", 300], ["boxMaybe", "css=.food-form-grid select", "idea"]] },
     { name: "e6-ideas", steps: [["eval", "document.querySelector('.food-form-actions button[type=button]')?.click(); true"], ["wait", 800], ["scrollY", "A little inspiration", 100], ["wait", 300], ["boxAs", "=How to make it", "how"]] },
-    { name: "e6-how", steps: [["click", "=How to make it", "how"], ["wait", 700], ["scrollY", "Chickpea sunshine bowl", 110], ["wait", 300], ["boxMaybe", "=Review & plan", "plan"]] },
+    { name: "e6-how", steps: [["click", "=How to make it", "how"], ["wait", 700], ["scrollY", "Chickpea sunshine bowl", 110], ["wait", 300], ["boxAs", "=Review & plan", "plan"]] },
+    { name: "e6-review", steps: [["click", "=Review & plan", "plan"], ["wait", 1500], ["scrollY", "Your meals, ready to review.", 90], ["wait", 300], ["boxMaybe", "Chickpea sunshine bowl", "title"]] },
+    { name: "e6-review2", steps: [["scroll", "Save these meals", "center"], ["wait", 400], ["boxAs", "Save these meals", "save"]] },
+    { name: "e6-saved", steps: [["click", "Save these meals", "save"], ["wait", 2200], ["scrollY", "Meal plans saved", 150], ["wait", 300], ["boxMaybe", "Meal plans saved", "notice"]] },
   ] },
   // Chapter 7: look back at the week, without judgement (Daywell).
   { query: "view=eat&promo=1&still", clock: "2026-10-14T20:00:00", shots: [
     { name: "e7-strip", steps: [["scrollTo", 300], ["wait", 300], ["boxAs", "Eat, last 7 days", "strip"]] },
     { name: "e7-story", steps: [["scroll", "=Your meal story", "center"], ["click", "=Your meal story", "story"], ["wait", 1200], ["scrollY", "Meals to remember", 90], ["wait", 300]] },
+    { name: "e7-story2", steps: [["eval", "window.scrollBy(0, 360); true"], ["wait", 400]] },
   ] },
 ];

@@ -33,9 +33,10 @@ Short({
     tap(W(3, "home"), "m1-none", "house"); S(W(3, "home") + 0.12, "m1-house", "cut");
     tap(W(3, "gym", 1), "m1-house", "gym"); S(W(3, "gym", 1) + 0.12, "m1-gym", "cut");
     camTo(W(3, "gym", 1) + 0.5, R(16, 240, 358, 520));
+    bubble(20.7, 23.3, "bounce", "Five minutes or fifty. Your pace.");
 
     // 2 · One step at a time, with a timer for each (Daywell).
-    camTo(24.85, R(16, 320, 358, 200));
+    camTo(24.85, R(16, 320, 358, 230));
     tap(W(4, "bounce") + 0.05, "m2-desk", "start");
     S(W(4, "bounce") + 0.17, "m2-step1"); camTo(W(4, "bounce") + 0.2, R(16, 20, 358, 200));
     S(W(4, "one") - 0.1, "m2-step1b", "scroll"); camTo(W(4, "one") - 0.05, R(16, 330, 358, 200));
@@ -51,6 +52,7 @@ Short({
     tap(W(5, "strong"), "m3-easy", "harder"); S(W(5, "strong") + 0.12, "m3-back");
     tap(W(5, "harder") - 0.05, "m3-back", "harder"); S(W(5, "harder") + 0.07, "m3-hard");
     hl(W(5, "harder") + 0.5, "m3-hard", "title", 2);
+    bubble(41.9, 45.2, "bounce", "Make it yours, one step at a time.");
 
     // 4 · With Plus, Bounce reads each step aloud.
     camTo(46.85, R(16, 20, 358, 300));
@@ -69,6 +71,7 @@ Short({
     S(W(7, "did") + 0.25, "m5-save", "scroll"); camTo(W(7, "did") + 0.3, R(16, 300, 358, 200));
     tap(W(7, "still"), "m5-save", "save"); cue(W(7, "still") + 0.1, "saved", -12);
     S(W(7, "still") + 0.12, "m5-done"); camTo(W(7, "still") + 0.15, R(16, 100, 358, 300));
+    bubble(63.3, 67.1, "bounce", "You moved! That counts. Every bit.");
 
     // 6 · A walk, a swim, a dance in the kitchen: recorded by hand (Daywell).
     camTo(68.6, R(16, 380, 358, 200));
@@ -80,7 +83,9 @@ Short({
     typing(W(8, "dance"), W(8, "kitchen") + 0.5, "m6-typed", "m6-typing");
     S(W(8, "kitchen") + 0.51, "m6-typed", "cut");
     tap(W(8, "hand") - 0.1, "m6-typed", "save"); cue(W(8, "hand"), "saved", -12);
-    S(W(8, "hand") + 0.02, "m6-saved"); camTo(W(8, "hand") + 0.05, R(16, 90, 358, 240));
+    S(W(8, "hand") + 0.02, "m6-saved"); camTo(W(8, "hand") + 0.05, R(16, 90, 358, 300));
+    S(74.7, "m6-story", "scroll"); camTo(74.75, R(16, 150, 358, 200)); hl(75.3, "m6-story", "entry", 2.6);
+    bubble(76.0, 79.1, "bounce", "A dance in the kitchen counts, too.");
 
     // 7 · No plan? Fifteen minutes with Bounce; then the week, with no streaks (Daywell).
     camTo(80.85, R(16, 300, 358, 160));

@@ -5,6 +5,7 @@
   "mix": {
     "voiceDb": 2,
     "musicDb": -9,
-    "duckDb": -9
+    "duckDb": -9,
+    "ceilingDb": -2.5
   }
 }

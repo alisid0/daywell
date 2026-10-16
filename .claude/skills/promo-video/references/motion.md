@@ -74,7 +74,8 @@ One transform on the world layer: translate to a point, scale, translate back. I
 (`z = exp(lerp(log z0, log z1, e))`) or it feels like it accelerates. Push in (1.15–1.8×) about the control
 being touched, so that control is a fixed point and the finger stays on it; settle before the tap; release after
 the result has landed. Don't zoom in and out back to back. A slow continuous drift (1–2% over a scene) keeps
-holds alive.
+holds alive. The shorts engine does this by itself: during any hold over 2.6 s it pushes in by up to 4%, and the
+next camera move releases it.
 
 ## Text
 

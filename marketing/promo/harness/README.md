@@ -21,3 +21,16 @@ The promo needs its `?promo=1` mode (in `main.jsx`):
 4. From `marketing/promo`, run `node tools/capture.mjs` (all shots) or `node tools/capture.mjs s4-eat` (one group).
 
 The harness tracks the app, so after big UI changes check that `main.jsx` still matches the app's API routes.
+
+## A second harness, for another branch (port 5194)
+
+The shorts show the October design from the `design/areas-ui` branch, captured beside the main clone's harness:
+
+1. In a second checkout (a git worktree) of that branch, repeat steps 1 and 2.
+2. Start it with `vite.fix.config.mjs`, which uses port 5194 and its own Vite cache:
+   `node node_modules/vite/bin/vite.js --config .harness/food/vite.fix.config.mjs`
+3. Capture from it with `HARNESS=http://localhost:5194/ node tools/capture.mjs --film=shorts/<film>`, or name it as a
+   group's `base` in the capture plan.
+
+`page=signin` and `page=plans` show the sign-in and plan screens (the web film uses them). The sign-in page takes
+the test code 246810, and signs in by itself on the sixth digit.

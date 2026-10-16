@@ -28,3 +28,24 @@ The engine in `film.js` is the reference for every technique in `references/moti
 - sky by time of day;
 - captions from word timings;
 - bubbles, the ending, and the cue export.
+
+## A series of films (the Daywell shorts, October 2026)
+
+For several films in one format, don't copy the folder: put each film in `shorts/<film>/` and share the engine.
+
+- **Every tool takes `--film=shorts/<film>`.** The film's `film.json` holds its name, length, music take and mix
+  settings. Its own `voiceover-lines.mjs`, `music-plan.json`, `capture-plan.mjs` and `timeline.js` sit beside it.
+  Sound effects stay shared.
+- **`engine/short.js`** builds the shared sections from a `Short({ … })` call:
+  - hook chips, title, chapter cards with a plan badge (or the film's own `badge`), the recap (rows or `areas`) and
+    the close;
+  - `script(api)` for each chapter's moments: `S`, `tap`, `tapAt` (drawn controls, in app CSS px), `hl`, `typing`,
+    `ticks`, `bubble`, `cue`, `camTo`, `camFull`, `camWorld`, `layer` (drawn HTML on the phone screen), `worldArt`;
+  - `draw(t)` for anything the film animates itself.
+- **The capture plan** can give each group its own `base` (another harness), `viewport` (a laptop view, say) and
+  `clock`. It also has an `eval` step for in-page script and a `helpers` step to reload the helpers after the page
+  reloads itself. `HARNESS=…` changes the default harness; `CLOCK=…` and `FULL=1` help `--explore`.
+- **`RENDER_SLOT=n`** gives a render its own ports and Chrome profile, so several renders and stills can run at
+  once.
+- **`tools/qa.mjs`** compares each frame with the one half a second earlier to find frozen stretches, so slow drifts
+  count as movement.

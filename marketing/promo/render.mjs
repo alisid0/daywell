@@ -33,13 +33,18 @@ const server = createServer(async (req, res) => {
     res.end(body);
   } catch { res.writeHead(404); res.end(); }
 });
-await new Promise(r => server.listen(8791 + slot, "127.0.0.1", r));
+// The last render in this slot may still be letting go of its port (Windows holds it for a moment), so retry.
+for (let i = 0; ; i++) {
+  try { await new Promise((resolve, reject) => { server.once("error", reject); server.listen(8791 + slot, "127.0.0.1", () => { server.off("error", reject); resolve(); }); }); break; }
+  catch (e) { if (e.code !== "EADDRINUSE" || i >= 20) throw e; await sleep(500); }
+}
 
 const port = 9371 + slot;
 const proc = spawn(CHROME, ["--headless=new", `--remote-debugging-port=${port}`, `--user-data-dir=${join(TMP, `render-${slot}`)}`, "--no-first-run", "--no-default-browser-check", "--hide-scrollbars", "--force-color-profile=srgb", "--disable-gpu-vsync", "--window-size=1080,1920", "about:blank"], { stdio: "ignore" });
+// Chrome can take well over 10 s to start while other renders keep the machine busy, so wait up to a minute.
 let target;
-for (let i = 0; i < 60 && !target; i++) { await sleep(200); try { target = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()).find(t => t.type === "page"); } catch { /* starting */ } }
-if (!target) throw new Error("Chrome did not start");
+for (let i = 0; i < 300 && !target; i++) { await sleep(200); try { target = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()).find(t => t.type === "page"); } catch { /* starting */ } }
+if (!target) { proc.kill(); server.close(); console.error(`Chrome did not start within a minute (slot ${slot}, port ${port}).`); process.exit(1); }
 const ws = new WebSocket(target.webSocketDebuggerUrl);
 await new Promise(r => ws.addEventListener("open", r, { once: true }));
 let id = 0; const pending = new Map(); const listeners = [];
@@ -85,7 +90,7 @@ if (has("cues")) {
   const args = ["-y", "-hide_banner", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(fps), "-c:v", "mjpeg", "-i", "pipe:0"];
   if (withSound) args.push("-ss", String(from), "-i", mix);
   args.push("-map", "0:v");
-  if (withSound) args.push("-map", "1:a", "-c:a", "aac", "-b:a", "192k", "-ar", "48000");
+  if (withSound) args.push("-map", "1:a", "-c:a", "aac", "-b:a", "256k", "-ar", "48000");
   args.push("-vf", "scale=out_color_matrix=bt709:out_range=tv,format=yuv420p", "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-profile:v", "high",
     "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv", "-r", String(fps), "-t", String(to - from), "-movflags", "+faststart", out);
   const ff = spawn(FFMPEG, args, { stdio: ["pipe", "inherit", "inherit"] });
@@ -102,5 +107,8 @@ if (has("cues")) {
   console.log("wrote", out, withSound ? "with mix.wav" : "without sound", `in ${Math.round((Date.now() - started) / 1000)} s`);
 }
 await send("Browser.close").catch(() => {});
-ws.close(); proc.kill(); server.close();
+ws.close();
+// Let Chrome exit before this process does, so the next render in this slot finds its profile and port free.
+await Promise.race([new Promise(r => proc.once("exit", r)), sleep(5000)]);
+proc.kill(); server.close();
 process.exit(0);

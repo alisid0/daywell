@@ -40,7 +40,13 @@ for (let f = 2; f < n - 2; f++) {
 console.log(`frames: ${n} at ${fps} fps; mean change per frame ${(diff.reduce((a, b) => a + b, 0) / n).toFixed(2)}`);
 console.log("big jumps (check each is a planned cut or hit):", spikes.join(" ") || "none");
 console.log("one-frame flashes:", flashes.join(" ") || "none");
-// Longest stretches with almost no motion (possible dead time)
-const still = []; let run = 0;
-for (let f = 1; f < n; f++) { if (diff[f] < 0.08) run++; else { if (run > fps * 1.5) still.push(`${((f - run) / fps).toFixed(1)}–${(f / fps).toFixed(1)}s`); run = 0; } }
+// Stretches of over 1.5 s where nothing visibly changes (possible dead time). Each frame is compared with the one half
+// a second earlier, so a slow camera drift or a breathing ring counts as movement, as it does for a viewer.
+const lag = Math.round(fps / 2), still = []; let run = 0;
+const endRun = f => { if (run > fps) still.push(`${((f - run - lag) / fps).toFixed(1)}–${(f / fps).toFixed(1)}s`); run = 0; };
+for (let f = lag; f < n; f++) {
+  let s = 0; const a = (f - lag) * size, b = f * size; for (let i = 0; i < size; i++) s += Math.abs(frames[a + i] - frames[b + i]);
+  if (s / size < 0.1) run++; else endRun(f);
+}
+endRun(n);
 console.log("still for over 1.5 s:", still.join(" ") || "none");

@@ -8,7 +8,7 @@ const chapter = "[Warm, calm, friendly narration]", close = "[Warm and confident
 export const lines = [
   { at: 0.3, tag: hook, text: "Bedtime came and went again? Let the day soften." },
   { at: 6.5, tag: upbeat, text: "This is Sleep, with Luma. Wind down well, and notice your rest.", seed: 3307 },
-  { at: 12.6, tag: chapter, text: "Choose when to wind down and when to be in bed. Change it any time." },
+  { at: 12.6, tag: chapter, text: "Choose when to wind down and when to wake up. Change it any time." },
   { at: 24.6, tag: chapter, text: "When it's time, Luma keeps you quiet company. You can leave the day here." },
   { at: 36.6, tag: chapter, text: "Pick a sleep sound, from forest at night to waves on sand. It fades out by itself." },
   { at: 48.6, tag: chapter, text: "Or listen to a guided track, like A softer goodnight." },

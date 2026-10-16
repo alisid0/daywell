@@ -37,7 +37,10 @@ the output size, and for each frame calls `seek(t)`, waits two animation frames,
   platforms that prefer 30.
 - Encode: `-c:v libx264 -preset slow -crf 17 -profile:v high -pix_fmt yuv420p -vf
   scale=out_color_matrix=bt709:out_range=tv -color_primaries bt709 -color_trc bt709 -colorspace bt709
-  -color_range tv -c:a aac -b:a 192k -ar 48000 -movflags +faststart`.
+  -color_range tv -c:a aac -b:a 256k -ar 48000 -movflags +faststart`.
+- Measure the true peak of the delivered MP4, not just the master. At 192 kbps, FFmpeg's AAC encoder added up to
+  2.5 dB to a sharp drum hit. At 256 kbps, with the limiter's ceiling at -2.5 dBFS (`ceilingDb` in `film.json`),
+  all five Daywell shorts measured -1.6 to -2.2 dBTP.
 - `--stills=t1,t2,…` renders PNGs at chosen times for checking; always check stills before a full render.
 - Long renders run in the background; check progress, don't poll in a tight loop.
 - Version every output (`name-v2.mp4`); never overwrite.

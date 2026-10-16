@@ -50,3 +50,17 @@ AI) needs a mock that returns a realistic result for promo captures. Restart the
 - Sound effects: 15 ElevenLabs sounds (`tools/sfx-list.json`).
 - Cost: small next to a paid ElevenLabs plan's monthly credits. The voice took about 1,200 credits; music and
   effects a few thousand more.
+
+## The shorts (15–16 Oct 2026), a series in one format
+
+- Five 2-minute films: Eat with Nori, Move with Bounce, Sleep with Luma, Relax with Luma, and the web app with
+  Sunny. Scripts, line changes and what blocks posting: `marketing/shorts/SCRIPTS.md`.
+- Format: hook (0–6 s), title (6–12 s), seven chapter cards about 12 s apart, each with a plan badge ("Included in
+  Daywell" or "Included in Daywell Plus"), a recap at 96 s and the close at 110 s.
+- Built from one engine (`marketing/promo/engine/short.js`) and one folder per film (`marketing/promo/shorts/`);
+  every tool takes `--film=shorts/<film>`.
+- Voice: Alice again, 11 lines per film. Music: one upbeat 120 BPM take per film (owner's choice for all five).
+  Relax plays two of the app's own sounds where the film shows them: a recorded kind word and the Temple drum.
+- Screens: the approved October design, from a second harness on port 5194 running `design/areas-ui`. The web film
+  draws the browser, keyboard, share sheet, menu, home screens and laptop as generic illustrations, with the real
+  app inside them.

@@ -7,7 +7,8 @@
 // Then two-pass loudnorm to -14 LUFS, a true-peak limiter (level=disabled) and a measurement of the result.
 //   node tools/mix.mjs [--film=shorts/eat]      → <film>/audio/mix-raw.wav, <film>/audio/mix.wav
 // Settings live in the film's film.json "mix": voiceDb, musicDb, duckDb, lines {"8": {gainDb, duckDb}}, muffle
-// {from, to}, ambience [{file (in the repo), from, to, db, fadeIn, fadeOut}], musicFadeOut [from, to].
+// {from, to}, ambience [{file (in the repo, or "film:…" in the film's folder), from, to, db, fadeIn, fadeOut}],
+// duck [[from, to]] (extra music dips), musicFadeOut [from, to], ceilingDb (the limiter's ceiling, default -1).
 import { spawn, spawnSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -62,7 +63,9 @@ stem = "music";
 // ---- Music: base level, ducked under the voice, optionally muffled for a stretch, optionally faded at the end
 const MUSIC_BASE = db(cfg.musicDb ?? -9), DUCK = db(cfg.duckDb ?? -9);
 // How much of the music remains (1 = none ducked): each line ducks to its own depth (default DUCK).
-const keepAt = t => { let keep = 1; for (const [a, b, depth] of voWindows) { const d = smooth((t - (a - 0.18)) / 0.15) * (1 - smooth((t - (b + 0.2)) / 0.45)); keep = Math.min(keep, 1 - (1 - (depth ?? DUCK)) * d); } return keep; };
+// Other sounds that need the music out of the way (film.json "duck": [[from, to], …]), such as a recorded voice in the app.
+const duckWindows = [...voWindows, ...(cfg.duck || []).map(([a, b]) => [a, b, null])];
+const keepAt = t => { let keep = 1; for (const [a, b, depth] of duckWindows) { const d = smooth((t - (a - 0.18)) / 0.15) * (1 - smooth((t - (b + 0.2)) / 0.45)); keep = Math.min(keep, 1 - (1 - (depth ?? DUCK)) * d); } return keep; };
 const duckAt = t => (1 - keepAt(t)) / (1 - DUCK);
 const music = await decode(join(filmRoot, "audio", "music", film.music));
 const [F0, F1] = cfg.musicFadeOut || [LEN + 1, LEN + 2];
@@ -99,7 +102,7 @@ for (const c of cues) {
 stem = "amb";
 // ---- Ambience, such as Daywell's own sleep sounds
 for (const a of cfg.ambience || []) {
-  const buf = await decode(join(repoRoot, a.file));
+  const buf = await decode(a.file.startsWith("film:") ? join(filmRoot, a.file.slice(5)) : join(repoRoot, a.file)); // "film:" = in the film's folder
   const W0 = a.from, W1 = a.to, wp = peakOf(buf).peak, fi = a.fadeIn ?? 1.8, fo = a.fadeOut ?? 2.4;
   add(buf, W0, t => (db(a.db) / wp) * smooth((t - W0) / fi) * (1 - smooth((t - (W1 - fo)) / fo)) * (t < W1 ? 1 : 0));
 }
@@ -115,7 +118,10 @@ const raw = join(filmRoot, "audio", "mix-raw.wav"), out = join(filmRoot, "audio"
 wav(raw, outL, outR);
 const pass1 = spawnSync(FFMPEG, ["-hide_banner", "-i", raw, "-af", "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json", "-f", "null", "-"], { encoding: "utf8" }).stderr;
 const m = JSON.parse(pass1.slice(pass1.lastIndexOf("{"), pass1.lastIndexOf("}") + 1));
-const af = `loudnorm=I=-14:TP=-1.5:LRA=11:linear=true:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset},alimiter=limit=0.891:level=disabled:attack=5:release=60`;
+// The limiter's ceiling: -1 dBFS unless film.json sets ceilingDb. AAC encoding lifts sharp peaks (by up to 2.5 dB at
+// 192 kbps on the shorts), so a film whose delivered MP4 measures over -1 dBTP sets a lower one; the shorts use -2.5.
+const ceiling = cfg.ceilingDb == null ? "0.891" : db(cfg.ceilingDb).toFixed(3);
+const af = `loudnorm=I=-14:TP=-1.5:LRA=11:linear=true:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset},alimiter=limit=${ceiling}:level=disabled:attack=5:release=60`;
 const r2 = spawnSync(FFMPEG, ["-hide_banner", "-loglevel", "error", "-y", "-i", raw, "-af", af, "-ar", String(SR), "-c:a", "pcm_s24le", out], { encoding: "utf8" });
 if (r2.status !== 0) throw Error(r2.stderr);
 const meas = spawnSync(FFMPEG, ["-hide_banner", "-i", out, "-af", "ebur128=peak=true:framelog=quiet", "-f", "null", "-"], { encoding: "utf8" }).stderr;

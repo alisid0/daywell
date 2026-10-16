@@ -47,12 +47,12 @@ Short({
     S(W(4, "enough") + 0.31, "e2-typed", "cut");
     S(W(4, "add") - 0.05, "e2-optional", "slide"); camTo(W(4, "add"), R(16, 150, 358, 140));
     hl(W(4, "nutrition"), "e2-optional", "kcal", 1.6);
-    S(W(4, "it") + 0.6, "e2-save", "scroll"); camTo(W(4, "it") + 0.65, R(16, 640, 358, 140));
+    S(W(4, "it") + 0.6, "e2-save", "slide"); camTo(W(4, "it") + 0.65, R(16, 640, 358, 140));
     tap(W(4, "it") + 1.3, "e2-save", "save"); cue(W(4, "it") + 1.4, "saved", -12);
     S(W(4, "it") + 1.42, "e2-saved"); camTo(W(4, "it") + 1.45, R(16, 100, 358, 420));
 
     // 3 · The food basket (Daywell): two eggs used, noted, and the basket shows four.
-    camTo(34.85, R(16, 290, 358, 280));
+    camTo(34.85, R(16, 290, 358, 330));
     tap(W(5, "used") + 0.05, "e3-basket", "use");
     S(W(5, "used") + 0.17, "e3-form"); camTo(W(5, "used") + 0.2, R(16, 300, 358, 300));
     tap(W(5, "eggs") - 0.05, "e3-form", "amount");
@@ -61,7 +61,7 @@ Short({
     tap(W(5, "note") + 0.45, "e3-typed", "checked");
     tap(W(5, "it's") + 0.05, "e3-typed", "save"); cue(W(5, "it's") + 0.15, "saved", -12);
     S(W(5, "it's") + 0.17, "e3-saved"); camTo(W(5, "it's") + 0.2, R(16, 110, 358, 200));
-    S(41.0, "e3-egg", "slide"); camTo(41.05, R(16, 290, 358, 280));
+    S(41.0, "e3-egg", "slide"); camTo(41.05, R(16, 290, 358, 330));
     hl(41.6, "e3-egg", "card", 2.6);
 
     // 4 · What can my basket make? (Plus): three dinners from what's already there.
@@ -74,7 +74,7 @@ Short({
     S(W(6, "meals") + 0.21, "e4-typed", "cut");
     tap(W(6, "from") + 0.05, "e4-typed", "continue");
     S(W(6, "from") + 0.17, "e4-result"); camTo(W(6, "from") + 0.2, R(16, 110, 358, 420));
-    S(52.3, "e4-result2", "scroll"); camTo(52.35, R(16, 90, 358, 380));
+    S(52.3, "e4-result2", "slide"); camTo(52.35, R(16, 90, 358, 380));
     tap(53.4, "e4-result2", "review");
     S(53.52, "e4-review"); camTo(53.55, R(16, 120, 358, 400));
     bubble(54.4, 57.2, "nori", "Something good, made simple.");
@@ -86,6 +86,8 @@ Short({
     S(W(7, "tick") + 0.15, "e5-purchase"); camTo(W(7, "tick") + 0.18, R(16, 100, 358, 560));
     tap(W(7, "put") + 0.02, "e5-purchase", "add"); cue(W(7, "put") + 0.12, "saved", -12);
     S(W(7, "put") + 0.14, "e5-added"); camTo(W(7, "put") + 0.17, R(16, 150, 358, 400));
+    S(64.8, "e5-basket", "slide"); camTo(64.85, R(16, 290, 358, 290)); hl(65.4, "e5-basket", "card", 2.6);
+    bubble(66.2, 69.1, "nori", "Just what you need, aisle by aisle.");
 
     // 6 · Plans by hand, and an idea from Nori's recipes (Daywell).
     camTo(70.85, R(16, 120, 358, 260));
@@ -94,12 +96,17 @@ Short({
     S(W(8, "borrow") - 0.05, "e6-ideas", "slide"); camTo(W(8, "borrow"), R(16, 70, 358, 470));
     tap(W(8, "recipes") - 0.2, "e6-ideas", "how");
     S(W(8, "recipes") - 0.08, "e6-how"); camTo(W(8, "recipes") - 0.05, R(16, 90, 358, 520));
-    hl(76.6, "e6-how", "plan", 2.2);
+    tap(76.3, "e6-how", "plan");
+    S(76.42, "e6-review"); camTo(76.45, R(16, 40, 358, 520));
+    S(78.2, "e6-review2", "scroll"); camTo(78.25, R(16, 300, 358, 200));
+    tap(79.0, "e6-review2", "save"); cue(79.1, "saved", -12);
+    S(79.12, "e6-saved"); camTo(79.15, R(16, 140, 358, 170));
 
     // 7 · Look back (Daywell): the week and the meals, without judgement.
     camTo(82.85, R(16, 80, 358, 160));
     S(W(9, "meals") + 0.1, "e7-story", "slide"); camTo(W(9, "meals") + 0.15, R(16, 60, 358, 560), 1.3);
     bubble(86.6, 91.0, "nori", "A little nourishment, without the judgement.");
+    S(91.4, "e7-story2", "scroll");
     camFull(92.0);
   },
 });

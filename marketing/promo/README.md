@@ -54,6 +54,59 @@ node tools/sfx.mjs                         # any missing sound effects in tools/
 
 The full render takes about 11 minutes at 60 fps on the owner's Windows machine.
 
+## The shorts (October 2026)
+
+Five more 2-minute films made with the same tools: Eat, Move, Sleep, Relax and the web app. Their scripts, line
+changes and what blocks posting are in [../shorts/SCRIPTS.md](../shorts/SCRIPTS.md).
+
+- **One engine, five timelines.** `engine/short.js` (with `short.css` and `icons.js`) builds what the series shares:
+  the hook's thought chips, the title, the event cards with their plan badge, the recap and the close. It gives
+  each film's `timeline.js` its tools:
+  - screens (`S`), and taps on captured (`tap`) or drawn (`tapAt`) controls;
+  - highlights, typing and ticking crops, and bubbles;
+  - drawings on the phone screen (`layer`) and around it (`worldArt`, `camWorld`);
+  - the camera.
+
+  When the camera holds for over 2.6 s, it pushes in slowly, so a held screen never sits frozen.
+- **One folder per film,** `shorts/<film>/`, holds:
+  - `film.json`: the name, length, music take and mix settings;
+  - `voiceover-lines.mjs`, `music-plan.json`, `capture-plan.mjs` and `timeline.js`;
+  - `index.html`, and the film's assets, audio and data.
+
+  The sound effects are shared (`audio/sfx/`).
+- **Every tool takes `--film=shorts/<film>`.** Without it, the tools work on the promo as before.
+
+To get a film back, from `marketing/promo` (Eat shown):
+
+```sh
+node render.mjs --film=shorts/eat --cues && node tools/mix.mjs --film=shorts/eat
+node render.mjs --film=shorts/eat          # → shorts/eat/out/daywell-short-eat.mp4
+node tools/qa.mjs shorts/eat/out/daywell-short-eat.mp4
+node tools/srt.mjs --film=shorts/eat
+```
+
+Renders can run side by side. Give each one its own `RENDER_SLOT` number, which picks its ports and Chrome
+profile: for example `RENDER_SLOT=2 node render.mjs --film=shorts/move`. A render takes 10–20 minutes, depending on
+what else is running.
+
+**Screens:**
+- The four area films show the approved October design. They were captured from a second copy of the harness that
+  runs a checkout of `design/areas-ui` on port 5194 (see `harness/README.md`):
+  `HARNESS=http://localhost:5194/ node tools/capture.mjs --film=shorts/eat`.
+- The web film's capture plan names a harness per group (`base`): sign-in and the plan screen come from 5196,
+  Today and the laptop view from 5194.
+- A group can also set its own `viewport`. The laptop view is 1280×800.
+
+**Mix settings in `film.json`:**
+- `voiceDb`, `musicDb` and `duckDb`;
+- per-line `lines` adjustments;
+- a `muffle` stretch;
+- `ambience` beds: a repo path, or `film:` plus a path inside the film's folder;
+- extra `duck` windows;
+- `musicFadeOut`;
+- `ceilingDb`, the limiter's ceiling. The shorts use -2.5, because AAC encoding lifts sharp peaks; their MP4s
+  measure -1.6 to -2.2 dBTP. The render encodes AAC at 256 kbps.
+
 ## What's real, and what blocks posting
 
 Everything shown works in today's app (main, the plans branch or the private test), with sample data. Before posting:

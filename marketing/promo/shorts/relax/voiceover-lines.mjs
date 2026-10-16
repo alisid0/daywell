@@ -14,7 +14,7 @@ export const lines = [
   { at: 48.6, tag: chapter, text: "Or just listen to a few kind words, for moments like after an awkward conversation." },
   { at: 60.6, tag: chapter, text: "Sounds for rest, from forest at dawn to a temple drum." },
   { at: 70.6, tag: chapter, text: "Want to remember something? Write a private reflection, only if you want to." },
-  { at: 82.6, tag: chapter, text: "And from anywhere in Daywell, Just rest is one tap away." },
+  { at: 82.6, tag: chapter, text: "And from Home, Just rest is one tap away." },
   { at: 96.6, tag: upbeat, text: "The quiet corner, guidance and reflections come with Daywell. Voices, sounds and guided sessions come with Plus." },
   { at: 110.6, tag: close, text: "Daywell, from four ninety-nine a month. Make a date with yourself." },
 ];

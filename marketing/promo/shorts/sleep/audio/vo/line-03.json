@@ -1,82 +1,77 @@
 {
- "text": "Choose when to wind down and when to be in bed. Change it any time.",
+ "text": "Choose when to wind down and when to wake up. Change it any time.",
  "tag": "[Warm, calm, friendly narration]",
  "words": [
   {
    "word": "Choose",
-   "start": 0.162,
-   "end": 0.482
+   "start": 0.082,
+   "end": 0.402
   },
   {
    "word": "when",
-   "start": 0.562,
-   "end": 0.722
+   "start": 0.482,
+   "end": 0.642
   },
   {
    "word": "to",
-   "start": 0.802,
-   "end": 0.962
+   "start": 0.722,
+   "end": 0.802
   },
   {
    "word": "wind",
-   "start": 1.122,
-   "end": 1.282
+   "start": 0.882,
+   "end": 1.122
   },
   {
    "word": "down",
-   "start": 1.362,
-   "end": 1.842
+   "start": 1.202,
+   "end": 1.682
   },
   {
    "word": "and",
-   "start": 1.922,
-   "end": 2.162
+   "start": 1.762,
+   "end": 2.002
   },
   {
    "word": "when",
-   "start": 2.242,
-   "end": 2.402
+   "start": 2.122,
+   "end": 2.242
   },
   {
    "word": "to",
-   "start": 2.482,
-   "end": 2.562
+   "start": 2.322,
+   "end": 2.402
   },
   {
-   "word": "be",
-   "start": 2.602,
+   "word": "wake",
+   "start": 2.522,
    "end": 2.642
   },
   {
-   "word": "in",
+   "word": "up.",
    "start": 2.722,
-   "end": 2.882
-  },
-  {
-   "word": "bed.",
-   "start": 3.242,
-   "end": 3.642
+   "end": 3.362
   },
   {
    "word": "Change",
-   "start": 3.682,
-   "end": 3.922
+   "start": 3.442,
+   "end": 3.682
   },
   {
    "word": "it",
+   "start": 3.802,
+   "end": 3.922
+  },
+  {
+   "word": "any",
    "start": 4.002,
    "end": 4.242
   },
   {
-   "word": "any",
-   "start": 4.322,
-   "end": 4.562
-  },
-  {
    "word": "time.",
-   "start": 4.642,
-   "end": 5.442
+   "start": 4.682,
+   "end": 5.202
   }
  ],
- "heard": "Choose when to wind down and when to be in bed. Change it any time"
+ "heard": "Choose when to wind down and when to wake up. Change it anytime."
 }

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/atkinson-hyperlegible-next";
 // Reading comfort font options. Browsers only download a font's files when someone picks it.
 import "@fontsource-variable/lexend";
@@ -23,6 +23,7 @@ import "./sleep-sounds.css";
 import "./ai-report.css";
 import "./sign-in.css";
 import "./food.css";
+import "./areas.css";
 import "./capture.css";
 import "./audio-library.css";
 import "./meditation.css";
@@ -38,7 +39,15 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
+    apple: "/apple-touch-icon.png",
   },
+  // The web app (docs/web-app.md): added to a phone's home screen, Daywell opens full screen with its own icon.
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: "Daywell", statusBarStyle: "default" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#fae7ef",
 };
 
 export default function RootLayout({

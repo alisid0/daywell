@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Play, Square } from "lucide-react";
+import { ArrowLeft, ChevronRight, Clock, NotebookPen, Play, Square } from "lucide-react";
+import { sessionLook } from "./area-look";
 import Link from "@/components/daywell-link";
 import { CompanionPortrait } from "@/components/daywell-companions";
 import { CompanionMotionControl } from "@/components/companion-motion-preference";
@@ -33,11 +34,11 @@ export function RestSpace({ a, bedtime = false, onLeave }: { a: AppState; bedtim
     <div className="well-actions rest-controls"><button className="well-button" aria-pressed={guided} onClick={() => { recording.stop(); setGuided(!guided); setStep(0); }}>{guided ? "Return to quiet" : "A little guidance"}</button></div>
     {guided && <div className="well-actions"><button className="well-button well-secondary" disabled={!recording.ready(moments[step])} onClick={() => recording.status !== "idle" ? recording.stop() : void recording.play(moments[step])}>{recording.status !== "idle" ? <Square size={16} /> : <Play size={16} />}{recording.status !== "idle" ? "Stop listening" : "Listen to these words"}</button><button className="well-text-button" onClick={() => { recording.stop(); if (step === moments.length - 1) { setGuided(false); setStep(0); } else setStep(step + 1); }}>{step === moments.length - 1 ? "Stay quietly" : "Next, when I’m ready"}</button></div>}
     {recording.error && <p role="alert">{recording.error}</p>}
-    <SleepSounds />
-    {!bedtime && <section className="rest-unwind" aria-label="Choose an unwind exercise"><h2>A softer landing</h2><div>{unwindSessions.map(session=><Link key={session.id} href={`/meditate?session=${session.id}`} onClick={()=>recording.stop()}><span>{session.title}</span><small>{session.seconds/60} min · 5 voices</small></Link>)}</div></section>}
+    <SleepSounds focusRequest={a.soundFocus} />
+    {!bedtime && <section className="rest-unwind" aria-label="Choose an unwind exercise"><h2>A softer landing</h2><div>{unwindSessions.map(session=>{ const look = sessionLook(session.id); return <Link key={session.id} className={`area-tone-${look.tone}`} href={`/meditate?session=${session.id}`} onClick={()=>recording.stop()}><span className="area-icon" aria-hidden><look.Icon size={20}/></span><span className="rest-unwind-text"><span>{session.title}</span><em>{session.description}</em><small><Clock size={13} aria-hidden/>{session.seconds/60} min · 5 voices</small></span><ChevronRight className="rest-unwind-go" size={20} aria-hidden/></Link>; })}</div></section>}
     <Link className="rest-library-link" href={`/meditate?session=${bedtime ? "softer-goodnight" : "easy-breath"}`} onClick={() => recording.stop()}>{bedtime ? "A five-minute bedtime meditation" : "More guided breathing & meditation"}</Link>
     <Link className="rest-library-link" href="/audio-library" onClick={() => recording.stop()}>More little words of comfort</Link>
     {!bedtime && <CalendarStrip a={a} area="relax" />}
-    <details className="rest-reflection"><summary>Something you’d like to remember?</summary><p>Only if you want to. Your pause doesn’t need a record.</p><button className="well-text-button" onClick={() => a.openEditor("reflection")}>Write a private reflection</button></details>
+    <details className="rest-reflection"><summary><span className="area-icon is-small" aria-hidden><NotebookPen size={17}/></span>Something you’d like to remember?</summary><p>Only if you want to. Your pause doesn’t need a record.</p><button className="well-text-button" onClick={() => a.openEditor("reflection")}>Write a private reflection</button></details>
   </section>;
 }

@@ -1,6 +1,7 @@
 import type { Entry, Kind } from "./daywell";
 import { wellnessBoundary } from "./wellness-scope.ts";
 import { timerIntent } from "./timer-intent.ts";
+import { soundRequest, type SoundRequest } from "./sound-request.ts";
 
 export type SupportLevel = "quiet" | "occasional" | "guided";
 export type ActivityCompanion = "pip" | "luma" | "bounce" | "tock";
@@ -10,6 +11,7 @@ export type HostAction =
   | { type: "activity"; companion: ActivityCompanion; title: string; minutes: number }
   | { type: "alarm"; time: string };
 export type HostRequest =
+  | SoundRequest
   | { type: "timer-status" }
   | { type: "plan"; actions: HostAction[] }
   | { type: "control"; command: "confirm" | "cancel" | "undo" | "changes" | "pause" | "resume" | "end" }
@@ -54,6 +56,8 @@ export function parseHostRequest(input: string): HostRequest {
     return { type: "reply", message: "Hello! I’m here. Would you like a quiet moment, or a little help with your day? You can say “Help me wind down” or choose Just rest." };
   }
   text = text.replace(/^(?:(?:hello|hi|hey)(?:[ ,]+daywell)?[ ,]+|daywell[ ,]+)/i, "").replace(/^please /i, "").replace(/ please$/i, "");
+  const sounds = soundRequest(text);
+  if (sounds) return sounds;
   if (/^(?:thanks|thank you)(?:[ ,]+daywell| so much)?$/i.test(text)) return { type: "reply", message: "You’re welcome. Take your time—I’m here when you need a hand." };
   if (/^(?:are you there|can you hear me|is this working)$/i.test(text)) return { type: "reply", message: "I received your message. You can type here, or tap Talk to Daywell to try voice." };
   if (/^(?:help|what can you do|how (?:do i|can i) (?:start|use (?:this|daywell)))$/i.test(text)) return { type: "reply", message: "We can start small: try “Help me wind down”, “Focus for ten minutes”, or “Show my calendar”. Move, Eat, Sleep and Relax are below. Choose Just rest if you only need a pause." };

@@ -128,7 +128,7 @@ If the owner means public availability by 5 November, aim to submit earlier and 
 
 ## Deferred features
 
-Defer new mascot redesigns, further appearance experiments, retailer integrations, automatic food ordering, receipt/barcode automation, wearable/HealthKit/Health Connect integrations, live Google/Apple calendar sync, social features, medical diet planning and multilingual expansion. Keep the agreed core ingredient-photo and food-planning journey in scope. If it misses the freeze, explicitly decide whether to reduce scope or move the date; do not silently market an unfinished feature.
+Defer new mascot redesigns, further appearance experiments, retailer integrations, automatic food ordering, receipt/barcode automation, wearable/HealthKit/Health Connect integrations (after the first store release, through Apple Health and Health Connect; see [wearables](wearables.md)), live Google/Apple calendar sync, social features, medical diet planning and multilingual expansion. Keep the agreed core ingredient-photo and food-planning journey in scope. If it misses the freeze, explicitly decide whether to reduce scope or move the date; do not silently market an unfinished feature.
 
 ## Work across both machines
 

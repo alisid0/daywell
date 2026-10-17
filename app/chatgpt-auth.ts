@@ -1,5 +1,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { database } from "@/db/store";
+import { readClosure } from "@/lib/account-lifecycle";
 
 export type ChatGPTUser = {
   userId: string;
@@ -41,9 +43,13 @@ export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
 
 export async function requireChatGPTUser(
   returnTo: string,
+  allowClosed = false,
 ): Promise<ChatGPTUser> {
   const user = await getChatGPTUser();
-  if (user) return user;
+  if (user) {
+    if (!allowClosed && await readClosure(database(), user.userId)) redirect("/account-deleted");
+    return user;
+  }
 
   redirect(chatGPTSignInPath(returnTo));
 }

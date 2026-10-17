@@ -1,3 +1,4 @@
+import { activeAccountRoute } from "../active-account";
 import { env } from "cloudflare:workers";
 import { getChatGPTUser } from "@/app/chatgpt-auth";
 import { database } from "@/db/store";
@@ -11,11 +12,11 @@ const usedUp: Partial<Record<LimitedFeature, string>> = {
   "voice-day": `You’ve had today’s ${limits["voice-day"].max} live conversations. More are available tomorrow, and typing everyday commands still works.`,
   "voice-all": "Live conversations are unavailable until tomorrow because Daywell’s daily limit has been reached. Typing everyday commands still works.",
 };
-export async function GET() {
+async function handleGET() {
   if(!await getChatGPTUser()) return json({error:"Sign in to use Daywell."},401);
   return json({configured:voiceConfig(env.ELEVENLABS_API_KEY,env.ELEVENLABS_AGENT_ID)});
 }
-export async function POST(request: Request) {
+async function handlePOST(request: Request) {
   const user = await getChatGPTUser();
   if(!user) return json({error:"Sign in to start a conversation."},401);
   if(!allowedVoiceOrigin(request)) return json({error:"Start your conversation from Daywell."},403);
@@ -33,3 +34,7 @@ export async function POST(request: Request) {
     return json({signedUrl:result.signed_url});
   } catch { await giveBack(); return json({error:"The voice connection is unavailable right now. You can still type an everyday command."},503); }
 }
+
+export const GET = activeAccountRoute(handleGET);
+
+export const POST = activeAccountRoute(handlePOST);

@@ -1,3 +1,4 @@
+import { activeAccountRoute } from "../active-account";
 import { validateHostChange } from "@/lib/host-change";
 import { getChatGPTUser } from "@/app/chatgpt-auth";
 import { database } from "@/db/store";
@@ -19,7 +20,7 @@ async function hasRoom(db: ReturnType<typeof database>, userId: string, ids: str
 }
 export const dynamic = "force-dynamic";
 const json = (value: unknown, status = 200) => Response.json(value, { status, headers: { "Cache-Control": "no-store" } });
-export async function GET() {
+async function handleGET() {
   const user = await getChatGPTUser();
   if (!user) return json({ error: "Sign in to save your day." }, 401);
   try {
@@ -35,7 +36,7 @@ export async function GET() {
     return json({ error: "Your saved day is unavailable. Please try again." }, 503);
   }
 }
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   const user = await getChatGPTUser();
   if (!user) return json({ error: "Sign in to save your day." }, 401);
   if (!sameOrigin(req)) return json({ error: "Request origin is not allowed." }, 403);
@@ -70,3 +71,7 @@ export async function POST(req: Request) {
     return json({ error: "Couldn't save. Your entry is still here; please try again." }, 503);
   }
 }
+
+export const GET = activeAccountRoute(handleGET);
+
+export const POST = activeAccountRoute(handlePOST);

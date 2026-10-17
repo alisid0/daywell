@@ -94,3 +94,23 @@ test("guided plan batches retain calories and cooking steps across reload and in
   data.pending=prepareFoodCommand(data.draft,"plan-retry");writeFoodRecovery(store,ali,data);
   assert.deepEqual(readFoodRecovery(store,ali).pending,data.pending);
 });
+
+import { clearAccountDeviceData, accountClosedOnDevice, closedAccountPrefix } from "../lib/food-recovery.ts";
+test("closing one account clears only its drafts and blocks offline restoration", () => {
+  const mine = "a".repeat(64), other = "b".repeat(64);
+  const values = new Map([
+    [recoveryPrefix + mine, "my draft"], [recoveryPrefix + other, "other draft"],
+    ["daywell-reading-comfort", "large"], ["unrelated-app", "keep"],
+  ]);
+  const storage = { getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key), key: i => [...values.keys()][i] ?? null, get length() { return values.size; } };
+  clearAccountDeviceData(storage, mine);
+  assert.equal(values.has(recoveryPrefix + mine), false);
+  assert.equal(values.get(recoveryPrefix + other), "other draft");
+  assert.equal(values.get("daywell-reading-comfort"), "large");
+  assert.equal(values.get("unrelated-app"), "keep");
+  assert.equal(accountClosedOnDevice(storage, mine), true);
+  assert.equal(values.get(closedAccountPrefix + mine), "closed");
+  assert.equal(readFoodRecovery(storage, mine), null);
+  assert.throws(() => writeFoodRecovery(storage, mine, {}), /account is closed/);
+  const count = values.size; clearAccountDeviceData(storage, "../bad"); assert.equal(values.size, count);
+});

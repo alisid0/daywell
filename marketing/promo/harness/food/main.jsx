@@ -77,6 +77,11 @@ if (promo) {
     { id: "tk2", kind: "task", data: { title: "Return the parcel", done: true, date: day(2), completedDate: day(2), minutes: 15 } },
     { id: "tk3", kind: "task", data: { title: "Water the plants", done: true, date: day(1), completedDate: day(1), minutes: 5 } },
   ];
+  if (params.get("whoop") === "1") {
+    // A connected WHOOP: last night and this morning's run came from it, and last night has no feeling yet.
+    entries = entries.map(e => e.id === "sl1" ? { ...e, data: { date: e.data.date, bedtime: "23:42", wakeTime: "07:05", minutes: sleepMins("23:42", "07:05"), source: "whoop", externalId: "whoop-sleep-1" } } : e);
+    entries.push({ id: "wh-run", kind: "move", data: { title: "Running", date: day(0), minutes: 32, source: "whoop", externalId: "whoop-workout-1" } });
+  }
   food.state = { ...food.state,
     stock: food.state.stock.filter(item => item.id !== "s-milk").map(item => item.id === "s-tomato" ? { ...item, quantity: 4 } : item),
     plans: [], shopping: [{ id: "sh-bread", title: "Sourdough loaf", quantity: "1", done: false, changedBy: seed }] };
@@ -88,6 +93,22 @@ const cannedPlan = { summary: "Three dinners for one from your basket, no mushro
   { title: "Spinach and egg fried rice", ingredients: [{ ingredient: "rice", quantity: 75, unit: "g" }, { ingredient: "egg", quantity: 2, unit: "each" }, { ingredient: "spinach", quantity: 80, unit: "g" }], steps: ["Cook the rice and let it cool a little.", "Scramble the eggs, add the spinach until it wilts, then stir through the rice."], caloriesPerServing: null, nutritionNote: "" },
   { title: "Tomato egg noodles", ingredients: [{ ingredient: "egg noodles", quantity: 75, unit: "g" }, { ingredient: "egg", quantity: 2, unit: "each" }, { ingredient: "tomato", quantity: 2, unit: "each" }, { ingredient: "spring onion", quantity: 2, unit: "each" }, { ingredient: "lime", quantity: 1, unit: "each" }], steps: ["Cook the noodles following the pack instructions.", "Soften the tomatoes, scramble in the eggs, then toss with the noodles, spring onion and a squeeze of lime."], caloriesPerServing: null, nutritionNote: "" },
 ] };
+// Recipe ideas (branches with lib/recipe-ideas.ts): canned model replies run through the app's own converters, so
+// what Daywell decides (in the basket or missing, extras not already listed) is real. No provider calls.
+// &norecipes hides the feature, as when OpenAI isn't connected.
+const recipesModule = Object.values(import.meta.glob("../../lib/recipe-ideas.ts"))[0];
+const recipes = recipesModule ? await recipesModule() : null;
+const cannedIdeas = { summary: "Three easy ideas from your rice, eggs, spinach, milk and chilli.", ideas: [
+  { title: "Spinach and egg fried rice", meal: "Dinner", minutes: 20, ingredients: [{ ingredient: "rice", quantity: 75, unit: "g" }, { ingredient: "egg", quantity: 2, unit: "each" }, { ingredient: "spinach", quantity: 60, unit: "g" }, { ingredient: "soy sauce", quantity: 10, unit: "ml" }, { ingredient: "vegetable oil", quantity: 5, unit: "ml" }],
+    steps: ["Cook the rice following the pack instructions, then spread it out to cool a little.", "Heat the oil in a large pan and scramble the eggs until fully set.", "Add the spinach and stir until it wilts.", "Stir in the rice and soy sauce, and fry until piping hot."] },
+  { title: "Chilli rice bowl", meal: "Lunch", minutes: 15, ingredients: [{ ingredient: "vegetable chilli", quantity: 1, unit: "portion" }, { ingredient: "rice", quantity: 75, unit: "g" }],
+    steps: ["Cook the rice following the pack instructions.", "Heat the chilli until piping hot all the way through.", "Spoon the chilli over the rice."] },
+  { title: "Creamy rice pudding", meal: "Breakfast", minutes: 35, ingredients: [{ ingredient: "rice", quantity: 50, unit: "g" }, { ingredient: "milk", quantity: 300, unit: "ml" }, { ingredient: "ground cinnamon", quantity: null, unit: "g" }],
+    steps: ["Put the rice and milk in a small pan.", "Simmer gently for 25 to 30 minutes, stirring often, until soft and creamy.", "Add a splash more milk if it gets too thick.", "Serve warm with a pinch of cinnamon."] },
+] };
+const cannedSteps = request => ({ summary: "Simple steps for your meal.", title: request.title || "Tomato and spinach noodles",
+  steps: ["Cook the egg noodles following the pack instructions, then drain.", "Warm the olive oil in a pan and soften the garlic for a minute.", "Add the chopped tomatoes and cook for 5 minutes until saucy.", "Stir in the spinach until it wilts, then toss everything with the noodles."],
+  extras: ["olive oil", "garlic"] });
 window.__food = food; window.__entries = () => entries;
 const realFetch = window.fetch.bind(window);
 // Branches with the timer and reply-routing endpoints get mirrors that use the app's own rules (no provider calls).
@@ -99,10 +120,19 @@ const replyManifest = router ? (await import("@/public/audio-library/manifest.js
 const eligible = router ? router.eligibleReplies(replyManifest) : [];
 const sha256 = async text => Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text))), b => b.toString(16).padStart(2, "0")).join("");
 async function savedTimer() { const entry = entries.find(e => e.id === "timer" && e.kind === "timer"); const raw = entry ? JSON.stringify(entry.data) : null; return { timer: entry ? entry.data : null, version: raw ? await sha256(raw) : null }; }
+let whoopConnected = params.get("whoop") === "1";
 const reply = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 window.fetch = async (input, init = {}) => {
   const path = new URL(typeof input === "string" ? input : input.url, location.href).pathname;
   const method = (init.method || "GET").toUpperCase();
+  if (path.startsWith("/api/wearables")) {
+    // ?whoop=1: a connected WHOOP with today's steps; ?whoop=0: not connected yet. Without it, wearables aren't offered.
+    if (!params.has("whoop")) return reply({ error: "Not found" }, 404);
+    if (method === "POST" && path.endsWith("/disconnect")) whoopConnected = false;
+    if (method === "POST") return reply({ ok: true });
+    const now = new Date(), date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+    return reply({ connections: [{ source: "whoop", connected: whoopConnected, lastSyncedAt: whoopConnected ? new Date(now.getTime() - 4 * 60e3).toISOString() : null, steps: whoopConnected ? { count: 6240, date, dayStartedAt: "07:05" } : null }] });
+  }
   if (path === "/api/state") {
     if (method === "GET") return reply({ recoveryScope: "a".repeat(64), settings, entries });
     // Mirrors app/api/state/route.ts, using the app's own validation where the branch has it.
@@ -202,6 +232,13 @@ window.fetch = async (input, init = {}) => {
     if (!pending || pending.tries <= 0) return reply({ error: "That code has expired. Ask for a new one." }, 400);
     if (String(body.code) !== "246810") { pending.tries--; return reply({ error: "That code isn't right. Check the newest email from Daywell.", triesLeft: pending.tries }, 400); }
     return reply({ ok: true, created: pending.email !== "sam@example.com" });
+  }
+  if (path === "/api/recipes" && recipes) {
+    if (method === "GET") return reply({ connected: !params.has("norecipes") });
+    let request; try { request = recipes.recipeRequestSchema.parse(JSON.parse(init.body || "{}")); } catch { return reply({ error: "Please check the ingredients and try again." }, 400); }
+    await new Promise(r => setTimeout(r, 400));
+    if (request.kind === "basket") return reply({ ...recipes.basketIdeasDraft(cannedIdeas, food.state), source: "ai" });
+    return reply({ ...recipes.mealStepsDraft(cannedSteps(request), request.ingredients.map(item => item.ingredient)), source: "ai" });
   }
   if (path === "/api/capture" && promo && draftEntries && mealPlanDraft) {
     if (method === "GET") return reply({ connected: true });

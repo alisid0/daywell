@@ -1,6 +1,6 @@
 # Preview harness snapshot (for capturing screens)
 
-A copy, taken 14 October 2026, of the local Vite preview harness. On the owner's Windows machine it lives in
+A copy, taken 14 October 2026 and updated 17 October, of the local Vite preview harness. On the owner's Windows machine it lives in
 `.harness/food/`, which is git-ignored. It renders the whole app with sample data and mocks the APIs, so real screens
 can be captured without the Workers runtime or any paid AI calls.
 
@@ -34,3 +34,15 @@ The shorts show the October design from the `design/areas-ui` branch, captured b
 
 `page=signin` and `page=plans` show the sign-in and plan screens (the web film uses them). The sign-in page takes
 the test code 246810, and signs in by itself on the sixth digit.
+
+## Other sample switches
+
+- `&whoop=1` or `&whoop=0`: a connected, or not yet connected, WHOOP, for the `feat/whoop` branch's Connected apps
+  and Steps today. Without it, wearables aren't offered.
+- Recipe ideas (`/api/recipes`, on `feat/eat-quantity-recipes`): canned model replies run through the app's own
+  converters in `lib/recipe-ideas.ts`, so no provider is called. `&norecipes` hides the feature, as when OpenAI isn't
+  connected.
+- `vite.dialog.config.mjs` starts a third copy, on port 5195.
+
+To show a preview at a glance, `node tools/screens-board.mjs` (from `marketing/promo`) puts captured phone screens on
+one board, each under a caption.

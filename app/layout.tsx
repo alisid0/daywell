@@ -24,6 +24,7 @@ import "./ai-report.css";
 import "./sign-in.css";
 import "./food.css";
 import "./areas.css";
+import "./wearables.css";
 import "./capture.css";
 import "./audio-library.css";
 import "./meditation.css";

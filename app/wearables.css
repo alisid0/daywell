@@ -1,0 +1,26 @@
+/* Connected wearables (app/wearables.tsx): the steps card on Move, Connected apps in Settings, and the source and
+   "How did you feel?" lines on wearable nights in Sleep. */
+.steps-today{display:flex;align-items:center;gap:16px}
+.steps-today h2{margin:0;font-size:calc(16px*var(--rc-scale,1))}
+.steps-today strong{display:block;font-size:calc(34px*var(--rc-scale,1));line-height:1.1;letter-spacing:-.01em;color:var(--dw-ink,#522d46);font-variant-numeric:tabular-nums}
+.steps-today small{display:block;margin-top:2px;font-size:calc(14px*var(--rc-scale,1));line-height:1.45;color:var(--dw-muted,#7d536e)}
+.steps-connect{display:inline-flex;align-items:center;gap:8px;justify-self:start;min-height:44px}
+
+.connected-apps{display:grid;gap:10px;margin-top:16px;padding:16px;border:1px solid var(--dw-line,#d8b7cc);border-radius:18px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font-size:calc(15px*var(--rc-scale,1))}
+.connected-apps h3{margin:0;font-size:calc(17px*var(--rc-scale,1))}
+.connected-apps small{font-size:calc(14px*var(--rc-scale,1));line-height:1.45;color:var(--dw-muted,#7d536e)}
+.connected-app{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.connected-app-text{display:grid;gap:2px;flex:1 1 180px;min-width:0}
+.connected-app-consent{display:grid;gap:8px;padding:14px;border-radius:14px;background:var(--dw-bg,#fae7ef)}
+.connected-app-consent p{margin:0;line-height:1.45}
+.connected-app-consent ul{display:grid;gap:4px;margin:0;padding-left:22px;list-style:disc;line-height:1.45}
+.connected-app-actions{display:flex;flex-wrap:wrap;gap:8px}
+.connected-app-button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 18px;border:1px solid var(--dw-line,#d8b7cc);border-radius:999px;background:var(--dw-bg,#fae7ef);color:var(--dw-ink,#522d46);font:inherit;font-size:calc(15px*var(--rc-scale,1));font-weight:700;text-decoration:none;cursor:pointer}
+.connected-app-button.primary{border-color:transparent;background:var(--dw-accent,#803c65);color:var(--dw-on-accent,#fff7fb)}
+.connected-app-button:disabled{opacity:.6;cursor:default}
+.connected-app-error{margin:0;font-weight:700}
+
+.sleep-source{color:var(--dw-muted,#7d536e)}
+.sleep-feeling-ask{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+.sleep-feeling-ask>span{font-weight:700}
+.sleep-feeling-ask button{min-height:44px;padding:8px 16px;border:1px solid var(--dw-line,#d8b7cc);border-radius:999px;background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font:inherit;font-size:calc(15px*var(--rc-scale,1));font-weight:700;cursor:pointer}

@@ -1,0 +1,82 @@
+{
+ "text": "Keep a basket of what's at home. Used two eggs? Note it, and it's updated.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Keep",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "a",
+   "start": 0.322,
+   "end": 0.402
+  },
+  {
+   "word": "basket",
+   "start": 0.482,
+   "end": 0.882
+  },
+  {
+   "word": "of",
+   "start": 0.962,
+   "end": 1.042
+  },
+  {
+   "word": "what's",
+   "start": 1.122,
+   "end": 1.282
+  },
+  {
+   "word": "at",
+   "start": 1.362,
+   "end": 1.442
+  },
+  {
+   "word": "home.",
+   "start": 1.522,
+   "end": 2.082
+  },
+  {
+   "word": "Used",
+   "start": 2.322,
+   "end": 2.562
+  },
+  {
+   "word": "two",
+   "start": 2.642,
+   "end": 2.802
+  },
+  {
+   "word": "eggs?",
+   "start": 2.882,
+   "end": 3.402
+  },
+  {
+   "word": "Note",
+   "start": 3.602,
+   "end": 3.762
+  },
+  {
+   "word": "it,",
+   "start": 3.922,
+   "end": 4.242
+  },
+  {
+   "word": "and",
+   "start": 4.322,
+   "end": 4.402
+  },
+  {
+   "word": "it's",
+   "start": 4.482,
+   "end": 4.562
+  },
+  {
+   "word": "updated.",
+   "start": 4.642,
+   "end": 5.762
+  }
+ ],
+ "heard": "Keep a basket of what's at home. Use two eggs? Note it, and it's updated"
+}

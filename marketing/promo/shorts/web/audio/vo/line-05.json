@@ -1,0 +1,62 @@
+{
+ "text": "On Android, open the menu and tap Add to home screen.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "On",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "Android,",
+   "start": 0.322,
+   "end": 1.002
+  },
+  {
+   "word": "open",
+   "start": 1.122,
+   "end": 1.362
+  },
+  {
+   "word": "the",
+   "start": 1.402,
+   "end": 1.442
+  },
+  {
+   "word": "menu",
+   "start": 1.522,
+   "end": 1.922
+  },
+  {
+   "word": "and",
+   "start": 2.002,
+   "end": 2.082
+  },
+  {
+   "word": "tap",
+   "start": 2.162,
+   "end": 2.402
+  },
+  {
+   "word": "Add",
+   "start": 2.642,
+   "end": 2.802
+  },
+  {
+   "word": "to",
+   "start": 2.842,
+   "end": 2.882
+  },
+  {
+   "word": "home",
+   "start": 3.042,
+   "end": 3.202
+  },
+  {
+   "word": "screen.",
+   "start": 3.282,
+   "end": 3.762
+  }
+ ],
+ "heard": "On Android, open the menu and tap Add to Home screen"
+}

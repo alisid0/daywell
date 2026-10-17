@@ -1,0 +1,62 @@
+{
+ "text": "Sat at your desk all day? Good news: a stretch counts.",
+ "tag": "[Playful, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Sat",
+   "start": 0.32,
+   "end": 0.48
+  },
+  {
+   "word": "at",
+   "start": 0.52,
+   "end": 0.56
+  },
+  {
+   "word": "your",
+   "start": 0.64,
+   "end": 0.8
+  },
+  {
+   "word": "desk",
+   "start": 0.96,
+   "end": 1.12
+  },
+  {
+   "word": "all",
+   "start": 1.2,
+   "end": 1.28
+  },
+  {
+   "word": "day?",
+   "start": 1.36,
+   "end": 1.84
+  },
+  {
+   "word": "Good",
+   "start": 2.08,
+   "end": 2.24
+  },
+  {
+   "word": "news:",
+   "start": 2.32,
+   "end": 2.84
+  },
+  {
+   "word": "a",
+   "start": 2.96,
+   "end": 3.12
+  },
+  {
+   "word": "stretch",
+   "start": 3.36,
+   "end": 3.6
+  },
+  {
+   "word": "counts.",
+   "start": 3.68,
+   "end": 4.64
+  }
+ ],
+ "heard": "Sat at your desk all day? Good news, a stretch counts"
+}

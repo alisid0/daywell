@@ -1,0 +1,62 @@
+{
+ "text": "This is Move, with Bounce. A little stronger, at your pace.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "This",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "is",
+   "start": 0.322,
+   "end": 0.482
+  },
+  {
+   "word": "Move,",
+   "start": 0.562,
+   "end": 1.122
+  },
+  {
+   "word": "with",
+   "start": 1.202,
+   "end": 1.362
+  },
+  {
+   "word": "Bounce.",
+   "start": 1.442,
+   "end": 2.162
+  },
+  {
+   "word": "A",
+   "start": 2.322,
+   "end": 2.362
+  },
+  {
+   "word": "little",
+   "start": 2.402,
+   "end": 2.562
+  },
+  {
+   "word": "stronger,",
+   "start": 2.722,
+   "end": 3.242
+  },
+  {
+   "word": "at",
+   "start": 3.362,
+   "end": 3.522
+  },
+  {
+   "word": "your",
+   "start": 3.602,
+   "end": 3.842
+  },
+  {
+   "word": "pace.",
+   "start": 4.082,
+   "end": 4.402
+  }
+ ],
+ "heard": "This is move with Bounce, a little stronger at your pace"
+}

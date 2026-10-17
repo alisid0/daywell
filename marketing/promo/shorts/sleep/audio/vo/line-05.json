@@ -1,0 +1,92 @@
+{
+ "text": "Pick a sleep sound, from forest at night to waves on sand. It fades out by itself.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "Pick",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "a",
+   "start": 0.322,
+   "end": 0.362
+  },
+  {
+   "word": "sleep",
+   "start": 0.402,
+   "end": 0.722
+  },
+  {
+   "word": "sound,",
+   "start": 0.802,
+   "end": 1.362
+  },
+  {
+   "word": "from",
+   "start": 1.522,
+   "end": 1.682
+  },
+  {
+   "word": "forest",
+   "start": 1.842,
+   "end": 2.162
+  },
+  {
+   "word": "at",
+   "start": 2.242,
+   "end": 2.322
+  },
+  {
+   "word": "night",
+   "start": 2.402,
+   "end": 2.882
+  },
+  {
+   "word": "to",
+   "start": 2.962,
+   "end": 3.042
+  },
+  {
+   "word": "waves",
+   "start": 3.202,
+   "end": 3.602
+  },
+  {
+   "word": "on",
+   "start": 3.682,
+   "end": 3.762
+  },
+  {
+   "word": "sand.",
+   "start": 3.922,
+   "end": 4.562
+  },
+  {
+   "word": "It",
+   "start": 4.802,
+   "end": 4.962
+  },
+  {
+   "word": "fades",
+   "start": 5.042,
+   "end": 5.282
+  },
+  {
+   "word": "out",
+   "start": 5.362,
+   "end": 5.602
+  },
+  {
+   "word": "by",
+   "start": 5.682,
+   "end": 5.762
+  },
+  {
+   "word": "itself.",
+   "start": 5.882,
+   "end": 6.482
+  }
+ ],
+ "heard": "Pick a sleep sound from forest at night to waves on sand. It fades out by itself"
+}

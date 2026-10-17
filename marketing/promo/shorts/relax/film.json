@@ -1,0 +1,37 @@
+{
+  "name": "daywell-short-relax",
+  "length": 120,
+  "music": "take1.mp3",
+  "mix": {
+    "voiceDb": 2,
+    "musicDb": -9,
+    "duckDb": -9,
+    "duck": [
+      [
+        55,
+        57.5
+      ]
+    ],
+    "ambience": [
+      {
+        "file": "film:audio/fx/kind-words.wav",
+        "from": 55,
+        "to": 57.8,
+        "db": -6,
+        "fadeIn": 0.05,
+        "fadeOut": 0.3,
+        "why": "the app's own recorded kind words, after Listen is tapped (first sentence of relax-social-replay-01)"
+      },
+      {
+        "file": "public/sleep-sounds/temple-drum-f3e9a2137356.mp3",
+        "from": 65.6,
+        "to": 69.4,
+        "db": -15,
+        "fadeIn": 0.4,
+        "fadeOut": 1.4,
+        "why": "Daywell's own Temple drum, after Play is pressed"
+      }
+    ],
+    "ceilingDb": -2.5
+  }
+}

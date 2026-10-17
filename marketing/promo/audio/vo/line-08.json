@@ -1,0 +1,72 @@
+{
+ "text": "Still scrolling at nine? Take a pause instead. Nothing to do. Just breathe.",
+ "tag": "[Softer, slower and calm]",
+ "words": [
+  {
+   "word": "Still",
+   "start": 0.32,
+   "end": 0.56
+  },
+  {
+   "word": "scrolling",
+   "start": 0.64,
+   "end": 1.04
+  },
+  {
+   "word": "at",
+   "start": 1.12,
+   "end": 1.2
+  },
+  {
+   "word": "nine?",
+   "start": 1.28,
+   "end": 1.96
+  },
+  {
+   "word": "Take",
+   "start": 2.32,
+   "end": 2.48
+  },
+  {
+   "word": "a",
+   "start": 2.56,
+   "end": 2.64
+  },
+  {
+   "word": "pause",
+   "start": 2.84,
+   "end": 3.04
+  },
+  {
+   "word": "instead.",
+   "start": 3.32,
+   "end": 3.96
+  },
+  {
+   "word": "Nothing",
+   "start": 4.32,
+   "end": 4.56
+  },
+  {
+   "word": "to",
+   "start": 4.64,
+   "end": 4.72
+  },
+  {
+   "word": "do.",
+   "start": 4.88,
+   "end": 5.36
+  },
+  {
+   "word": "Just",
+   "start": 5.68,
+   "end": 5.92
+  },
+  {
+   "word": "breathe.",
+   "start": 6.08,
+   "end": 6.72
+  }
+ ],
+ "heard": "Still scrolling at nine? Take a pause instead. Nothing to do. Just breathe"
+}

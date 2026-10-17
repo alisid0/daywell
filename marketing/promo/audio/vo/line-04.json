@@ -1,0 +1,77 @@
+{
+ "text": "Snap your breakfast, and Daywell notes it for you. Or add it by hand.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Snap",
+   "start": 0.16,
+   "end": 0.48
+  },
+  {
+   "word": "your",
+   "start": 0.56,
+   "end": 0.64
+  },
+  {
+   "word": "breakfast,",
+   "start": 0.72,
+   "end": 1.4
+  },
+  {
+   "word": "and",
+   "start": 1.52,
+   "end": 1.68
+  },
+  {
+   "word": "Daywell",
+   "start": 1.76,
+   "end": 2.16
+  },
+  {
+   "word": "notes",
+   "start": 2.24,
+   "end": 2.48
+  },
+  {
+   "word": "it",
+   "start": 2.56,
+   "end": 2.64
+  },
+  {
+   "word": "for",
+   "start": 2.72,
+   "end": 2.8
+  },
+  {
+   "word": "you.",
+   "start": 2.88,
+   "end": 3.28
+  },
+  {
+   "word": "Or",
+   "start": 3.52,
+   "end": 3.68
+  },
+  {
+   "word": "add",
+   "start": 3.92,
+   "end": 4
+  },
+  {
+   "word": "it",
+   "start": 4.04,
+   "end": 4.08
+  },
+  {
+   "word": "by",
+   "start": 4.16,
+   "end": 4.32
+  },
+  {
+   "word": "hand.",
+   "start": 4.4,
+   "end": 4.88
+  }
+ ],
+ "heard": "Snap your breakfast and Daywell notes it for you or add it by hand"
+}

@@ -1,0 +1,62 @@
+{
+ "text": "Daywell, from four ninety-nine a month. Make a date with yourself.",
+ "tag": "[Warm and confident]",
+ "words": [
+  {
+   "word": "Daywell,",
+   "start": 0.08,
+   "end": 0.76
+  },
+  {
+   "word": "from",
+   "start": 0.88,
+   "end": 1.12
+  },
+  {
+   "word": "four",
+   "start": 1.2,
+   "end": 1.36
+  },
+  {
+   "word": "ninety-nine",
+   "start": 1.44,
+   "end": 1.92
+  },
+  {
+   "word": "a",
+   "start": 2,
+   "end": 2.04
+  },
+  {
+   "word": "month.",
+   "start": 2.08,
+   "end": 2.68
+  },
+  {
+   "word": "Make",
+   "start": 2.88,
+   "end": 3.04
+  },
+  {
+   "word": "a",
+   "start": 3.12,
+   "end": 3.2
+  },
+  {
+   "word": "date",
+   "start": 3.32,
+   "end": 3.44
+  },
+  {
+   "word": "with",
+   "start": 3.52,
+   "end": 3.6
+  },
+  {
+   "word": "yourself.",
+   "start": 3.72,
+   "end": 4.48
+  }
+ ],
+ "heard": "DayWell from $4.99 a month. Make a date with yourself"
+}

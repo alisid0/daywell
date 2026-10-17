@@ -1,0 +1,52 @@
+{
+ "text": "Open your browser and go to daywell dot date.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Open",
+   "start": 0.304,
+   "end": 0.32
+  },
+  {
+   "word": "your",
+   "start": 0.4,
+   "end": 0.48
+  },
+  {
+   "word": "browser",
+   "start": 0.76,
+   "end": 1.04
+  },
+  {
+   "word": "and",
+   "start": 1.12,
+   "end": 1.28
+  },
+  {
+   "word": "go",
+   "start": 1.4,
+   "end": 1.52
+  },
+  {
+   "word": "to",
+   "start": 1.64,
+   "end": 1.76
+  },
+  {
+   "word": "daywell",
+   "start": 1.92,
+   "end": 2.4
+  },
+  {
+   "word": "dot",
+   "start": 2.56,
+   "end": 2.72
+  },
+  {
+   "word": "date.",
+   "start": 2.92,
+   "end": 3.6
+  }
+ ],
+ "heard": "Open your browser and go to daywell.date"
+}

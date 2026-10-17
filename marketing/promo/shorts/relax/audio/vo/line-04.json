@@ -1,0 +1,72 @@
+{
+ "text": "Want a little help? Follow one gentle step, like letting your shoulders settle.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "Want",
+   "start": 0.229,
+   "end": 0.24
+  },
+  {
+   "word": "a",
+   "start": 0.28,
+   "end": 0.32
+  },
+  {
+   "word": "little",
+   "start": 0.44,
+   "end": 0.56
+  },
+  {
+   "word": "help?",
+   "start": 0.64,
+   "end": 1.2
+  },
+  {
+   "word": "Follow",
+   "start": 1.44,
+   "end": 1.76
+  },
+  {
+   "word": "one",
+   "start": 1.92,
+   "end": 2.16
+  },
+  {
+   "word": "gentle",
+   "start": 2.24,
+   "end": 2.64
+  },
+  {
+   "word": "step,",
+   "start": 2.8,
+   "end": 3.48
+  },
+  {
+   "word": "like",
+   "start": 3.52,
+   "end": 3.84
+  },
+  {
+   "word": "letting",
+   "start": 3.92,
+   "end": 4.08
+  },
+  {
+   "word": "your",
+   "start": 4.16,
+   "end": 4.32
+  },
+  {
+   "word": "shoulders",
+   "start": 4.44,
+   "end": 4.8
+  },
+  {
+   "word": "settle.",
+   "start": 4.92,
+   "end": 5.76
+  }
+ ],
+ "heard": "Want a little help? Follow one gentle step, like letting your shoulders settle"
+}

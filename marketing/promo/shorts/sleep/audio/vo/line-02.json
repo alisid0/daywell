@@ -1,0 +1,67 @@
+{
+ "text": "This is Sleep, with Luma. Wind down well, and notice your rest.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "This",
+   "start": 0.16,
+   "end": 0.32
+  },
+  {
+   "word": "is",
+   "start": 0.4,
+   "end": 0.56
+  },
+  {
+   "word": "Sleep,",
+   "start": 0.64,
+   "end": 1.16
+  },
+  {
+   "word": "with",
+   "start": 1.28,
+   "end": 1.44
+  },
+  {
+   "word": "Luma.",
+   "start": 1.52,
+   "end": 2.2
+  },
+  {
+   "word": "Wind",
+   "start": 2.48,
+   "end": 2.72
+  },
+  {
+   "word": "down",
+   "start": 2.8,
+   "end": 3.04
+  },
+  {
+   "word": "well,",
+   "start": 3.2,
+   "end": 3.64
+  },
+  {
+   "word": "and",
+   "start": 3.76,
+   "end": 3.92
+  },
+  {
+   "word": "notice",
+   "start": 4,
+   "end": 4.4
+  },
+  {
+   "word": "your",
+   "start": 4.48,
+   "end": 4.64
+  },
+  {
+   "word": "rest.",
+   "start": 4.88,
+   "end": 5.2
+  }
+ ],
+ "heard": "This is Sleep with Luma. Wind down well and notice your rest"
+}

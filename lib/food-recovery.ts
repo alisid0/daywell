@@ -8,7 +8,7 @@ const text = z.string().max(160), id = z.string().regex(/^[a-zA-Z0-9-]{1,87}$/);
 const number = z.number().finite().min(-1_000_000).max(1_000_000);
 const date = z.string().max(10), unit = z.enum(["g", "kg", "ml", "l", "each", "portion"]);
 const stock = z.object({ id, ingredient: text, quantity: number.nullable(), unit, bestBefore: date.nullable() });
-const requirement = z.object({ ingredient: text, quantity: number, unit });
+const requirement = z.object({ ingredient: text, quantity: number.nullable(), unit });
 const meal = z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]);
 const plan = z.object({ id, title: text, date, meal, servings: number, ingredients: z.array(requirement).max(40), guide: planGuideSchema.optional() });
 const intake = z.object({ portions: number, calories: number.optional(), macros: z.object({ protein: number, carbs: number, fat: number }).optional(), source: z.enum(["label", "estimate", "app"]).optional(), sugarGrams: number.optional() });
@@ -20,7 +20,8 @@ const draftAction = z.union([
   z.object({ type: z.literal("plan.add"), plans: z.array(plan).min(1).max(7) }),
   z.object({ type: z.literal("plan.window"), startDate: date, days: z.union([z.literal(2), z.literal(3), z.literal(7)]), plans: z.array(plan).max(28) }),
   z.object({ type: z.literal("shopping.set"), item: z.object({ id, title: text, quantity: z.string().max(80), done: z.boolean() }) }),
-  z.object({ type: z.literal("purchase"), items: z.array(stock.extend({ quantity: number, shoppingId: id.optional() })).min(1).max(40) }),
+  z.object({ type: z.literal("shopping.add"), items: z.array(z.object({ id, title: text, quantity: z.string().max(80), done: z.boolean() })).min(1).max(20) }),
+  z.object({ type: z.literal("purchase"), items: z.array(stock.extend({ quantity: number.nullable(), shoppingId: id.optional() })).min(1).max(40) }),
   z.object({ type: z.literal("use"), ...consumption }),
   z.object({ type: z.literal("cook"), planId: id.optional(), ...consumption, servings: number,
     leftovers: z.object({ id, title: text, portions: number, bestBefore: date.nullable() }).optional() }),

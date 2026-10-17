@@ -5,13 +5,14 @@ const id = z.string().regex(/^[a-zA-Z0-9-]{1,60}$/);
 const shoppingId = z.string().regex(/^[a-zA-Z0-9-]{1,87}$/);
 const label = z.string().trim().min(1).max(120);
 const amount = z.number().finite().min(0).max(1_000_000).refine(n => Math.abs(n * 1000 - Math.round(n * 1000)) < 0.00001, "Use at most three decimal places.");
-const positive = amount.refine(n => n > 0, "Enter an amount greater than zero.");
+const positive = amount.refine(n => n > 0, "Enter a quantity greater than zero.");
 const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value => {
   const parsed = new Date(`${value}T00:00:00Z`);
   return value >= "1900-01-01" && Number.isFinite(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
 }, "Choose a valid date.");
 const unit = z.enum(["g", "kg", "ml", "l", "each", "portion"]);
-const requirement = z.object({ ingredient: label, quantity: positive, unit }).strict();
+// Quantities are optional. Without one, an ingredient only says "some is needed".
+const requirement = z.object({ ingredient: label, quantity: positive.nullable(), unit }).strict();
 export const planGuideSchema = z.object({
   steps: z.array(z.string().trim().min(1).max(400)).max(8),
   caloriesPerServing: z.number().finite().min(0).max(10000).optional(),
@@ -25,10 +26,11 @@ export const planInput = z.object({
   guide: planGuideSchema.optional(),
 }).strict();
 const stockInput = z.object({ id, ingredient: label, quantity: amount.nullable(), unit, bestBefore: date.nullable().default(null) }).strict();
-const shoppingInput = z.object({ id: shoppingId, title: z.string().trim().min(1).max(160), quantity: z.string().trim().min(1).max(80), done: z.boolean() }).strict();
+const shoppingInput = z.object({ id: shoppingId, title: z.string().trim().min(1).max(160), quantity: z.string().trim().max(80), done: z.boolean() }).strict();
+const used = z.array(z.object({ stockId: id, quantity: positive, unit }).strict()).max(40);
 const consumption = {
   title: label, date, meal: z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]),
-  consumed: z.array(z.object({ stockId: id, quantity: positive, unit }).strict()).min(1).max(40),
+  consumed: used.min(1),
   useReservedStock: z.boolean().default(false), intake: intakeSchema.optional(),
 };
 export const actionSchema = z.discriminatedUnion("type", [
@@ -41,9 +43,10 @@ export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("plan.remove"), id }).strict(),
   z.object({ type: z.literal("shopping.set"), item: shoppingInput }).strict(),
   z.object({ type: z.literal("shopping.remove"), id: shoppingId }).strict(),
+  z.object({ type: z.literal("shopping.add"), items: z.array(shoppingInput).min(1).max(20) }).strict(),
   z.object({
     type: z.literal("purchase"),
-    items: z.array(stockInput.extend({ quantity: positive, shoppingId: shoppingId.optional() }).strict()).min(1).max(40),
+    items: z.array(stockInput.extend({ quantity: positive.nullable(), shoppingId: shoppingId.optional() }).strict()).min(1).max(40),
   }).strict(),
   z.object({ type: z.literal("use"), ...consumption }).strict(),
   z.object({
@@ -51,7 +54,8 @@ export const actionSchema = z.discriminatedUnion("type", [
     // the parsed JSON, including commands authorised before this update.
     type: z.literal("cook"), planId: id.optional(), title: label, date,
     meal: consumption.meal, servings: z.number().int().min(1).max(24),
-    consumed: consumption.consumed, useReservedStock: consumption.useReservedStock,
+    // A meal can be cooked from food without quantities, so nothing has to be counted.
+    consumed: used, useReservedStock: consumption.useReservedStock,
     leftovers: z.object({ id, title: label, portions: positive.refine(n => n >= .125 && n <= 24), bestBefore: date.nullable().default(null) }).strict().optional(),
     intake: intakeSchema.optional(),
   }).strict(),
@@ -62,7 +66,7 @@ export const foodCommandSchema = z.object({
 }).strict();
 export type FoodCommand = z.infer<typeof foodCommandSchema>;
 export type Unit = "g" | "ml" | "each" | "portion";
-export type IngredientAmount = { ingredient: string; quantity: number; unit: Unit };
+export type IngredientAmount = { ingredient: string; quantity: number | null; unit: Unit };
 export type Stock = Omit<z.infer<typeof stockInput>, "unit"> & { unit: Unit; changedBy: string };
 export type Plan = Omit<z.infer<typeof planInput>, "ingredients"> & { ingredients: IngredientAmount[]; changedBy: string };
 export type Shopping = z.infer<typeof shoppingInput> & { changedBy: string };
@@ -71,7 +75,7 @@ const storedUnit = z.enum(["g", "ml", "each", "portion"]);
 export const foodStateSchema = z.object({
   version: z.literal(1),
   stock: z.array(stockInput.extend({ unit: storedUnit, quantity: z.number().finite().min(0).max(1_000_000_000).nullable(), changedBy: id })),
-  plans: z.array(planInput.extend({ ingredients: z.array(requirement.extend({ unit: storedUnit, quantity: z.number().finite().min(0).max(1_000_000_000) })), changedBy: id })),
+  plans: z.array(planInput.extend({ ingredients: z.array(requirement.extend({ unit: storedUnit, quantity: z.number().finite().min(0).max(1_000_000_000).nullable() })), changedBy: id })),
   shopping: z.array(shoppingInput.extend({ changedBy: id })),
 });
 type Change<T> = { id: string; before: T | null; after: T | null };
@@ -94,16 +98,19 @@ export function ingredientName(value: string) {
   const name = value.normalize("NFKC").trim().replace(/\s+/g, " ").toLowerCase();
   return Object.hasOwn(aliases, name) ? aliases[name] : name;
 }
-export function measured(quantity: number, inputUnit: z.infer<typeof unit>): { quantity: number; unit: Unit } {
-  return { quantity: round(quantity * (inputUnit === "kg" || inputUnit === "l" ? 1000 : 1)), unit: inputUnit === "kg" ? "g" : inputUnit === "l" ? "ml" : inputUnit };
+export function measured(quantity: number, inputUnit: z.infer<typeof unit>): { quantity: number; unit: Unit };
+export function measured(quantity: number | null, inputUnit: z.infer<typeof unit>): { quantity: number | null; unit: Unit };
+export function measured(quantity: number | null, inputUnit: z.infer<typeof unit>) {
+  return { quantity: quantity === null ? null : round(quantity * (inputUnit === "kg" || inputUnit === "l" ? 1000 : 1)), unit: inputUnit === "kg" ? "g" : inputUnit === "l" ? "ml" : inputUnit };
 }
 const key = (item: { ingredient: string; unit: Unit }) => JSON.stringify([item.ingredient, item.unit]);
 const equal = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+// Quantities add up. A listing without one adds nothing, and stays "some" only while none has a quantity.
 function combine(items: IngredientAmount[]) {
   const combined = new Map<string, IngredientAmount>();
   for (const item of items) {
-    const existing = combined.get(key(item));
-    combined.set(key(item), { ...item, quantity: round((existing?.quantity ?? 0) + item.quantity) });
+    const before = combined.get(key(item))?.quantity ?? null;
+    combined.set(key(item), { ...item, quantity: before === null ? item.quantity : item.quantity === null ? before : round(before + item.quantity) });
   }
   return [...combined.values()];
 }
@@ -113,15 +120,18 @@ export function foodOverview(state: FoodState) {
   const inventory = [...keys.values()].map(item => {
     const lots = state.stock.filter(lot => key(lot) === key(item));
     const onHand = round(lots.reduce((sum, lot) => sum + (lot.quantity ?? 0), 0));
-    const required = demand.find(row => key(row) === key(item))?.quantity ?? 0;
+    const need = demand.find(row => key(row) === key(item));
+    const required = need?.quantity ?? 0;
     const unknownQuantity = lots.some(lot => lot.quantity === null);
     const otherUnits = state.stock.some(lot => lot.ingredient === item.ingredient && lot.unit !== item.unit && lot.quantity !== 0);
     const shortage = Math.max(0, round(required - onHand));
     const needsCheck = shortage > 0 && (unknownQuantity || otherUnits);
+    // Planned without a quantity: any of it in the basket, in any unit, is enough.
+    const unmeasured = need?.quantity === null && !state.stock.some(lot => lot.ingredient === item.ingredient && lot.quantity !== 0);
     return { ...item, knownOnHand: onHand, required, reserved: Math.min(onHand, required), available: Math.max(0, round(onHand - required)), unknownQuantity,
-      needsCheck, toBuy: needsCheck ? null : shortage };
+      needsCheck, toBuy: needsCheck ? null : shortage, unmeasured };
   });
-  return { inventory, toBuy: inventory.filter(item => item.required > item.knownOnHand), manualShopping: state.shopping };
+  return { inventory, toBuy: inventory.filter(item => item.required > item.knownOnHand || item.unmeasured), manualShopping: state.shopping };
 }
 function put<T extends { id: string }>(list: T[], item: T) {
   const index = list.findIndex(row => row.id === item.id);
@@ -156,13 +166,13 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
   let meal: MealRecord | null = null;
   if (action.type === "stock.set") {
     const item = action.item;
-    put(state.stock, { ...item, ingredient: ingredientName(item.ingredient), ...measured(item.quantity ?? 0, item.unit), quantity: item.quantity === null ? null : measured(item.quantity, item.unit).quantity, changedBy: operationId });
+    put(state.stock, { ...item, ingredient: ingredientName(item.ingredient), ...measured(item.quantity, item.unit), changedBy: operationId });
   } else if (action.type === "stock.add") {
     const seen = new Set(state.stock.map(item => item.id));
     for (const item of action.items) {
       if (seen.has(item.id)) throw new FoodError("A captured item already exists. Review your basket before adding it again.");
       seen.add(item.id);
-      state.stock.push({ ...item, ingredient: ingredientName(item.ingredient), ...measured(item.quantity ?? 0, item.unit), quantity: item.quantity === null ? null : measured(item.quantity, item.unit).quantity, changedBy: operationId });
+      state.stock.push({ ...item, ingredient: ingredientName(item.ingredient), ...measured(item.quantity, item.unit), changedBy: operationId });
     }
   } else if (action.type === "stock.remove") remove(state.stock, action.id);
   else if (action.type === "plan.set") {
@@ -183,6 +193,11 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
   } else if (action.type === "plan.remove") remove(state.plans, action.id);
   else if (action.type === "shopping.set") put(state.shopping, { ...action.item, changedBy: operationId });
   else if (action.type === "shopping.remove") remove(state.shopping, action.id);
+  else if (action.type === "shopping.add") {
+    unique(action.items.map(item => item.id));
+    if (action.items.some(item => state.shopping.some(saved => saved.id === item.id))) throw new FoodError("A shopping note already exists. Refresh before adding it again.");
+    for (const item of action.items) state.shopping.push({ ...item, changedBy: operationId });
+  }
   else if (action.type === "purchase") {
     unique(action.items.map(item => item.id));
     unique(action.items.flatMap(item => item.shoppingId ? [item.shoppingId] : []));
@@ -192,7 +207,8 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
       const existing = state.stock.find(lot => lot.id === item.id);
       if (existing && (key(existing) !== key(bought) || existing.bestBefore !== bought.bestBefore)) throw new FoodError("Use a separate stock item for a different ingredient, unit or date.");
       if (existing?.quantity === null) throw new FoodError("Check how much you already have, or save this purchase as a separate stock item.");
-      put(state.stock, { ...bought, quantity: round((existing?.quantity ?? 0) + bought.quantity) });
+      if (existing && bought.quantity === null) throw new FoodError("Add how much you bought to top up this item, or save it as a separate item.", 400);
+      put(state.stock, { ...bought, quantity: bought.quantity === null ? null : round((existing?.quantity ?? 0) + bought.quantity) });
       if (shoppingId) {
         const shopping = state.shopping.find(row => row.id === shoppingId);
         if (!shopping || shopping.done) throw new FoodError("That shopping item has changed. Review the purchase before saving.");
@@ -211,21 +227,21 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
     for (const used of action.consumed) {
       const lot = state.stock.find(item => item.id === used.stockId);
       const quantity = measured(used.quantity, used.unit);
-      if (!lot || lot.quantity === null) throw new FoodError("Confirm the amount in your food basket before recording what you used.");
+      if (!lot || lot.quantity === null) throw new FoodError("Add a quantity to this basket item before taking some away.");
       if (lot.unit !== quantity.unit) throw new FoodError("Use a matching unit for the amount you used.", 400);
-      if (quantity.quantity > lot.quantity) throw new FoodError("There is less in your recorded food basket than that. Check the amount first.");
+      if (quantity.quantity > lot.quantity) throw new FoodError("There is less in your recorded food basket than that. Check the quantity first.");
       put(state.stock, { ...lot, quantity: round(lot.quantity - quantity.quantity), changedBy: operationId });
     }
     if (plan && action.type === "cook") {
       const remaining = plan.servings - action.servings;
       if (!remaining) remove(state.plans, plan.id);
-      else put(state.plans, { ...plan, servings: remaining, ingredients: plan.ingredients.map(item => ({ ...item, quantity: round(item.quantity * remaining / plan.servings) })), changedBy: operationId });
+      else put(state.plans, { ...plan, servings: remaining, ingredients: plan.ingredients.map(item => ({ ...item, quantity: item.quantity === null ? null : round(item.quantity * remaining / plan.servings) })), changedBy: operationId });
     }
     if (!action.useReservedStock) {
       const otherDemand = combine(current.plans.filter(item => item.id !== planId).flatMap(item => item.ingredients));
       for (const needed of otherDemand) {
         const stockTotal = (source: FoodState) => round(source.stock.filter(item => key(item) === key(needed)).reduce((sum, item) => sum + (item.quantity ?? 0), 0));
-        if (stockTotal(state) < Math.min(stockTotal(current), needed.quantity)) throw new FoodError("Some of this food is reserved for another meal. Review that change before using it.");
+        if (needed.quantity !== null && stockTotal(state) < Math.min(stockTotal(current), needed.quantity)) throw new FoodError("Some of this food is reserved for another meal. Review that change before using it.");
       }
     }
     if (action.type === "cook" && action.leftovers) {
@@ -242,7 +258,7 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
     meal = undoEffect.meal;
   }
   if (state.stock.length > 400 || state.plans.length > 365 || state.shopping.length > 500) throw new FoodError("Your food space is full. Remove a few older items before adding more.", 413);
-  if (state.stock.some(item => item.quantity !== null && item.quantity > 1_000_000_000)) throw new FoodError("That stock amount is too large. Review the quantity.", 400);
+  if (state.stock.some(item => item.quantity !== null && item.quantity > 1_000_000_000)) throw new FoodError("That quantity is too large. Review it.", 400);
   const effect: FoodEffect = { type: action.type, stock: diff(current.stock, state.stock), plans: diff(current.plans, state.plans), shopping: diff(current.shopping, state.shopping), meal };
   return { state, effect };
 }

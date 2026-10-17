@@ -24,8 +24,8 @@ export const starterAmounts: Record<string, IngredientAmount[]> = {
   ],
 };
 export const rounded = (n: number) => Math.round(n * 1000) / 1000;
-export function scaleIngredients<T extends { quantity: number }>(items: T[], from: number, to: number): T[] {
-  return items.map(item => ({ ...item, quantity: rounded(item.quantity * to / from) }));
+export function scaleIngredients<T extends { quantity: number | null }>(items: T[], from: number, to: number): T[] {
+  return items.map(item => ({ ...item, quantity: item.quantity === null ? null : rounded(item.quantity * to / from) }));
 }
 export function windowEnd(start: string, days: number) {
   const date = new Date(`${start}T12:00:00Z`);
@@ -40,6 +40,8 @@ export function suggestedConsumption(plan: Plan, stock: Stock[]) {
   const used = new Map<string, { stockId: string; quantity: number; unit: Stock["unit"] }>();
   const ordered = [...stock].sort((a, b) => (a.bestBefore || "9999").localeCompare(b.bestBefore || "9999"));
   for (const required of plan.ingredients) {
+    // Nothing to suggest for an ingredient planned without a quantity.
+    if (required.quantity === null) continue;
     let remaining = required.quantity;
     for (const lot of ordered.filter(item => ingredientName(item.ingredient) === ingredientName(required.ingredient) && item.unit === required.unit)) {
       const quantity = Math.min(remaining, available.get(lot.id) ?? 0);

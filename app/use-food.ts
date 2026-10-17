@@ -116,7 +116,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
       persist({ pending: null }); setPending(null);
       if (result.kind === "saved") {
         persist({ draft: null }); setDraft(null); setReview(false);
-        setNotice(["cook", "use"].includes(command.action.type) ? "Meal remembered. Your food basket is updated." : command.action.type === "undo" ? "That change has been undone." : command.action.type.startsWith("plan.") ? "Meal plans saved. Your shopping needs are updated; nothing has been consumed." : "Saved to your food basket.");
+        setNotice(["cook", "use"].includes(command.action.type) ? "Meal remembered. Your food basket is updated." : command.action.type === "undo" ? "That change has been undone." : command.action.type.startsWith("plan.") ? "Meal plans saved. Your shopping needs are updated; nothing has been consumed." : command.action.type === "shopping.add" ? "Added to your shopping list." : "Saved to your food basket.");
         setUndoable(["purchase", "cook", "use", "stock.add"].includes(command.action.type) ? command.operationId : null);
         await reload();
         await journal.current();

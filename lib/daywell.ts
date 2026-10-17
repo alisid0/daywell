@@ -10,7 +10,7 @@ export const settingsSchema = z.object({name:z.string().trim().min(1).max(40),mo
 export const defaults: Settings = {name:"You", modules:[...moduleIds],calorieGoal:0,bedtime:"22:30",wakeTime:"07:00",onboarded:false,guideDismissed:false,calorieTracking:false,birthYear:null,sex:null,heightCm:null,weights:[],bodyConsentAt:null};
 export const schemas = {
  task:z.object({title,done:z.boolean(),date,completedDate:date.nullable().optional(),completedAt:z.string().datetime().nullable().optional(),minutes:z.number().int().min(1).max(240)}),
- grocery:z.object({title,completedDate:date.nullable().optional(),completedAt:z.string().datetime().nullable().optional(),quantity:z.string().trim().min(1).max(80),done:z.boolean(),foodChangedBy:z.string().regex(/^[a-zA-Z0-9-]{1,87}$/).optional()}),
+ grocery:z.object({title,completedDate:date.nullable().optional(),completedAt:z.string().datetime().nullable().optional(),quantity:z.string().trim().max(80),done:z.boolean(),foodChangedBy:z.string().regex(/^[a-zA-Z0-9-]{1,87}$/).optional()}),
  food:z.object({title,date,calories:z.number().min(0).max(10000),protein:z.number().min(0).max(1000),carbs:z.number().min(0).max(1000),fat:z.number().min(0).max(1000),nutritionKnown:z.boolean().optional(),meal:z.enum(["Breakfast","Lunch","Dinner","Snack"]),...foodTrackingFields}),
  sleep:z.object({date,bedtime:time,wakeTime:time,minutes:z.number().min(1).max(960),quality:z.enum(["Rested","Okay","Tired"])}),
  move:z.object({title,date,minutes:z.number().int().min(1).max(600),sets:z.array(workoutSetSchema).min(1).max(20).optional(),...activityTrackingFields}),

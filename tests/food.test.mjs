@@ -103,7 +103,7 @@ test("plans reserve compatible amounts without consuming stock; swaps and remova
   state = applyFoodCommand(state, command(plan("monday", 300))).state;
   state = applyFoodCommand(state, command(plan("tuesday", 400))).state;
   assert.equal(state.stock[0].quantity, 500);
-  assert.deepEqual(foodOverview(state).inventory[0], { ingredient: "rice", unit: "g", knownOnHand: 500, required: 700, reserved: 500, available: 0, unknownQuantity: false, needsCheck: false, toBuy: 200 });
+  assert.deepEqual(foodOverview(state).inventory[0], { ingredient: "rice", unit: "g", knownOnHand: 500, required: 700, reserved: 500, available: 0, unknownQuantity: false, needsCheck: false, toBuy: 200, unmeasured: false });
   state = applyFoodCommand(state, command(plan("tuesday", 100))).state;
   assert.equal(foodOverview(state).inventory[0].available, 100);
   state = applyFoodCommand(state, command({ type: "plan.remove", id: "monday" })).state;

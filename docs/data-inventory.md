@@ -35,7 +35,7 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 
 | Service | What goes | When |
 | --- | --- | --- |
-| OpenAI | Food photo or description, basket and reserved amounts for a meal plan (`store: false`) | Only when asked |
+| OpenAI | Food photo or description; basket and reserved amounts for a meal plan; the basket's names, quantities and units for recipe ideas; a planned meal's name and ingredients for recipe steps (`store: false`) | Only when asked |
 | ElevenLabs | Voice or typed messages, timer details, readout text | Live voice and readouts, which leave version 1 |
 | TypeSafe (US) | Unmatched requests to pick a recorded reply | Switched off |
 | Cloudflare | Everything above runs on its network; the planned chat would use its AI service, which doesn't train on customer data | Always |

@@ -2,7 +2,8 @@
 
 ```text
 Session date: 17 October 2026
-Branch and PR: feat/eat-quantity-recipes, draft PR. A preview for the owner's approval: not merged, not deployed.
+Branch and PR: feat/eat-quantity-recipes, PR ready for review. The owner approved it on 19 October, together with the
+  Kitchen design that builds on it. Not merged, not deployed.
 What changed:
   - "Amount" is now "Quantity (optional)" everywhere in Eat: basket items, meal-plan ingredients, food put away
     after shopping, and shopping notes. Blank means no quantity. The "I need to check the amount" box and the
@@ -21,7 +22,9 @@ What changed:
     - A new daily allowance, "recipes", of 40 per person: a safety net set well above everyday use.
 Checks performed and their results:
   - npx tsc --noEmit: clean.
-  - node --experimental-strip-types --test tests/*.test.mjs: 268 of 268 pass.
+  - node --experimental-strip-types --test tests/*.test.mjs: 276 of 276 pass, including 8 new tests in
+    tests/eat-quantity-recipes.test.mjs.
+  - npm run build: complete. npm run lint:changed: no new lint errors.
   - ESLint on the changed files: no new problems (one older warning in app/food-space.tsx).
   - In the preview harness at phone size, with canned AI replies run through the app's own converters:
     - asking for ideas, then planning one (an ingredient without a quantity is saved as null);
@@ -30,20 +33,13 @@ Checks performed and their results:
     - Suggest a recipe in the meal editor.
 What is not yet verified:
   - No real OpenAI request has been made: no paid model tests without the owner's approval.
-  - There are no new tests yet for lib/recipe-ideas.ts, optional quantities or shopping.add.
   - GitHub checks on the draft PR.
 Remaining work / next step:
-  - The owner approves the preview (8 phone screens, workspace/2026-10-17 branch:
-    workspace/previews/preview-eat-recipes/eat-recipes-preview.png) or asks for changes. Three decisions:
-    - Plus only, once the plans branch merges? The owner said meal ideas from the basket are a Plus feature.
-    - Keep the 40-a-day safety net?
-    - Should quantity be optional on Today's shopping list too? It's unchanged for now.
-  - After "approved":
-    - add tests;
-    - update docs/food-inventory.md and docs/usage-limits.md;
-    - update the data inventory and privacy wording, because the basket now goes to OpenAI for ideas;
-    - mark the PR ready.
-    Merge only on the owner's "merge".
+  - Merge only on the owner's "merge".
+  - The Kitchen redesign continues on feat/eat-kitchen, branched from this one.
+  - Still open:
+    - make recipe ideas Plus-only once the plans branch merges (the owner said meal ideas from the basket are Plus);
+    - should Today's shopping list make quantity optional too? It's unchanged.
 Setup or migration steps needed on the other machine:
   - No database migration. Run npm run install:ci, then preview as usual.
   - The preview harness is versioned on marketing/promo-v2, under marketing/promo/harness:
@@ -55,6 +51,7 @@ Any work still local, and why:
   - Only private, git-ignored files: the .dev.vars keys and the Cloudflare deploy profile (cloudflare.local.json),
     which holds account and database IDs. The repository is public, so these stay on each machine.
   - The launch-costs page stays off GitHub because it's internal cost and marketing-budget analysis.
+  - Old design previews and experiments (about 40 MB) wait for a private home, chosen by the owner.
 ```
 
 ## Where everything is
@@ -64,7 +61,7 @@ Any work still local, and why:
 | Optional quantities and recipe ideas | `feat/eat-quantity-recipes`, draft PR | Waiting for the owner's approval |
 | Promo film v2 and the five shorts, with the promo-video skill | `marketing/promo-v2`, PR #60 | Rendered and sent. Waiting for the owner's approval; the line changes in Sleep short 3 and Relax short 9 need an OK. |
 | Preview harness, capture tool and board maker | `marketing/promo-v2`: `marketing/promo/harness` and `marketing/promo/tools` | Up to date with this session |
-| Design previews, experiments and analysis scripts from the owner's Windows PC | `workspace/2026-10-17` | An archive for reference, not for merging |
+| Design previews, experiments and analysis scripts from the owner's Windows PC | Not on GitHub yet | The repository is public; waiting for the owner to choose a private home (a private repository or Google Drive) |
 | Two plans (subscriptions) | `feat/plans` | Not merged |
 | WHOOP connection | `feat/whoop` | Parked. Wearables come through Apple Health and Health Connect after the first store release ([wearables](../wearables.md)). |
 | Account closure | Draft PR #47 (`codex/account-lifecycle`) | Draft |

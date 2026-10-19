@@ -48,6 +48,10 @@ const food = { revision: 3, receipts: new Map(), effects: new Map(), actions: []
   ],
   shopping: [{ id: "sh-bread", title: "Sourdough loaf", quantity: "1", done: false, changedBy: seed }],
 } };
+// &kitchen adds a freezer and a fruit bowl to the sample, for the Kitchen's shelves (19 October design).
+if (params.has("kitchen")) food.state.stock.push(
+  { id: "s-peas", ingredient: "frozen peas", quantity: 750, unit: "g", bestBefore: null, place: "freezer", changedBy: seed },
+  { id: "s-apple", ingredient: "apple", quantity: 4, unit: "each", bestBefore: null, changedBy: seed });
 // ?promo=1: the sample week for the promo video. Sam has a week of walks, meals and sleep to look back on, a basket
 // without milk, no saved meal plans, and photo and plan understanding that run canned model output through the app's
 // own converters (no provider calls).

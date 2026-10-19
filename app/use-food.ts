@@ -4,6 +4,25 @@ import type { FoodCommand } from "@/lib/food";
 import { prepareFoodCommand, readFoodSnapshot, sendFoodCommand, type FoodAction, type FoodDraft, type FoodSnapshot } from "@/lib/food-client";
 import { clearOtherFoodRecovery, foodRecoveryToken, FoodRecoveryConflict, readFoodRecovery, writeFoodRecovery, type FoodRecovery } from "@/lib/food-recovery";
 import { today } from "@/lib/daywell";
+import { placeNames, placeOf } from "@/lib/food-places";
+
+// What the notice says after a save.
+function savedNotice(action: FoodAction, before: FoodSnapshot | null) {
+  if (action.type === "cook") return "Meal remembered. Your kitchen is updated.";
+  if (action.type === "use") return action.intake ? "On today’s plate. Your kitchen is updated." : "Your kitchen is updated.";
+  if (action.type === "undo") return "That change has been undone.";
+  if (action.type.startsWith("plan.")) return "Meal plans saved. Your shopping needs are updated; nothing has been consumed.";
+  if (action.type === "shopping.add") return "Added to your trolley list.";
+  if (action.type === "stock.remove") return "Taken out of your kitchen.";
+  if (action.type === "purchase") return "Put away in your kitchen.";
+  if (action.type === "stock.add") return "Added to your kitchen.";
+  if (action.type === "stock.set") {
+    const lot = before?.state.stock.find(item => item.id === action.item.id);
+    if (!lot) return "Added to your kitchen.";
+    if (action.item.place && action.item.place !== placeOf(lot)) return `Moved to the ${placeNames[action.item.place].toLowerCase()}.`;
+  }
+  return "Saved to your kitchen.";
+}
 
 export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, scope: string | null) {
   const [snapshot, setSnapshot] = useState<FoodSnapshot | null>(null);
@@ -16,10 +35,10 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
   const [review, setReview] = useState(false), [recovered, setRecovered] = useState(false);
   const [storageWarning, setStorageWarning] = useState("");
   const [hydratedScope, setHydratedScope] = useState<string | null>(null);
-  const [view, updateView] = useState("basket"), [start, updateStart] = useState(today()), [days, updateDays] = useState<2 | 3 | 7>(3);
+  const [view, updateView] = useState("plate"), [start, updateStart] = useState(today()), [days, updateDays] = useState<2 | 3 | 7>(3);
   const guard = useRef(false), journal = useRef(refreshJournal), readSequence = useRef(0), hydrated = useRef<string | null>(null);
   const scopeRef = useRef(scope), recoveryToken = useRef<string | null>(null);
-  const working = useRef<Omit<FoodRecovery, "version">>({ draft, pending, view: "basket", start, days });
+  const working = useRef<Omit<FoodRecovery, "version">>({ draft, pending, view: "plate", start, days });
   useEffect(() => { journal.current = refreshJournal; }, [refreshJournal]);
   function persist(next: Partial<Omit<FoodRecovery, "version">>) {
     const previous = working.current;
@@ -44,7 +63,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
     queueMicrotask(() => {
       if (cancelled) return;
       setSnapshot(null); setFresh(false); setBusy(false); setDraft(null); setPending(null); setRecovered(false); setReview(false); setError(""); setNotice(""); setUndoable(null);
-      working.current = { draft: null, pending: null, view: "basket", start: today(), days: 3 };
+      working.current = { draft: null, pending: null, view: "plate", start: today(), days: 3 };
       try {
         if (scope || previousScope) clearOtherFoodRecovery(localStorage, scope);
         const saved = scope ? readFoodRecovery(localStorage, scope) : null;
@@ -66,7 +85,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
       const data = await readFoodSnapshot(fetch, scope);
       if (sequence !== readSequence.current || scope !== scopeRef.current) return false;
       setSnapshot(data); setFresh(true); return true;
-    } catch (failure) { if (sequence === readSequence.current) setError(failure instanceof Error ? failure.message : "Your food basket couldn’t load."); return false; }
+    } catch (failure) { if (sequence === readSequence.current) setError(failure instanceof Error ? failure.message : "Your kitchen couldn’t load."); return false; }
   }, [scope]);
   useEffect(() => { if (enabled && scope && !guard.current) void reload(); }, [enabled, scope, reload]);
   useEffect(() => {
@@ -103,28 +122,38 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
     if (guard.current || pending) return;
     persist({ draft: null, pending: null }); setDraft(null); setRecovered(false); setError(""); setReview(false);
   }
-  async function send(command: FoodCommand) {
-    if (guard.current || !scope || scope !== hydrated.current) return;
+  async function send(command: FoodCommand): Promise<boolean> {
+    if (guard.current || !scope || scope !== hydrated.current) return false;
     // Persist the exact authorised command BEFORE the request can reach the server.
-    if (!persist({ pending: command })) return;
+    if (!persist({ pending: command })) return false;
     guard.current = true; ++readSequence.current; setBusy(true); setError(""); setNotice(""); setUndoable(null);
     setPending(command); setRecovered(false);
     try {
       const result = await sendFoodCommand(command, fetch, scope);
-      if (scope !== scopeRef.current || scope !== hydrated.current) return;
-      if (result.kind === "uncertain") { setError(result.message); return; }
+      if (scope !== scopeRef.current || scope !== hydrated.current) return false;
+      if (result.kind === "uncertain") { setError(result.message); return false; }
       persist({ pending: null }); setPending(null);
       if (result.kind === "saved") {
         persist({ draft: null }); setDraft(null); setReview(false);
-        setNotice(["cook", "use"].includes(command.action.type) ? "Meal remembered. Your food basket is updated." : command.action.type === "undo" ? "That change has been undone." : command.action.type.startsWith("plan.") ? "Meal plans saved. Your shopping needs are updated; nothing has been consumed." : command.action.type === "shopping.add" ? "Added to your shopping list." : "Saved to your food basket.");
-        setUndoable(["purchase", "cook", "use", "stock.add"].includes(command.action.type) ? command.operationId : null);
+        setNotice(savedNotice(command.action, snapshot));
+        setUndoable(["purchase", "cook", "use", "stock.add", "stock.remove"].includes(command.action.type) ? command.operationId : null);
         await reload();
         await journal.current();
-      } else {
-        setError(result.message);
-        if (result.kind === "conflict") { setReview(true); await reload(); }
+        return true;
       }
+      setError(result.message);
+      if (result.kind === "conflict") { setReview(true); await reload(); }
+      return false;
     } finally { if (scope === scopeRef.current) { guard.current = false; setBusy(false); } }
+  }
+  // One tap, one save: the Kitchen's sheets save straight away. A problem leaves the change open in the editor.
+  async function submit(action: FoodAction) {
+    if (!snapshot || !fresh || guard.current || pending || recovered) return false;
+    if (draft) { setError("Finish or cancel your open change first. Your details are still here."); return false; }
+    const next = { revision: snapshot.revision, action };
+    persist({ draft: next }); setDraft(next); setError(""); setNotice(""); setUndoable(null); setReview(false);
+    try { return await send(prepareFoodCommand(next, crypto.randomUUID())); }
+    catch { setError("Check names, dates and quantities, then try again."); return false; }
   }
   async function save() {
     if (!draft || pending || guard.current || !fresh || review || recovered) return;
@@ -145,5 +174,5 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
   function resume() { setRecovered(false); setUndoable(null); setNotice(pending ? "Check this save using its original reference. It won’t be added twice." : "Your unfinished details are back. Review them before saving."); }
   const ready = hydratedScope === scope;
   return { snapshot: ready ? snapshot : null, draft: ready ? draft : null, pending: ready ? pending : null, busy, fresh: ready && fresh, error, notice, undoable, review, recovered: ready && recovered, storageWarning, resume,
-    view, setView, start, setStart, days, setDays, open, change, cancel, save, refresh, acceptReview, retry: () => pending ? send(pending) : Promise.resolve() };
+    view, setView, start, setStart, days, setDays, open, submit, change, cancel, save, refresh, acceptReview, retry: () => pending ? send(pending) : Promise.resolve(false) };
 }

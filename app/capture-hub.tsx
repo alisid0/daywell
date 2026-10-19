@@ -12,6 +12,7 @@ import { AiReport } from "./ai-report";
 import { useFoodNarration } from "./use-food-narration";
 import { foodNarration, foodDraftDetail } from "@/lib/food-narration";
 import { PlanCoverage, PlanGuide } from "./food-plan-journey";
+import { addFoodByHand } from "./kitchen";
 
 type Mode = "meal" | "basket" | "grocery" | "plan";
 type CaptureStart = { mode?: string; intent?: string; text?: string; planStart?: string; planCount?: number; planMeal?: string };
@@ -34,7 +35,7 @@ export function FoodCaptureCard({ a }: { a: AppState }) {
     <div className="capture-choices" role="group" aria-label="What are you sharing?">{choices.map(([id, label]) => <button type="button" key={id} aria-pressed={mode === id} onClick={() => setMode(id)}>{label}</button>)}</div>
     <div className="capture-primary-actions"><button className="well-button capture-shutter" onClick={() => capture(mode, "photo")}><Camera size={26}/>Take a photo</button><button className="well-button well-secondary" onClick={() => capture(mode, "voice")}><Mic size={24}/>Tell Daywell</button></div>
     <small>Review first. Save when it looks right.</small>
-    <button className="well-text-button capture-manual" onClick={() => { if (mode === "meal") a.openEditor("food"); else if (mode === "grocery") a.openEditor("grocery"); else { a.food.setView("basket"); a.food.open({ type: "stock.set", item: { id: crypto.randomUUID(), ingredient: "", quantity: null, unit: "g", bestBefore: null } }); } }}><Keyboard size={15}/>Add by hand instead</button>
+    <button className="well-text-button capture-manual" onClick={() => { if (mode === "meal") a.openEditor("food"); else if (mode === "grocery") a.openEditor("grocery"); else addFoodByHand(); }}><Keyboard size={15}/>Add by hand instead</button>
   </section>;
 }
 
@@ -170,7 +171,7 @@ export function CaptureHub({ a }: { a: AppState }) {
     <input ref={picker} hidden aria-label="Take a food photo" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={e => { const file = e.target.files?.[0]; if (file) void choosePhoto(file); e.target.value = ""; }}/>
     <input ref={upload} hidden aria-label="Choose a food photo" type="file" accept="image/jpeg,image/png,image/webp" onChange={e => { const file = e.target.files?.[0]; if (file) void choosePhoto(file); e.target.value = ""; }}/>
     <Dialog open={open} onOpenChange={value => { if (!value) close(); }}><DialogContent className="food-capture-dialog"><DialogHeader><DialogTitle>{saved ? "A little less to remember." : result?.question ? "One quick question." : hasDraft ? "Does this look right?" : mode === "plan" ? "Let’s make a few meals." : choices.find(([id]) => id === mode)?.[1]}</DialogTitle><DialogDescription>{saved ? "Your confirmed entries are saved." : hasDraft ? "Check the details before saving." : "A photo or a few words is all you need."}</DialogDescription></DialogHeader>
-      {connected === false && <div className="capture-connection" role="status"><strong>Photo and voice recognition are unavailable right now.</strong><p>Try again shortly, or add your food by hand.</p><button className="well-text-button" onClick={() => void checkConnection()}><RotateCcw size={15}/>Try again</button><button className="well-text-button" onClick={() => { close(); if (mode === "basket") { a.setActive("eat"); a.food.open({ type: "stock.set", item: { id: crypto.randomUUID(), ingredient: "", quantity: null, unit: "g", bestBefore: null } }); } else if(mode === "plan") { a.setActive("eat"); a.food.setView("meals"); } else a.openEditor(mode === "meal" ? "food" : "grocery"); }}>Add by hand</button></div>}
+      {connected === false && <div className="capture-connection" role="status"><strong>Photo and voice recognition are unavailable right now.</strong><p>Try again shortly, or add your food by hand.</p><button className="well-text-button" onClick={() => void checkConnection()}><RotateCcw size={15}/>Try again</button><button className="well-text-button" onClick={() => { close(); if (mode === "basket") { a.setActive("eat"); addFoodByHand(); } else if(mode === "plan") { a.setActive("eat"); a.food.setView("meals"); } else a.openEditor(mode === "meal" ? "food" : "grocery"); }}>Add by hand</button></div>}
       {saved ? <div className="capture-finished"><Check size={34}/><button className="well-button" onClick={close}>Back to my day</button></div> : <>
         {mode === "meal" && !hasDraft && !result?.question && <div className="capture-choices" role="group" aria-label="Where is your meal from?">{Object.entries(mealOrigins).map(([id,label])=><button type="button" key={id} disabled={busy || recording} aria-pressed={mealOrigin===id} onClick={()=>setMealOrigin(id as keyof typeof mealOrigins)}>{label}</button>)}</div>}
         {mode === "plan" && !hasDraft && !result?.question && <><p>Up to {planOptions.count} {planOptions.meal.toLowerCase()} meals for one person, starting {planOptions.start}. Say any preferences or exclusions.</p><button className="well-button" disabled={busy || !connected} onClick={()=>void understand()}>Suggest from my saved basket</button></>}

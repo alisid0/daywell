@@ -11,6 +11,8 @@ const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value => {
   return value >= "1900-01-01" && Number.isFinite(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
 }, "Choose a valid date.");
 const unit = z.enum(["g", "kg", "ml", "l", "each", "portion"]);
+// Where a lot lives in the Kitchen (lib/food-places.ts). Optional: without it, the food's usual place is used.
+export const placeIds = ["fridge", "freezer", "cupboard", "fruit"] as const;
 // Quantities are optional. Without one, an ingredient only says "some is needed".
 const requirement = z.object({ ingredient: label, quantity: positive.nullable(), unit }).strict();
 export const planGuideSchema = z.object({
@@ -25,7 +27,7 @@ export const planInput = z.object({
   ingredients: z.array(requirement).min(1).max(40),
   guide: planGuideSchema.optional(),
 }).strict();
-const stockInput = z.object({ id, ingredient: label, quantity: amount.nullable(), unit, bestBefore: date.nullable().default(null) }).strict();
+const stockInput = z.object({ id, ingredient: label, quantity: amount.nullable(), unit, bestBefore: date.nullable().default(null), place: z.enum(placeIds).optional() }).strict();
 const shoppingInput = z.object({ id: shoppingId, title: z.string().trim().min(1).max(160), quantity: z.string().trim().max(80), done: z.boolean() }).strict();
 const used = z.array(z.object({ stockId: id, quantity: positive, unit }).strict()).max(40);
 const consumption = {
@@ -142,6 +144,9 @@ function remove<T extends { id: string }>(list: T[], target: string) {
   if (index < 0) throw new FoodError("This item has changed. Refresh your food space and try again.");
   list.splice(index, 1);
 }
+// Where a lot lives (lib/food-places.ts): a top-up keeps its shelf, and a new pack follows the last one of that food.
+const placed = (lot?: { place?: typeof placeIds[number] }) => lot?.place ? { place: lot.place } : {};
+const lastPlaced = (stock: Stock[], ingredient: string) => placed([...stock].reverse().find(lot => lot.place && lot.ingredient === ingredient));
 function unique(values: string[]) {
   if (new Set(values).size !== values.length) throw new FoodError("Review the repeated items before saving.", 400);
 }
@@ -172,7 +177,8 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
     for (const item of action.items) {
       if (seen.has(item.id)) throw new FoodError("A captured item already exists. Review your basket before adding it again.");
       seen.add(item.id);
-      state.stock.push({ ...item, ingredient: ingredientName(item.ingredient), ...measured(item.quantity, item.unit), changedBy: operationId });
+      const ingredient = ingredientName(item.ingredient);
+      state.stock.push({ ...lastPlaced(state.stock, ingredient), ...item, ingredient, ...measured(item.quantity, item.unit), changedBy: operationId });
     }
   } else if (action.type === "stock.remove") remove(state.stock, action.id);
   else if (action.type === "plan.set") {
@@ -208,7 +214,7 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
       if (existing && (key(existing) !== key(bought) || existing.bestBefore !== bought.bestBefore)) throw new FoodError("Use a separate stock item for a different ingredient, unit or date.");
       if (existing?.quantity === null) throw new FoodError("Check how much you already have, or save this purchase as a separate stock item.");
       if (existing && bought.quantity === null) throw new FoodError("Add how much you bought to top up this item, or save it as a separate item.", 400);
-      put(state.stock, { ...bought, quantity: bought.quantity === null ? null : round((existing?.quantity ?? 0) + bought.quantity) });
+      put(state.stock, { ...(existing ? placed(existing) : lastPlaced(state.stock, bought.ingredient)), ...bought, quantity: bought.quantity === null ? null : round((existing?.quantity ?? 0) + bought.quantity) });
       if (shoppingId) {
         const shopping = state.shopping.find(row => row.id === shoppingId);
         if (!shopping || shopping.done) throw new FoodError("That shopping item has changed. Review the purchase before saving.");
@@ -251,7 +257,7 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
     }
     meal = { id: `food-${operationId}`, data: { title: action.title, date: action.date, meal: action.meal, ...intakeRecord(action.intake, action.type === "cook" ? "prepared" : "used") } };
   } else if (action.type === "undo") {
-    if (!undoEffect || !["purchase", "cook", "use", "stock.add"].includes(undoEffect.type)) throw new FoodError("Only a recorded capture, purchase, cooking or food-use action can be undone here.", 400);
+    if (!undoEffect || !["purchase", "cook", "use", "stock.add", "stock.remove"].includes(undoEffect.type)) throw new FoodError("Only a recorded capture, purchase, cooking, food-use or used-up action can be undone here.", 400);
     undoChanges(state.stock, undoEffect.stock, operationId);
     undoChanges(state.plans, undoEffect.plans, operationId);
     undoChanges(state.shopping, undoEffect.shopping, operationId);

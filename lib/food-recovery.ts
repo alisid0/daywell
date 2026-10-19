@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { actionSchema, foodCommandSchema, planGuideSchema } from "./food.ts";
+import { actionSchema, foodCommandSchema, placeIds, planGuideSchema } from "./food.ts";
 import type { FoodAction } from "./food-client.ts";
 
 // Drafts may be incomplete (blank names/zero quantities); API commands may not.
@@ -7,7 +7,7 @@ import type { FoodAction } from "./food-client.ts";
 const text = z.string().max(160), id = z.string().regex(/^[a-zA-Z0-9-]{1,87}$/);
 const number = z.number().finite().min(-1_000_000).max(1_000_000);
 const date = z.string().max(10), unit = z.enum(["g", "kg", "ml", "l", "each", "portion"]);
-const stock = z.object({ id, ingredient: text, quantity: number.nullable(), unit, bestBefore: date.nullable() });
+const stock = z.object({ id, ingredient: text, quantity: number.nullable(), unit, bestBefore: date.nullable(), place: z.enum(placeIds).optional() });
 const requirement = z.object({ ingredient: text, quantity: number.nullable(), unit });
 const meal = z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]);
 const plan = z.object({ id, title: text, date, meal, servings: number, ingredients: z.array(requirement).max(40), guide: planGuideSchema.optional() });
@@ -29,7 +29,7 @@ const draftAction = z.union([
 ]) as z.ZodType<FoodAction>;
 const draftSchema = z.object({ revision: z.number().int().nonnegative(), action: draftAction });
 const recoverySchema = z.object({ version: z.literal(1), draft: draftSchema.nullable(), pending: foodCommandSchema.nullable(),
-  view: z.enum(["basket", "meals", "shopping", "history"]), start: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), days: z.union([z.literal(2), z.literal(3), z.literal(7)]) });
+  view: z.enum(["plate", "basket", "meals", "shopping", "history"]), start: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), days: z.union([z.literal(2), z.literal(3), z.literal(7)]) });
 export type FoodRecovery = z.infer<typeof recoverySchema>;
 export const recoveryPrefix = "daywell-food-recovery-v1-";
 type Storage = Pick<globalThis.Storage, "getItem" | "setItem" | "removeItem" | "key" | "length">;

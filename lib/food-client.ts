@@ -18,10 +18,10 @@ const snapshotSchema = z.object({ revision: z.number().int().nonnegative(), stat
 export async function readFoodSnapshot(request: typeof fetch = fetch, scope?: string): Promise<FoodSnapshot> {
   const response = await request("/api/food", { cache: "no-store", headers: scope ? { "X-Daywell-Recovery-Scope": scope } : undefined, signal: AbortSignal.timeout(20_000) });
   const body = await response.json();
-  if (!response.ok) throw Error(errorResponse.safeParse(body).data?.error || "Your food basket couldn’t load.");
+  if (!response.ok) throw Error(errorResponse.safeParse(body).data?.error || "Your kitchen couldn’t load.");
   if (scope && !z.object({ recoveryScope: z.literal(scope) }).safeParse(body).success) throw Error("Your sign-in changed. Reload Daywell to see your saved details.");
   const data = snapshotSchema.safeParse(body);
-  if (!data.success) throw Error("Your food basket couldn’t load. Try again.");
+  if (!data.success) throw Error("Your kitchen couldn’t load. Try again.");
   return { ...data.data, overview: foodOverview(data.data.state) };
 }
 
@@ -36,7 +36,7 @@ export async function sendFoodCommand(command: FoodCommand, request: typeof fetc
     const body = await response.json().catch(() => null);
     if (response.ok && savedResponse.safeParse(body).success) return { kind: "saved" };
     const error = errorResponse.safeParse(body).data?.error;
-    if (response.status === 409) return { kind: "conflict", message: error || "Your food basket has changed. Review it before saving." };
+    if (response.status === 409) return { kind: "conflict", message: error || "Your kitchen has changed. Review it before saving." };
     if ([400, 401, 403, 413].includes(response.status)) return { kind: "rejected", message: error || "This change could not be saved. Check the details and your sign-in." };
   } catch { /* The server may have saved before the connection was lost. */ }
   return { kind: "uncertain", message: "We couldn’t confirm that save. Retry this same save safely; it won’t be added twice." };

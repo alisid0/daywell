@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { ArrowRight, Clock, Plus, ShoppingBasket, Sparkles } from "lucide-react";
 import { ingredientName } from "@/lib/food";
 import type { FoodAction } from "@/lib/food-client";
@@ -16,7 +16,7 @@ const withQuantity = (item: { ingredient: string; quantity: number | null; unit:
 
 // Whether recipe ideas can be asked for at all, checked once per page and again after a failed check.
 let connection: Promise<boolean> | null = null;
-function useRecipesConnected() {
+export function useRecipesConnected() {
   const [connected, setConnected] = useState<boolean | null>(null);
   useEffect(() => {
     let live = true;
@@ -35,8 +35,22 @@ async function askRecipes<T>(request: RecipeAsk): Promise<T> {
 
 // On the Food basket: "What could I make?", up to three recipes from what's there.
 export function BasketIdeas({ f }: { f: Food }) {
-  const connected = useRecipesConnected(), title = useId();
+  const connected = useRecipesConnected(), title = useId(), card = useRef<HTMLElement>(null), wishField = useRef<HTMLInputElement>(null);
   const [ideas, setIdeas] = useState<Ideas | null>(null), [wish, setWish] = useState(""), [busy, setBusy] = useState(false), [error, setError] = useState("");
+  // "Cook ideas" on the Kitchen shelves and "Cook with it" on a food's card (app/kitchen.tsx) fill in the wish and bring
+  // this card into view, after a closing sheet has handed focus back. Nothing is sent until the person asks.
+  useEffect(() => {
+    const show = (event: Event) => {
+      const wished = (event as CustomEvent<{ wish?: unknown }>).detail?.wish;
+      if (typeof wished === "string") setWish(wished.slice(0, 300));
+      window.setTimeout(() => {
+        card.current?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+        wishField.current?.focus({ preventScroll: true });
+      }, 80);
+    };
+    window.addEventListener("daywell-recipe-ideas", show);
+    return () => window.removeEventListener("daywell-recipe-ideas", show);
+  }, []);
   const state = f.snapshot!.state;
   if (connected !== true || !state.stock.some(lot => lot.quantity !== 0)) return null;
   // Already on the list, as a note or for a planned meal: never added twice.
@@ -55,9 +69,9 @@ export function BasketIdeas({ f }: { f: Food }) {
   function addToList(items: RecipeIdea["ingredients"]) {
     f.open({ type: "shopping.add", items: items.map(item => ({ id: crypto.randomUUID(), title: item.ingredient, quantity: item.quantity === null ? "" : `${quantityText(item.quantity)} ${unitText(item.unit, item.quantity)}`, done: false })) });
   }
-  return <section className="basket-ideas" aria-labelledby={title}>
-    <div className="basket-ideas-head"><span className="food-invitation-icon" aria-hidden><Sparkles size={24}/></span><div><span className="food-eyebrow">Ideas from your basket</span><h2 id={title}>What could I make?</h2><p>A few simple recipes from what you have. Anything missing can go straight on your list.</p></div></div>
-    <label className="basket-ideas-wish">Anything you fancy or want to avoid? (optional)<input maxLength={300} value={wish} placeholder="Quick, no mushrooms…" onChange={event => setWish(event.target.value)}/></label>
+  return <section className="basket-ideas" aria-labelledby={title} ref={card}>
+    <div className="basket-ideas-head"><span className="food-invitation-icon" aria-hidden><Sparkles size={24}/></span><div><span className="food-eyebrow">Ideas from your kitchen</span><h2 id={title}>What could I make?</h2><p>A few simple recipes from what you have. Anything missing can go straight on your trolley list.</p></div></div>
+    <label className="basket-ideas-wish">Anything you fancy or want to avoid? (optional)<input ref={wishField} maxLength={300} value={wish} placeholder="Quick, no mushrooms…" onChange={event => setWish(event.target.value)}/></label>
     <button className="well-button" disabled={busy} onClick={() => void ask()}><Sparkles size={18} aria-hidden/>{busy ? "Finding ideas…" : ideas?.ideas.length ? "Show different ideas" : "Suggest recipes"}</button>
     <div aria-live="polite">{ideas && <p className="basket-ideas-summary">{ideas.summary}</p>}{error && <p className="form-error" role="alert">{error}</p>}</div>
     {!!ideas?.ideas.length && <div className="food-recipe-grid basket-ideas-list">{ideas.ideas.map(idea => {
@@ -66,7 +80,7 @@ export function BasketIdeas({ f }: { f: Food }) {
       return <article className={`food-recipe food-tone-${tone}`} key={idea.title}>
         <div className="food-recipe-top"><span className="food-meal-chip"><span className="food-item-icon" aria-hidden><Icon size={24}/></span>{idea.meal}</span><span className="food-time"><Clock size={13} aria-hidden/>{idea.minutes} min</span></div>
         <h3>{idea.title}</h3>
-        {!!have.length && <><p className="idea-label">From your basket</p><ul className="food-chips">{have.map(item => <li key={item.ingredient}>{item.ingredient}</li>)}</ul></>}
+        {!!have.length && <><p className="idea-label">From your kitchen</p><ul className="food-chips">{have.map(item => <li key={item.ingredient}>{item.ingredient}</li>)}</ul></>}
         {missing.length ? <><p className="idea-label">You’d need</p><ul className="food-chips is-missing">{missing.map(item => <li key={item.ingredient}>{item.ingredient}{item.quantity !== null && <small> {quantityText(item.quantity)} {unitText(item.unit, item.quantity)}</small>}</li>)}</ul></> : <p className="idea-label is-ready">Nothing to buy</p>}
         <details><summary>How to make it</summary><ol>{idea.steps.map((step, index) => <li key={index}>{step}</li>)}</ol><small>Review ingredients, portions and your own dietary needs.</small></details>
         <div className="idea-actions"><button className="well-button well-secondary" onClick={() => plan(idea)}>Plan this meal<ArrowRight size={16} aria-hidden/></button>
@@ -74,7 +88,7 @@ export function BasketIdeas({ f }: { f: Food }) {
         <AiReport key={idea.title} source="meal-plan" noun="recipe" text={[idea.title, idea.ingredients.map(withQuantity).join(", "), ...idea.steps].join("\n")}/>
       </article>;
     })}</div>}
-    <p className="food-caption">Asking sends your basket’s names and quantities, and anything you type here, to OpenAI. Nothing is saved until you choose.</p>
+    <p className="food-caption">Asking sends the names and quantities of the food in your kitchen, and anything you type here, to OpenAI. Nothing is saved until you choose.</p>
   </section>;
 }
 

@@ -1,6 +1,6 @@
 # Connected Food basket: app flow and backend contract
 
-This closes the first food-system foundation in the [mobile release plan](mobile-release-plan.md): authenticated persistence and consistent stock, plans, shopping and cooking operations. The Eat screen now uses this system through **Food basket · Next meals · Shopping**, with a direct `/eat` entry point. First mobile builds, production identity/hosting, reviewed ingredient-photo assistance and a larger reviewed recipe collection remain outstanding.
+This closes the first food-system foundation in the [mobile release plan](mobile-release-plan.md): authenticated persistence and consistent stock, plans, shopping and cooking operations. The Eat screen uses this system through four places, **Plate · Kitchen · Week · Trolley** (since 19 October 2026; before that, Food basket · Next meals · Shopping), with a direct `/eat` entry point. First mobile builds, production identity/hosting, reviewed ingredient-photo assistance and a larger reviewed recipe collection remain outstanding.
 
 The new `/api/food` endpoint uses the existing server authentication boundary. A trusted production identity gateway is still required; this work does not make client-supplied identity headers safe on a public deployment. No provider keys, AI calls or new paid services are involved.
 
@@ -95,3 +95,42 @@ Owner request, 17 October: "the amount needs to be changed to quantity which sho
   - Requests count towards a separate daily safety net (see [usage limits](usage-limits.md)) and can be reported like other AI text.
 
 Tests: `tests/eat-quantity-recipes.test.mjs`.
+
+## The Kitchen, part 1 — 19 October 2026
+
+The owner approved the "Kitchen, all in" design on 19 October. It's built in three parts; this is the first.
+
+- **Four places replace the tabs:**
+  - Plate: today, with the meal story;
+  - Kitchen: shelves;
+  - Week: meal plans;
+  - Trolley: shopping.
+
+  Eat opens on the Plate. The places keep the old view ids (`basket`, `meals`, `shopping`, and `history` opens the Plate), so drafts saved on a device still open.
+- **Where food lives:** a lot may have a `place`: `fridge`, `freezer`, `cupboard` or `fruit`.
+  - It's an optional field at the end of the stock input, so earlier receipts keep their hashes. The state is stored as JSON, so there's no migration.
+  - A lot without a place shows where its kind of food usually lives (`lib/food-places.ts`).
+  - A top-up keeps its lot's place. A new pack from a purchase or a capture goes where the last one of that food was put.
+- **Shelves:** a lot with nothing left leaves the shelf.
+  - Food whose reminder date is within three days, or has passed, gets a ring and comes first. The words stay plain: a pack date is a reminder, not a food-safety check.
+  - "Cook ideas" opens the recipe ideas card with a wish filled in. Nothing is sent until the person asks.
+- **A food's card:**
+  - I ate some, Used it up, Change, Move and "Take it out of my kitchen";
+  - Cook with it, or Plan a meal when recipe ideas are off.
+
+  These save in one tap through `useFood().submit`. A problem leaves the change open in the editor, as before.
+- **I ate some:** quick amounts and a stepper.
+  - "Put it on today's plate as a snack" saves the `use` as eaten.
+  - Food without a quantity can be noted on today's plate as a plain food entry, which leaves the kitchen as it is.
+- **Adding in three steps:**
+  1. What it is: typed, from a photo, or a tile of food the person has had.
+  2. How much: optional.
+  3. Where it lives: suggested, with an optional reminder date.
+
+  Change uses the same steps.
+- **Undo:** `stock.remove` can now be undone. After a save, a toast above the bottom bar offers one-tap Undo. The confirmed Undo in "Recent kitchen changes & undo" stays.
+- **Wording:** Eat's messages say "kitchen" instead of "food basket".
+
+Parts 2 (Trolley with Put it away, and the Week board) and 3 (Plate, and the recipe deck with cook mode) follow.
+
+Tests: `tests/kitchen.test.mjs`.

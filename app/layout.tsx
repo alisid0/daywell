@@ -23,6 +23,7 @@ import "./sleep-sounds.css";
 import "./ai-report.css";
 import "./sign-in.css";
 import "./food.css";
+import "./kitchen.css";
 import "./areas.css";
 import "./capture.css";
 import "./audio-library.css";

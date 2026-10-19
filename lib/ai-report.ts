@@ -3,6 +3,7 @@ import { z } from 'zod';
 // People can report an AI-written reply or estimate without leaving the app (Google Play's AI-generated content
 // policy; owner approval, 12 October 2026). A report keeps only that text, the reason and the person's optional note,
 // for 90 days, so the team can review it. See docs/ai-reports.md.
+// Recipe ideas are reported as 'meal-plan': they are meal suggestions, and ai_reports only accepts these three.
 export const aiReportSources = ['conversation', 'food-estimate', 'meal-plan'] as const;
 export type AiReportSource = typeof aiReportSources[number];
 export const aiReportReasons = [

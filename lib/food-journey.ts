@@ -29,9 +29,13 @@ export function mealCoverage(state: FoodState, plans: MealProposal[]) {
   }).inventory;
   const key = (name: string, unit: string) => JSON.stringify([ingredientName(name), unit]);
   const available = new Map(inventory.map(item => [key(item.ingredient, item.unit), item.available]));
+  const inBasket = (name: string) => state.stock.some(lot => ingredientName(lot.ingredient) === name && lot.quantity !== 0);
   return plans.map(plan => {
     const amounts = new Map<string, { ingredient: string; quantity: number; unit: string }>();
+    // Listed without a quantity: covered by any of it in the basket, in any unit.
+    const some = new Map<string, { ingredient: string; quantity: null; unit: string; needsCheck: false }>();
     for (const item of plan.ingredients) {
+      if (item.quantity === null) { const name = ingredientName(item.ingredient); if (!inBasket(name)) some.set(name, { ingredient: name, quantity: null, unit: item.unit, needsCheck: false }); continue; }
       const normalized = { ingredient: ingredientName(item.ingredient), ...measured(item.quantity, item.unit) };
       const id = key(normalized.ingredient, normalized.unit);
       amounts.set(id, { ...normalized, quantity: (amounts.get(id)?.quantity ?? 0) + normalized.quantity });
@@ -40,8 +44,9 @@ export function mealCoverage(state: FoodState, plans: MealProposal[]) {
       const onHand = available.get(id) ?? 0, gap = Math.max(0, Math.round((item.quantity - onHand) * 1000) / 1000);
       available.set(id, Math.max(0, onHand - item.quantity));
       const needsCheck = state.stock.some(lot => ingredientName(lot.ingredient) === item.ingredient && (lot.quantity === null || (lot.quantity !== 0 && lot.unit !== item.unit)));
-      return gap ? [{ ...item, quantity: gap, needsCheck }] : [];
+      return gap ? [{ ...item, quantity: gap as number | null, needsCheck }] : [];
     });
+    for (const [name, item] of some) if (![...amounts.values()].some(row => row.ingredient === name)) missing.push(item);
     return { id: plan.id, covered: missing.length === 0, missing };
   });
 }
@@ -61,7 +66,7 @@ export function matchesPlannedIngredients(state: FoodState, plan: MealProposal, 
   const add = (map: Map<string, number>, ingredient: string, quantity: number, unit: string) => {
     const key = JSON.stringify([ingredientName(ingredient), unit]); map.set(key, (map.get(key) ?? 0) + quantity);
   };
-  for (const item of plan.ingredients) { const value = measured(item.quantity * action.servings / plan.servings, item.unit); add(expected, item.ingredient, value.quantity, value.unit); }
+  for (const item of plan.ingredients) { if (item.quantity === null) continue; const value = measured(item.quantity * action.servings / plan.servings, item.unit); add(expected, item.ingredient, value.quantity, value.unit); }
   for (const item of action.consumed) {
     const lot = state.stock.find(lot => lot.id === item.stockId); if (!lot) return false;
     const value = measured(item.quantity, item.unit); add(actual, lot.ingredient, value.quantity, value.unit);

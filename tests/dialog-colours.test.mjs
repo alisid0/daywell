@@ -10,7 +10,7 @@ test('dialogs get the colour tokens their buttons and fields read, without the p
   assert.match(read('components/ui/dialog.tsx'), /data-slot="dialog-content"/);
   const tokens = rules(read('app/wellbeing.css')).find(rule => rule.body.includes('--well-accent:'));
   assert.deepEqual(tokens.selectors, ['.well-space', '.rest-space', '[data-slot="dialog-content"]']);
-  const used = new Set(['app/wellbeing.css', 'app/food.css'].flatMap(file => [...read(file).matchAll(/var\((--well-[a-z]+)/g)].map(match => match[1])));
+  const used = new Set(['app/wellbeing.css', 'app/food.css', 'app/kitchen.css'].flatMap(file => [...read(file).matchAll(/var\((--well-[a-z]+)/g)].map(match => match[1])));
   for (const token of used) assert.match(tokens.body, new RegExp(`${token}:var\\(--dw-`), `${token} is defined for dialogs from the chosen look`);
   assert.doesNotMatch(tokens.body, /(^|;)(margin|max-width|color|font-family):/, 'the page layout stays off dialogs');
 });

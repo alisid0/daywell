@@ -49,6 +49,8 @@ export const limits = {
   "voice-all": { windowMs: day, max: 100 },
   capture: { windowMs: day, max: 20 },
   narration: { windowMs: day, max: 20 },
+  // A safety net against scripts, set well above everyday use: paying users shouldn't meet it.
+  recipes: { windowMs: day, max: 40 },
   picker: { windowMs: day, max: 120 },
   // Sign-in protection, not usage limits: they stop code guessing and stop anyone using Daywell to send unwanted
   // email. Rows are keyed by a keyed hash of the address or network address, never the address (docs/sign-in.md).

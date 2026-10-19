@@ -1,7 +1,7 @@
 // How food looks in Eat: one icon and one soft colour per supermarket aisle (lib/food-aisles.ts decides the aisle),
 // looks for the four meals, and gentle wording for pack-date reminders. Colours are mixed from the palette in food.css
 // (food-tone-*), so every look stays readable.
-import { Apple, Bean, Carrot, CookingPot, Cookie, Croissant, CupSoda, Drumstick, Fish, Leaf, Milk, Package, Sandwich, ShoppingBasket, Snowflake, Soup, SprayCan, Wheat, type LucideIcon } from "lucide-react";
+import { Apple, Banana, Bean, Beef, Beer, CakeSlice, Candy, Carrot, Cherry, Citrus, CookingPot, Cookie, Coffee, Croissant, CupSoda, Drumstick, Egg, Fish, Grape, Ham, IceCreamCone, Leaf, LeafyGreen, Milk, Nut, Package, Pizza, Popcorn, Salad, Sandwich, ShoppingBasket, Shrimp, Snowflake, Soup, SprayCan, Wheat, Wine, type LucideIcon } from "lucide-react";
 import { aisleFor, aisleIds, aisleNames, type AisleId } from "@/lib/food-aisles";
 
 export type FoodTone = "green" | "fruit" | "meat" | "sea" | "dairy" | "grain" | "meal" | "treat" | "other";
@@ -14,6 +14,20 @@ const looks: Record<AisleId, [LucideIcon, FoodTone]> = {
 };
 const aisles = Object.fromEntries(aisleIds.map(id => [id, { id, name: aisleNames[id], Icon: looks[id][0], tone: looks[id][1] }])) as Record<AisleId, Aisle>;
 export const aisleOf = (name: string, unit?: string): Aisle => aisles[aisleFor(name, unit)];
+// The Kitchen shows a food by itself where there's a clear picture of it (an egg, a banana), in its aisle's colour;
+// anything else shows its aisle's icon.
+const pictures: [AisleId, RegExp, LucideIcon][] = [
+  ["vegetables", /salad/, Salad], ["vegetables", /spinach|lettuce|kale|rocket|greens|cabbage|chard/, LeafyGreen],
+  ["fruit", /banana/, Banana], ["fruit", /cherr/, Cherry], ["fruit", /grape/, Grape], ["fruit", /orange|lemon|lime|clementine|satsuma|grapefruit/, Citrus],
+  ["dairy", /\beggs?\b/, Egg], ["ready", /pizza/, Pizza], ["ready", /soup/, Soup], ["meat", /beef|steak|mince/, Beef], ["meat", /\bham\b|bacon/, Ham],
+  ["fish", /prawn|shrimp/, Shrimp], ["drinks", /coffee/, Coffee], ["drinks", /wine/, Wine], ["drinks", /beer/, Beer], ["frozen", /ice cream/, IceCreamCone],
+  ["snacks", /popcorn/, Popcorn], ["snacks", /cake/, CakeSlice], ["snacks", /\bnuts?\b|almond|cashew|peanut|walnut|hazelnut|pistachio/, Nut], ["snacks", /\bsweets?\b|candy/, Candy],
+];
+export function foodLook(name: string, unit?: string): Aisle {
+  const aisle = aisleOf(name, unit), food = name.toLowerCase();
+  const picture = pictures.find(([id, pattern]) => id === aisle.id && pattern.test(food));
+  return picture ? { ...aisle, Icon: picture[2] } : aisle;
+}
 // Where an aisle comes on a walk round the shop (for sorting and grouping).
 export const aisleRank = (aisle: Aisle) => aisleIds.indexOf(aisle.id);
 

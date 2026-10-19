@@ -1,12 +1,12 @@
 # Connected Food basket: app flow and backend contract
 
-This closes the first food-system foundation in the [mobile release plan](mobile-release-plan.md): authenticated persistence and consistent stock, plans, shopping and cooking operations. The Eat screen now uses this system through **Food basket · Next meals · Shopping**, with a direct `/eat` entry point. First mobile builds, production identity/hosting, reviewed ingredient-photo assistance and a larger reviewed recipe collection remain outstanding.
+This closes the first food-system foundation in the [mobile release plan](mobile-release-plan.md): authenticated persistence and consistent stock, plans, shopping and cooking operations. The Eat screen uses this system through four places, **Plate · Kitchen · Week · Trolley** (since 19 October 2026; before that, Food basket · Next meals · Shopping), with a direct `/eat` entry point. First mobile builds, production identity/hosting, reviewed ingredient-photo assistance and a larger reviewed recipe collection remain outstanding.
 
 The new `/api/food` endpoint uses the existing server authentication boundary. A trusted production identity gateway is still required; this work does not make client-supplied identity headers safe on a public deployment. No provider keys, AI calls or new paid services are involved.
 
 ## What works
 
-- Ingredient lots have a name, quantity (or explicitly unknown), unit and optional user-entered date. Nothing guesses expiry or food safety.
+- Ingredient lots have a name, an optional quantity, a unit and an optional user-entered date. Nothing guesses expiry or food safety.
 - Kilograms/grams and litres/millilitres convert explicitly. Count, portions, mass and volume remain separate. A small explicit alias list merges names such as egg/eggs; different preparations or varieties are not fuzzy-matched.
 - Each planned meal stores its own reviewed ingredient quantities for all its servings. Adding, changing or removing it recalculates demand without consuming stock. A reviewed two-, three- or seven-day window can be replaced atomically while retaining meals outside it.
 - The overview distinguishes known stock, planned demand, reserved stock and stock available for other meals. Unknown or incompatible stock returns a `needsCheck` flag and an unknown shopping amount when it could cover a shortage. Known sufficient stock needs no extra question.
@@ -35,7 +35,7 @@ Every `POST /api/food` carries a client-generated unique `operationId`, the last
 }
 ```
 
-Supported actions are `stock.set`, `stock.remove`, `plan.set`, `plan.window`, `plan.remove`, `shopping.set`, `shopping.remove`, `purchase`, `cook`, and `undo`. Their exact request shapes are in [`lib/food.ts`](../lib/food.ts). `plan.window` takes `startDate`, `days` (2, 3 or 7) and the complete reviewed replacement `plans` for those dates. An empty replacement clears that window only. Recipe generation and automatic dietary suitability checks are not implemented here.
+Supported actions are `stock.set`, `stock.add`, `stock.remove`, `plan.set`, `plan.add`, `plan.window`, `plan.remove`, `shopping.set`, `shopping.add`, `shopping.remove`, `purchase`, `cook`, `use`, and `undo`. Their exact request shapes are in [`lib/food.ts`](../lib/food.ts). `plan.window` takes `startDate`, `days` (2, 3 or 7) and the complete reviewed replacement `plans` for those dates. An empty replacement clears that window only. Recipe generation and automatic dietary suitability checks are not implemented here.
 
 Successful saves return `{ ok, revision, replayed }`. Refresh the food space afterward. The returned revision on a replay belongs to the original action, so never replace newer client state with it. Preserve the original command and operation ID for an uncertain network retry. Reusing an ID with a changed command is a conflict, not a new save.
 
@@ -78,3 +78,59 @@ Still required for launch: ingredient-photo review and corrections; hosted ident
 This checkpoint supersedes the earlier frontend limitations above. Spoken and older grocery notes now appear in the main Shopping view and can be attached to reviewed actual-quantity purchases. No old note becomes inventory automatically. Food drafts and pending save commands can be restored after a reload under the same account, with browser-storage warnings, explicit review and stale-tab protection. Next meals exposes a multi-day review editor, and original planned meals now appear in the calendar.
 
 Shopping still includes all saved plans; photo assistance, personalised plan generation, workout recovery, hosted identity, native devices and complete account lifecycle are not included. See the [implementation and test handover](handover/2026-10-08-connected-food-recovery.md) for the 115-test checkpoint, browser evidence, setup and remaining work. No new database migration or dependencies are required.
+
+## Optional quantities and recipe ideas — 17 October 2026
+
+Owner request, 17 October: "the amount needs to be changed to quantity which should be optional", and recipe ideas once the ingredients are in.
+
+- **Quantities are optional everywhere in Eat:** basket lots, meal-plan ingredients, purchases and shopping notes. `null` means no quantity. Nothing is ever guessed.
+- **A planned ingredient without a quantity** is covered by any non-empty lot of the same food, in any unit. Otherwise the overview row is `unmeasured` and Shopping lists it as "For your planned meals". Within one meal, a quantity and an unmeasured listing of the same food combine into the quantity.
+- **Cooking can record a meal with nothing counted** (`cook.consumed` may be empty), so food without quantities never blocks "I made this". `use` still needs a quantity, because it takes some away.
+- **A purchase without a quantity becomes a new lot.** It can never top up an existing lot.
+- **`shopping.add` adds up to 20 notes at once,** for example the missing items from a recipe idea.
+- **Recipe ideas** (`/api/recipes`, `lib/recipe-ideas.ts`):
+  - "What could I make?" suggests up to three recipes from the basket;
+  - "Suggest a recipe" writes steps for a meal being planned.
+  - Daywell, not the model, decides what is already in the basket.
+  - Requests count towards a separate daily safety net (see [usage limits](usage-limits.md)) and can be reported like other AI text.
+
+Tests: `tests/eat-quantity-recipes.test.mjs`.
+
+## The Kitchen, part 1 — 19 October 2026
+
+The owner approved the "Kitchen, all in" design on 19 October. It's built in three parts; this is the first.
+
+- **Four places replace the tabs:**
+  - Plate: today, with the meal story;
+  - Kitchen: shelves;
+  - Week: meal plans;
+  - Trolley: shopping.
+
+  Eat opens on the Plate. The places keep the old view ids (`basket`, `meals`, `shopping`, and `history` opens the Plate), so drafts saved on a device still open.
+- **Where food lives:** a lot may have a `place`: `fridge`, `freezer`, `cupboard` or `fruit`.
+  - It's an optional field at the end of the stock input, so earlier receipts keep their hashes. The state is stored as JSON, so there's no migration.
+  - A lot without a place shows where its kind of food usually lives (`lib/food-places.ts`).
+  - A top-up keeps its lot's place. A new pack from a purchase or a capture goes where the last one of that food was put.
+- **Shelves:** a lot with nothing left leaves the shelf.
+  - Food whose reminder date is within three days, or has passed, gets a ring and comes first. The words stay plain: a pack date is a reminder, not a food-safety check.
+  - "Cook ideas" opens the recipe ideas card with a wish filled in. Nothing is sent until the person asks.
+- **A food's card:**
+  - I ate some, Used it up, Change, Move and "Take it out of my kitchen";
+  - Cook with it, or Plan a meal when recipe ideas are off.
+
+  These save in one tap through `useFood().submit`. A problem leaves the change open in the editor, as before.
+- **I ate some:** quick amounts and a stepper.
+  - "Put it on today's plate as a snack" saves the `use` as eaten.
+  - Food without a quantity can be noted on today's plate as a plain food entry, which leaves the kitchen as it is.
+- **Adding in three steps:**
+  1. What it is: typed, from a photo, or a tile of food the person has had.
+  2. How much: optional.
+  3. Where it lives: suggested, with an optional reminder date.
+
+  Change uses the same steps.
+- **Undo:** `stock.remove` can now be undone. After a save, a toast above the bottom bar offers one-tap Undo. The confirmed Undo in "Recent kitchen changes & undo" stays.
+- **Wording:** Eat's messages say "kitchen" instead of "food basket".
+
+Parts 2 (Trolley with Put it away, and the Week board) and 3 (Plate, and the recipe deck with cook mode) follow.
+
+Tests: `tests/kitchen.test.mjs`.

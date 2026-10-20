@@ -1,3 +1,4 @@
+import { activeAccountRoute } from "../active-account";
 import {env} from "cloudflare:workers";
 import {getChatGPTUser} from "@/app/chatgpt-auth";
 import {database} from "@/db/store";
@@ -13,8 +14,8 @@ import {photoDraftInstructions} from "@/lib/food-photo";
 import {paidRequest,AllowanceError} from "@/lib/paid-request";
 export const dynamic="force-dynamic";
 const json=(value:unknown,status=200)=>Response.json(value,{status,headers:{"Cache-Control":"no-store"}});
-export async function GET(){if(!await getChatGPTUser())return json({error:"Please sign in."},401);return json({connected:!!env.OPENAI_API_KEY});}
-export async function POST(req:Request){const user=await getChatGPTUser();if(!user)return json({error:"Please sign in."},401);if(!sameOrigin(req))return json({error:"Request origin is not allowed."},403);if(!env.OPENAI_API_KEY)return json({error:"Photo and voice recognition are unavailable right now. Your photo or recording has not been sent.",code:"AI_NOT_CONNECTED"},503);
+async function handleGET(){if(!await getChatGPTUser())return json({error:"Please sign in."},401);return json({connected:!!env.OPENAI_API_KEY});}
+async function handlePOST(req:Request){const user=await getChatGPTUser();if(!user)return json({error:"Please sign in."},401);if(!sameOrigin(req))return json({error:"Request origin is not allowed."},403);if(!env.OPENAI_API_KEY)return json({error:"Photo and voice recognition are unavailable right now. Your photo or recording has not been sent.",code:"AI_NOT_CONNECTED"},503);
  const raw=await readLimited(req,12*1024*1024);if(!raw)return json({error:"Please use a smaller photo or a shorter recording."},413);
  let form:FormData,input:ReturnType<typeof captureInput>;
  try{form=await new Response(raw,{headers:{"content-type":req.headers.get("content-type")||""}}).formData();input=captureInput(form);}
@@ -49,3 +50,7 @@ export async function POST(req:Request){const user=await getChatGPTUser();if(!us
  const response=await paidRequest(db,user.userId,"capture",()=>fetch("https://api.openai.com/v1/responses",{method:"POST",headers:{...auth,"Content-Type":"application/json"},body:JSON.stringify({model:env.OPENAI_MODEL||"gpt-4.1-mini",store:false,instructions:mode==="meal"&&image?`${wellnessInstructions} ${photoDraftInstructions}`:instructions,input:[{role:"user",content}],max_output_tokens:planning?7000:3500,text:{format:{type:"json_schema",name:"daywell_capture",strict:true,schema:planning?mealPlanJsonSchema:captureJsonSchema}}}),signal:AbortSignal.timeout(60000)}));
  if(!response.ok)throw new UserFacingError(response.status===429?"Food recognition is busy right now. Please try again later.":"Couldn’t check your food right now. Please try again later.");const result:any=await response.json();if(result.status==="incomplete")throw new UserFacingError("I couldn't finish that. Try one request or a clearer photo.");const output=result.output?.flatMap((x:any)=>x.content||[]).find((x:any)=>x.type==="output_text")?.text;if(!output)throw new UserFacingError("I couldn't turn that into an entry. Please try another photo or a shorter request.");const draft=planning&&planOptions?mealPlanDraft(JSON.parse(output),planOptions):draftEntries(JSON.parse(output),date,settings.modules,mode);return json({...draft,transcript,source:"ai"});
  }catch(e:any){if(e instanceof AllowanceError)return json({error:e.message},429);const message=e?.name==="TimeoutError"?"That took too long. Your capture is still here so you can retry.":e?.name==="ZodError"?"Some details were missing. Try a clearer photo or a few more words.":messageFor(e,"Couldn't analyse that capture. Please try again.");console.error("Capture failed",e?.name);return json({error:message},502)} }
+
+export const GET = activeAccountRoute(handleGET);
+
+export const POST = activeAccountRoute(handlePOST);

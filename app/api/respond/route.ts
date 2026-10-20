@@ -1,3 +1,4 @@
+import { activeAccountRoute } from "../active-account";
 import { env } from 'cloudflare:workers';
 import { z } from 'zod';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
@@ -13,11 +14,11 @@ const json = (value: unknown, status = 200) => Response.json(value, { status, he
 const input = z.object({ text: z.string().trim().min(1).max(600), area: z.enum(['today', 'eat', 'move', 'sleep', 'relax', 'calendar']).default('today'), allowAi: z.boolean().default(false) }).strict();
 const replies = eligibleReplies(manifest as AudioManifest);
 
-export async function GET() {
+async function handleGET() {
   if (!await getChatGPTUser()) return json({ error: 'Please sign in.' }, 401);
   return json({ picker: Boolean(env.TYPESAFE_API_KEY && env.TYPESAFE_PICKER_ENABLED === 'true'), generation: Boolean(env.ELEVENLABS_API_KEY && env.ELEVENLABS_AGENT_ID) });
 }
-export async function POST(request: Request) {
+async function handlePOST(request: Request) {
   const user = await getChatGPTUser();
   if (!user) return json({ error: 'Please sign in.' }, 401);
   if (!sameOrigin(request)) return json({ error: 'Use Daywell to send your request.' }, 403);
@@ -38,3 +39,7 @@ export async function POST(request: Request) {
   // Metrics contain no request, identity, conversation or provider response.
   return json({ ...decision, decisionMs: Math.round((performance.now() - started) * 100) / 100 });
 }
+
+export const GET = activeAccountRoute(handleGET);
+
+export const POST = activeAccountRoute(handlePOST);

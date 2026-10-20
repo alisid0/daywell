@@ -1,3 +1,4 @@
+import { activeAccountRoute } from "../active-account";
 import { getChatGPTUser } from "@/app/chatgpt-auth";
 import { database } from "@/db/store";
 import { foodResponse } from "@/lib/food-http";
@@ -7,5 +8,5 @@ async function handle(request: Request) {
   const user = await getChatGPTUser();
   return foodResponse(request, { userId: user?.userId ?? null, database });
 }
-export const GET = handle;
-export const POST = handle;
+export const GET = activeAccountRoute(handle);
+export const POST = activeAccountRoute(handle);

@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { undoableActions, type FoodCommand } from "@/lib/food";
 import { prepareFoodCommand, readFoodSnapshot, sendFoodCommand, type FoodAction, type FoodDraft, type FoodSnapshot } from "@/lib/food-client";
-import { clearOtherFoodRecovery, foodRecoveryToken, FoodRecoveryConflict, readFoodRecovery, writeFoodRecovery, type FoodRecovery } from "@/lib/food-recovery";
+import { clearFoodRecovery, foodRecoveryToken, FoodRecoveryConflict, readFoodRecovery, writeFoodRecovery, type FoodRecovery } from "@/lib/food-recovery";
 import { today } from "@/lib/daywell";
 import { placeNames, placeOf } from "@/lib/food-places";
 
@@ -68,7 +68,6 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
   useEffect(() => {
     ++readSequence.current; guard.current = false;
     scopeRef.current = scope;
-    const previousScope = hydrated.current;
     hydrated.current = scope;
     let cancelled = false;
     queueMicrotask(() => {
@@ -76,7 +75,6 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
       setSnapshot(null); setFresh(false); setBusy(false); setDraft(null); setPending(null); setRecovered(false); setReview(false); setError(""); setNotice(""); setUndoable(null);
       working.current = { draft: null, pending: null, view: "plate", start: today(), days: 3 };
       try {
-        if (scope || previousScope) clearOtherFoodRecovery(localStorage, scope);
         const saved = scope ? readFoodRecovery(localStorage, scope) : null;
         recoveryToken.current = scope ? foodRecoveryToken(localStorage, scope) : null;
         if (saved) {
@@ -109,7 +107,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
     const signOut = (event: MouseEvent) => {
       const link = (event.target as Element)?.closest?.("a[href]");
       if (!link || !new URL(link.getAttribute("href")!, location.href).pathname.startsWith("/signout")) return;
-      try { clearOtherFoodRecovery(localStorage, null); } catch { /* No storage available. */ }
+      try { if (scopeRef.current) clearFoodRecovery(localStorage, scopeRef.current); } catch { /* No storage available. */ }
       hydrated.current = null; ++readSequence.current;
       setDraft(null); setPending(null); setSnapshot(null); setFresh(false);
     };

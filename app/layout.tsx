@@ -31,6 +31,8 @@ import "./meditation.css";
 import "./mic-states.css";
 import "./navigation.css";
 import "./bottom-menu.css";
+import "./daywell-pages.css";
+import { AccountBoundary } from "./account-boundary";
 import "./companion-motion.css";
 import "./typography.css";
 
@@ -60,7 +62,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       {/* Applies the saved Reading comfort choice before the first paint. */}
       <head><script dangerouslySetInnerHTML={{ __html: readingComfortScript }} /></head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased"><AccountBoundary />{children}</body>
     </html>
   );
 }

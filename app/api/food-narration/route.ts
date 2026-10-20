@@ -1,3 +1,4 @@
+import { activeAccountRoute } from "../active-account";
 import { env } from 'cloudflare:workers';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 import { database } from '@/db/store';
@@ -9,7 +10,7 @@ import { paidRequest, AllowanceError } from '@/lib/paid-request';
 export const dynamic = 'force-dynamic';
 const headers = {'Cache-Control':'no-store',Vary:'Cookie, Origin'};
 const json = (error: string, status: number) => Response.json({error},{status,headers});
-export async function POST(request: Request) {
+async function handlePOST(request: Request) {
   const user = await getChatGPTUser();
   if (!user) return json('Sign in to hear your food review.',401);
   if (!allowedVoiceOrigin(request)) return json('Start the readout from Daywell.',403);
@@ -34,3 +35,5 @@ export async function POST(request: Request) {
     return new Response(response.body,{headers:{...headers,'Content-Type':'audio/mpeg','X-Daywell-Voice-Model':'eleven_v4'}});
   } catch (error) { return json(messageFor(error,'The food readout is unavailable right now. Your review is still here.'),error instanceof AllowanceError?429:502); }
 }
+
+export const POST = activeAccountRoute(handlePOST);

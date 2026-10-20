@@ -32,8 +32,24 @@ const recoverySchema = z.object({ version: z.literal(1), draft: draftSchema.null
   view: z.enum(["plate", "basket", "meals", "shopping", "history"]), start: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), days: z.union([z.literal(2), z.literal(3), z.literal(7)]) });
 export type FoodRecovery = z.infer<typeof recoverySchema>;
 export const recoveryPrefix = "daywell-food-recovery-v1-";
+export const closedAccountPrefix = "daywell-account-closed-v1-";
 type Storage = Pick<globalThis.Storage, "getItem" | "setItem" | "removeItem" | "key" | "length">;
 const key = (scope: string) => /^[a-f0-9]{64}$/.test(scope) ? recoveryPrefix + scope : null;
+
+export function accountClosedOnDevice(storage: Storage, scope: string) {
+  return !!key(scope) && storage.getItem(closedAccountPrefix + scope) === "closed";
+}
+export function clearAccountDeviceData(storage: Storage, scope: string) {
+  const name = key(scope);
+  if (!name) return;
+  storage.removeItem(name);
+  // A minimal marker also stops an offline tab from restoring a recovery draft.
+  storage.setItem(closedAccountPrefix + scope, "closed");
+}
+export function clearFoodRecovery(storage: Storage, scope: string) {
+  const name = key(scope);
+  if (name) storage.removeItem(name);
+}
 
 export function clearOtherFoodRecovery(storage: Storage, scope: string | null) {
   const keep = scope ? [key(scope), trolleyKey(scope)] : [];
@@ -61,6 +77,7 @@ export function writeTrolley(storage: Storage, scope: string, keys: string[]) {
 export function readFoodRecovery(storage: Storage, scope: string): FoodRecovery | null {
   const name = key(scope);
   if (!name) return null;
+  if (accountClosedOnDevice(storage, scope)) { storage.removeItem(name); return null; }
   const raw = storage.getItem(name);
   if (!raw) return null;
   try {
@@ -77,6 +94,7 @@ export function foodRecoveryToken(storage: Storage, scope: string) { const name 
 export function writeFoodRecovery(storage: Storage, scope: string, data: Omit<FoodRecovery, "version">, expected?: string | null) {
   const name = key(scope);
   if (!name) throw Error("Sign in before keeping a draft.");
+  if (accountClosedOnDevice(storage, scope)) throw new FoodRecoveryConflict("This Daywell account is closed.");
   if (expected !== undefined && storage.getItem(name) !== expected) throw new FoodRecoveryConflict("Another tab changed your saved draft. Keep this page open and finish the change in the other tab first.");
   if (!data.draft && !data.pending) { storage.removeItem(name); return null; }
   const raw = JSON.stringify(recoverySchema.parse({ version: 1, ...data }));

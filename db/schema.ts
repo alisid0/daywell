@@ -12,3 +12,8 @@ export const foodOperations = sqliteTable("food_operations", {
   requestHash: text("request_hash").notNull(), revision: integer("revision").notNull(),
   effect: text("effect").notNull(), createdAt: text("created_at").notNull(), undoneBy: text("undone_by"),
 }, table => [primaryKey({ columns: [table.userId, table.operationId] }), uniqueIndex("food_operations_user_revision").on(table.userId, table.revision)]);
+// A minimal receipt prevents an old session from recreating erased records.
+export const accountClosures = sqliteTable("account_closures", {
+  userId: text("user_id").primaryKey(), requestId: text("request_id").notNull().unique(),
+  closedAt: text("closed_at").notNull(), providerStatus: text("provider_status").notNull().default("not_automated"),
+});

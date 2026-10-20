@@ -19,7 +19,9 @@ const chilled = /spinach|lettuce|salad|rocket|kale|greens|broccoli|cucumber|cele
 type Lot = { ingredient: string; unit?: string; place?: PlaceId };
 export function usualPlace(ingredient: string, unit?: string): PlaceId {
   const name = ingredientName(ingredient), aisle = aisleFor(name, unit);
-  return aisle !== "frozen" && chilled.test(name) ? "fridge" : byAisle[aisle];
+  if (aisle === "frozen") return "freezer";
+  // Leftovers and ready meals, counted in portions, are kept cold whatever they're made of.
+  return unit === "portion" || chilled.test(name) ? "fridge" : byAisle[aisle];
 }
 // Where a new pack of this food should go: where the last one was put (on a shelf now, or remembered from before),
 // else where it usually lives.

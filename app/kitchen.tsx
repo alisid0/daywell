@@ -38,9 +38,9 @@ function describe(lot: Stock) {
   return [capital(lot.ingredient), amountText(lot.quantity, lot.unit), soon === "past" ? "reminder date passed, check it" : soon ? `use soon: ${whenText(lot.bestBefore!, true)}` : ""].filter(Boolean).join(", ");
 }
 
-// "Cook ideas" and "Cook with it" open the recipe ideas card (app/recipe-ideas.tsx) with a wish filled in. Nothing is
-// sent until the person asks.
-export function askForIdeas(wish: string) { window.dispatchEvent(new CustomEvent("daywell-recipe-ideas", { detail: { wish } })); }
+// "Cook ideas" and "Cook with it" open the recipe cards (app/cook.tsx) with a wish for them. Nothing is sent until
+// the person asks.
+export function askForIdeas(wish: string) { window.dispatchEvent(new CustomEvent("daywell-cook", { detail: { wish } })); }
 // "Add by hand" from anywhere opens the three steps, now or as soon as Eat opens.
 let addWaiting = false;
 export function addFoodByHand() { addWaiting = true; window.dispatchEvent(new Event("daywell-add-food")); }
@@ -169,7 +169,7 @@ export function FoodCard({ lot, f, onClose, onAte, onChange }: { lot: Stock; f: 
 }
 
 // "I ate some": how much, in big steps. Food without a quantity can still go on today's plate.
-export function AteSome({ lot, a, onClose, onBack }: { lot: Stock; a: AppState; onClose: () => void; onBack: () => void }) {
+export function AteSome({ lot, a, onClose, onBack, meal = "Snack" }: { lot: Stock; a: AppState; onClose: () => void; onBack: () => void; meal?: "Breakfast" | "Lunch" | "Dinner" | "Snack" }) {
   const f = a.food, known = lot.quantity;
   const step = lot.unit === "g" || lot.unit === "ml" ? (known !== null && known <= 100 ? 5 : known !== null && known <= 1000 ? 25 : 50) : lot.unit === "portion" ? 0.5 : 1;
   const nice = (value: number) => known === null ? 0 : Math.min(known, Math.max(step, round(Math.round(value / step) * step)));
@@ -182,12 +182,12 @@ export function AteSome({ lot, a, onClose, onBack }: { lot: Stock; a: AppState; 
   const choices = known === null ? [] : [...new Map(portions.map(([label, part]): [number, string] => [nice(known * part), label])).entries()];
   async function noteOnPlate() {
     setSaving(true);
-    const done = await a.save([{ id: crypto.randomUUID(), kind: "food", data: { title: capital(lot.ingredient), date: today(), meal: "Snack", calories: 0, protein: 0, carbs: 0, fat: 0, nutritionKnown: false, macrosKnown: false, foodStatus: "eaten", portions: 1 } }], "On today’s plate");
+    const done = await a.save([{ id: crypto.randomUUID(), kind: "food", data: { title: capital(lot.ingredient), date: today(), meal, calories: 0, protein: 0, carbs: 0, fat: 0, nutritionKnown: false, macrosKnown: false, foodStatus: "eaten", portions: 1 } }], `${meal} noted: ${lot.ingredient}`);
     setSaving(false); if (done) onClose();
   }
   async function eat() {
     setSaving(true); setFailed(false);
-    const done = await f.submit({ type: "use", title: capital(lot.ingredient), date: today(), meal: "Snack", consumed: [{ stockId: lot.id, quantity: amount, unit: lot.unit }], useReservedStock: intoReserved, ...(plate ? { intake: { portions: 1 } } : {}) });
+    const done = await f.submit({ type: "use", title: capital(lot.ingredient), date: today(), meal, consumed: [{ stockId: lot.id, quantity: amount, unit: lot.unit }], useReservedStock: intoReserved, ...(plate ? { intake: { portions: 1 } } : {}) });
     setSaving(false); if (done) onClose(); else setFailed(true);
   }
   async function usedUp() {
@@ -210,7 +210,7 @@ export function AteSome({ lot, a, onClose, onBack }: { lot: Stock; a: AppState; 
         <button type="button" aria-label="More" disabled={amount >= known} onClick={() => setAmount(nice(amount + step))}><Plus size={24} aria-hidden/></button>
       </div>
       {intoReserved && <p className="kitchen-note">Some of this is set aside for your planned meals. Using it puts what’s missing on your trolley list.</p>}
-      <label className="kitchen-check"><input type="checkbox" checked={plate} onChange={event => setPlate(event.target.checked)}/>Put it on today’s plate as a snack</label>
+      <label className="kitchen-check"><input type="checkbox" checked={plate} onChange={event => setPlate(event.target.checked)}/>Put it on today’s plate {meal === "Snack" ? "as a snack" : `for ${meal.toLowerCase()}`}</label>
     </>}
     <SheetError f={f} failed={failed}/>
     {known !== null ? <>

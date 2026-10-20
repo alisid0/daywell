@@ -88,6 +88,7 @@ export function CaptureHub({ a }: { a: AppState }) {
     setMealOrigin("home"); setPlanOptions({ start: detail.planStart || today(), count: detail.planCount || 2, meal: detail.planMeal || "Dinner" });
     window.dispatchEvent(new Event("daywell-stop-voice"));
     if (detail.intent === "photo") picker.current?.click();
+    if (detail.intent === "type") setTyped(true);
     // Voice begins on the labelled record button, after the sharing notice is visible.
   }; });
   async function choosePhoto(file: File) {

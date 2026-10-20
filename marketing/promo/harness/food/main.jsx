@@ -52,6 +52,10 @@ const food = { revision: 3, receipts: new Map(), effects: new Map(), actions: []
 if (params.has("kitchen")) food.state.stock.push(
   { id: "s-peas", ingredient: "frozen peas", quantity: 750, unit: "g", bestBefore: null, place: "freezer", changedBy: seed },
   { id: "s-apple", ingredient: "apple", quantity: 4, unit: "each", bestBefore: null, changedBy: seed });
+// It also adds two trolley notes: one household thing (ticked off, never shelved) and one with an amount.
+if (params.has("kitchen")) food.state.shopping.push(
+  { id: "sh-soap", title: "Washing-up liquid", quantity: "", done: false, changedBy: seed },
+  { id: "sh-soy", title: "Soy sauce", quantity: "150 ml", done: false, changedBy: seed });
 // ?promo=1: the sample week for the promo video. Sam has a week of walks, meals and sleep to look back on, a basket
 // without milk, no saved meal plans, and photo and plan understanding that run canned model output through the app's
 // own converters (no provider calls).

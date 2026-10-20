@@ -42,8 +42,8 @@ the test code 246810, and signs in by itself on the sixth digit.
 - Recipe ideas (`/api/recipes`, on `feat/eat-quantity-recipes`): canned model replies run through the app's own
   converters in `lib/recipe-ideas.ts`, so no provider is called. `&norecipes` hides the feature, as when OpenAI isn't
   connected.
-- `&kitchen` adds a freezer (frozen peas, placed there) and a fruit bowl (apples) to the food sample, for the Kitchen's
-  shelves on `feat/eat-kitchen`. Pair it with a capture clock of 7 October 2026, so the sample's reminder dates fall
+- `&kitchen` adds a freezer (frozen peas, placed there), a fruit bowl (apples) and two trolley notes (washing-up liquid and
+  soy sauce, 150 ml) to the food sample, for the Kitchen's shelves, Trolley and Week (`feat/eat-kitchen`, `feat/eat-kitchen-2`). Pair it with a capture clock of 7 October 2026, so the sample's reminder dates fall
   tomorrow and on Friday.
 - `vite.dialog.config.mjs` starts a third copy, on port 5195.
 

@@ -157,3 +157,133 @@ html [data-slot="dialog-content"].kitchen-steps{inset:0;width:100%;max-width:non
 .kitchen-summary{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 14px;border-radius:20px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));font-size:calc(16px*var(--rc-scale,1))}
 .kitchen-summary .kitchen-face.is-mid{width:46px;height:46px}
 @media(max-width:360px){.kitchen-places button{font-size:calc(12px*var(--rc-scale,1))}.kitchen-step-title{font-size:calc(26px*var(--rc-scale,1))}.kitchen-pick button{min-height:120px}}
+
+/* Kitchen part 2 (20 October 2026): food from the latest shop wears a New badge. */
+.kitchen-token{position:relative}
+.kitchen-new{position:absolute;top:-4px;right:calc(50% - 40px);z-index:1;padding:2px 7px;border-radius:999px;background:var(--well-accent);color:var(--dw-on-accent,#fff7fb);font-size:calc(11px*var(--rc-scale,1));font-weight:800}
+
+/* The Trolley */
+.trolley-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.trolley-head>span{font-size:calc(14px*var(--rc-scale,1));font-weight:800;color:var(--well-muted)}
+.trolley-add{display:flex;gap:8px;margin-top:10px}
+.kitchen-space .trolley-add input{flex:1;min-width:0;height:50px;padding:0 18px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:999px;background:var(--well-surface)}
+.trolley-add .kitchen-round{width:50px;height:50px}
+.trolley-group h2{margin:16px 0 8px 4px;font-size:calc(15px*var(--rc-scale,1));letter-spacing:-.01em}
+.trolley-group ul,.trolley-ticked ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.trolley-row{display:flex;align-items:center;gap:12px;padding:10px 10px 10px 12px;border-radius:22px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface))}
+.kitchen-face.is-row{width:48px;height:48px;border-width:0;box-shadow:none}
+.trolley-text{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:0;border:0;background:none;color:var(--well-ink);font:inherit;text-align:left}
+button.trolley-text{cursor:pointer}
+.trolley-text strong{font-size:calc(17px*var(--rc-scale,1));line-height:1.25;overflow-wrap:break-word}
+.trolley-text span{display:flex;align-items:center;gap:4px;font-size:calc(13.5px*var(--rc-scale,1));color:var(--well-muted)}
+.trolley-text svg{flex-shrink:0}
+.trolley-pick{flex-shrink:0;width:56px;height:56px;border-radius:50%;border:3px solid var(--well-line);background:var(--kitchen-raised);cursor:pointer}
+.trolley-pick:hover{border-color:var(--well-accent)}
+.trolley-ticked{margin-top:16px;padding:4px 14px;border-radius:18px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface))}
+.trolley-ticked summary{padding:12px 0;font-size:calc(14.5px*var(--rc-scale,1));font-weight:700;color:var(--well-muted);cursor:pointer}
+.trolley-ticked li{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.trolley-ticked ul{margin-bottom:8px}
+.trolley-place.has-tray{padding-bottom:190px}
+.trolley-tray{position:fixed;left:50%;translate:-50% 0;bottom:calc(96px + env(safe-area-inset-bottom));z-index:35;width:min(520px,calc(100% - 24px));padding:14px;border-radius:26px;background:var(--well-ink);color:var(--well-surface);box-shadow:0 14px 30px rgba(65,35,55,.35)}
+.trolley-tray-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.trolley-tray h2{margin:0;display:flex;align-items:center;gap:8px;font-family:inherit;font-size:calc(16px*var(--rc-scale,1));letter-spacing:0;color:inherit}
+.trolley-tray-head button{flex-shrink:0;min-height:44px;padding:0 16px;border:0;border-radius:999px;background:var(--well-surface);color:var(--well-ink);font:inherit;font-size:calc(14.5px*var(--rc-scale,1));font-weight:800;cursor:pointer}
+.trolley-tray ul{list-style:none;margin:12px 0 0;padding:0;display:flex;gap:10px;overflow-x:auto}
+.trolley-tray li button{width:72px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer}
+.trolley-tray li span:last-child{max-width:100%;font-size:calc(12.5px*var(--rc-scale,1));font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kitchen-face.is-tray{width:44px;height:44px;border:2px solid var(--well-surface);box-shadow:none}
+.trolley-tray :focus-visible{outline:3px solid var(--well-surface);outline-offset:2px}
+.kitchen-space:has(.trolley-tray) .kitchen-toast-region{bottom:calc(250px + env(safe-area-inset-bottom))}
+
+/* Put it away */
+.putaway-top{display:flex;align-items:flex-start;gap:12px;padding:16px 18px 6px;flex-shrink:0}
+.putaway-top p{margin:2px 0 0;font-size:calc(14.5px*var(--rc-scale,1));line-height:1.4;color:var(--well-muted)}
+.putaway-top .kitchen-step-title{font-size:calc(26px*var(--rc-scale,1))}
+.kitchen-steps-body.putaway-list{display:grid;gap:10px;align-content:start;padding-top:8px}
+.putaway-card{padding:12px;border-radius:22px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface))}
+.putaway-card-head{display:flex;align-items:center;gap:12px}
+.putaway-card-head strong{flex:1;min-width:0;font-size:calc(17px*var(--rc-scale,1));overflow-wrap:break-word}
+.putaway-card-head .kitchen-face.is-mid{width:46px;height:46px}
+.putaway-amount{width:118px;flex-shrink:0;height:42px;padding:0 12px;border:1px solid var(--well-line);border-radius:14px;background:var(--kitchen-raised);color:var(--well-ink);font:inherit;font-size:calc(15px*var(--rc-scale,1))}
+.putaway-amount[aria-invalid=true]{border:2px solid #d9776c}
+.putaway-places{margin-top:10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.putaway-places button{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;padding:8px 2px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:14px;background:var(--kitchen-raised);color:var(--well-ink);font-size:calc(11.5px*var(--rc-scale,1));font-weight:800;line-height:1.15;text-align:center}
+.putaway-places button[aria-pressed=true]{border:2px solid var(--well-accent);background:color-mix(in srgb,var(--well-accent) 9%,var(--well-surface))}
+.putaway-card.is-household p{margin:0;display:flex;align-items:center;gap:8px;font-size:calc(14.5px*var(--rc-scale,1))}
+.putaway-note{margin:2px 4px 0;font-size:calc(13.5px*var(--rc-scale,1));line-height:1.45;color:var(--well-muted)}
+
+/* A note on the list */
+.note-title{margin:0 52px 6px 0;font-size:calc(23px*var(--rc-scale,1))}
+.note-fields{display:grid;gap:6px;margin-top:6px}
+.note-fields label{margin-top:6px;font-size:calc(14px*var(--rc-scale,1));font-weight:700}
+.note-fields input{min-height:48px;padding:10px 14px;border:1px solid var(--well-line);border-radius:14px;background:var(--kitchen-raised);color:var(--well-ink);font:inherit}
+
+/* The Week board */
+.week-columns{display:grid;grid-template-columns:56px repeat(3,minmax(0,1fr));gap:6px;margin-top:10px;padding:0 7px}
+.week-columns span{font-size:calc(12px*var(--rc-scale,1));font-weight:800;color:var(--well-muted);text-align:center}
+.week-board{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}
+.week-board li{display:grid;grid-template-columns:56px repeat(3,minmax(0,1fr));gap:6px;align-items:center;padding:5px 6px;border-radius:18px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface))}
+.week-board li.is-today{border:2px solid var(--well-accent)}
+.week-day{display:flex;flex-direction:column;align-items:flex-start;padding:4px 2px;border:0;background:none;color:var(--well-ink);font:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:800;line-height:1.1;text-align:left;cursor:pointer}
+.week-day span{font-size:calc(11.5px*var(--rc-scale,1));font-weight:700;color:var(--well-muted)}
+.week-slot{position:relative;min-width:0;min-height:46px;display:grid;place-items:center;padding:2px 4px;border:2px dashed color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:14px;background:transparent;color:color-mix(in srgb,var(--well-accent) 60%,var(--well-surface));cursor:pointer}
+.week-slot.is-full{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border:0;background:color-mix(in srgb,var(--tone) 45%,var(--well-surface));color:var(--well-ink);font-size:calc(11.5px*var(--rc-scale,1));font-weight:800;line-height:1.1;text-align:center}
+.week-slot.is-full span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.week-slot small{position:absolute;top:2px;right:4px;font-size:calc(10.5px*var(--rc-scale,1));font-weight:800}
+.week-fill{margin-top:12px;width:100%;min-height:50px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:999px;background:var(--well-surface);color:var(--well-accent);font:inherit;font-size:calc(15.5px*var(--rc-scale,1));font-weight:800;cursor:pointer}
+.week-more{margin-top:18px}
+.week-more h2{margin:0 0 8px 4px;font-size:calc(15px*var(--rc-scale,1))}
+.week-more ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.week-more button{width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 14px;border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));border-radius:16px;background:var(--well-surface);color:var(--well-ink);font:inherit;text-align:left;cursor:pointer}
+.week-more strong{font-size:calc(15px*var(--rc-scale,1))}
+.week-more span{font-size:calc(13px*var(--rc-scale,1));color:var(--well-muted)}
+
+/* A day of the week */
+.week-day-head{display:flex;align-items:center;gap:10px;margin-top:12px}
+.week-day-head .kitchen-title{margin:0}
+.week-day-head p{margin:0;font-size:calc(14px*var(--rc-scale,1))}
+.week-meal h2{margin:16px 0 6px 4px;display:flex;align-items:center;gap:8px;font-family:inherit;font-size:calc(14px*var(--rc-scale,1));letter-spacing:0;color:var(--well-muted)}
+.week-plan{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:20px;background:color-mix(in srgb,var(--tone) 40%,var(--well-surface))}
+.week-plan + .week-plan{margin-top:8px}
+.week-plan-text{display:flex;flex-direction:column;gap:2px}
+.week-plan-text strong{font-size:calc(17px*var(--rc-scale,1))}
+.week-plan-text span{font-size:calc(13.5px*var(--rc-scale,1))}
+.week-plan-text .week-needs{margin-top:4px;font-weight:800;color:var(--kitchen-soon-text)}
+.week-plan-text .week-covered{margin-top:4px;color:var(--well-muted)}
+.week-plan-actions{display:flex;flex-wrap:wrap;gap:8px}
+.week-plan-actions button{min-height:40px;padding:0 14px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:999px;background:var(--well-surface);color:var(--well-ink);font:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:700;cursor:pointer}
+.week-plan-empty{width:100%;min-height:56px;display:flex;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--well-line);border-radius:20px;background:transparent;color:var(--well-accent);font:inherit;font-size:calc(15px*var(--rc-scale,1));font-weight:700;cursor:pointer}
+.week-idea{margin-top:10px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:14px;border-radius:22px;background:var(--well-surface);border:2px dashed var(--well-line)}
+.week-idea-label{margin:0 0 4px;display:flex;align-items:center;gap:6px;font-size:calc(13.5px*var(--rc-scale,1));font-weight:800;color:var(--well-muted)}
+.week-idea strong{font-size:calc(16.5px*var(--rc-scale,1));line-height:1.25}
+.week-idea>span{font-size:calc(13.5px*var(--rc-scale,1));font-weight:700;color:var(--well-muted)}
+.week-idea>span.is-soon{color:var(--kitchen-soon-ink)}
+.week-idea-ask{margin:0 0 6px}
+.week-idea small{margin-top:6px;font-size:calc(12.5px*var(--rc-scale,1));line-height:1.45;color:var(--well-muted)}
+.week-idea-actions{margin-top:8px;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.week-idea-actions button{min-height:48px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:999px;background:var(--kitchen-raised);color:var(--well-ink);font:inherit;font-size:calc(15px*var(--rc-scale,1));font-weight:700;cursor:pointer}
+.week-idea-actions .is-primary{border:0;background:var(--well-accent);color:var(--dw-on-accent,#fff7fb)}
+.week-snack{margin-top:10px}
+
+/* When will you have it? */
+.when-head{padding-right:52px}
+.when-head h2{margin:0;font-size:calc(23px*var(--rc-scale,1));font-weight:800}
+.when-head p{margin:2px 0 0;font-size:calc(14.5px*var(--rc-scale,1));color:var(--well-muted)}
+.when-label{margin:16px 0 8px 2px;font-size:calc(14px*var(--rc-scale,1));font-weight:800;color:var(--well-muted)}
+.when-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.when-days button{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0;padding:8px 0 7px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:16px;background:var(--kitchen-raised);color:var(--well-ink);font-size:calc(12px*var(--rc-scale,1));font-weight:700}
+.when-days strong{font-size:calc(17px*var(--rc-scale,1))}
+.when-days button[aria-pressed=true]{background:var(--well-accent);border-color:var(--well-accent);color:var(--dw-on-accent,#fff7fb)}
+.when-meals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.when-meals button{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;padding:12px 4px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:20px;background:var(--kitchen-raised);color:var(--well-ink);font-size:calc(13.5px*var(--rc-scale,1));font-weight:800}
+.when-meals button[aria-pressed=true]{border:2px solid var(--well-accent);background:color-mix(in srgb,var(--well-accent) 9%,var(--well-surface))}
+.when-meal-icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--tone) 45%,var(--well-surface))}
+.when-servings{margin-top:16px;display:flex;align-items:center;justify-content:space-between;padding:8px 8px 8px 16px;border-radius:999px;background:var(--kitchen-raised);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface))}
+.when-servings>span{font-size:calc(15px*var(--rc-scale,1));font-weight:800}
+.when-servings>div{display:flex;align-items:center;gap:10px}
+.when-servings button{width:40px;height:40px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:50%;background:var(--well-surface);color:var(--well-ink);display:grid;place-items:center}
+.when-servings output{min-width:20px;text-align:center;font-size:calc(18px*var(--rc-scale,1));font-weight:800}
+.when-amounts{margin-top:12px}
+.when-amounts summary{padding:10px 0;font-size:calc(14.5px*var(--rc-scale,1));font-weight:700;cursor:pointer}
+.when-amounts ul{margin:0;padding-left:20px;font-size:calc(14px*var(--rc-scale,1));line-height:1.6}
+@media(max-width:360px){.week-board li,.week-columns{grid-template-columns:48px repeat(3,minmax(0,1fr))}.putaway-places button{font-size:calc(10.5px*var(--rc-scale,1))}}

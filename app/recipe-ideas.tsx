@@ -26,7 +26,7 @@ export function useRecipesConnected() {
   }, []);
   return connected;
 }
-async function askRecipes<T>(request: RecipeAsk): Promise<T> {
+export async function askRecipes<T>(request: RecipeAsk): Promise<T> {
   const response = await fetch("/api/recipes", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(request), signal: AbortSignal.timeout(60_000) });
   const value = await response.json().catch(() => null) as (T & { error?: string }) | null;
   if (!response.ok || !value) throw Error(value?.error || failed);
@@ -34,7 +34,7 @@ async function askRecipes<T>(request: RecipeAsk): Promise<T> {
 }
 
 // On the Food basket: "What could I make?", up to three recipes from what's there.
-export function BasketIdeas({ f }: { f: Food }) {
+export function BasketIdeas({ f, onPlan }: { f: Food; onPlan: (idea: RecipeIdea) => void }) {
   const connected = useRecipesConnected(), title = useId(), card = useRef<HTMLElement>(null), wishField = useRef<HTMLInputElement>(null);
   const [ideas, setIdeas] = useState<Ideas | null>(null), [wish, setWish] = useState(""), [busy, setBusy] = useState(false), [error, setError] = useState("");
   // "Cook ideas" on the Kitchen shelves and "Cook with it" on a food's card (app/kitchen.tsx) fill in the wish and bring
@@ -61,11 +61,6 @@ export function BasketIdeas({ f }: { f: Food }) {
     catch (problem) { setError(problem instanceof Error ? problem.message : failed); }
     finally { setBusy(false); }
   }
-  function plan(idea: RecipeIdea) {
-    f.open({ type: "plan.set", plan: { id: crypto.randomUUID(), title: idea.title, date: f.start, meal: idea.meal, servings: 1,
-      ingredients: idea.ingredients.map(({ ingredient, quantity, unit }) => ({ ingredient, quantity, unit })),
-      guide: { steps: idea.steps, nutritionNote: "AI recipe idea for one serving. Check the ingredients, portion and your dietary needs." } } });
-  }
   function addToList(items: RecipeIdea["ingredients"]) {
     f.open({ type: "shopping.add", items: items.map(item => ({ id: crypto.randomUUID(), title: item.ingredient, quantity: item.quantity === null ? "" : `${quantityText(item.quantity)} ${unitText(item.unit, item.quantity)}`, done: false })) });
   }
@@ -83,7 +78,7 @@ export function BasketIdeas({ f }: { f: Food }) {
         {!!have.length && <><p className="idea-label">From your kitchen</p><ul className="food-chips">{have.map(item => <li key={item.ingredient}>{item.ingredient}</li>)}</ul></>}
         {missing.length ? <><p className="idea-label">You’d need</p><ul className="food-chips is-missing">{missing.map(item => <li key={item.ingredient}>{item.ingredient}{item.quantity !== null && <small> {quantityText(item.quantity)} {unitText(item.unit, item.quantity)}</small>}</li>)}</ul></> : <p className="idea-label is-ready">Nothing to buy</p>}
         <details><summary>How to make it</summary><ol>{idea.steps.map((step, index) => <li key={index}>{step}</li>)}</ol><small>Review ingredients, portions and your own dietary needs.</small></details>
-        <div className="idea-actions"><button className="well-button well-secondary" onClick={() => plan(idea)}>Plan this meal<ArrowRight size={16} aria-hidden/></button>
+        <div className="idea-actions"><button className="well-button well-secondary" onClick={() => onPlan(idea)}>Plan this meal<ArrowRight size={16} aria-hidden/></button>
           {toAdd.length > 0 ? <button className="well-text-button" onClick={() => addToList(toAdd)}><ShoppingBasket size={16} aria-hidden/>Add {toAdd.length === 1 ? "it" : `these ${toAdd.length}`} to my list</button> : missing.length > 0 && <span className="idea-listed">Already on your list</span>}</div>
         <AiReport key={idea.title} source="meal-plan" noun="recipe" text={[idea.title, idea.ingredients.map(withQuantity).join(", "), ...idea.steps].join("\n")}/>
       </article>;

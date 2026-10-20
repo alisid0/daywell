@@ -5,7 +5,8 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { today } from "@/lib/daywell";
 import { ingredientName, type Stock } from "@/lib/food";
 import type { FoodAction } from "@/lib/food-client";
-import { placeIds, placeNames, placeOf, suggestedPlace, type PlaceId } from "@/lib/food-places";
+import { placeIds, placeNames, placeOf, suggestedPlace, usualUnit, type PlaceId } from "@/lib/food-places";
+import { newFromShop } from "@/lib/food-trolley";
 import { aisleOf, aisleRank, foodLook, quantityText, reminder, unitText } from "./food-look";
 import { useRecipesConnected } from "./recipe-ideas";
 import type { AppState } from "./use-daywell";
@@ -18,7 +19,7 @@ export const placeIcons: Record<PlaceId, LucideIcon> = { fridge: Refrigerator, f
 const units: [InputUnit, string][] = [["g", "g"], ["kg", "kg"], ["ml", "ml"], ["l", "l"], ["each", "items"], ["portion", "portions"]];
 const commonFoods = ["Milk", "Eggs", "Bread", "Rice", "Pasta", "Spinach", "Tomatoes", "Apples", "Yoghurt"];
 const portions: [string, number][] = [["A little", 0.25], ["Half", 0.5], ["All of it", 1]];
-const capital = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+export const capital = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 const round = (value: number) => Math.round(value * 1000) / 1000;
 const amountText = (quantity: number | null, unit: string) => quantity === null ? "" : `${quantityText(quantity)} ${unitText(unit, quantity)}`;
 const daysUntil = (date: string) => Math.round((Date.parse(`${date}T12:00:00Z`) - Date.parse(`${today()}T12:00:00Z`)) / 864e5);
@@ -35,16 +36,6 @@ const ringClass = (lot: Stock) => { const state = soonState(lot); return state =
 function describe(lot: Stock) {
   const soon = soonState(lot);
   return [capital(lot.ingredient), amountText(lot.quantity, lot.unit), soon === "past" ? "reminder date passed, check it" : soon ? `use soon: ${whenText(lot.bestBefore!, true)}` : ""].filter(Boolean).join(", ");
-}
-// The unit most people count this food in, until they have one in the kitchen to copy.
-function usualUnit(name: string, stock: Stock[]): InputUnit {
-  const known = [...stock].reverse().find(lot => ingredientName(lot.ingredient) === ingredientName(name));
-  if (known) return known.unit;
-  const food = ingredientName(name);
-  if (/milk|juice|water|\boil\b|sauce|cream|vinegar|drink|squash/.test(food)) return "ml";
-  if (/leftover|chilli|curry|soup|stew|lasagne|casserole/.test(food)) return "portion";
-  if (/\beggs?\b|apple|banana|orange|lemon|lime|avocado|onion|pepper|loaf|bread|\brolls?\b|bagel|wraps?|\btins?\b|\bcans?\b|jar|bottle|pack|clove|yoghurt/.test(food)) return "each";
-  return "g";
 }
 
 // "Cook ideas" and "Cook with it" open the recipe ideas card (app/recipe-ideas.tsx) with a wish filled in. Nothing is
@@ -95,7 +86,7 @@ export function KitchenNotice({ f }: { f: Food }) {
   </div>}</div>;
 }
 
-function Face({ lot, size, className = "" }: { lot: { ingredient: string; unit?: string }; size: number; className?: string }) {
+export function FoodFace({ lot, size, className = "" }: { lot: { ingredient: string; unit?: string }; size: number; className?: string }) {
   const { Icon, tone } = foodLook(lot.ingredient, lot.unit);
   return <span className={`kitchen-face food-tone-${tone} ${className}`} aria-hidden><Icon size={size}/></span>;
 }
@@ -104,7 +95,7 @@ function Face({ lot, size, className = "" }: { lot: { ingredient: string; unit?:
 export function KitchenShelves({ f, onOpen, onAdd }: { f: Food; onOpen: (lot: Stock) => void; onAdd: (place?: PlaceId) => void }) {
   const [finding, setFinding] = useState(false), [query, setQuery] = useState(""), findId = useId();
   const ideas = useRecipesConnected();
-  const lots = f.snapshot!.state.stock.filter(lot => lot.quantity !== 0);
+  const lots = f.snapshot!.state.stock.filter(lot => lot.quantity !== 0), fresh = newFromShop(f.snapshot!.state, f.snapshot!.recentActions);
   const shown = lots.filter(lot => !query.trim() || ingredientName(lot.ingredient).includes(ingredientName(query)));
   const soon = lots.filter(lot => soonState(lot)).sort((a, b) => a.bestBefore!.localeCompare(b.bestBefore!));
   const order = (a: Stock, b: Stock) => Number(!!soonState(b)) - Number(!!soonState(a)) || (a.bestBefore ?? "9999").localeCompare(b.bestBefore ?? "9999")
@@ -126,7 +117,7 @@ export function KitchenShelves({ f, onOpen, onAdd }: { f: Food; onOpen: (lot: St
           <h2 id={`shelf-${place}`}><Icon size={18} aria-hidden/>{placeNames[place]}<span className="kitchen-count">{here.length}</span></h2>
           <div className="kitchen-shelf"><ul>
             {here.map(lot => { const soonNow = soonState(lot); return <li key={lot.id}>
-              <button type="button" className="kitchen-token" aria-label={describe(lot)} onClick={() => onOpen(lot)}><Face lot={lot} size={28} className={ringClass(lot).trim()}/>
+              <button type="button" className="kitchen-token" aria-label={`${describe(lot)}${fresh.has(lot.id) ? ", new" : ""}`} onClick={() => onOpen(lot)}>{fresh.has(lot.id) && <span className="kitchen-new" aria-hidden>New</span>}<FoodFace lot={lot} size={28} className={ringClass(lot).trim()}/>
                 <span className="kitchen-name">{capital(lot.ingredient)}</span>
                 {soonNow ? <span className={`kitchen-when${soonNow === "past" ? " is-past" : ""}`}>{whenText(lot.bestBefore!)}</span> : lot.quantity !== null && <span className="kitchen-qty">{amountText(lot.quantity, lot.unit)}</span>}</button>
             </li>; })}
@@ -138,13 +129,13 @@ export function KitchenShelves({ f, onOpen, onAdd }: { f: Food; onOpen: (lot: St
   </>;
 }
 
-function Sheet({ onClose, children, steps = false }: { onClose: () => void; children: ReactNode; steps?: boolean }) {
+export function Sheet({ onClose, children, steps = false }: { onClose: () => void; children: ReactNode; steps?: boolean }) {
   return <Dialog open onOpenChange={open => { if (!open) onClose(); }}>
     <DialogContent className={steps ? "kitchen-steps" : "kitchen-sheet"} showCloseButton={false} aria-describedby={undefined}>{children}</DialogContent>
   </Dialog>;
 }
 // A save that didn't go through leaves the change open on the page (the editor), where it can be reviewed.
-function SheetError({ f, failed }: { f: Food; failed: boolean }) {
+export function SheetError({ f, failed }: { f: Food; failed: boolean }) {
   return failed && f.error ? <p className="kitchen-error" role="alert">{f.error}{f.draft && " Your change is kept on the page, so you can review it there."}</p> : null;
 }
 
@@ -159,7 +150,7 @@ export function FoodCard({ lot, f, onClose, onAte, onChange }: { lot: Stock; f: 
     <div className="kitchen-grip" aria-hidden/>
     <button type="button" className="kitchen-round kitchen-close" aria-label="Close" onClick={onClose}><X size={20} aria-hidden/></button>
     <div className="kitchen-card-head">
-      <Face lot={lot} size={40} className={`is-big${ringClass(lot)}`}/>
+      <FoodFace lot={lot} size={40} className={`is-big${ringClass(lot)}`}/>
       <div><DialogTitle asChild><h2>{capital(lot.ingredient)}</h2></DialogTitle>{lot.quantity !== null && <p className="kitchen-card-qty">{amountText(lot.quantity, lot.unit)}</p>}
         {lot.bestBefore && <span className={`kitchen-chip${soon === "past" ? " is-past" : soon ? " is-soon" : ""}`}><Clock size={13} aria-hidden/>{soon === "past" ? "Reminder date passed · check it" : soon ? `Use soon · ${whenText(lot.bestBefore, true)}` : reminder(lot.bestBefore, today()).text}</span>}</div>
     </div>
@@ -208,7 +199,7 @@ export function AteSome({ lot, a, onClose, onBack }: { lot: Stock; a: AppState; 
     <div className="kitchen-grip" aria-hidden/>
     <div className="kitchen-ate-head">
       <button type="button" className="kitchen-round" aria-label="Back" onClick={onBack}><ChevronLeft size={20} aria-hidden/></button>
-      <Face lot={lot} size={24} className="is-mid"/>
+      <FoodFace lot={lot} size={24} className="is-mid"/>
       <div><DialogTitle asChild><h2>{known === null ? `Ate some ${lot.ingredient}?` : `How much ${lot.ingredient}?`}</h2></DialogTitle><p>{known === null ? "It has no quantity, so your kitchen stays as it is." : `You have ${amountText(known, lot.unit)}.`}</p></div>
     </div>
     {known !== null && <>
@@ -245,14 +236,14 @@ export function AddFood({ edit, place: startPlace, f, onClose }: { edit?: Stock;
   const tiles = [...[...recent, ...commonFoods].reduce((named, food) => named.has(ingredientName(food)) ? named : named.set(ingredientName(food), food), new Map<string, string>()).values()].slice(0, 9);
   const step = unit === "g" || unit === "ml" ? 50 : unit === "kg" || unit === "l" ? 0.5 : 1, start = unit === "g" || unit === "ml" ? 100 : 1;
   const clean = name.trim(), valid = quantity === null || (quantity > 0 && quantity <= 1_000_000);
-  const usual = suggestedPlace(clean || "food", unit, stock);
+  const places = f.snapshot?.state.places, usual = suggestedPlace(clean || "food", unit, stock, places);
   function setAmount(value: number | null) { setQuantity(value); setTyped(value === null ? "" : String(value)); }
   function choose(food: string) {
     const chosen = food.trim();
     if (!chosen) return;
     setName(chosen);
     if (!edit) { setUnit(usualUnit(chosen, stock)); setAmount(null); }
-    if (!placeChosen) setPlace(suggestedPlace(chosen, usualUnit(chosen, stock), stock));
+    if (!placeChosen) setPlace(suggestedPlace(chosen, usualUnit(chosen, stock), stock, places));
     setStep(2);
   }
   async function save() {
@@ -276,10 +267,10 @@ export function AddFood({ edit, place: startPlace, f, onClose }: { edit?: Stock;
           {!edit && <button type="button" className="kitchen-camera" aria-label="Show me with a photo" onClick={() => { onClose(); window.dispatchEvent(new CustomEvent("daywell-capture", { detail: { mode: "basket", intent: "photo" } })); }}><Camera size={26} aria-hidden/></button>}
         </form>
         {!edit && <><h3 className="kitchen-step-label">Or tap one you often get</h3>
-          <div className="kitchen-tiles">{tiles.map(food => <button key={food} type="button" aria-pressed={ingredientName(food) === ingredientName(name)} onClick={() => choose(food)}><Face lot={{ ingredient: food, unit: usualUnit(food, stock) }} size={26} className="is-tile"/>{food}</button>)}</div></>}
+          <div className="kitchen-tiles">{tiles.map(food => <button key={food} type="button" aria-pressed={ingredientName(food) === ingredientName(name)} onClick={() => choose(food)}><FoodFace lot={{ ingredient: food, unit: usualUnit(food, stock) }} size={26} className="is-tile"/>{food}</button>)}</div></>}
       </>}
       {stepNo === 2 && <div className="kitchen-much">
-        <Face lot={look} size={48} className="is-hero"/>
+        <FoodFace lot={look} size={48} className="is-hero"/>
         <DialogTitle asChild><h2 className="kitchen-step-title">How much {clean.toLowerCase()}?</h2></DialogTitle>
         <p>Optional. It helps with planning.</p>
         <div className="kitchen-stepper">
@@ -299,7 +290,7 @@ export function AddFood({ edit, place: startPlace, f, onClose }: { edit?: Stock;
           {place === id && <span className="kitchen-tick" aria-hidden><Check size={16}/></span>}<span className="kitchen-place-icon" aria-hidden><PlaceIcon size={30}/></span>{placeNames[id]}</button>; })}</div>
         <details className="kitchen-remind" open={!!remind || undefined}><summary><Clock size={18} aria-hidden/>{remind ? "Reminder date" : "Add a reminder date (optional)"}</summary>
           <label>Remind me to use it by<input type="date" value={remind} onChange={event => setRemind(event.target.value)}/></label><small>A reminder only, not a food-safety check.</small></details>
-        <div className="kitchen-summary"><Face lot={look} size={22} className="is-mid"/><span><strong>{capital(clean)}</strong>{quantity !== null && valid && ` · ${amountText(quantity, unit)}`} · {placeNames[place].toLowerCase()}</span></div>
+        <div className="kitchen-summary"><FoodFace lot={look} size={22} className="is-mid"/><span><strong>{capital(clean)}</strong>{quantity !== null && valid && ` · ${amountText(quantity, unit)}`} · {placeNames[place].toLowerCase()}</span></div>
         <SheetError f={f} failed={failed}/>
       </>}
     </div>

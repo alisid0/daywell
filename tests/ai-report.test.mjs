@@ -56,6 +56,8 @@ test('AI consent names the provider before anything is sent (Apple 5.1.2(i))', (
   const read = file => readFileSync(new URL(`../app/${file}`, import.meta.url), 'utf8');
   assert.match(read('daywell-host.tsx'), /current timer details to ElevenLabs, which runs Daywell’s conversations/);
   assert.match(read('capture-hub.tsx'), /Asking for a plan sends your request, basket and reserved amounts to OpenAI\.".*"Your photo or description goes to OpenAI for an estimate\."/);
-  assert.match(read('food-plan-journey.tsx'), /Asking for a plan sends your basket and reserved amounts to OpenAI\./);
-  for (const file of ['daywell-host.tsx', 'capture-hub.tsx', 'food-plan-journey.tsx']) assert.doesNotMatch(read(file), /with the AI service|AI estimates\. Nothing|Starting shares/);
+  // Recipe ideas from the kitchen: the recipe card, and the Week's idea for an empty slot.
+  assert.match(read('recipe-ideas.tsx'), /Asking sends the names and quantities of the food in your kitchen, and anything you type here, to OpenAI\./);
+  assert.match(read('week.tsx'), /Asking sends the names and quantities of the food in your kitchen to OpenAI\./);
+  for (const file of ['daywell-host.tsx', 'capture-hub.tsx', 'recipe-ideas.tsx', 'week.tsx']) assert.doesNotMatch(read(file), /with the AI service|AI estimates\. Nothing|Starting shares/);
 });

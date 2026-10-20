@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { FoodCommand } from "@/lib/food";
+import { undoableActions, type FoodCommand } from "@/lib/food";
 import { prepareFoodCommand, readFoodSnapshot, sendFoodCommand, type FoodAction, type FoodDraft, type FoodSnapshot } from "@/lib/food-client";
 import { clearOtherFoodRecovery, foodRecoveryToken, FoodRecoveryConflict, readFoodRecovery, writeFoodRecovery, type FoodRecovery } from "@/lib/food-recovery";
 import { today } from "@/lib/daywell";
@@ -11,10 +11,21 @@ function savedNotice(action: FoodAction, before: FoodSnapshot | null) {
   if (action.type === "cook") return "Meal remembered. Your kitchen is updated.";
   if (action.type === "use") return action.intake ? "On today’s plate. Your kitchen is updated." : "Your kitchen is updated.";
   if (action.type === "undo") return "That change has been undone.";
+  if (action.type === "plan.set") {
+    if (before?.state.plans.some(plan => plan.id === action.plan.id)) return "Meal plan saved.";
+    const weekday = new Date(`${action.plan.date}T12:00:00Z`).toLocaleDateString("en-GB", { weekday: "long", timeZone: "UTC" });
+    return `Planned for ${weekday} ${action.plan.meal.toLowerCase()}.`;
+  }
+  if (action.type === "plan.remove") return "Taken off your week.";
   if (action.type.startsWith("plan.")) return "Meal plans saved. Your shopping needs are updated; nothing has been consumed.";
   if (action.type === "shopping.add") return "Added to your trolley list.";
+  if (action.type === "shopping.set") return "Saved to your trolley list.";
+  if (action.type === "shopping.remove") return "Taken off your trolley list.";
   if (action.type === "stock.remove") return "Taken out of your kitchen.";
-  if (action.type === "purchase") return "Put away in your kitchen.";
+  if (action.type === "purchase") {
+    const count = action.items.length + (action.tickOff?.length ?? 0);
+    return action.items.length ? `${count} ${count === 1 ? "thing" : "things"} put away.` : "Ticked off your trolley list.";
+  }
   if (action.type === "stock.add") return "Added to your kitchen.";
   if (action.type === "stock.set") {
     const lot = before?.state.stock.find(item => item.id === action.item.id);
@@ -136,7 +147,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
       if (result.kind === "saved") {
         persist({ draft: null }); setDraft(null); setReview(false);
         setNotice(savedNotice(command.action, snapshot));
-        setUndoable(["purchase", "cook", "use", "stock.add", "stock.remove"].includes(command.action.type) ? command.operationId : null);
+        setUndoable((undoableActions as readonly string[]).includes(command.action.type) ? command.operationId : null);
         await reload();
         await journal.current();
         return true;
@@ -173,6 +184,6 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
   }
   function resume() { setRecovered(false); setUndoable(null); setNotice(pending ? "Check this save using its original reference. It won’t be added twice." : "Your unfinished details are back. Review them before saving."); }
   const ready = hydratedScope === scope;
-  return { snapshot: ready ? snapshot : null, draft: ready ? draft : null, pending: ready ? pending : null, busy, fresh: ready && fresh, error, notice, undoable, review, recovered: ready && recovered, storageWarning, resume,
+  return { scope: ready ? scope : null, snapshot: ready ? snapshot : null, draft: ready ? draft : null, pending: ready ? pending : null, busy, fresh: ready && fresh, error, notice, undoable, review, recovered: ready && recovered, storageWarning, resume,
     view, setView, start, setStart, days, setDays, open, submit, change, cancel, save, refresh, acceptReview, retry: () => pending ? send(pending) : Promise.resolve(false) };
 }

@@ -15,7 +15,7 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 | --- | --- | --- | --- | --- |
 | `settings` | Name, tools, bedtime, reading and voice choices; About you: birth year, optional sex, height and weight history (only with `bodyConsentAt`), calorie tracking | Yes. Body details are health data | Until changed or the account closes | Yes / yes |
 | `entries` | Everything saved in the day: tasks, shopping, meals with calories and sugar, workouts, sleep nights, alarms, the timer, calendar events and private reflections | Yes. Meals, workouts and sleep are health data, and reflections may be very personal | Until the person deletes them; up to 20,000 a person | Yes / yes |
-| `food_spaces` | Food in the kitchen (with where each item is kept), meal plans and shopping, one record a person | Yes | Until changed or closed | Yes / yes |
+| `food_spaces` | Food in the kitchen (with where each item is kept, and where each food usually goes), meal plans and shopping, one record a person | Yes | Until changed or closed | Yes / yes |
 | `food_operations` | Each food change and how to undo it | Yes | **Forever today.** Owner decision 13 October: 365 days | Yes / yes |
 | `usage_limits` | Counts of paid AI uses in the current window. In the public app, also sign-in protection counts, keyed by a hashed address or network | Low | Overwritten each window; sign-in counts removed daily | Yes / yes |
 | `accounts` (public app) | Email address, random account ID, when it was created and last signed in | Yes | Until the account closes | **Not yet** / **not yet** |
@@ -29,7 +29,7 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 - Photos and voice recordings are sent for one estimate and never saved.
 - Live conversation transcripts are held by ElevenLabs under the agent's retention setting, and go away when live voice is removed.
 - Payment details are never seen; Apple and Google handle payment.
-- Device-only drafts and reading or appearance choices stay in the browser.
+- Device-only drafts, the trolley tray (what's been picked up while shopping) and reading or appearance choices stay in the browser.
 
 ## Sent to outside services
 

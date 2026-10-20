@@ -134,3 +134,39 @@ The owner approved the "Kitchen, all in" design on 19 October. It's built in thr
 Parts 2 (Trolley with Put it away, and the Week board) and 3 (Plate, and the recipe deck with cook mode) follow.
 
 Tests: `tests/kitchen.test.mjs`.
+
+## The Kitchen, part 2 — 20 October 2026
+
+The Trolley and the Week from the approved "Kitchen, all in" design.
+
+- **The Trolley** lists what to get by aisle:
+  - what planned meals still need ("For tomato rice · 1");
+  - notes, which open a small sheet to change or remove them.
+
+  Tapping the big round button drops an item into a tray above the bottom bar. The tray is kept on the device for each
+  person (`lib/food-recovery.ts`), so it survives a reload in the shop.
+- **Put it all away** is one `purchase`:
+  - each food gets a shelf (suggested, usually remembered) and an optional amount ("150 ml");
+  - a counted, undated pack of the same food tops up what's already on the shelf;
+  - household things, such as washing-up liquid, are ticked off and never shelved (`purchase.tickOff`, optional and last
+    in the schema, so earlier receipts keep their hashes).
+
+  One Undo reverses all of it. Afterwards, the Kitchen shows the new food with a "New" badge for 12 hours.
+- **Where food goes is remembered:** the food state keeps `places`, the last shelf each food was put on (up to 300
+  foods). So the next pack goes there even after the last one is used up. It's optional, with no migration.
+- **The Week** is a board of seven days from today by breakfast, lunch and dinner.
+  - Tapping a day or a slot opens that day's own view: each meal, what it still needs, and I made this, Change and Take
+    it off.
+  - An empty slot offers "An idea for this slot". With recipe ideas on, it's asked for only when the person taps. Without
+    them, it's one of Daywell's own simple recipes. "Put it here" plans it in one tap.
+  - "Fill empty slots with ideas" opens the plan request for the first run of empty dinners, so no day gets a second
+    dinner.
+- **"When will you have it?"** puts a recipe idea from the Kitchen on the board: day, meal and servings, saying what
+  will go on the trolley list.
+- **Undo** now also covers `plan.set` and `plan.remove`. The list of undoable actions lives in one place,
+  `undoableActions` in `lib/food.ts`.
+- **Removed:** the old Next meals list and planner card ("Talk through my meal plan", and the quick egg-and-noodle
+  plan), and the old Shopping list. The board and the Trolley replace them. Planning by voice is still there, through
+  "Fill empty slots with ideas".
+
+Tests: `tests/kitchen-part2.test.mjs`.

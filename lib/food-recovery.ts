@@ -36,11 +36,27 @@ type Storage = Pick<globalThis.Storage, "getItem" | "setItem" | "removeItem" | "
 const key = (scope: string) => /^[a-f0-9]{64}$/.test(scope) ? recoveryPrefix + scope : null;
 
 export function clearOtherFoodRecovery(storage: Storage, scope: string | null) {
-  const keep = scope ? key(scope) : null;
+  const keep = scope ? [key(scope), trolleyKey(scope)] : [];
   for (let i = storage.length - 1; i >= 0; i--) {
     const name = storage.key(i);
-    if (name?.startsWith(recoveryPrefix) && name !== keep) storage.removeItem(name);
+    if ((name?.startsWith(recoveryPrefix) || name?.startsWith(trolleyPrefix)) && !keep.includes(name)) storage.removeItem(name);
   }
+}
+
+// The trolley tray: what's been picked up while shopping, kept on this device until it's put away.
+export const trolleyPrefix = "daywell-food-trolley-v1-";
+const trolleyKey = (scope: string) => /^[a-f0-9]{64}$/.test(scope) ? trolleyPrefix + scope : null;
+export function readTrolley(storage: Storage, scope: string): string[] {
+  const name = trolleyKey(scope);
+  try {
+    const value = name ? JSON.parse(storage.getItem(name) ?? "[]") : [];
+    return Array.isArray(value) ? [...new Set(value.filter((item): item is string => typeof item === "string" && item.length <= 300))].slice(0, 80) : [];
+  } catch { return []; }
+}
+export function writeTrolley(storage: Storage, scope: string, keys: string[]) {
+  const name = trolleyKey(scope);
+  if (!name) return;
+  if (keys.length) storage.setItem(name, JSON.stringify(keys.slice(0, 80))); else storage.removeItem(name);
 }
 export function readFoodRecovery(storage: Storage, scope: string): FoodRecovery | null {
   const name = key(scope);

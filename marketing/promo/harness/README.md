@@ -43,7 +43,9 @@ the test code 246810, and signs in by itself on the sixth digit.
   converters in `lib/recipe-ideas.ts`, so no provider is called. `&norecipes` hides the feature, as when OpenAI isn't
   connected.
 - `&kitchen` adds a freezer (frozen peas, placed there), a fruit bowl (apples) and two trolley notes (washing-up liquid and
-  soy sauce, 150 ml) to the food sample, for the Kitchen's shelves, Trolley and Week (`feat/eat-kitchen`, `feat/eat-kitchen-2`). Pair it with a capture clock of 7 October 2026, so the sample's reminder dates fall
+  soy sauce, 150 ml) to the food sample, and a breakfast noted on 7 October, for the Kitchen's shelves, Trolley, Week and
+  Plate (`feat/eat-kitchen` to `feat/eat-kitchen-3`). Like the server, the sample records a meal for eating food from the
+  kitchen as well as for cooking. One canned recipe step says "for about 3 minutes", so cook mode shows its timer. Pair it with a capture clock of 7 October 2026, so the sample's reminder dates fall
   tomorrow and on Friday.
 - `vite.dialog.config.mjs` starts a third copy, on port 5195.
 

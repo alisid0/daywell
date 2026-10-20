@@ -52,7 +52,9 @@ const food = { revision: 3, receipts: new Map(), effects: new Map(), actions: []
 if (params.has("kitchen")) food.state.stock.push(
   { id: "s-peas", ingredient: "frozen peas", quantity: 750, unit: "g", bestBefore: null, place: "freezer", changedBy: seed },
   { id: "s-apple", ingredient: "apple", quantity: 4, unit: "each", bestBefore: null, changedBy: seed });
-// It also adds two trolley notes: one household thing (ticked off, never shelved) and one with an amount.
+// It also adds two trolley notes (one household thing, ticked off and never shelved, and one with an amount), and a
+// breakfast already noted on 7 October for the Plate.
+if (params.has("kitchen")) entries.push({ id: "f-today", kind: "food", data: { title: "Berry oats", date: "2026-10-07", meal: "Breakfast", calories: 0, protein: 0, carbs: 0, fat: 0, nutritionKnown: false } });
 if (params.has("kitchen")) food.state.shopping.push(
   { id: "sh-soap", title: "Washing-up liquid", quantity: "", done: false, changedBy: seed },
   { id: "sh-soy", title: "Soy sauce", quantity: "150 ml", done: false, changedBy: seed });
@@ -108,7 +110,7 @@ const recipesModule = Object.values(import.meta.glob("../../lib/recipe-ideas.ts"
 const recipes = recipesModule ? await recipesModule() : null;
 const cannedIdeas = { summary: "Three easy ideas from your rice, eggs, spinach, milk and chilli.", ideas: [
   { title: "Spinach and egg fried rice", meal: "Dinner", minutes: 20, ingredients: [{ ingredient: "rice", quantity: 75, unit: "g" }, { ingredient: "egg", quantity: 2, unit: "each" }, { ingredient: "spinach", quantity: 60, unit: "g" }, { ingredient: "soy sauce", quantity: 10, unit: "ml" }, { ingredient: "vegetable oil", quantity: 5, unit: "ml" }],
-    steps: ["Cook the rice following the pack instructions, then spread it out to cool a little.", "Heat the oil in a large pan and scramble the eggs until fully set.", "Add the spinach and stir until it wilts.", "Stir in the rice and soy sauce, and fry until piping hot."] },
+    steps: ["Cook the rice following the pack instructions, then spread it out to cool a little.", "Heat the oil in a large pan and scramble the eggs for about 3 minutes, until fully set.", "Add the spinach and stir until it wilts.", "Stir in the rice and soy sauce, and fry until piping hot."] },
   { title: "Chilli rice bowl", meal: "Lunch", minutes: 15, ingredients: [{ ingredient: "vegetable chilli", quantity: 1, unit: "portion" }, { ingredient: "rice", quantity: 75, unit: "g" }],
     steps: ["Cook the rice following the pack instructions.", "Heat the chilli until piping hot all the way through.", "Spoon the chilli over the rice."] },
   { title: "Creamy rice pudding", meal: "Breakfast", minutes: 35, ingredients: [{ ingredient: "rice", quantity: 50, unit: "g" }, { ingredient: "milk", quantity: 300, unit: "ml" }, { ingredient: "ground cinnamon", quantity: null, unit: "g" }],
@@ -188,7 +190,7 @@ window.fetch = async (input, init = {}) => {
       const { state, effect } = applyFoodCommand(food.state, command, undo);
       food.state = state; food.revision += 1; food.receipts.set(command.operationId, food.revision); food.effects.set(command.operationId, effect);
       if (command.action.type === "undo") { const target = food.actions.find(a => a.operationId === command.action.operationId); if (target) target.undone = true; if (effect.meal) entries = entries.filter(e => e.id !== effect.meal.id); }
-      else if (command.action.type === "cook" && effect.meal) entries = [...entries, { id: effect.meal.id, kind: "food", data: effect.meal.data }];
+      else if (effect.meal) entries = [...entries, { id: effect.meal.id, kind: "food", data: effect.meal.data }];
       food.actions.unshift({ operationId: command.operationId, revision: food.revision, type: command.action.type, createdAt: new Date().toISOString(), undone: false, mealId: effect.meal?.id ?? null });
       return reply({ recoveryScope: "a".repeat(64), ok: true, revision: food.revision, replayed: false });
     } catch (error) { return reply({ error: error.message }, error.status || 400); }

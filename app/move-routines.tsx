@@ -1,6 +1,6 @@
 "use client";
 import { PrivacyDetails } from "./privacy-details";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowUp, Clock, Pause, Play, RotateCcw, SkipForward, Mic, Volume2 } from "lucide-react";
 import { whereLooks } from "./area-look";
 import { CompanionPortrait } from "@/components/daywell-companions";
@@ -10,15 +10,17 @@ import type { WorkoutSet } from "@/lib/wellbeing";
 import { completedSets, elapsedMinutes, levelLabels, routineSteps, routines, swapStep, whereLabels, type Routine, type RoutineStep, type Where } from "@/lib/workouts";
 
 import { useHostVoice } from "./use-host-voice";
+import { ExercisePicture } from "./exercise-picture";
+import type { GuideFigure } from "@/lib/exercise-pictures";
 import { workoutCommand } from "@/lib/workout-voice";
 
 type LogRoutine = (title: string, minutes: number, sets: WorkoutSet[]) => void;
 const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
 
-export function MoveRoutines({ onLog }: { onLog: LogRoutine }) {
+export function MoveRoutines({ onLog, figure, onFigure }: { onLog: LogRoutine; figure: GuideFigure; onFigure: (figure: GuideFigure) => void }) {
   const [where, setWhere] = useState<"all" | Where>("all"), [active, setActive] = useState<Routine | null>(null);
   const [expanded, setExpanded] = useState(false);
-  if (active) return <RoutinePlayer routine={active} onClose={() => setActive(null)} onLog={(minutes, sets) => { setActive(null); onLog(active.name, minutes, sets); }} />;
+  if (active) return <RoutinePlayer routine={active} figure={figure} onFigure={onFigure} onClose={() => setActive(null)} onLog={(minutes, sets) => { setActive(null); onLog(active.name, minutes, sets); }} />;
   const shown = routines.filter(r => where === "all" || r.where === where);
   const filters: ["all" | Where, string][] = [["all", "Anywhere"], ...(Object.entries(whereLabels) as [Where, string][])];
   return <div className="move-routines">
@@ -34,7 +36,7 @@ export function MoveRoutines({ onLog }: { onLog: LogRoutine }) {
   </div>;
 }
 
-function RoutinePlayer({ routine, onClose, onLog }: { routine: Routine; onClose: () => void; onLog: (minutes: number, sets: WorkoutSet[]) => void }) {
+function RoutinePlayer({ routine, figure, onFigure, onClose, onLog }: { routine: Routine; figure: GuideFigure; onFigure: (figure: GuideFigure) => void; onClose: () => void; onLog: (minutes: number, sets: WorkoutSet[]) => void }) {
   const [steps, setSteps] = useState<RoutineStep[]>(() => routineSteps(routine));
   const [index, setIndex] = useState(0), [setNo, setSetNo] = useState(1), [done, setDone] = useState<RoutineStep[]>([]);
   const [remaining, setRemaining] = useState(steps[0]?.amount.seconds ?? 0), [endAt, setEndAt] = useState<number | null>(null);
@@ -44,6 +46,13 @@ function RoutinePlayer({ routine, onClose, onLog }: { routine: Routine; onClose:
   const step = steps[index], helper = companions[routine.companion];
   const finished = finishedAt !== null || !step;
   const [spoken, setSpoken] = useState(false), [voiceNote, setVoiceNote] = useState("");
+  const top = useRef<HTMLElement>(null), placed = useRef(false);
+  // Brings the player into view when it opens, and again when a new step starts above the top of the screen.
+  useEffect(() => {
+    const el = top.current;
+    if (el && (!placed.current || el.getBoundingClientRect().top < 0)) el.scrollIntoView({ block: "start" });
+    placed.current = true;
+  }, [index, resting, finished]);
   const voice = useHostVoice(handleCommand);
   const timerDuration = resting ? routine.restSeconds ?? 0 : step?.amount.seconds ?? 0;
   const restCue = `${remaining === 0 ? "The rest timer has finished. Take longer if you need." : "Rest and reset. Put any weight down safely and breathe normally."} Next: ${step?.exercise.name}. Say ‘next’ or choose Ready, next when you are ready.`;
@@ -101,7 +110,7 @@ function RoutinePlayer({ routine, onClose, onLog }: { routine: Routine; onClose:
     const minutes = elapsedMinutes((finishedAt ?? started) - started);
     const usedKettlebell = done.some(s => s.exercise.kit === "One kettlebell");
     const sets = completedSets(done, { "One kettlebell": Number(kettlebellKg) });
-    return <section className="well-card routine-player" aria-labelledby="routine-done">
+    return <section ref={top} className="well-card routine-player" aria-labelledby="routine-done">
       <div className="routine-helper"><CompanionPortrait id={routine.companion} size={96} motion="happy" decorative /><p>{done.length ? "You moved! That counts. Every bit." : "Starting is enough for today."}</p></div>
       <h2 id="routine-done">{routine.name}: {done.length === steps.length ? "complete" : "ended"}</h2>
       <CompanionMotionControl />
@@ -118,22 +127,16 @@ function RoutinePlayer({ routine, onClose, onLog }: { routine: Routine; onClose:
 
   const ex = step.exercise, timed = resting || step.amount.seconds !== undefined;
   const easier = !resting && ex.easier ? swapStep(step, ex.easier).exercise.name : null, harder = !resting && ex.harder ? swapStep(step, ex.harder).exercise.name : null;
-  return <section className="well-card routine-player" aria-labelledby="routine-step">
+  return <section ref={top} className="well-card routine-player" aria-labelledby="routine-step">
     <div className="routine-progress"><span>{routine.name}{step.rounds > 1 ? ` · round ${step.round} of ${step.rounds}` : ""}</span><span>Step {index + 1} of {steps.length}</span></div>
     <progress max={steps.length} value={index} aria-label="Routine progress" />
-    <div className="routine-helper"><CompanionPortrait id={routine.companion} size={96} motion={endAt && !resting ? "encouraging" : "idle"} decorative /><p><strong>{helper.name}:</strong> {resting ? restCue : ex.cue}</p></div>
     {index === 0 && routine.setup && <p className="routine-caution">{routine.setup}</p>}
-    <section className="routine-voice" aria-label="Training partner voice">
-      <label className="food-checkbox"><input type="checkbox" checked={spoken} disabled={!voice.canSpeak} onChange={e=>{window.dispatchEvent(new Event("daywell-stop-voice"));setSpoken(e.target.checked);}}/>Read each step aloud</label>
-      <div className="well-actions"><button type="button" className="well-button well-secondary" disabled={!voice.available} onClick={()=>{if(voice.listening)voice.stop();else{window.dispatchEvent(new Event("daywell-stop-voice"));voice.start();}}}><Mic size={17}/>{voice.listening?"Stop listening":"Tap to give a command"}</button><button type="button" className="well-text-button" disabled={!voice.canSpeak} onClick={()=>{window.dispatchEvent(new Event("daywell-stop-voice"));voice.speak(cue);}}><Volume2 size={17}/>Hear this step</button></div>
-      <small>{resting ? "Say “next” when ready, “pause” to pause the rest timer, or “end”. Rest never counts as a completed exercise." : "Say “done” to record this step, “next” to skip, or “pause”, “continue”, “repeat”, “easier”, “end”."} Tap the mic for each command.</small><PrivacyDetails><p>Voice commands use your browser’s speech recognition, which may process audio online. Spoken steps use your device’s voice. Your camera stays off.</p></PrivacyDetails>
-      {!voice.available&&<p>Voice commands aren’t available in this browser. All routine controls work by tapping.</p>}
-      <p role="status">{voice.listening?"Listening…":voiceNote}</p>{voice.error&&<p role="alert">Voice couldn’t continue. Use the buttons, or check microphone access and try again.</p>}
-    </section>
+    <ExercisePicture exercise={ex} figure={figure} onFigure={onFigure} />
     <h2 id="routine-step" aria-live="polite">{resting ? "Rest and reset" : ex.name}</h2>
     <p className="routine-amount">{resting ? `Up next: ${ex.name}` : step.amount.text}{!resting && step.amount.sets > 1 ? ` · set ${setNo} of ${step.amount.sets}` : ""}</p>
     {!resting && ex.kit && <small>Needs: {ex.kit}</small>}
     {!resting && ex.caution && <p className="routine-caution">{ex.caution}</p>}
+    <div className="routine-helper"><CompanionPortrait id={routine.companion} size={96} motion={endAt && !resting ? "encouraging" : "idle"} decorative /><p><strong>{helper.name}:</strong> {resting ? restCue : ex.cue}</p></div>
     {timed && <div className="routine-timer">
       <output aria-label="Time left">{clock(remaining)}</output>
       {endAt === null
@@ -147,6 +150,13 @@ function RoutinePlayer({ routine, onClose, onLog }: { routine: Routine; onClose:
       {easier && <button type="button" className="well-text-button" onClick={() => swap(ex.easier)}><ArrowDown size={16} />Easier: {easier}</button>}
       {harder && <button type="button" className="well-text-button" onClick={() => swap(ex.harder)}><ArrowUp size={16} />Harder: {harder}</button>}
     </div>
+    <section className="routine-voice" aria-label="Training partner voice">
+      <label className="food-checkbox"><input type="checkbox" checked={spoken} disabled={!voice.canSpeak} onChange={e=>{window.dispatchEvent(new Event("daywell-stop-voice"));setSpoken(e.target.checked);}}/>Read each step aloud</label>
+      <div className="well-actions"><button type="button" className="well-button well-secondary" disabled={!voice.available} onClick={()=>{if(voice.listening)voice.stop();else{window.dispatchEvent(new Event("daywell-stop-voice"));voice.start();}}}><Mic size={17}/>{voice.listening?"Stop listening":"Tap to give a command"}</button><button type="button" className="well-text-button" disabled={!voice.canSpeak} onClick={()=>{window.dispatchEvent(new Event("daywell-stop-voice"));voice.speak(cue);}}><Volume2 size={17}/>Hear this step</button></div>
+      <small>{resting ? "Say “next” when ready, “pause” to pause the rest timer, or “end”. Rest never counts as a completed exercise." : "Say “done” to record this step, “next” to skip, or “pause”, “continue”, “repeat”, “easier”, “end”."} Tap the mic for each command.</small><PrivacyDetails><p>Voice commands use your browser’s speech recognition, which may process audio online. Spoken steps use your device’s voice. Your camera stays off.</p></PrivacyDetails>
+      {!voice.available&&<p>Voice commands aren’t available in this browser. All routine controls work by tapping.</p>}
+      <p role="status">{voice.listening?"Listening…":voiceNote}</p>{voice.error&&<p role="alert">Voice couldn’t continue. Use the buttons, or check microphone access and try again.</p>}
+    </section>
     <button type="button" className="well-text-button routine-end" onClick={() => { voice.stop(); setEndAt(null); setFinishedAt(() => Date.now()); }}>End routine</button>
     <CompanionMotionControl />
   </section>;

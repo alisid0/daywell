@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "note": "Move exercises with workout-guide pictures, per figure: frames (1, or 2 for start and end) and aspect (the figures' width ÷ height inside the 800×600 frames). Made by scripts/move-pictures/process.mjs; see docs/move-pictures.md.",
+  "figures": {
+    "female": {
+      "goblet-squat": {
+        "frames": 2,
+        "aspect": 0.7
+      },
+      "hip-hinge-practice": {
+        "frames": 2,
+        "aspect": 0.71
+      },
+      "kettlebell-carry-left": {
+        "frames": 1,
+        "aspect": 0.5
+      },
+      "kettlebell-carry-right": {
+        "frames": 1,
+        "aspect": 0.5
+      },
+      "kettlebell-deadlift": {
+        "frames": 2,
+        "aspect": 0.68
+      },
+      "kettlebell-goblet-squat": {
+        "frames": 2,
+        "aspect": 0.7
+      },
+      "plank": {
+        "frames": 1,
+        "aspect": 2.77
+      },
+      "push-up": {
+        "frames": 2,
+        "aspect": 2.1
+      },
+      "squat": {
+        "frames": 2,
+        "aspect": 0.72
+      }
+    },
+    "male": {
+      "plank": {
+        "frames": 1,
+        "aspect": 2.81
+      },
+      "push-up": {
+        "frames": 2,
+        "aspect": 1.86
+      },
+      "squat": {
+        "frames": 2,
+        "aspect": 0.7
+      }
+    }
+  }
+}

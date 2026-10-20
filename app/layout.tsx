@@ -25,6 +25,7 @@ import "./sign-in.css";
 import "./food.css";
 import "./kitchen.css";
 import "./areas.css";
+import "./move-guides.css";
 import "./capture.css";
 import "./audio-library.css";
 import "./meditation.css";

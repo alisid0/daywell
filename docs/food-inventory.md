@@ -170,3 +170,45 @@ The Trolley and the Week from the approved "Kitchen, all in" design.
   "Fill empty slots with ideas".
 
 Tests: `tests/kitchen-part2.test.mjs`.
+
+## The Kitchen, part 3 — 20 October 2026
+
+The Plate, and cooking from the kitchen, from the approved "Kitchen, all in" design. This completes it.
+
+- **Today's plate** is a round plate with a quarter for each meal: what was eaten, what's planned ("Planned: tomato
+  rice"), or "Tap to note". The big button in the middle snaps a meal; "Say it" and "Type" open the same capture
+  sheet.
+- **Tapping a quarter** asks what you had, with a photo or up to four quick picks (`plateSuggestions` in
+  `lib/food-cook.ts`):
+  - a planned meal is cooked in one tap, as made and eaten, using what the plan needs from the kitchen;
+  - a leftover takes one portion off its shelf;
+  - other kitchen food opens "I ate some", for how much;
+  - something had before is noted again.
+
+  Each saves with Undo.
+- **At most one gentle question** follows: "Was that the last of the chilli?" or, after a planned meal for more than
+  one, "Any left over?". The answer changes the kitchen.
+- **Cook from your kitchen** (from "Cook ideas" and "Cook with it") shows recipe cards to swipe:
+  - how much of each recipe is at home, and what it uses up;
+  - "Cook it now" and "Plan it".
+  - With recipe ideas on, asking happens only on a tap, and the OpenAI disclosure is shown first. Without them, the
+    cards are Daywell's own recipes.
+- **The whole recipe** shows servings, what you need and where it is ("Fridge", "On your list", "To buy"), "Add to
+  trolley", the steps, and Report for AI recipes.
+- **Cook mode** shows one step per screen.
+  - A step that says how long ("simmer for 10 minutes") offers a timer.
+  - "For this step" shows the ingredients the step mentions.
+  - The screen stays on where the browser allows it (wake lock).
+- **All done** chooses the meal and any leftovers. Saving is one `cook`:
+  - it goes on today's plate as eaten;
+  - it takes the matching food from the kitchen, soonest reminder first;
+  - leftovers go in the fridge.
+
+  Planned meals with steps get "Cook it now" in the Week's day view.
+- **Leftovers and ready meals** counted in portions now usually go in the fridge, whatever they're made of.
+- **Removed:** the old "What could I make?" card, which the recipe cards replace, and the capture card on the Plate,
+  which the plate replaces.
+- **Still to design** (owner list, 19 October): calories on the Plate, past days, photo results onto shelves, the
+  remaining old forms, the £4.99 plan without AI, and whether there's one shopping list or two.
+
+Tests: `tests/kitchen-part3.test.mjs`.

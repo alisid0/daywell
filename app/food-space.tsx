@@ -12,9 +12,10 @@ import { recipeIdeas } from "@/lib/wellbeing";
 import type { AppState } from "./use-daywell";
 import { EntryActions } from "./parts";
 import { foodDetail } from "@/lib/food-tracking";
-import { FoodCaptureCard } from "./capture-hub";
 import { DailyNutrition, IntakeFields } from "./food-tracking";
-import { BasketIdeas, RecipeHelper } from "./recipe-ideas";
+import { RecipeHelper } from "./recipe-ideas";
+import { CookCard, CookSheet } from "./cook";
+import { PlatePlace } from "./plate";
 import { TrolleyPlace } from "./trolley";
 import { WeekPlace, WhenSheet } from "./week";
 import type { RecipeIdea } from "@/lib/recipe-ideas";
@@ -44,9 +45,18 @@ export function FoodSpace({ a }: { a: AppState }) {
   const editorHeading = useRef<HTMLHeadingElement>(null), editing = !!f.draft;
   useEffect(() => { if (editing) editorHeading.current?.focus(); }, [editing]);
   // The Kitchen's sheets (app/kitchen.tsx) follow the saved food, so a sheet closes by itself when its food has gone.
-  const [sheet, setSheet] = useState<{ kind: "card" | "ate" | "add"; id?: string; place?: PlaceId } | { kind: "when"; idea: RecipeIdea } | null>(null);
+  const [sheet, setSheet] = useState<{ kind: "card" | "ate" | "add"; id?: string; place?: PlaceId } | { kind: "when"; idea: RecipeIdea } | { kind: "cook"; wish?: string; planId?: string } | null>(null);
   useAddFoodByHand(() => { f.setView("basket"); setSheet({ kind: "add" }); });
-  const lotId = sheet && sheet.kind !== "when" ? sheet.id : undefined, lot = lotId ? state?.stock.find(item => item.id === lotId) : undefined;
+  // "Cook ideas", "Cook with it" and a planned meal's "Cook it now" open the recipe cards (app/cook.tsx).
+  useEffect(() => {
+    const cook = (event: Event) => {
+      const detail = (event as CustomEvent<{ wish?: unknown; planId?: unknown }>).detail ?? {};
+      setSheet({ kind: "cook", wish: typeof detail.wish === "string" ? detail.wish : undefined, planId: typeof detail.planId === "string" ? detail.planId : undefined });
+    };
+    window.addEventListener("daywell-cook", cook);
+    return () => window.removeEventListener("daywell-cook", cook);
+  }, []);
+  const lotId = sheet && (sheet.kind === "card" || sheet.kind === "ate" || sheet.kind === "add") ? sheet.id : undefined, lot = lotId ? state?.stock.find(item => item.id === lotId) : undefined;
   const place = f.view === "history" ? "plate" : f.view;
   const foodHistory = [...a.by("food")].sort((x, y) => y.data.date.localeCompare(x.data.date));
   const recent = f.snapshot?.recentActions.filter(item => ["purchase", "cook", "use", "stock.add", "stock.remove"].includes(item.type)) ?? [];
@@ -61,8 +71,8 @@ export function FoodSpace({ a }: { a: AppState }) {
     {!state && !f.error && <p role="status">Opening your kitchen…</p>}
     {state && <fieldset className="food-content" disabled={disabled}>
       {place === "plate" && <>
-        <h1 className="kitchen-title">Today’s plate</h1>
-        <FoodCaptureCard a={a}/><DailyNutrition a={a} area="eat"/>
+        <PlatePlace a={a}/>
+        <DailyNutrition a={a} area="eat"/>
         <div className="well-section-title"><h2>Your meal story</h2><button className="well-button" onClick={() => a.openEditor("food")}>Log a meal</button></div>
         <p>Prepared and used food stays in your story. Only entries marked eaten count towards your intake. Meal notes don’t change your kitchen.</p>
         {foodHistory.length ? foodHistory.slice(0, 20).map(entry => { const look = mealLooks[entry.data.meal as keyof typeof mealLooks] ?? mealLooks.Snack; return <article className={`well-record food-story-row food-tone-${look.tone}`} key={entry.id}><span className="food-item-icon is-small" aria-hidden><look.Icon size={18}/></span><div><strong>{entry.data.title}</strong><small>{entry.data.date} · {entry.data.meal}{` · ${foodDetail(entry.data)}`}</small></div><EntryActions a={a} e={entry}/></article>; }) : <p className="well-empty">Your next meal can be the beginning. No targets to catch up with.</p>}
@@ -70,7 +80,7 @@ export function FoodSpace({ a }: { a: AppState }) {
       </>}
       {place === "basket" && <>
         <KitchenShelves f={f} onOpen={item => setSheet({ kind: "card", id: item.id })} onAdd={where => setSheet({ kind: "add", place: where })}/>
-        <BasketIdeas f={f} onPlan={idea => setSheet({ kind: "when", idea })}/>
+        <CookCard/>
         {f.snapshot!.overview.inventory.some(row => row.required > 0) && <section className="well-card"><h2>A little set aside</h2><p>Across all your planned meals. These totals combine matching ingredients and units; nothing has been used yet.</p>{f.snapshot!.overview.inventory.filter(row => row.required > 0).map(row => <div className="well-record" key={`${row.ingredient}-${row.unit}`}><div><strong>{row.ingredient}</strong><small>{amount(row.knownOnHand, row.unit)} in your kitchen · {amount(row.reserved, row.unit)} set aside · {amount(row.available, row.unit)} free{row.unknownQuantity ? " · plus some without a quantity" : ""}</small></div></div>)}</section>}
         {recent.length > 0 && <details className="food-recent"><summary>Recent kitchen changes & undo</summary><p>Undo restores the food involved. If it has changed again, we’ll ask you to adjust it instead. Editing or removing a meal note does not reverse kitchen changes.</p>{recent.slice(0, 10).map(item => <div className="well-record" key={item.operationId}><div><strong>{item.type === "cook" ? "Meal cooked" : item.type === "use" ? "Food eaten / used" : item.type === "stock.add" ? "Food added" : item.type === "stock.remove" ? "Taken out of your kitchen" : "Shopping put away"}{item.undone ? " · undone" : ""}</strong><small>{new Date(item.createdAt).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}</small></div>{!item.undone && <button className="well-text-button" onClick={() => f.open({ type: "undo", operationId: item.operationId })}><Undo2 size={16}/>Undo</button>}</div>)}</details>}
       </>}
@@ -82,6 +92,7 @@ export function FoodSpace({ a }: { a: AppState }) {
     {sheet?.kind === "ate" && lot && <AteSome lot={lot} a={a} onClose={() => setSheet(null)} onBack={() => setSheet({ kind: "card", id: lot.id })}/>}
     {sheet?.kind === "add" && state && (!sheet.id || lot) && <AddFood edit={lot} place={sheet.place} f={f} onClose={() => setSheet(null)}/>}
     {sheet?.kind === "when" && state && <WhenSheet f={f} idea={sheet.idea} onClose={() => setSheet(null)}/>}
+    {sheet?.kind === "cook" && state && <CookSheet a={a} wish={sheet.wish} planId={sheet.planId} onClose={() => setSheet(null)} onPlan={idea => setSheet({ kind: "when", idea })}/>}
   </section>;
 }
 

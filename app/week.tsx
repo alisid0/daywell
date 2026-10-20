@@ -65,6 +65,7 @@ function DayView({ a, date, focus, onBack }: { a: AppState; date: string; focus?
         <div className="week-plan-text"><strong>{plan.title}</strong><span>{plan.servings} {plan.servings === 1 ? "serving" : "servings"}</span>
           <span className={needs.length ? "week-needs" : "week-covered"}>{needs.length ? `Needs ${needs.map(row => row.ingredient).slice(0, 3).join(", ")}${needs.length > 3 ? " and more" : ""} · it’s on your trolley list` : "Everything is in your kitchen"}</span></div>
         <div className="week-plan-actions">
+          {!!plan.guide?.steps.length && <button type="button" className="is-primary" disabled={busy} onClick={() => window.dispatchEvent(new CustomEvent("daywell-cook", { detail: { planId: plan.id } }))}>Cook it now</button>}
           <button type="button" disabled={busy} onClick={() => f.open({ type: "cook", planId: plan.id, title: plan.title, date: now, meal: plan.meal, servings: plan.servings, consumed: suggestedConsumption(plan, state.stock), useReservedStock: false })}>I made this</button>
           <button type="button" disabled={busy} onClick={() => f.open({ type: "plan.set", plan: withoutChange(plan) })}>Change</button>
           <button type="button" disabled={busy} onClick={() => void f.submit({ type: "plan.remove", id: plan.id })}>Take it off</button>

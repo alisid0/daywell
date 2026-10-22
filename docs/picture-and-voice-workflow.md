@@ -11,6 +11,7 @@ Lead Eat with Take a photo and Tell Daywell. Choose Meal or drink, Food basket, 
 3. Confirm before saving. Meal entries require the person to confirm consumption and the portion. A meal photo cannot deduct ingredients from stock.
 4. Basket recognition hands reviewed ingredients into the existing inventory editor. Add separate items, remove duplicates during review, allow uncertain quantities, and never infer expiry dates. Saving uses the same revision checks, retry reference, recovery and undo as other basket operations.
 5. Shopping captures create unchecked notes, never a purchase or consumed meal. The normal shopping flow records what was actually bought later.
+6. Back from the shops, a photo of the receipt, or of the shopping on the counter, puts it away (owner-approved design, 22 October 2026). OpenAI only reads the photo. Daywell matches it to the trolley list on the device: a line ticks off a list item only when it is that thing ("semi-skimmed milk" ticks off "milk"; "milk chocolate" doesn't). It suggests where each food goes, leaves off what isn't food, and says how many lines it couldn't read. Nothing is saved until the person checks it and taps Put away, which saves one purchase with Undo.
 
 Typing stays available for correction, accessibility and service outages. AI estimates cannot verify ingredients, allergens or food safety. Preserve the general-wellness boundaries.
 
@@ -30,13 +31,19 @@ For meal captures, choose Home-prepared, Takeaway or Restaurant, then review the
 
 Lead with a small selection of routines, optional spoken step cues and one-tap commands. Done records a completed step; Next/Skip moves on without recording it. Pause, Continue, Repeat, Easier and End have bounded meanings. Unrecognised or negated instructions change nothing. A rep step shows a count the person can change before Done; Done records the reps counted, and counting none records nothing. Review completed sets before saving. Never infer calories burned from an image or automatically record a full routine when someone ends early.
 
-No workout photos or camera permissions are part of this flow. Device speech is the current routine implementation and is labelled as such. ElevenLabs live chat remains separate; expressive live coaching tied to routine state is still an integration task, not a delivered feature.
+No workout photos or camera permissions are part of this flow. Device speech is the current routine implementation and is labelled as such. The assistant's chat is separate; expressive live coaching tied to routine state is still an integration task, not a delivered feature.
+
+## Talking with Daywell
+
+Owner-approved design, 22 October 2026. Talk to Daywell listens with the phone's or browser's own speech recognition and shows the words as they're heard. It sends at a pause, or straight away with Send now. Everyday commands are still understood on the device; anything else goes to the Plus assistant (`lib/assistant.ts`), which answers from the areas the person allowed and can only prepare changes for "Here's the plan".
+
+Replies are read in the device's own voice, a sentence at a time, with the sentence being read marked on screen. While the person is talking, the microphone opens again after each reply (Keep listening), until they type, tap Stop or end the chat. They choose the voice from the phone's own voices, the speed, and whether replies are read aloud, in Voice & company. Listening and speaking cost nothing and aren't counted; only the question sent to OpenAI is. The phone apps need a native speech plugin before talking works there, which means a new store build; until then they offer typing.
 
 The one-kettlebell routine includes setup cues, separate left/right carries and optional rest phases. A rest timer does not complete a movement: the person chooses when to continue. Ending during rest preserves only already-completed exercises. Enter the actual bell weight once before reviewing; unweighted alternatives do not inherit it. See the [Food and Move checkpoint](handover/2026-10-08-food-move-kettlebell.md) for scope, checks and remaining launch gaps.
 
 ## Current connection and verification
 
-The [shared response router](response-routing.md) checks everyday commands and exact recordings locally before offering optional JEV matching or a new ElevenLabs conversation. Food statements hand their original words into the review. Continuous live conversation still generates its own turns; movement step cues remain local.
+The [shared response router](response-routing.md) checks everyday commands and exact recordings locally before offering optional JEV matching or asking the assistant. Food statements hand their original words into the review. Continuous live conversation still generates its own turns; movement step cues remain local.
 
 The capture endpoint uses server-side OpenAI credentials; never put keys in frontend code. OpenAI and ElevenLabs are connected in the private tester deployment. The 10 October phone-feedback checks used an unlabelled real-food image and generated a short v4 readout. Original photos/recordings are not saved by Daywell; this does not imply that providers have no retention. Physical Android camera, microphone, audio interruptions and locked-screen behaviour still require owner testing. Do not represent a single successful recognition example as recognition accuracy across dishes.
 

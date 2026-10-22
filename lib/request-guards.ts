@@ -51,6 +51,8 @@ export const limits = {
   narration: { windowMs: day, max: 20 },
   // A safety net against scripts, set well above everyday use: paying users shouldn't meet it.
   recipes: { windowMs: day, max: 40 },
+  // The Plus assistant: paying users never meet a usage wall, so this only stops scripts (docs/usage-limits.md).
+  assistant: { windowMs: day, max: 300 },
   picker: { windowMs: day, max: 120 },
   // Sign-in protection, not usage limits: they stop code guessing and stop anyone using Daywell to send unwanted
   // email. Rows are keyed by a keyed hash of the address or network address, never the address (docs/sign-in.md).

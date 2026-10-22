@@ -5,7 +5,7 @@ Session date: 22 October 2026
 Branch and PR: feat/plus-assistant, from main 47a7466. PR to main. Not deployed.
 What changed:
   - The owner chose ideas 3, 5 and 9 from "Daywell: where AI can help" and approved the canvas "Plus assistant,
-    receipts and talk" ("approved, up to £3" for test calls, 22 October). Its assumptions stand: OpenAI gpt-4.1-mini,
+    receipts and talk" ("approved", with a budget for test calls, 22 October). Its assumptions stand: OpenAI gpt-4.1-mini,
     the four areas below, no chat kept, its own branch, not the store build.
   - The Plus assistant (lib/assistant.ts, app/api/assistant/route.ts, app/assistant.tsx, app/use-assistant.ts). One
     assistant speaks as Nori, Bounce, Luma or Pip. It reads only the areas the person turned on (meals and kitchen,
@@ -42,11 +42,11 @@ Checks performed and their results:
     company and Daywell's voice; talking with a pretend microphone and voice (listening, sending at a pause, the
     reply read a sentence at a time, listening again, End the chat); a dark look.
 What is not yet verified:
-  - Real OpenAI replies and receipt reading: the key is only on the deployed app. The test-call budget is up to £3.
+  - Real OpenAI replies and receipt reading: the key is only on the deployed app.
   - The assistant needs the person's own yes before it reads records, so its first real try is the owner's.
   - A real phone. The phone apps need a native speech plugin for talking (a store build); until then they type.
 Remaining work / next step:
-  - Merge only on "merge"; deploy to the private app only when asked. Then try it there, within £3 of test calls.
+  - Merge only on "merge"; deploy to the private app only when asked. Then try it there, within the test-call budget.
   - Later: remove the unused ElevenLabs chat code; the native speech plugin for the phone apps; Plus checks when plans
     exist (the assistant and receipt photos are Plus features, but there is no plan check in the code yet).
 Setup or migration steps needed on the other machine:

@@ -444,3 +444,58 @@ button.trolley-text{cursor:pointer}
 .finish-used li{display:flex;align-items:center;gap:10px;font-size:calc(14.5px*var(--rc-scale,1))}
 .finish-used .kitchen-face.is-ing{width:30px;height:30px}
 .finish-used p{margin:8px 0 0;font-size:calc(14px*var(--rc-scale,1))}
+
+/* Receipt photos (owner-approved design, 22 October 2026): "Back from the shops?" on the Trolley, the check sheet and "All put away" (app/receipt.tsx). */
+.receipt-card{display:grid;gap:10px;margin-top:12px;padding:16px;border-radius:24px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));box-shadow:0 10px 24px rgba(82,45,70,.1)}
+.receipt-intro{display:flex;align-items:center;gap:12px}
+.receipt-intro img{flex-shrink:0;width:60px;height:60px;object-fit:contain}
+.receipt-intro>div{flex:1;min-width:0}
+.receipt-intro h2{margin:0;font-size:calc(18px*var(--rc-scale,1));font-weight:800;letter-spacing:-.01em}
+.receipt-intro p{margin:2px 0 0;font-size:calc(15px*var(--rc-scale,1));line-height:1.4}
+.receipt-card .kitchen-primary{margin-top:2px}
+.receipt-card .kitchen-quiet.receipt-choose{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:-6px auto 0}
+.receipt-note{margin:0;font-size:calc(14px*var(--rc-scale,1));line-height:1.4;color:var(--well-muted)}
+.receipt-status{margin:0;font-size:calc(14.5px*var(--rc-scale,1));font-weight:700}
+.receipt-card .kitchen-error{margin:0}
+.receipt-close{align-self:flex-start}
+.receipt-spots{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.receipt-spots li{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;padding:0 8px 0 12px;border-radius:14px;background:color-mix(in srgb,var(--well-accent) 8%,var(--well-surface));font-size:calc(14.5px*var(--rc-scale,1));font-weight:700}
+.receipt-spots b{min-width:28px;height:28px;padding:0 4px;border-radius:9px;background:var(--well-surface);display:grid;place-items:center;color:var(--well-accent);font-size:calc(16px*var(--rc-scale,1))}
+.receipt-actions{display:flex;gap:10px}
+.receipt-actions .kitchen-primary{flex:1;margin:0}
+.receipt-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:0 20px;border:1px solid var(--well-line);border-radius:999px;background:var(--well-surface);color:var(--well-accent);font:inherit;font-size:calc(16px*var(--rc-scale,1));font-weight:800;cursor:pointer}
+.receipt-secondary:disabled{opacity:.5;cursor:default}
+.receipt-top{display:flex;align-items:center;gap:10px;padding:14px 18px 6px;flex-shrink:0}
+.receipt-top .kitchen-step-title{flex:1;min-width:0;margin:0;font-size:calc(22px*var(--rc-scale,1))}
+.receipt-retake{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--well-line);border-radius:999px;background:var(--well-surface);color:var(--well-accent);font-size:calc(15px*var(--rc-scale,1));font-weight:700}
+.kitchen-steps-body.receipt-body{display:grid;gap:12px;align-content:start;padding-top:8px}
+.receipt-says{display:flex;align-items:flex-end;gap:10px}
+.receipt-says img{flex-shrink:0;width:52px;height:52px;object-fit:contain}
+.receipt-says p{margin:0;padding:11px 14px;border-radius:20px 20px 20px 6px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));font-size:calc(16px*var(--rc-scale,1));line-height:1.42}
+.receipt-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.receipt-row{border-radius:16px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface))}
+.receipt-row.is-out{border-style:dashed;background:transparent}
+.receipt-row.is-out strong{text-decoration:line-through;color:var(--well-muted)}
+.receipt-line{display:flex;align-items:center;gap:10px;min-height:52px;padding:4px 6px 4px 10px}
+.kitchen-face.is-receipt{width:36px;height:36px;border-width:0;box-shadow:none}
+.receipt-name{flex:1;min-width:0;min-height:44px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1px;padding:0;border:0;background:none;color:var(--well-ink);font:inherit;text-align:left}
+.receipt-name strong{font-size:calc(16px*var(--rc-scale,1));line-height:1.25;overflow-wrap:anywhere}
+.receipt-name>span{font-size:calc(14px*var(--rc-scale,1));line-height:1.3;color:var(--well-muted)}
+.receipt-on,.receipt-amount{white-space:nowrap}
+.receipt-on{font-weight:700;color:var(--well-accent)}
+.receipt-on svg{display:inline-block;vertical-align:-2px;margin-right:2px}
+.receipt-place{position:relative;flex-shrink:0;display:inline-flex;align-items:center}
+.receipt-place select{appearance:none;-webkit-appearance:none;min-height:44px;max-width:150px;padding:0 28px 0 11px;border:1px solid var(--well-line);border-radius:999px;background:color-mix(in srgb,var(--well-accent) 7%,var(--well-surface));color:var(--well-ink);font:inherit;font-size:calc(14.5px*var(--rc-scale,1));font-weight:700;text-overflow:ellipsis;cursor:pointer}
+.receipt-place svg{position:absolute;right:10px;pointer-events:none;color:var(--well-accent)}
+.receipt-back,.receipt-hand,.receipt-leave{flex-shrink:0;min-height:44px;padding:0 8px;border:0;background:none;color:var(--well-accent);font:inherit;font-size:calc(14.5px*var(--rc-scale,1));font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.receipt-edit{display:grid;gap:6px;padding:0 12px 10px 56px}
+.receipt-edit label{font-size:calc(14px*var(--rc-scale,1));font-weight:700;color:var(--well-muted)}
+.receipt-edit input{height:46px;padding:0 14px;border:1px solid var(--well-line);border-radius:14px;background:var(--kitchen-raised,#fff);color:var(--well-ink);font:inherit;font-size:calc(16px*var(--rc-scale,1))}
+.receipt-edit .kitchen-error{margin:0}
+.receipt-leave{justify-self:start;padding:0}
+.receipt-skipped{display:grid;padding:2px 12px;border-radius:16px;background:var(--well-surface);border:1px dashed var(--well-line)}
+.receipt-skipped p{display:flex;align-items:center;gap:10px;min-height:44px;margin:0;padding:6px 0;font-size:calc(14.5px*var(--rc-scale,1));line-height:1.35}
+.receipt-skipped p+p{border-top:1px solid color-mix(in srgb,var(--well-line) 50%,var(--well-surface))}
+.receipt-skipped p>span{flex:1}
+.receipt-skipped svg{flex-shrink:0;color:var(--well-muted)}
+.receipt-foot-note{margin:8px 0 0;text-align:center;font-size:calc(14px*var(--rc-scale,1));color:var(--well-muted)}

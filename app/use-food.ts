@@ -134,7 +134,8 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
     if (guard.current || pending) return;
     persist({ draft: null, pending: null }); setDraft(null); setRecovered(false); setError(""); setReview(false);
   }
-  async function send(command: FoodCommand): Promise<boolean> {
+  // quiet: the screen that made the change shows what happened itself (a receipt's "All put away"), so no notice.
+  async function send(command: FoodCommand, quiet = false): Promise<boolean> {
     if (guard.current || !scope || scope !== hydrated.current) return false;
     // Persist the exact authorised command BEFORE the request can reach the server.
     if (!persist({ pending: command })) return false;
@@ -147,7 +148,7 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
       persist({ pending: null }); setPending(null);
       if (result.kind === "saved") {
         persist({ draft: null }); setDraft(null); setReview(false);
-        setNotice(savedNotice(command.action, snapshot));
+        setNotice(quiet ? "" : savedNotice(command.action, snapshot));
         setUndoable((undoableActions as readonly string[]).includes(command.action.type) ? command.operationId : null);
         await reload();
         await journal.current();
@@ -159,12 +160,13 @@ export function useFood(enabled: boolean, refreshJournal: () => Promise<void>, s
     } finally { if (scope === scopeRef.current) { guard.current = false; setBusy(false); } }
   }
   // One tap, one save: the Kitchen's sheets save straight away. A problem leaves the change open in the editor.
-  async function submit(action: FoodAction) {
+  // A caller that may undo the change later (the assistant's plan, a receipt) chooses its operation ID.
+  async function submit(action: FoodAction, options: { operationId?: string; quiet?: boolean } = {}) {
     if (!snapshot || !fresh || guard.current || pending || recovered) return false;
     if (draft) { setError("Finish or cancel your open change first. Your details are still here."); return false; }
     const next = { revision: snapshot.revision, action };
     persist({ draft: next }); setDraft(next); setError(""); setNotice(""); setUndoable(null); setReview(false);
-    try { return await send(prepareFoodCommand(next, crypto.randomUUID())); }
+    try { return await send(prepareFoodCommand(next, options.operationId ?? crypto.randomUUID()), options.quiet); }
     catch { setError("Check names, dates and quantities, then try again."); return false; }
   }
   async function save() {

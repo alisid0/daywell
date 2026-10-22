@@ -20,6 +20,12 @@ test('a receipt is tidied: repeats combined, odd amounts dropped, foods before o
   assert.equal(receiptDraft({ unreadable: 0, items: [line('Eggs', 6), line('eggs', null)] }).items[0].quantity, null);
 });
 
+test('milk read in pints is kept in millilitres', () => {
+  const receipt = receiptDraft({ unreadable: 0, items: [line('Semi-skimmed milk', 2, 'pint'), line('Semi-skimmed milk', 568, 'ml'), line('Whole milk', 4, 'pint'), line('Oat milk', null, 'pint')] });
+  assert.deepEqual(receipt.items.map(item => [item.name, item.quantity, item.unit]), [['Semi-skimmed milk', 1704, 'ml'], ['Whole milk', 2272, 'ml'], ['Oat milk', null, 'ml']]);
+  assert.ok(receiptJsonSchema.properties.items.items.properties.unit.enum.includes('pint'));
+});
+
 test('a receipt never holds more than a purchase can save', () => {
   const many = Array.from({ length: 60 }, (_, n) => line(`Food ${n}`, 1));
   const receipt = receiptDraft({ unreadable: 900, items: [...many, ...Array.from({ length: 30 }, (_, n) => line(`Thing ${n}`, 1, 'each', false))] });

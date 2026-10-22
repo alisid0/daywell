@@ -10,6 +10,26 @@ type Playing = { sound: SleepSound; sources: AudioBufferSourceNode[]; gain: Gain
 const soundById = new Map(sleepSounds.map(sound => [sound.id, sound]));
 const stopLabel = (minutes: number) => minutes === 0 ? "Off" : minutes === 60 ? "1 hour" : `${minutes} min`;
 const clockTimeAfter = (seconds: number) => Date.now() + seconds * 1000;
+// iPhones mute Web Audio when the side switch is on silent, though music still plays. Asking for "playback" (Safari 17
+// and later) lets these sounds play like music; on older iPhones, a moment of silence played through an ordinary audio
+// element in the same tap does the same.
+const SILENCE = "data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQIAAACAgA==";
+function preferPlayback() {
+  const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+  if (session) {
+    try { session.type = "playback"; } catch { /* the browser keeps its own choice */ }
+    return;
+  }
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1)) {
+    void new Audio(SILENCE).play().catch(() => undefined);
+  }
+}
+// A context the phone interrupted (a call, a locked screen) can stay suspended. Give up after a few seconds, and start a
+// fresh one on the next tap, rather than waiting for ever.
+async function running(context: AudioContext) {
+  await Promise.race([context.resume(), new Promise<never>((_, reject) => window.setTimeout(() => reject(Error("suspended")), 4000))]);
+  if (context.state !== "running") throw Error("suspended");
+}
 
 // Sounds for the quiet corner: one looping sound at a time, with gentle fades between them. It keeps playing while the
 // screen is off; "Stop after" fades out on the audio clock, so a sleeping page still stops on time. Leaving stops it.
@@ -70,10 +90,11 @@ export function SleepSounds({ focusRequest = null }: { focusRequest?: SoundFocus
     window.dispatchEvent(new CustomEvent("daywell-stop-library-audio", { detail: { source: "sleep-sounds" } }));
     window.dispatchEvent(new CustomEvent("daywell-stop-guided-audio", { detail: { source: "sleep-sounds" } }));
     window.dispatchEvent(new Event("daywell-stop-narration"));
+    preferPlayback();
     const e = ensureEngine(), ticket = ++request.current;
     setError(""); setLoading(true); setSelected(id);
     try {
-      await e.context.resume();
+      await running(e.context);
       const buffer = await bufferFor(e, sound);
       if (ticket !== request.current) return;
       fadeAway(current.current);
@@ -89,8 +110,12 @@ export function SleepSounds({ focusRequest = null }: { focusRequest?: SoundFocus
       current.current = { sound, sources, gain };
       setPlaying(true);
       if (stopAt.current !== null) applyStop(current.current); else if (stopAfter) startTimer(stopAfter);
-    } catch {
-      if (ticket === request.current) setError("That sound couldn’t load. Check your connection and try again.");
+    } catch (problem) {
+      if (ticket !== request.current) return;
+      if (problem instanceof Error && problem.message === "suspended") {
+        if (engine.current === e) { void e.context.close(); engine.current = null; }
+        setError("The sound didn’t start. Tap Play again.");
+      } else setError("That sound couldn’t load. Check your connection and try again.");
     } finally {
       if (ticket === request.current) setLoading(false);
     }

@@ -16,7 +16,7 @@ test("a timer is tried only after starting or completing it, not just choosing a
   assert.equal(hasTriedStep([{ id: "focus-session", kind: "session", data: {} }], "timer"), true);
 });
 test("older settings get the guide without changing their selected tools or name", () => {
-  const { guideDismissed, calorieTracking, birthYear, sex, heightCm, weights, bodyConsentAt, guideFigure, ...oldSettings } = defaults;
+  const { guideDismissed, calorieTracking, birthYear, sex, heightCm, weights, bodyConsentAt, guideFigure, moveTargets, ...oldSettings } = defaults;
   const result = settingsSchema.parse({ ...oldSettings, name: "Alex", modules: ["grocery"], onboarded: true });
   assert.equal(result.guideDismissed, false);
   assert.equal(result.name, "Alex");
@@ -28,5 +28,6 @@ test("older settings get the guide without changing their selected tools or name
   assert.equal(result.birthYear, null);
   assert.deepEqual(result.weights, []);
   assert.equal(result.guideFigure, "female");
+  assert.deepEqual(result.moveTargets, {});
   assert.equal(settingsSchema.parse({ ...result, calorieTracking: true }).calorieTracking, true);
 });

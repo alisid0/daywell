@@ -1,50 +1,37 @@
 "use client";
 import { PrivacyDetails } from "./privacy-details";
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUp, Clock, Pause, Play, RotateCcw, SkipForward, Mic, Volume2 } from "lucide-react";
-import { whereLooks } from "./area-look";
+import { ArrowDown, ArrowUp, Check, Mic, Minus, Pause, Play, Plus, RotateCcw, SkipForward, Volume2, VolumeX, X } from "lucide-react";
 import { CompanionPortrait } from "@/components/daywell-companions";
 import { CompanionMotionControl } from "@/components/companion-motion-preference";
 import { companions } from "@/lib/companions";
-import type { WorkoutSet } from "@/lib/wellbeing";
-import { completedSets, elapsedMinutes, levelLabels, routineSteps, routines, swapStep, whereLabels, type Routine, type RoutineStep, type Where } from "@/lib/workouts";
-
+import { elapsedMinutes, routineSteps, swapStep, type Routine, type RoutineStep } from "@/lib/workouts";
+import { targetReps, type Target } from "@/lib/move-plan";
+import { exercisePicture, type GuideFigure } from "@/lib/exercise-pictures";
 import { useHostVoice } from "./use-host-voice";
 import { ExercisePicture } from "./exercise-picture";
-import type { GuideFigure } from "@/lib/exercise-pictures";
+import { MoveFace, focusLook } from "./move-look";
 import { workoutCommand } from "@/lib/workout-voice";
 
-type LogRoutine = (title: string, minutes: number, sets: WorkoutSet[]) => void;
 const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
-
-export function MoveRoutines({ onLog, figure, onFigure }: { onLog: LogRoutine; figure: GuideFigure; onFigure: (figure: GuideFigure) => void }) {
-  const [where, setWhere] = useState<"all" | Where>("all"), [active, setActive] = useState<Routine | null>(null);
-  const [expanded, setExpanded] = useState(false);
-  if (active) return <RoutinePlayer routine={active} figure={figure} onFigure={onFigure} onClose={() => setActive(null)} onLog={(minutes, sets) => { setActive(null); onLog(active.name, minutes, sets); }} />;
-  const shown = routines.filter(r => where === "all" || r.where === where);
-  const filters: ["all" | Where, string][] = [["all", "Anywhere"], ...(Object.entries(whereLabels) as [Where, string][])];
-  return <div className="move-routines">
-    <div className="well-section-title"><h2>Your training partner</h2></div>
-    <p>Choose a routine. Bounce takes it one step at a time, with spoken cues when you want them. No photos needed.</p>
-    <div className="well-tabs move-filters" role="group" aria-label="Where you'll move">{filters.map(([id, label]) => { const { Icon } = whereLooks[id]; return <button key={id} type="button" aria-pressed={where === id} onClick={() => {setWhere(id);setExpanded(false);}}><Icon size={16} aria-hidden />{label}</button>; })}</div>
-    <div className="routine-grid">{(expanded?shown:shown.slice(0,4)).map(r => { const place = whereLooks[r.where]; return <article key={r.id} className={`routine-card area-tone-${place.tone}`}>
-      <CompanionPortrait id={r.companion} size={64} decorative />
-      <div><h3>{r.name}</h3><ul className="area-chips" aria-label="About this routine"><li><Clock size={13} aria-hidden />{r.minutes} min</li><li>{levelLabels[r.level]}</li><li><place.Icon size={13} aria-hidden />{whereLabels[r.where]}</li></ul><p>{r.when}</p></div>
-      <button type="button" className="well-button routine-start" aria-label={`Start ${r.name}`} onClick={() => setActive(r)}><Play size={15} aria-hidden />Start</button>
-    </article>; })}</div>
-    {shown.length>4&&<button type="button" className="well-text-button" onClick={()=>setExpanded(!expanded)}>{expanded?"Show fewer routines":`More routines (${shown.length-4})`}</button>}
-  </div>;
+// A saved target (Move's "What next?") replaces the reps a routine asks for, for that move only.
+function withTarget(step: RoutineStep, targets: Record<string, Target>): RoutineStep {
+  const reps = step.amount.reps !== undefined ? targetReps(step.exercise, targets) : undefined;
+  return reps ? { ...step, amount: { ...step.amount, reps, text: `${step.amount.sets > 1 ? `${step.amount.sets} × ` : ""}${reps} reps · your target` } } : step;
 }
 
-function RoutinePlayer({ routine, figure, onFigure, onClose, onLog }: { routine: Routine; figure: GuideFigure; onFigure: (figure: GuideFigure) => void; onClose: () => void; onLog: (minutes: number, sets: WorkoutSet[]) => void }) {
-  const [steps, setSteps] = useState<RoutineStep[]>(() => routineSteps(routine));
+// Doing a routine with Bounce (owner-approved design, 22 October 2026): one step per screen with its picture, Bounce's
+// tip, a count of the reps really done, timers, rest and what's next. Done records a step (with the reps counted); Skip
+// moves on without recording; rest never counts as a move. Ending early keeps only the steps already done, and the
+// person reviews them before anything is saved.
+// briefed: the person has just read the routine's safety notes on Before you start, so the first step doesn't repeat them.
+export function RoutinePlayer({ routine, figure, onFigure, targets, briefed = false, onFinish, onClose }: { routine: Routine; figure: GuideFigure; onFigure: (figure: GuideFigure) => void; targets: Record<string, Target>; briefed?: boolean; onFinish: (done: RoutineStep[], minutes: number) => void; onClose: () => void }) {
+  const [steps, setSteps] = useState<RoutineStep[]>(() => routineSteps(routine).map(step => withTarget(step, targets)));
   const [index, setIndex] = useState(0), [setNo, setSetNo] = useState(1), [done, setDone] = useState<RoutineStep[]>([]);
   const [remaining, setRemaining] = useState(steps[0]?.amount.seconds ?? 0), [endAt, setEndAt] = useState<number | null>(null);
-  const [resting, setResting] = useState(false);
-  const [kettlebellKg, setKettlebellKg] = useState("");
-  const [started] = useState(() => Date.now()), [finishedAt, setFinishedAt] = useState<number | null>(null);
+  const [resting, setResting] = useState(false), [count, setCount] = useState(steps[0]?.amount.reps ?? 0);
+  const [started] = useState(() => Date.now()), [stopped, setStopped] = useState(false);
   const step = steps[index], helper = companions[routine.companion];
-  const finished = finishedAt !== null || !step;
   const [spoken, setSpoken] = useState(false), [voiceNote, setVoiceNote] = useState("");
   const top = useRef<HTMLElement>(null), placed = useRef(false);
   // Brings the player into view when it opens, and again when a new step starts above the top of the screen.
@@ -52,11 +39,11 @@ function RoutinePlayer({ routine, figure, onFigure, onClose, onLog }: { routine:
     const el = top.current;
     if (el && (!placed.current || el.getBoundingClientRect().top < 0)) el.scrollIntoView({ block: "start" });
     placed.current = true;
-  }, [index, resting, finished]);
+  }, [index, resting, stopped]);
   const voice = useHostVoice(handleCommand);
   const timerDuration = resting ? routine.restSeconds ?? 0 : step?.amount.seconds ?? 0;
-  const restCue = `${remaining === 0 ? "The rest timer has finished. Take longer if you need." : "Rest and reset. Put any weight down safely and breathe normally."} Next: ${step?.exercise.name}. Say ‘next’ or choose Ready, next when you are ready.`;
-  const cue = finished ? "Your routine has ended. Review the steps you completed before saving." : resting ? restCue : `${index === 0 ? routine.setup || "" : ""} ${step.exercise.name}. ${step.amount.text}. ${step.amount.sets > 1 ? `Set ${setNo} of ${step.amount.sets}.` : ""} ${step.exercise.cue} ${step.exercise.caution || ""}`;
+  const restCue = `${remaining === 0 ? "The rest timer has finished. Take longer if you need." : "Rest and reset. Put any weight down safely and breathe normally."} Next: ${step?.exercise.name}. Say ‘next’ or choose I’m ready when you are.`;
+  const cue = stopped || !step ? "Your routine has ended." : resting ? restCue : `${index === 0 ? routine.setup || "" : ""} ${step.exercise.name}. ${step.amount.text}. ${step.amount.sets > 1 ? `Set ${setNo} of ${step.amount.sets}.` : ""} ${step.exercise.cue} ${step.exercise.caution || ""}`;
   // A cue is read only when its content changes or the user opts in.
   useEffect(() => {
     if (spoken) voice.speak(cue);
@@ -64,18 +51,17 @@ function RoutinePlayer({ routine, figure, onFigure, onClose, onLog }: { routine:
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cue, spoken]);
   function handleCommand(value: string) {
-    if (finished) return;
+    if (stopped || !step) return;
     const command = workoutCommand(value);
     setVoiceNote(command ? `Heard: “${value}”` : "I didn’t recognise a routine command. Nothing changed. Try ‘done’, ‘pause’, ‘repeat’ or ‘easier’, or use the buttons.");
-    if (command === "done") { if (resting) goTo(index); else goTo(index + 1, step); }
+    if (command === "done") { if (resting) goTo(index); else complete(); }
     if (command === "skip") { if (resting) { goTo(index); setVoiceNote("Rest ended. Start the next step when ready."); } else { goTo(index + 1); setVoiceNote("Skipped that step without recording it as completed."); } }
     if (command === "pause") setEndAt(null);
     if (command === "start") { if (resting || step.amount.seconds !== undefined) startTimer(); else setVoiceNote("This step uses reps. Take your time, then say ‘done’."); }
     if (command === "repeat") voice.speak(cue);
     if (command === "easier") { if (resting) setVoiceNote("Take all the rest you need. Choose an easier option when the next step begins."); else if (step.exercise.easier) swap(step.exercise.easier); else setVoiceNote("This is already the easiest option here. You can skip or end whenever you like."); }
-    if (command === "end") { voice.stop(); setEndAt(null); setFinishedAt(() => Date.now()); }
+    if (command === "end") end();
   }
-
 
   useEffect(() => {
     if (endAt === null) return;
@@ -91,73 +77,94 @@ function RoutinePlayer({ routine, figure, onFigure, onClose, onLog }: { routine:
     return () => clearInterval(id);
   }, [endAt, step, setNo, resting]);
 
+  function finish(list: RoutineStep[]) {
+    voice.stop(); setEndAt(null);
+    if (list.length) onFinish(list, elapsedMinutes(Date.now() - started)); else setStopped(true);
+  }
+  function end() { finish(done); }
   function goTo(next: number, completed?: RoutineStep) {
-    if (completed) setDone(d => [...d, completed]);
+    const list = completed ? [...done, completed] : done;
+    if (completed) setDone(list);
+    if (next >= steps.length) { finish(list); return; }
     // Rest is a player phase, not an exercise. Ending or skipping it never records the upcoming step.
-    const rest = completed && next < steps.length ? routine.restSeconds ?? 0 : 0;
+    const rest = completed ? routine.restSeconds ?? 0 : 0;
     setResting(rest > 0); setEndAt(rest ? Date.now() + rest * 1000 : null); setSetNo(1); setIndex(next);
-    setRemaining(rest || steps[next]?.amount.seconds || 0);
-    if (next >= steps.length) setFinishedAt(() => Date.now());
+    setRemaining(rest || steps[next]?.amount.seconds || 0); setCount(steps[next]?.amount.reps ?? 0);
+  }
+  // Done records the step with the reps really counted. Counting none records nothing.
+  function complete() {
+    if (step.amount.reps === undefined || count === step.amount.reps) goTo(index + 1, step);
+    else if (count > 0) goTo(index + 1, { ...step, amount: { ...step.amount, reps: count } });
+    else goTo(index + 1);
   }
   function swap(id: string | null) {
-    const next = swapStep(step, id);
+    const next = withTarget(swapStep(step, id), targets);
     setSteps(all => all.map((s, i) => i === index ? next : s));
-    setEndAt(null); setSetNo(1); setRemaining(next.amount.seconds ?? 0);
+    setEndAt(null); setSetNo(1); setRemaining(next.amount.seconds ?? 0); setCount(next.amount.reps ?? 0);
   }
   function startTimer() { setEndAt(Date.now() + (remaining || timerDuration) * 1000); }
+  function moreRest() { if (endAt === null) setRemaining(r => r + 15); else setEndAt(e => (e ?? Date.now()) + 15000); }
+  function toggleVoice() { window.dispatchEvent(new Event("daywell-stop-voice")); setSpoken(on => !on); }
 
-  if (finished) {
-    const minutes = elapsedMinutes((finishedAt ?? started) - started);
-    const usedKettlebell = done.some(s => s.exercise.kit === "One kettlebell");
-    const sets = completedSets(done, { "One kettlebell": Number(kettlebellKg) });
-    return <section ref={top} className="well-card routine-player" aria-labelledby="routine-done">
-      <div className="routine-helper"><CompanionPortrait id={routine.companion} size={96} motion="happy" decorative /><p>{done.length ? "You moved! That counts. Every bit." : "Starting is enough for today."}</p></div>
-      <h2 id="routine-done">{routine.name}: {done.length === steps.length ? "complete" : "ended"}</h2>
-      <CompanionMotionControl />
-      <p>{done.length} of {steps.length} steps · about {minutes} {minutes === 1 ? "minute" : "minutes"}. Check the reps and add any weights before saving.</p>
-      <form onSubmit={e => { e.preventDefault(); onLog(minutes, sets); }}>
-      {usedKettlebell && <label className="well-space">Kettlebell used (kg)<input aria-label="Kettlebell used (kg)" required type="number" min="0.25" max="500" step="0.25" value={kettlebellKg} onChange={e => setKettlebellKg(e.target.value)} /><small>Enter it once. We’ll add it to your completed kettlebell sets. You can change individual sets in the review.</small></label>}
-      <div className="well-actions">
-        {sets.length > 0 && <button type="submit" className="well-button">Review and save</button>}
-        <button type="button" className="well-text-button" onClick={onClose}>{sets.length ? "Close without saving" : "Close"}</button>
-      </div>
-      </form>
-    </section>;
-  }
+  if (stopped || !step) return <section ref={top} className="mv-player mv-player-end" aria-labelledby="mv-ended">
+    <CompanionPortrait id={routine.companion} size={110} motion="happy" decorative />
+    <h2 id="mv-ended">Starting is enough for today.</h2>
+    <p>Nothing was recorded, so there’s nothing to save.</p>
+    <button type="button" className="mv-btn" onClick={onClose}>Back to Move</button>
+  </section>;
 
-  const ex = step.exercise, timed = resting || step.amount.seconds !== undefined;
+  const ex = step.exercise, timed = resting || step.amount.seconds !== undefined, last = index + 1 === steps.length;
   const easier = !resting && ex.easier ? swapStep(step, ex.easier).exercise.name : null, harder = !resting && ex.harder ? swapStep(step, ex.harder).exercise.name : null;
-  return <section ref={top} className="well-card routine-player" aria-labelledby="routine-step">
-    <div className="routine-progress"><span>{routine.name}{step.rounds > 1 ? ` · round ${step.round} of ${step.rounds}` : ""}</span><span>Step {index + 1} of {steps.length}</span></div>
-    <progress max={steps.length} value={index} aria-label="Routine progress" />
-    {index === 0 && routine.setup && <p className="routine-caution">{routine.setup}</p>}
-    <ExercisePicture exercise={ex} figure={figure} onFigure={onFigure} />
-    <h2 id="routine-step" aria-live="polite">{resting ? "Rest and reset" : ex.name}</h2>
-    <p className="routine-amount">{resting ? `Up next: ${ex.name}` : step.amount.text}{!resting && step.amount.sets > 1 ? ` · set ${setNo} of ${step.amount.sets}` : ""}</p>
-    {!resting && ex.kit && <small>Needs: {ex.kit}</small>}
-    {!resting && ex.caution && <p className="routine-caution">{ex.caution}</p>}
-    <div className="routine-helper"><CompanionPortrait id={routine.companion} size={96} motion={endAt && !resting ? "encouraging" : "idle"} decorative /><p><strong>{helper.name}:</strong> {resting ? restCue : ex.cue}</p></div>
-    {timed && <div className="routine-timer">
-      <output aria-label="Time left">{clock(remaining)}</output>
-      {endAt === null
-        ? <button type="button" className="well-button well-secondary" onClick={startTimer}><Play size={16} />{remaining === timerDuration ? "Start timer" : remaining === 0 ? "Again" : "Continue"}</button>
-        : <button type="button" className="well-button well-secondary" onClick={() => setEndAt(null)}><Pause size={16} />Pause</button>}
-      {remaining !== timerDuration && <button type="button" className="well-text-button" onClick={() => { setEndAt(null); setRemaining(timerDuration); }}><RotateCcw size={16} />Reset</button>}
-    </div>}
-    <div className="well-actions">
-      <button type="button" className="well-button" onClick={() => resting ? goTo(index) : goTo(index + 1, step)}>{resting ? "Ready, next" : index + 1 === steps.length ? "Done, finish" : "Done, next"}</button>
-      {!resting && <button type="button" className="well-text-button" onClick={() => goTo(index + 1)}><SkipForward size={16} />Skip</button>}
-      {easier && <button type="button" className="well-text-button" onClick={() => swap(ex.easier)}><ArrowDown size={16} />Easier: {easier}</button>}
-      {harder && <button type="button" className="well-text-button" onClick={() => swap(ex.harder)}><ArrowUp size={16} />Harder: {harder}</button>}
+  const look = focusLook(ex.focus), picture = exercisePicture(ex.id, figure);
+  const where = resting ? `Next is step ${index + 1} of ${steps.length}` : `${step.rounds > 1 ? `Round ${step.round} of ${step.rounds} · ` : ""}Step ${index + 1} of ${steps.length}${step.amount.sets > 1 ? ` · set ${setNo} of ${step.amount.sets}` : ""}`;
+  return <section ref={top} className="mv-player" aria-labelledby="mv-step">
+    <header className="mv-player-head">
+      <button type="button" className="mv-round" aria-label="End workout" onClick={end}><X size={20} aria-hidden /></button>
+      <div><strong id="mv-step" aria-live="polite">{resting ? "Rest and reset" : ex.name}</strong><span>{where}</span></div>
+      <button type="button" className={`mv-round${spoken ? " is-on" : ""}`} aria-pressed={spoken} aria-label="Read each step aloud" disabled={!voice.canSpeak} onClick={toggleVoice}>{spoken ? <Volume2 size={20} aria-hidden /> : <VolumeX size={20} aria-hidden />}</button>
+    </header>
+    <div className="mv-progress" role="progressbar" aria-label="Routine progress" aria-valuemin={0} aria-valuemax={steps.length} aria-valuenow={index}><span style={{ width: `${(index / steps.length) * 100}%` }} /></div>
+    {index === 0 && !resting && !briefed && routine.setup && <p className="mv-caution">{routine.setup}</p>}
+    {resting
+      ? <div className="mv-clock is-rest"><strong role="timer" aria-label={`${remaining} seconds of rest left`}>{clock(remaining)}</strong><span>rest left</span></div>
+      : picture ? <ExercisePicture exercise={ex} figure={figure} onFigure={onFigure} />
+        : <div className={`mv-big-tile area-tone-${look.tone}`}><look.Icon size={52} strokeWidth={1.6} aria-hidden /><span>{look.name}</span></div>}
+    <div className="mv-bounce">
+      <CompanionPortrait id={routine.companion} size={76} motion={endAt && !resting ? "encouraging" : "idle"} decorative />
+      <div className="mv-bubble"><p><span className="sr-only">{helper.name}: </span>{resting ? (remaining === 0 ? "The rest timer has finished. Take longer if you need." : "Rest and reset. Put any weight down safely and breathe normally.") : ex.cue}</p>{spoken && <small><Volume2 size={14} aria-hidden />Read aloud by your device’s voice</small>}</div>
     </div>
-    <section className="routine-voice" aria-label="Training partner voice">
-      <label className="food-checkbox"><input type="checkbox" checked={spoken} disabled={!voice.canSpeak} onChange={e=>{window.dispatchEvent(new Event("daywell-stop-voice"));setSpoken(e.target.checked);}}/>Read each step aloud</label>
-      <div className="well-actions"><button type="button" className="well-button well-secondary" disabled={!voice.available} onClick={()=>{if(voice.listening)voice.stop();else{window.dispatchEvent(new Event("daywell-stop-voice"));voice.start();}}}><Mic size={17}/>{voice.listening?"Stop listening":"Tap to give a command"}</button><button type="button" className="well-text-button" disabled={!voice.canSpeak} onClick={()=>{window.dispatchEvent(new Event("daywell-stop-voice"));voice.speak(cue);}}><Volume2 size={17}/>Hear this step</button></div>
-      <small>{resting ? "Say “next” when ready, “pause” to pause the rest timer, or “end”. Rest never counts as a completed exercise." : "Say “done” to record this step, “next” to skip, or “pause”, “continue”, “repeat”, “easier”, “end”."} Tap the mic for each command.</small><PrivacyDetails><p>Voice commands use your browser’s speech recognition, which may process audio online. Spoken steps use your device’s voice. Your camera stays off.</p></PrivacyDetails>
-      {!voice.available&&<p>Voice commands aren’t available in this browser. All routine controls work by tapping.</p>}
-      <p role="status">{voice.listening?"Listening…":voiceNote}</p>{voice.error&&<p role="alert">Voice couldn’t continue. Use the buttons, or check microphone access and try again.</p>}
+    {resting ? <>
+      <section className="mv-next" aria-labelledby="mv-next-up"><MoveFace exercise={ex} figure={figure} /><div><span>Next up</span><h3 id="mv-next-up">{ex.name}</h3><small>{step.amount.text}</small></div></section>
+      <div className="mv-row-buttons"><button type="button" className="mv-btn" onClick={() => goTo(index)}><Play size={18} aria-hidden />I’m ready</button><button type="button" className="mv-btn is-ghost" aria-label="Add 15 seconds of rest" onClick={moreRest}>+15 s</button></div>
+    </> : <>
+      <p className="mv-amount">{step.amount.text}{ex.kit ? ` · needs ${ex.kit.toLowerCase()}` : ""}</p>
+      {ex.caution && <p className="mv-caution">{ex.caution}</p>}
+      {timed
+        ? <div className="mv-clock"><strong role="timer" aria-label={`${remaining} seconds left`}>{clock(remaining)}</strong><span>left of {clock(timerDuration)}</span></div>
+        : step.amount.reps !== undefined && <div className="mv-count" role="group" aria-label="Reps done">
+          <button type="button" aria-label="One fewer" disabled={count <= 0} onClick={() => setCount(c => Math.max(0, c - 1))}><Minus size={22} aria-hidden /></button>
+          <p><strong aria-live="polite">{count}</strong><span>of {step.amount.reps} reps</span></p>
+          <button type="button" aria-label="One more" disabled={count >= 200} onClick={() => setCount(c => Math.min(200, c + 1))}><Plus size={22} aria-hidden /></button>
+        </div>}
+      <div className="mv-row-buttons">
+        {timed && endAt !== null && <button type="button" className="mv-btn" onClick={() => setEndAt(null)}><Pause size={18} aria-hidden />Pause</button>}
+        {timed && endAt === null && remaining > 0 && <button type="button" className="mv-btn" onClick={startTimer}><Play size={18} aria-hidden />{remaining === timerDuration ? "Start timer" : "Continue"}</button>}
+        {(!timed || endAt === null) && <button type="button" className={`mv-btn${timed && remaining > 0 ? " is-ghost" : ""}`} onClick={complete}><Check size={18} aria-hidden />{last ? "Done, finish" : "Done, next"}</button>}
+      </div>
+      <div className="mv-chips">
+        {timed && endAt === null && remaining !== timerDuration && <button type="button" className="mv-chip" onClick={() => setRemaining(timerDuration)}><RotateCcw size={16} aria-hidden />Reset</button>}
+        {easier && <button type="button" className="mv-chip" onClick={() => swap(ex.easier)}><ArrowDown size={16} aria-hidden />Easier: {easier}</button>}
+        {harder && <button type="button" className="mv-chip" onClick={() => swap(ex.harder)}><ArrowUp size={16} aria-hidden />Harder: {harder}</button>}
+        <button type="button" className="mv-chip" onClick={() => goTo(index + 1)}><SkipForward size={16} aria-hidden />Skip</button>
+      </div>
+    </>}
+    <section className="mv-voice" aria-label="Training partner voice">
+      <button type="button" className="mv-chip" disabled={!voice.available} onClick={() => { if (voice.listening) voice.stop(); else { window.dispatchEvent(new Event("daywell-stop-voice")); voice.start(); } }}><Mic size={17} aria-hidden />{voice.listening ? "Stop listening" : "Tap to give a command"}</button>
+      <small>{resting ? "Say “next” when ready, “pause” to pause the rest timer, or “end”. Rest never counts as a completed exercise." : "Say “done” to record this step, “next” to skip, or “pause”, “continue”, “repeat”, “easier”, “end”."} Tap the mic for each command.</small>
+      <PrivacyDetails><p>Voice commands use your browser’s speech recognition, which may process audio online. Spoken steps use your device’s voice. Your camera stays off.</p></PrivacyDetails>
+      {!voice.available && <p>Voice commands aren’t available in this browser. All routine controls work by tapping.</p>}
+      <p role="status">{voice.listening ? "Listening…" : voiceNote}</p>{voice.error && <p role="alert">Voice couldn’t continue. Use the buttons, or check microphone access and try again.</p>}
     </section>
-    <button type="button" className="well-text-button routine-end" onClick={() => { voice.stop(); setEndAt(null); setFinishedAt(() => Date.now()); }}>End routine</button>
     <CompanionMotionControl />
   </section>;
 }

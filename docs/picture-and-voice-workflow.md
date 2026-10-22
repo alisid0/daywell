@@ -28,7 +28,7 @@ For meal captures, choose Home-prepared, Takeaway or Restaurant, then review the
 
 ## Movement
 
-Lead with a small selection of routines, optional spoken step cues and one-tap commands. Done records a completed step; Next/Skip moves on without recording it. Pause, Continue, Repeat, Easier and End have bounded meanings. Unrecognised or negated instructions change nothing. Review completed sets before saving. Never infer calories burned from an image or automatically record a full routine when someone ends early.
+Lead with a small selection of routines, optional spoken step cues and one-tap commands. Done records a completed step; Next/Skip moves on without recording it. Pause, Continue, Repeat, Easier and End have bounded meanings. Unrecognised or negated instructions change nothing. A rep step shows a count the person can change before Done; Done records the reps counted, and counting none records nothing. Review completed sets before saving. Never infer calories burned from an image or automatically record a full routine when someone ends early.
 
 No workout photos or camera permissions are part of this flow. Device speech is the current routine implementation and is labelled as such. ElevenLabs live chat remains separate; expressive live coaching tied to routine state is still an integration task, not a delivered feature.
 

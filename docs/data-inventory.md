@@ -13,7 +13,7 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 
 | Table | What it holds | Personal | Kept for | Export / closure (#47) |
 | --- | --- | --- | --- | --- |
-| `settings` | Name, tools, bedtime, reading and voice choices; the figure in workout pictures (female or male); About you: birth year, optional sex, height and weight history (only with `bodyConsentAt`), calorie tracking | Yes. Body details are health data | Until changed or the account closes | Yes / yes |
+| `settings` | Name, tools, bedtime, reading and voice choices; the figure in workout pictures (female or male); the reps chosen for a move after a new best (Move's "What next?"); About you: birth year, optional sex, height and weight history (only with `bodyConsentAt`), calorie tracking | Yes. Body details are health data | Until changed or the account closes | Yes / yes |
 | `entries` | Everything saved in the day: tasks, shopping, meals with calories and sugar, workouts, sleep nights, alarms, the timer, calendar events and private reflections | Yes. Meals, workouts and sleep are health data, and reflections may be very personal | Until the person deletes them; up to 20,000 a person | Yes / yes |
 | `food_spaces` | Food in the kitchen (with where each item is kept, and where each food usually goes), meal plans and shopping, one record a person | Yes | Until changed or closed | Yes / yes |
 | `food_operations` | Each food change and how to undo it | Yes | **Forever today.** Owner decision 13 October: 365 days | Yes / yes |
@@ -29,7 +29,7 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 - Photos and voice recordings are sent for one estimate and never saved.
 - Live conversation transcripts are held by ElevenLabs under the agent's retention setting, and go away when live voice is removed.
 - Payment details are never seen; Apple and Google handle payment.
-- Device-only drafts, the trolley tray (what's been picked up while shopping) and reading or appearance choices stay in the browser.
+- Device-only drafts, the trolley tray (what's been picked up while shopping), Move's walk in progress (its start time) and "rest today" choice, and reading or appearance choices stay in the browser.
 
 ## Sent to outside services
 

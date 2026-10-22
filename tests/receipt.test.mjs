@@ -26,6 +26,12 @@ test('milk read in pints is kept in millilitres', () => {
   assert.ok(receiptJsonSchema.properties.items.items.properties.unit.enum.includes('pint'));
 });
 
+test('shop words on the end of a name are left out, so the list still matches', () => {
+  const receipt = receiptDraft({ unreadable: 0, items: [line('Garlic loose', null), line('Bananas LOOSE', 5), line('Tomatoes pack ea', 6), line('Loose leaf tea', 1)] });
+  assert.deepEqual(receipt.items.map(item => item.name), ['Garlic', 'Bananas', 'Tomatoes', 'Loose leaf tea']);
+  assert.deepEqual(matchList(receipt.items.map(item => item.name), ['Garlic', 'Bananas']), [0, 1, null, null]);
+});
+
 test('a receipt never holds more than a purchase can save', () => {
   const many = Array.from({ length: 60 }, (_, n) => line(`Food ${n}`, 1));
   const receipt = receiptDraft({ unreadable: 900, items: [...many, ...Array.from({ length: 30 }, (_, n) => line(`Thing ${n}`, 1, 'each', false))] });

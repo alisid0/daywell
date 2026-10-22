@@ -13,6 +13,7 @@ import { useFoodNarration } from "./use-food-narration";
 import { foodNarration, foodDraftDetail } from "@/lib/food-narration";
 import { PlanCoverage, PlanGuide } from "./food-plan-journey";
 import { addFoodByHand } from "./kitchen";
+import { photoProblem, shrinkPhoto } from "./photo";
 
 type Mode = "meal" | "basket" | "grocery" | "plan";
 type CaptureStart = { mode?: string; intent?: string; text?: string; planStart?: string; planCount?: number; planMeal?: string };
@@ -93,16 +94,13 @@ export function CaptureHub({ a }: { a: AppState }) {
   }; });
   async function choosePhoto(file: File) {
     narration.clear(); const token = epoch.current; setError("");
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size > 15 * 1024 * 1024) { setError("Choose a JPEG, PNG or WebP photo under 15 MB."); return; }
+    const problem = photoProblem(file);
+    if (problem) { setError(problem); return; }
     setBusy(true); lock.current = true;
     try {
-      const bitmap = await createImageBitmap(file); const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
-      const canvas = document.createElement("canvas"); canvas.width = Math.round(bitmap.width * scale); canvas.height = Math.round(bitmap.height * scale);
-      canvas.getContext("2d")!.drawImage(bitmap, 0, 0, canvas.width, canvas.height); bitmap.close();
-      const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, "image/jpeg", .85));
-      if (!blob) throw Error("Couldn’t open that photo. Try another one.");
+      const shrunk = await shrinkPhoto(file, "food.jpg");
       if (epoch.current !== token) return;
-      setPhoto(new File([blob], "food.jpg", { type: "image/jpeg" })); setPreview(URL.createObjectURL(blob)); setResult(null); setContext(""); setConsumed(false); setAudio(null);
+      setPhoto(shrunk); setPreview(URL.createObjectURL(shrunk)); setResult(null); setContext(""); setConsumed(false); setAudio(null);
     } catch { if (epoch.current === token) setError("Couldn’t open that photo. Try another one."); }
     finally { if (epoch.current === token) { setBusy(false); lock.current = false; } }
   }

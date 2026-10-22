@@ -9,10 +9,12 @@ import { readTrolley, writeTrolley } from "@/lib/food-recovery";
 import { amountWords, parseAmount, topUpLot, trolleyItems, type TrolleyItem } from "@/lib/food-trolley";
 import { aisleOf, aisleRank } from "./food-look";
 import { capital, FoodFace, placeIcons, Sheet, SheetError } from "./kitchen";
+import { ReceiptCard } from "./receipt";
 import type { AppState } from "./use-daywell";
 
 // The Trolley (owner-approved Kitchen design, part 2, 20 October 2026): what to get, by aisle; a tray for what's been
-// picked up while shopping; and putting it all away on the shelves in one save, with Undo.
+// picked up while shopping; and putting it all away on the shelves in one save, with Undo. Back home, a photo of the
+// receipt puts the shopping away too (app/receipt.tsx, 22 October 2026).
 type Food = AppState["food"];
 
 function useTray(scope: string | null) {
@@ -49,6 +51,7 @@ export function TrolleyPlace({ f, onPutAway }: { f: Food; onPutAway: (shelved: b
   }
   return <div className={`trolley-place${picked.length ? " has-tray" : ""}`}>
     <div className="trolley-head"><h1 className="kitchen-title">Your trolley</h1><span>{left.length ? `${left.length} left to get` : picked.length ? "All in the trolley" : ""}</span></div>
+    <ReceiptCard f={f} items={items}/>
     <form className="trolley-add" onSubmit={event => void add(event)}>
       <label htmlFor={addId} className="sr-only">Add something to get</label>
       <input id={addId} maxLength={160} autoComplete="off" value={text} placeholder="Add something…" onChange={event => setText(event.target.value)}/>

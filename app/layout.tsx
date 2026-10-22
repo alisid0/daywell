@@ -27,6 +27,7 @@ import "./kitchen.css";
 import "./areas.css";
 import "./move-guides.css";
 import "./move.css";
+import "./assistant.css";
 import "./capture.css";
 import "./audio-library.css";
 import "./meditation.css";

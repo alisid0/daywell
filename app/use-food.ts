@@ -8,8 +8,9 @@ import { placeNames, placeOf } from "@/lib/food-places";
 
 // What the notice says after a save.
 function savedNotice(action: FoodAction, before: FoodSnapshot | null) {
-  if (action.type === "cook") return "Meal remembered. Your kitchen is updated.";
-  if (action.type === "use") return action.intake ? "On today’s plate. Your kitchen is updated." : "Your kitchen is updated.";
+  const lowerFirst = (text: string) => text.charAt(0).toLowerCase() + text.slice(1);
+  if (action.type === "cook") return action.intake ? `${action.meal} noted: ${lowerFirst(action.title)}.` : "Meal remembered. Your kitchen is updated.";
+  if (action.type === "use") return action.intake ? `${action.meal} noted: ${lowerFirst(action.title)}.` : "Your kitchen is updated.";
   if (action.type === "undo") return "That change has been undone.";
   if (action.type === "plan.set") {
     if (before?.state.plans.some(plan => plan.id === action.plan.id)) return "Meal plan saved.";

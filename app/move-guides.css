@@ -1,0 +1,31 @@
+/* Move workout-guide pictures (app/exercise-picture.tsx). The pictures are light-grey figures with plum lines, so they sit
+   on a light card in every look. Two frames swap slowly; "Hold still" or reduced motion shows both at once.
+   --guide-box is the box shape (the figures' own shape when wider than 4:3); --guide-half is one frame's shape side by
+   side. The 800×600 frames are cropped to those shapes, which only trims empty margin. */
+.move-guide{margin:0;display:grid;gap:8px}
+.move-guide-frames{display:grid;border-radius:22px;overflow:hidden;background:light-dark(#fffafc,#f1e7ee);border:1px solid color-mix(in srgb,var(--well-line) 70%,transparent)}
+.move-guide-frame{grid-area:1/1;position:relative;min-width:0}
+.move-guide-frame img{display:block;width:100%;height:auto;aspect-ratio:var(--guide-box,4/3);object-fit:cover}
+.move-guide-frame span{position:absolute;top:10px;left:12px;padding:2px 10px;border-radius:999px;background:#f6e3ec;color:#522d46;font-size:calc(14px*var(--rc-scale,1));font-weight:700;line-height:1.5}
+.move-guide[data-frames="2"] .move-guide-frame:last-child{opacity:0}
+.move-guide[data-frames="2"]:not([data-still]) .move-guide-frame:first-child{animation:move-guide-start 4.4s ease-in-out infinite}
+.move-guide[data-frames="2"]:not([data-still]) .move-guide-frame:last-child{animation:move-guide-end 4.4s ease-in-out infinite}
+@keyframes move-guide-start{0%,42%{opacity:1}50%,92%{opacity:0}100%{opacity:1}}
+@keyframes move-guide-end{0%,42%{opacity:0}50%,92%{opacity:1}100%{opacity:0}}
+.move-guide[data-still] .move-guide-frame{grid-area:auto}
+.move-guide[data-still] .move-guide-frame:last-child{opacity:1}
+.move-guide[data-still][data-shape="tall"] .move-guide-frames{grid-template-columns:1fr 1fr}
+.move-guide[data-still][data-shape="tall"] .move-guide-frame img{aspect-ratio:var(--guide-half,3/4)}
+@media(prefers-reduced-motion:reduce){
+  .move-guide[data-frames="2"] .move-guide-frame{grid-area:auto;opacity:1!important;animation:none!important}
+  .move-guide[data-frames="2"][data-shape="tall"] .move-guide-frames{grid-template-columns:1fr 1fr}
+  .move-guide[data-frames="2"][data-shape="tall"] .move-guide-frame img{aspect-ratio:var(--guide-half,3/4)}
+  .move-guide-hold{display:none!important}
+}
+.move-guide figcaption{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.move-guide-hold{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border:1px solid var(--well-line);border-radius:999px;background:transparent;color:var(--well-accent);font-family:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:650}
+.move-guide-hold[aria-pressed="true"]{background:color-mix(in srgb,var(--well-accent) 14%,transparent)}
+.move-guide-figures{display:inline-flex;margin-left:auto;padding:3px;border-radius:999px;background:color-mix(in srgb,var(--well-line) 45%,transparent)}
+.move-guide-figures button{min-height:36px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--well-ink);font-family:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:650}
+.move-guide-figures button[aria-pressed="true"]{background:var(--well-accent);color:var(--well-surface,#fff)}
+.move-guide small{flex-basis:100%;color:var(--well-muted);font-size:calc(14px*var(--rc-scale,1))}

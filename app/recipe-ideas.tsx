@@ -1,15 +1,13 @@
 "use client";
-import { useEffect, useId, useRef, useState } from "react";
-import { ArrowRight, Clock, Plus, ShoppingBasket, Sparkles } from "lucide-react";
-import { ingredientName } from "@/lib/food";
+import { useEffect, useId, useState } from "react";
+import { Plus, Sparkles } from "lucide-react";
 import type { FoodAction } from "@/lib/food-client";
-import type { BasketIdeas as Ideas, MealSteps, RecipeAsk, RecipeIdea } from "@/lib/recipe-ideas";
-import { mealLooks, quantityText, unitText } from "./food-look";
+import type { MealSteps, RecipeAsk } from "@/lib/recipe-ideas";
+import { quantityText, unitText } from "./food-look";
 import { AiReport } from "./ai-report";
-import type { AppState } from "./use-daywell";
 
-// Recipe ideas (lib/recipe-ideas.ts): a few recipes from the Food basket, and simple steps for a meal being planned.
-type Food = AppState["food"];
+// Recipe ideas (lib/recipe-ideas.ts): asking for them (the recipe cards in app/cook.tsx use this too), and simple steps
+// for a meal being planned.
 type PlanInput = Extract<FoodAction, { type: "plan.set" }>["plan"];
 const failed = "Couldn’t find recipe ideas right now. Please try again.";
 const withQuantity = (item: { ingredient: string; quantity: number | null; unit: string }) => item.quantity === null ? item.ingredient : `${item.ingredient} ${quantityText(item.quantity)} ${unitText(item.unit, item.quantity)}`;
@@ -31,60 +29,6 @@ export async function askRecipes<T>(request: RecipeAsk): Promise<T> {
   const value = await response.json().catch(() => null) as (T & { error?: string }) | null;
   if (!response.ok || !value) throw Error(value?.error || failed);
   return value;
-}
-
-// On the Food basket: "What could I make?", up to three recipes from what's there.
-export function BasketIdeas({ f, onPlan }: { f: Food; onPlan: (idea: RecipeIdea) => void }) {
-  const connected = useRecipesConnected(), title = useId(), card = useRef<HTMLElement>(null), wishField = useRef<HTMLInputElement>(null);
-  const [ideas, setIdeas] = useState<Ideas | null>(null), [wish, setWish] = useState(""), [busy, setBusy] = useState(false), [error, setError] = useState("");
-  // "Cook ideas" on the Kitchen shelves and "Cook with it" on a food's card (app/kitchen.tsx) fill in the wish and bring
-  // this card into view, after a closing sheet has handed focus back. Nothing is sent until the person asks.
-  useEffect(() => {
-    const show = (event: Event) => {
-      const wished = (event as CustomEvent<{ wish?: unknown }>).detail?.wish;
-      if (typeof wished === "string") setWish(wished.slice(0, 300));
-      window.setTimeout(() => {
-        card.current?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
-        wishField.current?.focus({ preventScroll: true });
-      }, 80);
-    };
-    window.addEventListener("daywell-recipe-ideas", show);
-    return () => window.removeEventListener("daywell-recipe-ideas", show);
-  }, []);
-  const state = f.snapshot!.state;
-  if (connected !== true || !state.stock.some(lot => lot.quantity !== 0)) return null;
-  // Already on the list, as a note or for a planned meal: never added twice.
-  const listed = new Set([...state.shopping.filter(note => !note.done).map(note => ingredientName(note.title)), ...f.snapshot!.overview.toBuy.map(row => row.ingredient)]);
-  async function ask() {
-    setBusy(true); setError("");
-    try { setIdeas(await askRecipes<Ideas>({ kind: "basket", wish, avoid: ideas?.ideas.map(idea => idea.title) ?? [] })); }
-    catch (problem) { setError(problem instanceof Error ? problem.message : failed); }
-    finally { setBusy(false); }
-  }
-  function addToList(items: RecipeIdea["ingredients"]) {
-    f.open({ type: "shopping.add", items: items.map(item => ({ id: crypto.randomUUID(), title: item.ingredient, quantity: item.quantity === null ? "" : `${quantityText(item.quantity)} ${unitText(item.unit, item.quantity)}`, done: false })) });
-  }
-  return <section className="basket-ideas" aria-labelledby={title} ref={card}>
-    <div className="basket-ideas-head"><span className="food-invitation-icon" aria-hidden><Sparkles size={24}/></span><div><span className="food-eyebrow">Ideas from your kitchen</span><h2 id={title}>What could I make?</h2><p>A few simple recipes from what you have. Anything missing can go straight on your trolley list.</p></div></div>
-    <label className="basket-ideas-wish">Anything you fancy or want to avoid? (optional)<input ref={wishField} maxLength={300} value={wish} placeholder="Quick, no mushrooms…" onChange={event => setWish(event.target.value)}/></label>
-    <button className="well-button" disabled={busy} onClick={() => void ask()}><Sparkles size={18} aria-hidden/>{busy ? "Finding ideas…" : ideas?.ideas.length ? "Show different ideas" : "Suggest recipes"}</button>
-    <div aria-live="polite">{ideas && <p className="basket-ideas-summary">{ideas.summary}</p>}{error && <p className="form-error" role="alert">{error}</p>}</div>
-    {!!ideas?.ideas.length && <div className="food-recipe-grid basket-ideas-list">{ideas.ideas.map(idea => {
-      const { Icon, tone } = mealLooks[idea.meal], have = idea.ingredients.filter(item => item.have), missing = idea.ingredients.filter(item => !item.have);
-      const toAdd = missing.filter(item => !listed.has(ingredientName(item.ingredient)));
-      return <article className={`food-recipe food-tone-${tone}`} key={idea.title}>
-        <div className="food-recipe-top"><span className="food-meal-chip"><span className="food-item-icon" aria-hidden><Icon size={24}/></span>{idea.meal}</span><span className="food-time"><Clock size={13} aria-hidden/>{idea.minutes} min</span></div>
-        <h3>{idea.title}</h3>
-        {!!have.length && <><p className="idea-label">From your kitchen</p><ul className="food-chips">{have.map(item => <li key={item.ingredient}>{item.ingredient}</li>)}</ul></>}
-        {missing.length ? <><p className="idea-label">You’d need</p><ul className="food-chips is-missing">{missing.map(item => <li key={item.ingredient}>{item.ingredient}{item.quantity !== null && <small> {quantityText(item.quantity)} {unitText(item.unit, item.quantity)}</small>}</li>)}</ul></> : <p className="idea-label is-ready">Nothing to buy</p>}
-        <details><summary>How to make it</summary><ol>{idea.steps.map((step, index) => <li key={index}>{step}</li>)}</ol><small>Review ingredients, portions and your own dietary needs.</small></details>
-        <div className="idea-actions"><button className="well-button well-secondary" onClick={() => onPlan(idea)}>Plan this meal<ArrowRight size={16} aria-hidden/></button>
-          {toAdd.length > 0 ? <button className="well-text-button" onClick={() => addToList(toAdd)}><ShoppingBasket size={16} aria-hidden/>Add {toAdd.length === 1 ? "it" : `these ${toAdd.length}`} to my list</button> : missing.length > 0 && <span className="idea-listed">Already on your list</span>}</div>
-        <AiReport key={idea.title} source="meal-plan" noun="recipe" text={[idea.title, idea.ingredients.map(withQuantity).join(", "), ...idea.steps].join("\n")}/>
-      </article>;
-    })}</div>}
-    <p className="food-caption">Asking sends the names and quantities of the food in your kitchen, and anything you type here, to OpenAI. Nothing is saved until you choose.</p>
-  </section>;
 }
 
 // While planning a meal: once its ingredients are in, simple steps for them.

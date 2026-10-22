@@ -287,3 +287,160 @@ button.trolley-text{cursor:pointer}
 .when-amounts summary{padding:10px 0;font-size:calc(14.5px*var(--rc-scale,1));font-weight:700;cursor:pointer}
 .when-amounts ul{margin:0;padding-left:20px;font-size:calc(14px*var(--rc-scale,1));line-height:1.6}
 @media(max-width:360px){.week-board li,.week-columns{grid-template-columns:48px repeat(3,minmax(0,1fr))}.putaway-places button{font-size:calc(10.5px*var(--rc-scale,1))}}
+
+/* Kitchen part 3 (20 October 2026): today's plate */
+.kitchen-space,[data-slot="dialog-content"].kitchen-sheet,[data-slot="dialog-content"].kitchen-steps{--kitchen-ok:light-dark(#24563a,#9ad7aa)}
+.plate{position:relative;width:min(290px,78vw);aspect-ratio:1;margin:16px auto 0}
+.plate-rim{position:absolute;inset:0;border-radius:50%;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));box-shadow:0 18px 40px rgba(82,45,70,.14)}
+.plate-quarters{position:absolute;inset:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:6px;border-radius:50%;overflow:hidden}
+.plate-quarter{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;border:0;font:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:800;line-height:1.15;cursor:pointer}
+.plate-quarter.is-breakfast{padding:16% 0 0 16%}
+.plate-quarter.is-lunch{padding:16% 16% 0 0}
+.plate-quarter.is-snack{padding:0 0 16% 16%}
+.plate-quarter.is-dinner{padding:0 16% 16% 0}
+.plate-quarter span{max-width:100%;font-size:calc(12px*var(--rc-scale,1));font-weight:600;text-align:center;overflow-wrap:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.plate-quarter.is-empty{background:color-mix(in srgb,var(--well-accent) 10%,var(--well-surface));color:var(--well-ink)}
+.plate-quarter.is-empty span{color:var(--well-muted)}
+.plate-quarter.is-planned{background:color-mix(in srgb,var(--tone) 45%,var(--well-surface));color:var(--well-ink)}
+.plate-quarter.is-noted{background:var(--tone);color:#522d46}
+.plate-quarter:focus-visible{outline-offset:-4px}
+.plate-snap{position:absolute;left:50%;top:50%;translate:-50% -50%;width:76px;height:76px;border-radius:50%;border:5px solid var(--well-surface);background:var(--well-accent);color:var(--dw-on-accent,#fff7fb);display:grid;place-items:center;box-shadow:0 10px 24px rgba(82,45,70,.28);cursor:pointer}
+.plate-ways{display:flex;justify-content:center;gap:10px;margin-top:12px}
+.plate-ways button{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:999px;background:var(--well-surface);color:var(--well-ink);font:inherit;font-size:calc(15px*var(--rc-scale,1));font-weight:700;cursor:pointer}
+.plate-ask{margin-top:16px;padding:14px;border-radius:22px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));box-shadow:0 12px 28px rgba(82,45,70,.08)}
+.plate-ask-head{display:flex;align-items:center;gap:12px}
+.plate-ask h2{margin:0;font-family:inherit;font-size:calc(17px*var(--rc-scale,1));line-height:1.3;letter-spacing:0}
+.plate-ask-head .kitchen-face.is-mid{width:46px;height:46px}
+.plate-ask-answers{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.plate-ask-answers button{min-height:50px;padding:0 10px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:999px;background:var(--kitchen-raised);color:var(--well-ink);font:inherit;font-size:calc(15.5px*var(--rc-scale,1));font-weight:700;cursor:pointer}
+.plate-soon{margin-top:14px;display:flex;align-items:center;gap:10px;padding:12px 12px 12px 14px;border-radius:22px;background:var(--kitchen-soon-bg);border:1px solid var(--kitchen-soon-line);color:var(--kitchen-soon-text)}
+.plate-soon>div{flex:1;min-width:0}
+.plate-soon h2{margin:0;display:flex;align-items:center;gap:6px;font-family:inherit;font-size:calc(15px*var(--rc-scale,1));letter-spacing:0;color:inherit}
+.plate-soon ul{list-style:none;margin:8px 0 0;padding:0;display:flex;gap:6px;overflow-x:auto}
+.plate-soon li{width:58px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;text-align:center}
+.plate-soon li>span:last-child{max-width:100%;margin-top:3px;font-size:calc(11.5px*var(--rc-scale,1));font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kitchen-face.is-small{width:44px;height:44px;border-width:3px;box-shadow:none}
+.plate-soon>button{flex-shrink:0;display:flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:0;border-radius:999px;background:var(--well-accent);color:var(--dw-on-accent,#fff7fb);font:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:700;cursor:pointer}
+
+/* What did you have? */
+.log-head{display:flex;align-items:flex-start;gap:10px}
+.log-head h2{flex:1;margin:0;font-size:calc(22px*var(--rc-scale,1));font-weight:800}
+.log-head .kitchen-round{border:0;background:color-mix(in srgb,var(--well-accent) 8%,var(--well-surface))}
+.log-icon{flex-shrink:0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--tone) 45%,var(--well-surface))}
+.log-label{margin:16px 0 8px 2px;font-size:calc(14px*var(--rc-scale,1));font-weight:800;color:var(--well-muted)}
+.log-picks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.log-picks button{display:flex;align-items:center;gap:10px;min-width:0;padding:12px 10px;border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));border-radius:20px;background:var(--kitchen-raised);color:var(--well-ink);text-align:left}
+.log-picks button>span:last-child{min-width:0}
+.log-picks strong{display:block;font-size:calc(15px*var(--rc-scale,1));line-height:1.2;overflow-wrap:break-word}
+.log-picks strong+span{display:block;margin-top:2px;font-size:calc(12.5px*var(--rc-scale,1));font-weight:700;color:var(--well-muted)}
+.log-picks strong+span.is-soon{color:var(--kitchen-soon-ink)}
+.log-picks .kitchen-face.is-small{width:44px;height:44px}
+.log-else{margin-top:10px}
+.log-note{margin:12px 0 0;text-align:center;font-size:calc(13.5px*var(--rc-scale,1));color:var(--well-muted)}
+
+/* Cook from your kitchen */
+.cook-entry{margin-top:20px;display:flex;align-items:center;gap:14px;padding:16px;border-radius:24px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface))}
+.cook-entry .kitchen-empty-icon{flex-shrink:0;width:56px;height:56px;margin:0}
+.cook-entry>div{flex:1;min-width:0}
+.cook-entry h2{margin:0;font-size:calc(18px*var(--rc-scale,1))}
+.cook-entry p{margin:2px 0 0;font-size:calc(14px*var(--rc-scale,1))}
+@media(max-width:420px){.cook-entry{flex-wrap:wrap}.cook-entry .well-button{width:100%}}
+.cook-top{display:flex;align-items:flex-start;gap:12px;padding:16px 18px 6px;flex-shrink:0}
+.cook-top p{margin:2px 0 0;font-size:calc(14px*var(--rc-scale,1));color:var(--well-muted)}
+.cook-top .kitchen-step-title{font-size:calc(24px*var(--rc-scale,1))}
+.cook-filters{display:flex;gap:8px;overflow-x:auto;padding:6px 18px 4px;flex-shrink:0}
+.cook-filters button{flex-shrink:0;min-height:40px;padding:0 14px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:999px;background:var(--well-surface);color:var(--well-ink);font-size:calc(14px*var(--rc-scale,1));font-weight:700}
+.cook-filters button[aria-pressed=true]{background:var(--well-ink);border-color:var(--well-ink);color:var(--well-surface)}
+.kitchen-steps-body.cook-deck-body{display:flex;flex-direction:column;gap:12px}
+.cook-intro{padding:24px 10px;text-align:center}
+.cook-intro .kitchen-empty-icon{margin:0 auto 8px}
+.cook-intro p{margin:0 auto 14px;max-width:300px;color:var(--well-muted)}
+.cook-finding{padding:40px 0;text-align:center;color:var(--well-muted)}
+.cook-deck{position:relative;margin-top:10px;padding:0 6px;touch-action:pan-y}
+.cook-deck-back{position:absolute;inset:-6px 26px 6px;border-radius:28px;border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));background:color-mix(in srgb,#bba6e6 22%,var(--well-surface));transform:rotate(3deg)}
+.cook-deck-back.is-two{inset:-2px 18px 4px;background:color-mix(in srgb,#8fcf9b 22%,var(--well-surface));transform:rotate(-2.5deg)}
+.cook-card{position:relative;border-radius:28px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));overflow:hidden;box-shadow:0 16px 36px rgba(82,45,70,.14)}
+.cook-card-top{position:relative;height:108px;display:grid;place-items:center;background:color-mix(in srgb,var(--tone) 55%,var(--well-surface));color:var(--well-ink)}
+.cook-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;background:var(--well-surface);color:var(--well-ink);font-size:calc(12.5px*var(--rc-scale,1));font-weight:800}
+.cook-card-top .cook-chip{position:absolute;top:14px}
+.cook-chip.is-left{left:14px}
+.cook-chip.is-right{right:14px}
+.cook-card-body{padding:14px 16px 16px}
+.cook-card-body h3{margin:0;font-size:calc(21px*var(--rc-scale,1));line-height:1.2}
+.cook-card-body h3 button{padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.cook-why{margin:6px 0 0;font-size:calc(14px*var(--rc-scale,1));font-weight:700;color:var(--well-muted)}
+.cook-why.is-soon{font-weight:800;color:var(--kitchen-soon-ink)}
+.cook-count{margin:10px 0 6px;font-size:calc(14px*var(--rc-scale,1));font-weight:700;color:var(--well-ink)}
+.cook-bar{height:10px;border-radius:5px;background:color-mix(in srgb,var(--well-accent) 12%,var(--well-surface));overflow:hidden}
+.cook-bar span{display:block;height:100%;border-radius:5px;background:#5c9a6b}
+.cook-ings{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.cook-ings li{width:56px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.cook-ings li>span:last-child{max-width:100%;margin-top:4px;font-size:calc(11.5px*var(--rc-scale,1));font-weight:700;line-height:1.2;overflow-wrap:break-word}
+.kitchen-face.is-ing{width:40px;height:40px;border-width:2px;box-shadow:none}
+.kitchen-face.is-ing.is-soon{box-shadow:0 0 0 3px #fbe2b0}
+.kitchen-face.is-missing{background:transparent;border:2px dashed var(--well-line);color:var(--well-accent)}
+.cook-card-actions{margin-top:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cook-card-actions button{min-height:50px;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid color-mix(in srgb,var(--well-line) 80%,var(--well-surface));border-radius:999px;background:var(--well-surface);color:var(--well-ink);font-size:calc(15.5px*var(--rc-scale,1));font-weight:700}
+.cook-card-actions .is-primary{border:0;background:var(--well-accent);color:var(--dw-on-accent,#fff7fb)}
+.cook-see{margin-top:4px}
+.cook-nav{display:flex;align-items:center;justify-content:center;gap:10px;font-size:calc(14px*var(--rc-scale,1));font-weight:700;color:var(--well-muted)}
+.cook-more{align-self:center}
+.cook-share{display:block;font-size:calc(12.5px*var(--rc-scale,1));line-height:1.45;text-align:center;color:var(--well-muted)}
+
+/* The whole recipe */
+.recipe-band{position:relative;height:150px;flex-shrink:0;display:grid;place-items:center;background:color-mix(in srgb,var(--tone) 55%,var(--well-surface));color:var(--well-ink)}
+.recipe-band .kitchen-round{position:absolute;left:16px;top:16px;border:0}
+.recipe-band .cook-chip{position:absolute;right:16px;top:24px}
+.kitchen-steps-body.recipe-body{display:flex;flex-direction:column;gap:14px;padding-top:16px}
+.recipe-body .kitchen-step-title{font-size:calc(26px*var(--rc-scale,1))}
+.recipe-body .when-servings{margin-top:0}
+.recipe-need{padding:10px 14px;border-radius:22px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface))}
+.recipe-need-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.recipe-need h3,.recipe-steps h3{margin:4px 0;font-family:inherit;font-size:calc(16px*var(--rc-scale,1));font-weight:800;letter-spacing:0}
+.recipe-need-head button{display:flex;align-items:center;gap:5px;min-height:40px;padding:0 12px;border:0;border-radius:999px;background:color-mix(in srgb,var(--well-accent) 8%,var(--well-surface));color:var(--well-accent);font-size:calc(13.5px*var(--rc-scale,1));font-weight:800}
+.recipe-need ul{list-style:none;margin:0;padding:0}
+.recipe-need li{display:flex;align-items:center;gap:12px;padding:7px 0}
+.recipe-need li+li{border-top:1px solid color-mix(in srgb,var(--well-line) 45%,var(--well-surface))}
+.recipe-need .kitchen-face.is-ing{width:36px;height:36px}
+.recipe-need-name{flex:1;min-width:0;font-size:calc(14px*var(--rc-scale,1));color:var(--well-muted)}
+.recipe-need-name strong{font-size:calc(15px*var(--rc-scale,1));color:var(--well-ink)}
+.recipe-have{display:flex;align-items:center;gap:4px;font-size:calc(13px*var(--rc-scale,1));font-weight:800;color:var(--kitchen-ok)}
+.recipe-buy{font-size:calc(13px*var(--rc-scale,1));font-weight:800;color:var(--kitchen-soon-ink)}
+.recipe-steps ol{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.recipe-steps li{display:flex;align-items:flex-start;gap:12px;font-size:calc(15.5px*var(--rc-scale,1));line-height:1.45}
+.recipe-steps li>span{flex-shrink:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--well-accent);color:var(--dw-on-accent,#fff7fb);font-size:calc(15px*var(--rc-scale,1));font-weight:800}
+.recipe-steps small{display:block;margin-top:10px;color:var(--well-muted)}
+.kitchen-steps-foot.recipe-foot{display:flex;gap:8px}
+.recipe-foot .kitchen-primary{flex:1;margin-top:0}
+.recipe-foot .kitchen-secondary{width:auto;padding:0 20px}
+
+/* Cooking, one step at a time */
+.cook-mode-top{display:flex;align-items:center;gap:10px;padding:14px 18px 10px;flex-shrink:0}
+.cook-mode-top h2{flex:1;min-width:0;margin:0;font-family:inherit;font-size:calc(14.5px*var(--rc-scale,1));font-weight:700;letter-spacing:0;text-align:center;color:var(--well-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cook-mode-top>span{flex-shrink:0;min-width:44px;text-align:right;font-size:calc(14.5px*var(--rc-scale,1));font-weight:800}
+.kitchen-steps-body.cook-mode-body{padding-top:24px}
+.cook-step{padding:22px 20px 24px;border-radius:30px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));box-shadow:0 16px 36px rgba(82,45,70,.12)}
+.cook-step-number{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--well-accent);color:var(--dw-on-accent,#fff7fb);font-size:30px;font-weight:800}
+.cook-step p{margin:18px 0 0;font-size:calc(25px*var(--rc-scale,1));line-height:1.3;font-weight:800;letter-spacing:-.01em;color:var(--well-ink)}
+.cook-step h3{margin:20px 0 8px;font-family:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:800;letter-spacing:0;color:var(--well-muted)}
+.cook-uses{display:flex;flex-wrap:wrap;gap:8px}
+.cook-uses>span{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border-radius:999px;background:var(--kitchen-raised);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface));font-size:calc(14.5px*var(--rc-scale,1));font-weight:700}
+.cook-uses .kitchen-face.is-ing{width:34px;height:34px}
+.cook-timer{margin-top:16px;width:100%;min-height:56px;display:flex;align-items:center;justify-content:center;gap:10px;border:2px solid var(--well-accent);border-radius:999px;background:var(--well-surface);color:var(--well-accent);font:inherit;font-size:calc(16.5px*var(--rc-scale,1));font-weight:800;cursor:pointer}
+.cook-timer.is-running{padding:0 8px 0 18px;color:var(--well-ink);cursor:default}
+.cook-timer.is-running>span{flex:1;text-align:center;font-variant-numeric:tabular-nums}
+.cook-timer.is-running button{min-height:40px;padding:0 16px;border:0;border-radius:999px;background:var(--well-accent);color:var(--dw-on-accent,#fff7fb);font:inherit;font-weight:800;cursor:pointer}
+.cook-timer.is-done{border-color:var(--kitchen-soon-ink);background:var(--kitchen-soon-bg);color:var(--kitchen-soon-text)}
+.cook-awake{margin:12px 0 0;text-align:center;font-size:calc(14px*var(--rc-scale,1));color:var(--well-muted)}
+.kitchen-steps-foot.cook-mode-foot{display:flex;align-items:center;gap:10px}
+.cook-mode-foot .kitchen-primary{flex:1;min-height:60px;margin:0}
+.kitchen-round.is-big{width:60px;height:60px}
+
+/* All done */
+.kitchen-steps-body.finish-body{display:flex;flex-direction:column}
+.finish-used{margin-top:14px;padding:12px 14px;border-radius:20px;background:var(--well-surface);border:1px solid color-mix(in srgb,var(--well-line) 62%,var(--well-surface))}
+.finish-used h3{margin:0 0 8px;font-family:inherit;font-size:calc(15px*var(--rc-scale,1));letter-spacing:0}
+.finish-used ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.finish-used li{display:flex;align-items:center;gap:10px;font-size:calc(14.5px*var(--rc-scale,1))}
+.finish-used .kitchen-face.is-ing{width:30px;height:30px}
+.finish-used p{margin:8px 0 0;font-size:calc(14px*var(--rc-scale,1))}

@@ -78,15 +78,16 @@ export function sugarHistory(entries: Entry[], endDate: string) {
     return { date, sugarGrams: total.sugarCount ? total.sugarGrams : null, recorded: total.sugarCount, entries: total.meals };
   });
 }
-// Without calorie tracking, a meal says how much was eaten and where, and leaves energy out (owner-approved, 23 October 2026).
 export function foodDetail(data: Entry["data"], { calories = true }: { calories?: boolean } = {}) {
   if (!isEaten(data)) return data.foodStatus === "prepared" ? "Prepared · not logged as eaten" : "Used · not logged as eaten";
   const portions = data.portions ? `${data.portions} portion${data.portions === 1 ? "" : "s"} eaten · ` : "Eaten · ";
-  if (!calories) return portions.slice(0, -3) + (Number.isFinite(data.sugarGrams) ? ` · ${data.sugarGrams} g total sugar` : "") + (data.mealOrigin ? ` · ${mealOrigins[data.mealOrigin as keyof typeof mealOrigins]}` : "");
   const energy = data.nutritionKnown === false ? "calories not added" : `${data.calories} kcal recorded`;
   const sugar = Number.isFinite(data.sugarGrams) ? ` · ${data.sugarGrams} g total sugar` : "";
   const source = data.nutritionSource ? ` · ${nutritionSources[data.nutritionSource as keyof typeof nutritionSources]}` : data.nutritionKnown === false && !sugar ? "" : " (estimate)";
-  return portions + energy + sugar + source + (data.mealOrigin ? ` · ${mealOrigins[data.mealOrigin as keyof typeof mealOrigins]}` : "");
+  const origin = data.mealOrigin ? ` · ${mealOrigins[data.mealOrigin as keyof typeof mealOrigins]}` : "";
+  // While calorie tracking is off, a meal without calories doesn't say "calories not added"; calories the person recorded still show (owner-approved, 23 October 2026).
+  if (!calories && data.nutritionKnown === false) return portions.slice(0, -3) + sugar + (sugar ? source : "") + origin;
+  return portions + energy + sugar + source + origin;
 }
 // Apply a correction relative to the reviewed draft. Unknown nutrition stays
 // unknown; a smaller fraction must never turn an unknown value into zero.

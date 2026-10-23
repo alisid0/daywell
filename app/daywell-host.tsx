@@ -29,7 +29,8 @@ const supportOptions: { id: SupportLevel; title: string; description: string }[]
   { id: "guided", title: "Guide me through", description: "Check-ins at a quarter, halfway and three-quarters" },
 ];
 const moduleNames: Record<string, string> = { focus: "Priorities & focus", sleep: "Sleep", move: "Movement", grocery: "Groceries", food: "Food & nutrition", alarm: "Alarms", clock: "Timers", calendar: "Calendar & history" };
-const activityLabels = { pip: "Your focus time", luma: "Your wind-down", bounce: "Your movement time", tock: "Your timer" };
+// A plain timer's own title is "Your timer", so its label says what's happening instead.
+const activityLabels = { pip: "Your focus time", luma: "Your wind-down", bounce: "Your movement time", tock: "Counting down" };
 // A food change left open in Eat (a save that didn't go through) has to be finished first; Eat keeps it for review.
 const foodOpen = "There’s an unfinished change in Eat. Finish or cancel it there, then try again.";
 const activityMessages = { pip: "One thing in front of you. Everything else can wait here.", luma: "Nothing to finish. A little space to settle.", bounce: "At your pace. A pause is always welcome.", tock: "Time is taken care of." };

@@ -32,6 +32,8 @@ function whenText(date: string, inSentence = false) {
   return new Date(`${date}T12:00:00Z`).toLocaleDateString("en-GB", { weekday: "long", timeZone: "UTC" });
 }
 const list = (words: string[]) => words.length < 2 ? words.join("") : `${words.slice(0, -1).join(", ")} and ${words.at(-1)}`;
+// "Apples usually go…", "Rice usually goes…". Hummus and couscous stay singular.
+const plural = (name: string) => /[^su]s$/i.test(name.trim());
 const ringClass = (lot: Stock) => { const state = soonState(lot); return state === "past" ? " is-past" : state ? " is-soon" : ""; };
 function describe(lot: Stock) {
   const soon = soonState(lot);
@@ -271,7 +273,7 @@ export function AddFood({ edit, place: startPlace, f, onClose }: { edit?: Stock;
       </>}
       {stepNo === 2 && <div className="kitchen-much">
         <FoodFace lot={look} size={48} className="is-hero"/>
-        <DialogTitle asChild><h2 className="kitchen-step-title">How much {clean.toLowerCase()}?</h2></DialogTitle>
+        <DialogTitle asChild><h2 className="kitchen-step-title">{unit === "each" ? "How many" : "How much"} {clean.toLowerCase()}?</h2></DialogTitle>
         <p>Optional. It helps with planning.</p>
         <div className="kitchen-stepper">
           <button type="button" aria-label="Less" disabled={quantity === null || !valid || quantity <= step} onClick={() => setAmount(quantity === null ? null : round(quantity - step))}><Minus size={26} aria-hidden/></button>
@@ -285,7 +287,7 @@ export function AddFood({ edit, place: startPlace, f, onClose }: { edit?: Stock;
       </div>}
       {stepNo === 3 && <>
         <DialogTitle asChild><h2 className="kitchen-step-title">Where does it live?</h2></DialogTitle>
-        <p className="kitchen-step-note">{capital(clean)} usually goes in the {placeNames[usual].toLowerCase()}.</p>
+        <p className="kitchen-step-note">{capital(clean)} usually {plural(clean) ? "go" : "goes"} in the {placeNames[usual].toLowerCase()}.</p>
         <div className="kitchen-pick" role="group" aria-label={`Where ${clean} lives`}>{placeIds.map(id => { const PlaceIcon = placeIcons[id]; return <button key={id} type="button" aria-pressed={place === id} onClick={() => { setPlace(id); setPlaceChosen(true); }}>
           {place === id && <span className="kitchen-tick" aria-hidden><Check size={16}/></span>}<span className="kitchen-place-icon" aria-hidden><PlaceIcon size={30}/></span>{placeNames[id]}</button>; })}</div>
         <details className="kitchen-remind" open={!!remind || undefined}><summary><Clock size={18} aria-hidden/>{remind ? "Reminder date" : "Add a reminder date (optional)"}</summary>

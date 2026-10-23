@@ -86,8 +86,9 @@ export const foodStateSchema = z.object({
   places: z.record(z.string().min(1).max(120), z.enum(placeIds)).optional(),
 });
 // Actions that Undo can reverse: their effect is stored and nothing outside the food space depends on them. Meals added
-// together (the assistant's plan, or a week filled in one go) are undone together, since 22 October 2026.
-export const undoableActions = ["purchase", "cook", "use", "stock.add", "stock.remove", "plan.set", "plan.add", "plan.remove"] as const;
+// together (the assistant's plan, or a week filled in one go) are undone together, since 22 October 2026. Food added,
+// changed or moved by hand (stock.set) is too, since 23 October, as the Kitchen's notice promises Undo after every save.
+export const undoableActions = ["purchase", "cook", "use", "stock.set", "stock.add", "stock.remove", "plan.set", "plan.add", "plan.remove"] as const;
 type Change<T> = { id: string; before: T | null; after: T | null };
 export type MealRecord = { id: string; data: { title: string; date: string; meal: "Breakfast" | "Lunch" | "Dinner" | "Snack"; calories: number; protein: number; carbs: number; fat: number; nutritionKnown: boolean } & Partial<ReturnType<typeof intakeRecord>> };
 export type FoodEffect = {
@@ -282,7 +283,7 @@ export function applyFoodCommand(current: FoodState, command: FoodCommand, undoE
     }
     meal = { id: `food-${operationId}`, data: { title: action.title, date: action.date, meal: action.meal, ...intakeRecord(action.intake, action.type === "cook" ? "prepared" : "used") } };
   } else if (action.type === "undo") {
-    if (!undoEffect || !(undoableActions as readonly string[]).includes(undoEffect.type)) throw new FoodError("Only a recorded capture, purchase, cooking, food-use, used-up or meal-plan change can be undone here.", 400);
+    if (!undoEffect || !(undoableActions as readonly string[]).includes(undoEffect.type)) throw new FoodError("Only kitchen, purchase, cooking, food-use and meal-plan changes can be undone here.", 400);
     undoChanges(state.stock, undoEffect.stock, operationId);
     undoChanges(state.plans, undoEffect.plans, operationId);
     undoChanges(state.shopping, undoEffect.shopping, operationId);

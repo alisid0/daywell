@@ -1,7 +1,8 @@
 import { foodDetail } from './food-tracking.ts';
 import type { Entry } from './daywell';
+// While calorie tracking is off, the review shows the portion and the place, not the calorie estimate (owner-approved, 23 October 2026).
 export function foodDraftDetail(data: Entry['data'], calories = true) {
-  return foodDetail(data, { calories }).replace(/\beaten\b/g,'shown').replace('kcal recorded','kcal estimated').replace('My estimate','Estimate');
+  return foodDetail(calories ? data : { ...data, nutritionKnown: false }, { calories }).replace(/\beaten\b/g,'shown').replace('kcal recorded','kcal estimated').replace('My estimate','Estimate');
 }
 export function foodNarration(draft: { summary: string; question: string | null; entries: Entry[] }, calories = true) {
   const meals = draft.entries.filter(entry => entry.kind === 'food');

@@ -54,6 +54,20 @@
 .rest-unwind-text em{font-style:normal;font-size:calc(13px*var(--rc-scale,1));line-height:1.45;color:var(--dw-muted,#7d536e)}
 .rest-unwind-text small{display:inline-flex;align-items:center;gap:5px;font-size:calc(12.5px*var(--rc-scale,1));font-weight:700;color:var(--dw-muted,#7d536e)}
 .rest-unwind-go{flex-shrink:0;color:var(--dw-muted,#7d536e)}
+/* Relax folds the sounds into one row; Sleep keeps the full list (owner-approved, 23 October 2026). */
+.rest-sounds{margin:22px 0 4px}
+.rest-sounds>summary{display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:22px;border:1px solid var(--dw-line,#e3cbd8);background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font-weight:650;text-align:left;cursor:pointer;list-style:none}
+.rest-sounds>summary::-webkit-details-marker{display:none}
+.rest-sounds>summary>span{flex:1;min-width:0}
+.rest-sounds>summary small{display:block;margin-top:2px;font-weight:400;font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#7d536e)}
+.rest-sounds[open]>summary{margin-bottom:14px}
+.rest-sounds[open]>summary>svg:last-child{rotate:180deg}
+/* The row already names the list, so the card inside keeps its title for screen readers only and skips its intro. */
+.rest-sounds .sleep-sounds{margin-top:0}
+.rest-sounds .sleep-sounds>h2{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.rest-sounds .sleep-sounds>h2+p{display:none}
+/* Focus says what will show here until there is something to count. */
+.focus-empty{margin:10px 0 0;color:var(--dw-muted,#7d536e)}
 .rest-reflection summary{display:inline-flex;align-items:center;gap:10px;min-height:44px;list-style:none}
 .rest-reflection summary::-webkit-details-marker{display:none}
 @media(max-width:520px){.well-card.move-invitation,.well-card.sleep-door{flex-direction:column;align-items:flex-start}}

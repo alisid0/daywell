@@ -76,7 +76,7 @@ export function FoodSpace({ a }: { a: AppState }) {
         <DailyNutrition a={a} area="eat"/>
         <div className="well-section-title"><h2>Your meal story</h2><button className="well-button" onClick={() => a.openEditor("food")}>Log a meal</button></div>
         <p>Prepared and used food stays in your story. Only entries marked eaten count towards your intake. Meal notes don’t change your kitchen.</p>
-        {foodHistory.length ? foodHistory.slice(0, 20).map(entry => { const look = mealLooks[entry.data.meal as keyof typeof mealLooks] ?? mealLooks.Snack; return <article className={`well-record food-story-row food-tone-${look.tone}`} key={entry.id}><span className="food-item-icon is-small" aria-hidden><look.Icon size={18}/></span><div><strong>{entry.data.title}</strong><small>{dateLabel(entry.data.date, { weekday: "short", day: "numeric", month: "short" })} · {entry.data.meal}{` · ${foodDetail(entry.data)}`}</small></div><EntryActions a={a} e={entry}/></article>; }) : <p className="well-empty">Your next meal can be the beginning. No targets to catch up with.</p>}
+        {foodHistory.length ? foodHistory.slice(0, 20).map(entry => { const look = mealLooks[entry.data.meal as keyof typeof mealLooks] ?? mealLooks.Snack; return <article className={`well-record food-story-row food-tone-${look.tone}`} key={entry.id}><span className="food-item-icon is-small" aria-hidden><look.Icon size={18}/></span><div><strong>{entry.data.title}</strong><small>{dateLabel(entry.data.date, { weekday: "short", day: "numeric", month: "short" })} · {entry.data.meal}{` · ${foodDetail(entry.data, { calories: a.settings.calorieTracking })}`}</small></div><EntryActions a={a} e={entry}/></article>; }) : <p className="well-empty">Your next meal can be the beginning. No targets to catch up with.</p>}
         <button className="well-text-button" onClick={() => { a.setActive("calendar"); a.setCalendarView("history"); a.setCalendarArea("eat"); }}>See your saved days<ArrowRight size={17}/></button>
       </>}
       {place === "basket" && <>
@@ -88,7 +88,7 @@ export function FoodSpace({ a }: { a: AppState }) {
       {place === "meals" && <WeekPlace a={a}/>}
       {place === "shopping" && <TrolleyPlace f={f} onPutAway={shelved => { if (shelved) f.setView("basket"); }}/>}
     </fieldset>}
-    {state && <button className="well-text-button kitchen-refresh" disabled={f.busy || !!f.pending} onClick={() => void f.refresh()}>Refresh saved details</button>}
+    {state && f.error && <button className="well-text-button kitchen-refresh" disabled={f.busy || !!f.pending} onClick={() => void f.refresh()}>Refresh saved details</button>}
     {sheet?.kind === "card" && lot && <FoodCard lot={lot} f={f} onClose={() => setSheet(null)} onAte={() => setSheet({ kind: "ate", id: lot.id })} onChange={() => setSheet({ kind: "add", id: lot.id })}/>}
     {sheet?.kind === "ate" && lot && <AteSome lot={lot} a={a} onClose={() => setSheet(null)} onBack={() => setSheet({ kind: "card", id: lot.id })}/>}
     {sheet?.kind === "add" && state && (!sheet.id || lot) && <AddFood edit={lot} place={sheet.place} f={f} onClose={() => setSheet(null)}/>}

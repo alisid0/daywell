@@ -17,7 +17,7 @@ function LookPreview({ look, name, small = false }: { look: Appearance; name: st
     <span className="appearance-preview-brand"><Sun size={18} />daywell.</span>
     <div className="appearance-preview-greeting">{look.style === "stillwater" ? "Take a moment" : "A little company"}{small ? "." : `, ${name === "You" ? "friend" : name}.`}</div>
     <span className="appearance-preview-copy">Your day, with a little company.</span>
-    {look.company !== "quiet" && <div className="appearance-preview-friends"><CompanionPortrait id="luma" size={120} decorative /><CompanionPortrait id="bounce" size={120} decorative /><CompanionPortrait id="pip" size={155} decorative /></div>}
+    {look.company !== "quiet" && <div className="appearance-preview-friends"><CompanionPortrait id="luma" size={120} decorative /><CompanionPortrait id="bounce" size={120} decorative /><CompanionPortrait id="nori" size={155} decorative /></div>}
     <span className="appearance-preview-talk"><Mic size={18} />Talk to Daywell</span>
     <div className="appearance-preview-actions"><span>Focus</span><span>Unwind</span><span>Move</span></div>
     {!small && <span className="appearance-preview-dock">Home <span>Calendar</span> Tools</span>}

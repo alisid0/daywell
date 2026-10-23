@@ -72,6 +72,14 @@ test("sugar can be edited and cleared, survives JSON storage, and appears in mea
   assert.doesNotMatch(foodDetail({ ...edited, foodStatus: "prepared" }), /g total sugar/);
 });
 
+test("without calorie tracking, a meal shows how much, any sugar noted and where, with no energy figures", () => {
+  const meal = { ...food("lunch", { sugarGrams: 6, mealOrigin: "takeaway" }).data, portions: 2, nutritionSource: "label" };
+  assert.equal(foodDetail(meal, { calories: false }), "2 portions eaten · 6 g total sugar · Takeaway");
+  assert.equal(foodDetail({ ...meal, sugarGrams: undefined, mealOrigin: undefined, portions: undefined, nutritionKnown: false }, { calories: false }), "Eaten");
+  assert.match(foodDetail(meal), /kcal recorded · 6 g total sugar · Food label · Takeaway/);
+  assert.match(foodDetail({ ...meal, foodStatus: "prepared" }, { calories: false }), /not logged as eaten/);
+});
+
 test("both direct logs and basket intake reject invalid sugar amounts", () => {
   for (const sugarGrams of [-1, NaN, Infinity, 1001, "5", null]) {
     assert.equal(intakeSchema.safeParse({ portions: 1, sugarGrams }).success, false);

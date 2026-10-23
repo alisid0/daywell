@@ -36,6 +36,7 @@ import "./navigation.css";
 import "./bottom-menu.css";
 import "./companion-motion.css";
 import "./typography.css";
+import "./personality.css";
 
 export const metadata: Metadata = {
   title: "Daywell — Your day, in balance",

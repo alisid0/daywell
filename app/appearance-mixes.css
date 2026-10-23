@@ -55,7 +55,7 @@ html[data-appearance-buttons="pillowy"] .stillwater-shell .host-talk-symbol{bord
 .host-workspace:not(.nook-shell .host-workspace):not(.stillwater-shell .host-workspace) .nook-company{max-width:410px;margin:20px auto 25px}
 html[data-appearance-company="perch"] .nook-company{display:flex;justify-content:center;align-items:center}
 html[data-appearance-company="perch"] .nook-company .dw-companion-image{position:static;width:34%;transform:none;max-width:none}
-html[data-appearance-company="perch"] .nook-company .companion-image-pip{order:2}
+html[data-appearance-company="perch"] .nook-company .companion-image-nori{order:2}
 html[data-appearance-company="perch"] .nook-company .companion-image-luma{order:1}
 html[data-appearance-company="perch"] .nook-company .companion-image-bounce{order:3}
 html[data-appearance-company="perch"] .nook-company:before{inset:55% 0 15%;border-radius:50% 50% 28px 28px;transform:none}

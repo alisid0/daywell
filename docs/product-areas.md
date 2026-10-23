@@ -49,7 +49,7 @@ Owner decision, updated 9–10 October: photo and voice understanding is connect
 
 For moments like “I can’t switch off”, “it’s 11pm and I’m still scrolling” and “how have I slept this week?”
 
-1. **Evening:** wind down with Luma, a sleep sound or a bedtime track. Sleep shows 11 looping [sleep sounds](sleep-sounds.md) directly, with an optional Stop after; the same collection remains in Relax and the quiet corner.
+1. **Evening:** wind down with Luma, a sleep sound or a bedtime track. Sleep and the bedtime corner show 11 looping [sleep sounds](sleep-sounds.md) directly, with an optional Stop after; Relax keeps the same collection one tap away under “Sounds for rest and sleep”.
 2. **Night:** nothing to do, and nothing tracking the person.
 3. **Morning:** one tap for how they slept.
 4. **Week:** a gentle look back, with no scores.

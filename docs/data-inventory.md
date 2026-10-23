@@ -37,8 +37,8 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 | Service | What goes | When |
 | --- | --- | --- |
 | OpenAI | Food photo or description; basket and reserved amounts for a meal plan; the basket's names, quantities and units for recipe ideas; a planned meal's name and ingredients for recipe steps; a receipt photo, to put shopping away; for the assistant, the question, the visit's conversation and the records of the areas the person allowed (names, dates, times and amounts; never About you details, nutrition numbers or notes) (`store: false`) | Only when asked; the assistant only after the person chooses what it can see |
-| ElevenLabs | Readout text for food reviews. Since 22 October the app no longer starts live conversations | Readouts, which leave version 1 |
-| The person's phone or browser (Apple or Google, depending on the device) | What they say while Talk to Daywell is listening, turned into text by the device's own speech service, which some run online | Only while listening |
+| ElevenLabs | Nothing. “Hear this” reads food reviews in the phone's own voice (approved 23 October), and the app stopped starting live conversations on 22 October | Never |
+| The person's phone or browser (Apple or Google, depending on the device) | What they say while Talk to Daywell is listening, turned into text by the device's own speech service, and the text it reads aloud (replies and food reviews); some devices run these services online | Only while listening or reading aloud |
 | TypeSafe (US) | Unmatched requests to pick a recorded reply | Switched off |
 | Cloudflare | Everything above runs on its network; the planned chat would use its AI service, which doesn't train on customer data | Always |
 

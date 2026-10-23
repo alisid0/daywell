@@ -4,7 +4,7 @@ import { parseHostRequest, entriesForActions } from '../lib/host.ts';
 import { safeAgentRequest } from '../lib/voice-tools.ts';
 import { timerSnapshot, timerStatusReply, timerConversationContext } from '../lib/timer-context.ts';
 import { timerMinutes } from '../lib/timer-intent.ts';
-import { foodNarration, narrationInput } from '../lib/food-narration.ts';
+import { foodNarration } from '../lib/food-narration.ts';
 import { resizeCapturedMeal } from '../lib/food-tracking.ts';
 
 test('natural gaming requests prepare a labelled timer, with words and hours',()=>{
@@ -42,12 +42,12 @@ test('conversation context whitelists the timer and keeps proposals uncommitted'
   const context=timerConversationContext({title:'Game',duration:60,remaining:60,endAt:null,privateNotes:'SECRET'},['Start a 60-minute timer'],1000);
   assert.doesNotMatch(context,/SECRET|privateNotes/);assert.match(context,/proposal has NOT started/);assert.match(context,/"state":"none"/);
 });
-test('food readout uses current adjusted calories and includes clarifying recognition',()=>{
+test('food readout uses current adjusted calories, leaves them out without calorie tracking, and includes clarifying recognition',()=>{
   const entry={id:'meal',kind:'food',data:{title:'Toast',calories:400,protein:10,carbs:40,fat:10,nutritionKnown:true,macrosKnown:true,nutritionSource:'estimate',portions:1,foodStatus:'eaten',meal:'Breakfast',date:'2026-10-10'}};
   const draft={summary:'Original 400 calorie estimate',question:null,entries:[resizeCapturedMeal(entry,.5)]};
   assert.match(foodNarration(draft),/200/);assert.doesNotMatch(foodNarration(draft),/400/);
   assert.doesNotMatch(foodNarration(draft),/eaten|recorded|saved/);assert.match(foodNarration(draft),/portion.*shown/);
   assert.equal(foodNarration({summary:'I can see rice.',question:'Is the topping egg?',entries:[]}), 'I can see rice. Is the topping egg?');
-  for(const value of [null,{}, {text:''},{text:'x'.repeat(1801)}]) assert.equal(narrationInput(value),null);
-  assert.equal(narrationInput({text:' Food review '}),'Food review');
+  const quiet=foodNarration(draft,false);
+  assert.doesNotMatch(quiet,/kcal|calorie|200/);assert.match(quiet,/Toast: 0\.5 portions shown\. Check/);
 });

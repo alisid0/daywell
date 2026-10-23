@@ -58,7 +58,7 @@ html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"]
 html[data-appearance-composition="beside"] .stillwater-shell .nook-company:before{display:block;inset:-20px -5px 0;border-radius:49% 49% 35% 35%;background:var(--dw-surface);box-shadow:0 8px color-mix(in srgb,var(--dw-soft) 80%,transparent);transform:rotate(4deg)}
 html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .dw-companion-image{width:38%;position:static;transform:none;max-width:none;align-self:center}
 html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-luma{transform:translateY(14px) rotate(-7deg)}
-html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-pip{transform:translateY(45px)}
+html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-nori{transform:translateY(45px)}
 html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-bounce{transform:translateY(-12px) rotate(7deg)}
 html[data-appearance-composition="beside"] .stillwater-shell .host-form{grid-row:5}
 html[data-appearance-composition="beside"] .stillwater-shell .host-conversation{grid-row:6}
@@ -97,7 +97,7 @@ html[data-appearance-composition] .stillwater-shell .host-is-active .host-invita
   html[data-appearance-composition="beside"] .stillwater-shell .host-invitation h2{font-size:calc(38px*var(--rc-scale,1));max-width:13ch}
   html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .nook-company{grid-column:1;grid-row:2;width:230px;height:160px;justify-self:end;margin:-5px 5px -55px 0}
   html[data-appearance-composition="beside"] .stillwater-shell .nook-company:before{inset:0;border-radius:48% 45% 35% 35%}
-  html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-pip{transform:translateY(20px)}
+  html[data-appearance-composition="beside"][data-appearance-company="perch"] .stillwater-shell .nook-company .companion-image-nori{transform:translateY(20px)}
   html[data-appearance-composition="beside"] .stillwater-shell [data-view="today"] .daywell-host:not(.host-is-active) .host-input-actions{grid-row:3;margin-left:0;z-index:1}
   html[data-appearance-composition="beside"] .stillwater-shell .host-talk-symbol{width:104px;height:104px}
   html[data-appearance-composition="beside"] .stillwater-shell .host-talk{padding:0 10px}

@@ -48,7 +48,6 @@ export const limits = {
   "voice-day": { windowMs: day, max: 10 },
   "voice-all": { windowMs: day, max: 100 },
   capture: { windowMs: day, max: 20 },
-  narration: { windowMs: day, max: 20 },
   // A safety net against scripts, set well above everyday use: paying users shouldn't meet it.
   recipes: { windowMs: day, max: 40 },
   // The Plus assistant: paying users never meet a usage wall, so this only stops scripts (docs/usage-limits.md).

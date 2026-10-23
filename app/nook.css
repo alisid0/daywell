@@ -50,7 +50,7 @@ html[data-daywell-style="nook"]{color-scheme:light}
 .nook-company .dw-companion-image{position:absolute;height:auto;filter:drop-shadow(0 11px 8px #6c536021)}
 .nook-company .companion-image-luma{width:48%;left:-5%;top:24%;transform:rotate(-9deg)}
 .nook-company .companion-image-bounce{width:47%;right:-4%;top:15%;transform:rotate(8deg)}
-.nook-company .companion-image-pip{width:64%;left:20%;bottom:-2%;z-index:1}
+.nook-company .companion-image-nori{width:64%;left:20%;bottom:-2%;z-index:1}
 .nook-shell .host-suggestions{grid-column:1 / -1;order:4;display:flex;justify-content:center;gap:18px;margin:46px auto 0;width:100%;max-width:710px}
 .nook-shell .host-suggestions button{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#f9dca1;border:1px solid #e7c786;border-radius:25px;min-height:80px;padding:14px 20px;font-size:calc(17px*var(--rc-scale,1));font-weight:650;color:var(--dw-ink);box-shadow:0 5px 0 #ddbd8180,inset 0 2px 0 #ffffff90}
 .nook-shell .host-suggestions button[data-activity="sleep"]{background:#e9e0f3;border-color:#d4c5e6;box-shadow:0 5px 0 #b9a9d15c,inset 0 2px 0 #fff9}
@@ -133,7 +133,7 @@ html[data-daywell-style="nook"] .stillwater-tool-list button:hover,html[data-day
   .nook-company{grid-column:1;grid-row:2;width:min(310px,90%);height:190px;justify-self:center;margin:16px 0 19px}
   .nook-company .companion-image-luma{width:44%;left:-2%;top:17%}
   .nook-company .companion-image-bounce{width:44%;right:-1%;top:10%}
-  .nook-company .companion-image-pip{width:59%;left:22%;bottom:-3%}
+  .nook-company .companion-image-nori{width:59%;left:22%;bottom:-3%}
   .nook-shell .host-input-actions{grid-column:1;grid-row:3;justify-content:center;gap:7px 16px}
   .nook-shell .daywell-host .host-talk{padding:14px 22px;min-height:54px!important;font-size:calc(14px*var(--rc-scale,1))}
   .nook-shell .host-type{font-size:calc(14px*var(--rc-scale,1))}

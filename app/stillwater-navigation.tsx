@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ComponentType } from "react";
-import { CircleHelp, Footprints, Heart, History, Home, Moon, Palette, Settings2, SlidersHorizontal, Sun, Utensils } from "lucide-react";
+import { CircleHelp, Footprints, Heart, History, Home, Mic, Moon, Palette, Settings2, SlidersHorizontal, Sun, Utensils } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import type { AppState } from "./use-daywell";
 import { ReadingComfortSettings } from "./reading-comfort";
@@ -16,7 +16,7 @@ const tabs = [
   { id: "relax", label: "Relax", icon: Heart },
 ];
 const tabFor: Record<string, string> = { move: "move", eat: "eat", food: "eat", grocery: "eat", sleep: "sleep", relax: "relax" };
-export function StillwaterNavigation({ a, tools, onStyle }: { a: AppState; tools: Tool[]; onStyle: () => void }) {
+export function StillwaterNavigation({ a, tools, onStyle, talkOpen = false, onTalk }: { a: AppState; tools: Tool[]; onStyle: () => void; talkOpen?: boolean; onTalk?: () => void }) {
   const [drawer, setDrawer] = useState<"tools" | "settings">("tools");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const currentTab = a.active === "calendar" ? (a.calendarArea === "all" ? "today" : a.calendarArea) : tabFor[a.active] ?? "today";
@@ -28,7 +28,7 @@ export function StillwaterNavigation({ a, tools, onStyle }: { a: AppState; tools
   }
   function customize() { setDrawerOpen(false); a.setPrefs(a.settings); a.setFormError(""); a.setCustomize(true); }
   return <>
-    <header className="stillwater-header"><button className="stillwater-wordmark" aria-label="Daywell home" onClick={() => go("today")}><Sun size={24} />daywell.</button><div><span className="stillwater-save" role="status">{a.syncError ? "Changes not saved" : a.saving ? "Saving…" : ""}</span><button className="stillwater-header-button" id="stillwater-style-toggle" aria-label="Choose your style" onClick={onStyle}><Palette size={18} /><span>Your style</span></button><button className="stillwater-header-button" aria-label="Your space settings" disabled={!a.loaded} onClick={() => openDrawer("settings")}><Settings2 size={20} /></button></div></header>
+    <header className="stillwater-header"><button className="stillwater-wordmark" aria-label="Daywell home" onClick={() => go("today")}><Sun size={24} />daywell.</button><div><span className="stillwater-save" role="status">{a.syncError ? "Changes not saved" : a.saving ? "Saving…" : ""}</span>{onTalk && a.active !== "today" && <button className="stillwater-header-button stillwater-talk" aria-label="Talk or type to Daywell" aria-expanded={talkOpen} aria-controls="daywell-host-panel" disabled={!a.loaded} onClick={onTalk}><Mic size={19} /></button>}<button className="stillwater-header-button" id="stillwater-style-toggle" aria-label="Choose your style" onClick={onStyle}><Palette size={18} /><span>Your style</span></button><button className="stillwater-header-button" aria-label="Your space settings" disabled={!a.loaded} onClick={() => openDrawer("settings")}><Settings2 size={20} /></button></div></header>
     <nav className="stillwater-dock" data-tabs={tabs.length} aria-label="Daywell navigation">{tabs.map(tab => <button key={tab.id} aria-current={currentTab === tab.id ? "page" : undefined} disabled={tab.id !== "today" && !a.loaded} onClick={() => go(tab.id)}><tab.icon size={21} /><span>{tab.label}</span></button>)}</nav>
     <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}><SheetContent side="bottom" className="stillwater-drawer"><SheetHeader><SheetTitle>{drawer === "tools" ? "A little help with your day." : "Make yourself comfortable."}</SheetTitle><SheetDescription>{drawer === "tools" ? "Pick what you need, or just ask Daywell." : "Your space, at your pace."}</SheetDescription></SheetHeader><div className="stillwater-drawer-body">{drawer === "tools" ? <><div className="stillwater-tool-list">{tools.map(tool => <button key={tool.id} onClick={() => go(tool.id)}><tool.icon size={22} /><span><strong>{tool.name}</strong><small>{tool.desc}</small></span></button>)}</div><button className="stillwater-drawer-link" onClick={() => go("calendar", true)}><History size={19} />Look back at your progress</button><button className="stillwater-drawer-link" onClick={customize}><SlidersHorizontal size={19} />Choose your tools</button></> : <><button className="stillwater-drawer-link" onClick={() => { setDrawerOpen(false); onStyle(); }}><Palette size={19} />Change the atmosphere</button><button className="stillwater-drawer-link" onClick={customize}><SlidersHorizontal size={19} />Name, tools & daily preferences</button><button className="stillwater-drawer-link" onClick={() => { setDrawerOpen(false); a.setPrefs(a.settings); a.setFormError(""); a.setWelcome(true); }}><CircleHelp size={19} />Getting started</button><ReadingComfortSettings /><p>Voice and companion preferences are under “Voice & company” beside your host.</p></>}</div></SheetContent></Sheet>
   </>;

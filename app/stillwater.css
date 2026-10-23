@@ -35,6 +35,9 @@ html[data-daywell-style="stillwater"]{color-scheme:dark}
 .stillwater-shell .calendar-host-disclosure>summary{color:#e1eeec}
 .stillwater-shell .calendar-host-disclosure>summary>span{color:#c4d8d8}
 .stillwater-shell .calendar-workspace{padding:27px 30px;background:#173e4def;border:1px solid #d8f0eb30;border-radius:28px}
+/* Talk or type from any page (owner-approved, 23 October 2026): the header's microphone opens the host, so area pages have no "Talk or type to Daywell" line. */
+:is(.stillwater-shell,.nook-shell) .calendar-host-disclosure>summary{display:none}
+.stillwater-header-button.stillwater-talk[aria-expanded="true"]{background:var(--dw-accent,#803c65);color:var(--dw-on-accent,#fff7fb)}
 .stillwater-shell .calendar-intro{display:none}
 .stillwater-shell .calendar-view-tabs{margin-top:0;background:#ffffff0c}
 .stillwater-shell .calendar-month{background:#ffffff06;border-color:#9cc8ca40;border-radius:18px}

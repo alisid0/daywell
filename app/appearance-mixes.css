@@ -4,7 +4,7 @@ html[data-appearance-palette] .host-workspace{color:var(--dw-ink)}
 html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .daywell-host{color:var(--dw-ink)}
 html[data-appearance-palette] :is(.stillwater-wordmark,.stillwater-header-button,.host-talk-label,.host-plan h3,.host-activity h3){color:var(--dw-ink)}
 html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) :is(.host-invitation p,.host-voice-note,.host-type,.host-help,.host-settings-toggle,.host-activity-main p,.host-activity-main small,.host-activity-label,.host-conversation .host-heard,.host-history-actions>button,.host-history-actions>span,.calendar-host-disclosure>summary,.calendar-host-disclosure>summary>span,.calendar-day-agenda .calendar-empty){color:var(--dw-muted)}
-html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) :is(.host-conversation,.host-form>div,.host-plan,.host-settings,.host-change-summary,.host-ack,.host-help[open],.calendar-workspace,.calendar-month,.design-picker){background:var(--dw-surface);color:var(--dw-ink);border-color:var(--dw-line)}
+html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) :is(.host-conversation,.host-form>div,.host-plan,.host-settings,.host-change-summary,.host-ack,.host-help[open],.calendar-workspace,.design-picker){background:var(--dw-surface);color:var(--dw-ink);border-color:var(--dw-line)}
 html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-form textarea{color:var(--dw-ink)}
 html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .host-conversation .host-reply>span{color:var(--dw-accent)}
 html[data-appearance-palette] .nook-shell .daywell-host .host-talk{background:var(--dw-accent);color:var(--dw-on-accent);border-color:var(--dw-accent);box-shadow:0 5px color-mix(in srgb,var(--dw-accent) 75%,#000),inset 0 2px #ffffff35}
@@ -29,7 +29,6 @@ html[data-appearance-palette] .stillwater-dock button:hover:not([aria-current="p
 html[data-appearance-palette] .stillwater-drawer{background:var(--dw-surface);color:var(--dw-ink);border-color:var(--dw-line)}
 html[data-appearance-palette] .stillwater-drawer :is([data-slot="sheet-description"],small,p){color:var(--dw-muted)}
 html[data-appearance-palette] .stillwater-drawer :is(.stillwater-tool-list button,.stillwater-drawer-link){color:var(--dw-ink);border-color:var(--dw-line)}
-html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .calendar-days button[aria-pressed="true"]{background:var(--dw-accent);color:var(--dw-on-accent)}
 html[data-appearance-palette] :is(.nook-shell,.stillwater-shell) .calendar-view-tabs{background:var(--dw-soft)}
 html[data-appearance-palette] .nook-shell .calendar-progress{background:var(--dw-positive);color:var(--dw-positive-ink)}
 

@@ -23,6 +23,8 @@ class Track {
 ```
 
 - UI elements: `w` 16–26, `z` 0.75–0.9 (a hair of overshoot). Camera and text: `z` = 1.
+- Camera: `w` 2.5–3.5 (settles in 1.3–1.8 s). `engine/moments.js` defaults to 3. A faster camera (`w` 5.4) read
+  as rushed once several moves followed each other; see "Calm pace" below.
 - A spring takes about `4.6 / (z·w)` seconds to settle; issue a target that must *arrive* by T that much early.
 - For something that must be exact at a moment (a finger landing on a button), finish the move before the press.
 
@@ -68,14 +70,29 @@ above the UI it touches. A tap is three things on the same moment:
 Take tap positions from the real control boxes recorded when capturing the screens. Fade the finger out when
 its work in a scene is done.
 
+## Moving controls: flipbooks of real frames
+
+Show a wheel, slider or carousel moving with the app's own frames: capture the control at a series of positions
+(render-and-qa) and play them as a flipbook (`flip()` in `engine/moments.js`), not a rebuilt imitation. A flicked
+wheel slows at a constant rate, so its position follows the ease-out `1 − (1 − τ)²`:
+
+- **Frames captured at even steps** are each shown when the ease-out reaches them, `τ = 1 − √(1 − p)` for position
+  `p`. That's `flip()`'s default: early frames flash by, late ones linger. The opposite (`τ = 1 − (1 − p)²`) makes
+  the wheel speed up and stop dead. The first Daywell cut had exactly that bug.
+- **Frames captured on the ease-out already** are shown evenly (`eased: true`). This is smoother: with even steps,
+  the slow creep at the end shows as one visible jump (about 0.57 s, then a jump, with 8 frames over 1.5 s).
+- **A click per row** as it passes the centre line, at the same eased times, so the clicks thin out as it slows.
+- Give a spin **1.5 s or more** and about **24 frames per second of spin**. The finger rests on the wheel as it
+  starts, and the result holds still for about a second afterwards.
+
 ## Camera
 
 One transform on the world layer: translate to a point, scale, translate back. Interpolate zoom in log space
 (`z = exp(lerp(log z0, log z1, e))`) or it feels like it accelerates. Push in (1.15–1.8×) about the control
 being touched, so that control is a fixed point and the finger stays on it; settle before the tap; release after
-the result has landed. Don't zoom in and out back to back. A slow continuous drift (1–2% over a scene) keeps
-holds alive. The shorts engine does this by itself: during any hold over 2.6 s it pushes in by up to 4%, and the
-next camera move releases it.
+the result has landed. Don't zoom in and out back to back. At most one push-in per moment or beat of the story;
+re-aiming the camera at each new control reads as a camera operator chasing the action. A slow continuous drift
+(1–2% over a scene) keeps holds alive.
 
 ## Text
 
@@ -88,10 +105,32 @@ next camera move releases it.
 
 ## Rhythm
 
-- Every 2–4 seconds something new happens; nothing is static for more than about 1.5 s except a deliberate hold.
+- One thing at a time: an action, its result, a hold of about a second, then the next thing. Something new every
+  2–5 seconds is plenty; a hold stays alive with a slow drift, not with another move.
 - Stagger groups by 30–60 ms in reading order; items you want counted by 100–150 ms.
 - Before a big moment (the brand reveal, the final card) leave a short quiet beat; then hit on the beat.
 - Each scene resolves; the next one enters already moving in the direction the last one left.
+
+## Calm pace
+
+The owner's verdict on the first cut of "Small things count" was "the movements and animations are way too fast".
+What was wrong, and what replaced it:
+
+| | First cut (too fast) | Calm |
+| --- | --- | --- |
+| Actions in a 5-second moment | up to five: tap, sheet, spin, save, stamp | one, and its result |
+| Camera moves in a moment | up to six | one push-in; the release opens the next moment |
+| Camera spring | `w` 5.4, settling in 0.85 s | `w` 2.5–3.5, settling in 1.3–1.8 s |
+| Wheel spin | 0.7–0.9 s from 7–8 frames, speeding up | 1.5 s or more, about 24 frames a second, slowing |
+| Hold on a result | about half a second | about a second before anything else changes |
+| Hook to-dos | rained down and piled up | drift about 320 px on a slow spring (`w` 7) and settle |
+
+The shape of a calm 5-second moment: 0–0.3 s, the last signature leaves and the camera is at full view; 0.3–3 s,
+the voice line and its one action (push in, tap or spin, the screen changes); then the result holds, the camera
+eases back, and the signature lands about 0.75 s before the moment ends.
+
+Stills can't show pace: every frame of a rushed moment can look good. Watch each moment at full speed, with
+sound, before sending it.
 
 ## Deterministic life
 

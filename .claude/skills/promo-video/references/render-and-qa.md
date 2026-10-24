@@ -23,6 +23,21 @@ will touch (`getBoundingClientRect()` in the page) into `shots.json`, so taps la
 Where the app calls a paid AI service, mock that endpoint in the preview with a realistic response in the app's
 own schema (it's a demo state, not a claim) rather than making paid calls. Check every capture by eye before use.
 
+- **Capture and look at every state before you choreograph.** Real flows surprise: Daywell's "Set timer" readies
+  the timer in a card at the top, and a separate "Start timer" runs it. The script follows the app, not your guess.
+- **Start the preview before each capture run, and check it answers.** The desktop app can stop dev servers
+  between turns; a capture against a dead server fails or, worse, records an error page.
+- **Mark what you'll box.** When a label appears more than once, or a control has no unique text, add a
+  `data-promo="name"` attribute in an `eval` step and record the box with `css=[data-promo=name]`. Clear old marks
+  first. `markText()` in `scripts/example-moments/capture-plan.mjs` marks the smallest element whose whole text
+  matches.
+- **Moving controls frame by frame.** For a wheel or a scrolling strip, turn off snapping on the scroll container
+  (`style.scrollSnapType = 'none'`), set its `scrollTop` for each frame, wait about 120 ms, capture, and afterwards
+  restore snapping and fire a `scroll` event so the app settles on the final value. Capture positions on the
+  flick's ease-out (`spin(name, selector, index, rows, n, true)` in the example plan) and play them evenly with
+`flip(…, { eased: true })`;
+  see motion.md for why. About 24 frames per second of spin.
+
 Inside the film, a phone screen is the screenshot drawn at the phone's screen size. Element-level motion (a new
 row, a ticking checkbox, a timer counting) is done by overlaying crops of the "after" shot or small rebuilt
 elements in the app's own styles; keep them pixel-aligned to the shot.
@@ -37,11 +52,11 @@ the output size, and for each frame calls `seek(t)`, waits two animation frames,
   platforms that prefer 30.
 - Encode: `-c:v libx264 -preset slow -crf 17 -profile:v high -pix_fmt yuv420p -vf
   scale=out_color_matrix=bt709:out_range=tv -color_primaries bt709 -color_trc bt709 -colorspace bt709
-  -color_range tv -c:a aac -b:a 256k -ar 48000 -movflags +faststart`.
-- Measure the true peak of the delivered MP4, not just the master. At 192 kbps, FFmpeg's AAC encoder added up to
-  2.5 dB to a sharp drum hit. At 256 kbps, with the limiter's ceiling at -2.5 dBFS (`ceilingDb` in `film.json`),
-  all five Daywell shorts measured -1.6 to -2.2 dBTP.
+  -color_range tv -c:a aac -b:a 192k -ar 48000 -movflags +faststart`.
 - `--stills=t1,t2,…` renders PNGs at chosen times for checking; always check stills before a full render.
+- **Review renders, one moment at a time:** `node render.mjs --film=<film> --from=10 --to=15 --name=moment-03`
+  renders just that stretch at full quality, with the matching slice of the full mix. Send that to the owner, not a
+  30-second batch, and build the next moment only after their notes are in.
 - Long renders run in the background; check progress, don't poll in a tight loop.
 - Version every output (`name-v2.mp4`); never overwrite.
 
@@ -58,6 +73,10 @@ What to hunt for: double-printed text during swaps, captions over UI the viewer 
 1080 wide, a finger tapping beside a button, a scene still moving when it changes, the same layout twice in a
 row, an accent colour used for decoration.
 
+Stills can't judge pace. After the stills pass, watch the moment's review render at full speed and count: how
+many actions, how many camera moves, how long each result holds. More than one action or camera move per moment,
+or a result held for less than about a second, means it is too fast (motion.md, "Calm pace").
+
 ## Checking the delivered file
 
 - **Spec:** `ffprobe -v error -show_entries stream=codec_name,width,height,pix_fmt,color_range,color_space,r_frame_rate,sample_rate,channels -of compact out.mp4`
@@ -70,6 +89,20 @@ row, an accent colour used for decoration.
 - **Key moments:** extract full-size frames at every changed beat and at each scene's last frame.
 - **Audio cues:** for the effects that matter (the logo hit, the shutter), measure the envelope in a window around
   the cue to prove it's audible at the right moment.
+
+## Separate clips (films of moments)
+
+Cut each moment from the final, mastered render, re-encoding so the cut is frame-exact, with short audio fades:
+
+```
+ffmpeg -ss 10 -i film-v3.mp4 -t 5 -af "afade=t=in:d=0.15,afade=t=out:st=4.85:d=0.15" <the encode settings above> clips/03-how-you-slept-v1.mp4
+```
+
+Name clips by number and title, and check each clip's first and last frames are settled. A signature that crosses
+the boundary shows up at the start of the next clip: Daywell's stamp tucks away during the first 0.5 s of the
+following moment. Either let each signature finish inside its own moment, or render the clips one by one with
+the neighbouring moments' signatures hidden (every frame is a pure function of time, so this is a filter on the
+timeline). Decide which before building the signature, and tell the owner.
 
 ## Platform notes (9:16)
 

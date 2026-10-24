@@ -1,0 +1,120 @@
+/* Daywell shorts: 1080×1920, 120 s. Every frame is a pure function of time; engine/short.js draws seek(t).
+   Shared by every short (shorts/<film>/index.html); each film's timeline.js says what happens. */
+@font-face { font-family: "Atkinson"; src: url(../assets/fonts/atkinson.woff2) format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "Lexend"; src: url(../assets/fonts/lexend.woff2) format("woff2"); font-weight: 100 900; }
+:root { --ink: #522d46; --muted: #7d536e; --accent: #803c65; --surface: #fff7fb; --area: #F3C5B5; --plus1: #f7dc9c; --plus2: #f1bf7a; --plus-ink: #5a3a12; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #f7dfeb; }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Atkinson", system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+.layer { position: absolute; inset: 0; }
+.abs { position: absolute; left: 0; top: 0; }
+svg { display: block; }
+
+/* Sky */
+#sky { background: #f7dfeb; }
+.blob { position: absolute; border-radius: 50%; }
+.star { position: absolute; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,.85); }
+#moon { width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; background: #f4e9f1; box-shadow: 0 0 60px 18px rgba(244,233,241,.25); }
+#moon::after { content: ""; position: absolute; left: 34px; top: -10px; width: 120px; height: 120px; border-radius: 50%; background: var(--night, #241c3a); }
+
+/* World (the camera moves this) */
+#world { transform-origin: 0 0; }
+
+/* Hook: the helper, wondering, with little thought chips */
+.hhelper { position: absolute; width: 0; height: 0; }
+.hhelper img { position: absolute; left: -290px; top: -290px; width: 580px; height: 580px; object-fit: contain; filter: drop-shadow(0 24px 30px rgba(82,45,70,.22)); }
+.thought { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 20px; padding: 18px 34px 18px 18px; border-radius: 999px; background: rgba(255,247,251,.97); box-shadow: 0 22px 50px rgba(82,45,70,.2); white-space: nowrap; opacity: 0; }
+.thought i { flex: none; width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; background: var(--area); color: var(--ink); }
+.thought span { font-size: 50px; font-weight: 800; letter-spacing: -.01em; color: var(--ink); }
+
+/* Title: "Eat", with Nori */
+#title { left: 0; top: 0; width: 1080px; height: 1920px; }
+#title .word { position: absolute; left: 0; width: 1080px; top: 1180px; text-align: center; font-size: 250px; font-weight: 800; letter-spacing: -.045em; line-height: 1; color: var(--ink); }
+#title .with { position: absolute; left: 50%; top: 1470px; display: flex; align-items: center; gap: 16px; padding: 14px 34px 14px 16px; border-radius: 999px; background: rgba(255,247,251,.96); box-shadow: 0 18px 40px rgba(82,45,70,.18); transform-origin: 50% 50%; white-space: nowrap; }
+#title .with i { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: var(--area); }
+#title .with i img { width: 100%; height: 100%; object-fit: cover; }
+#title .with span { font-size: 46px; font-weight: 800; color: var(--ink); }
+#title .mark { position: absolute; left: 50%; top: 360px; width: 96px; height: 96px; margin-left: -48px; color: var(--accent); }
+
+/* Phone */
+#phone { left: 244px; top: 478px; width: 592px; height: 1244px; border-radius: 80px; background: #231a26; box-shadow: 0 50px 110px rgba(52,25,45,.38), inset 0 0 0 2px rgba(255,255,255,.08); }
+#screen { position: absolute; left: 16px; top: 16px; width: 560px; height: 1212px; border-radius: 64px; overflow: hidden; background: #f9e3ee; }
+#screen img.shot { position: absolute; left: 0; top: 0; width: 560px; height: 1212px; opacity: 0; }
+#screen img.crop { position: absolute; opacity: 0; }
+#island { position: absolute; left: 50%; top: 26px; width: 130px; height: 38px; margin-left: -65px; border-radius: 20px; background: #120d14; z-index: 30; }
+#flash, #dim { position: absolute; inset: 0; opacity: 0; z-index: 20; }
+#flash { background: #fff; }
+#dim { background: #0b0812; }
+.hl { position: absolute; border-radius: 22px; background: rgba(128,60,101,.18); box-shadow: 0 0 0 3px rgba(128,60,101,.35); opacity: 0; z-index: 19; }
+#art { position: absolute; inset: 0; z-index: 8; pointer-events: none; }
+
+/* The event card: drops in, then opens into the screen */
+#card { border-radius: 36px; overflow: hidden; box-shadow: 0 30px 70px rgba(82,45,70,.28); opacity: 0; }
+#card .inner { position: absolute; left: 0; top: 0; width: 560px; height: 1212px; opacity: 0; }
+#card .fill { position: absolute; inset: 0; }
+#card .lab { position: absolute; left: 26px; top: 0; height: 150px; display: flex; align-items: center; gap: 22px; white-space: nowrap; }
+#card .num { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.55); font-size: 34px; font-weight: 800; color: #4b2340; }
+#card .txt b { display: block; font-size: 40px; font-weight: 800; color: #4b2340; letter-spacing: -.012em; line-height: 1.1; }
+#card .txt small { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 26px; font-weight: 800; color: rgba(75,35,64,.78); }
+#card .por { position: absolute; right: 18px; top: 26px; width: 98px; height: 98px; border-radius: 50%; overflow: hidden; background: rgba(255,255,255,.45); }
+#card .por img { width: 100%; height: 100%; object-fit: cover; }
+
+/* "Included in" badge for the chapter on screen */
+#badge { left: 540px; top: 515px; height: 0; width: 0; }
+#badge .pill { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; display: flex; align-items: center; gap: 14px; padding: 12px 30px 12px 14px; border-radius: 999px; white-space: nowrap; box-shadow: 0 14px 30px rgba(82,45,70,.22); opacity: 0; }
+#badge .pill i { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; }
+#badge .pill span { font-size: 32px; font-weight: 800; letter-spacing: -.005em; }
+.plan-daywell { background: #803c65; color: #fff7fb; }
+.plan-daywell i { background: rgba(255,247,251,.18); color: #fff7fb; }
+.plan-plus { background: linear-gradient(135deg, var(--plus1), var(--plus2)); color: var(--plus-ink); }
+.plan-plus i { background: rgba(255,255,255,.45); color: var(--plus-ink); }
+
+/* What's included */
+#recap { left: 90px; top: 560px; width: 900px; border-radius: 56px; background: rgba(255,247,251,.97); box-shadow: 0 40px 90px rgba(82,45,70,.2); opacity: 0; transform-origin: 50% 0; }
+#recap .head { display: flex; align-items: center; gap: 22px; padding: 40px 46px 18px; }
+#recap .head i { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; background: var(--area); flex: none; }
+#recap .head i img { width: 100%; height: 100%; object-fit: cover; }
+#recap .head b { font-size: 54px; font-weight: 800; letter-spacing: -.02em; }
+#recap .row { position: relative; display: flex; align-items: center; gap: 22px; height: 104px; margin: 0 30px; padding: 0 16px; border-top: 2px solid rgba(125,83,110,.12); }
+#recap .row .tick { flex: none; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--area); color: #4b2340; }
+#recap .row .t { flex: 1; font-size: 40px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+#recap .row .p { flex: none; padding: 8px 20px; border-radius: 999px; font-size: 27px; font-weight: 800; }
+#recap .row .glow { position: absolute; inset: 6px -6px; border-radius: 26px; background: rgba(128,60,101,.1); box-shadow: 0 0 0 3px rgba(128,60,101,.22); opacity: 0; }
+#recap .prices { display: flex; gap: 20px; padding: 26px 46px 42px; }
+#recap .price { flex: 1; border-radius: 30px; padding: 22px 26px; opacity: 0; }
+#recap .price b { display: block; font-size: 34px; font-weight: 800; }
+#recap .price span { display: block; margin-top: 4px; font-size: 44px; font-weight: 800; letter-spacing: -.02em; }
+#recap .price small { font-size: 26px; font-weight: 700; opacity: .85; }
+
+/* Close */
+#endcard { left: 0; top: 0; width: 1080px; height: 1920px; opacity: 0; }
+#endcard .sun { position: absolute; left: 410px; top: 660px; width: 260px; height: 260px; color: var(--accent); }
+#endcard .url { position: absolute; left: 0; right: 0; top: 980px; text-align: center; font-size: 116px; font-weight: 800; letter-spacing: -.035em; color: var(--ink); }
+#endcard .price { position: absolute; left: 50%; top: 1160px; padding: 18px 40px; border-radius: 999px; background: rgba(255,247,251,.96); box-shadow: 0 18px 40px rgba(82,45,70,.16); font-size: 46px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+#endcard .helper { position: absolute; left: 540px; top: 1500px; width: 0; height: 0; }
+#endcard .helper img { position: absolute; left: -150px; top: -150px; width: 300px; height: 300px; object-fit: contain; filter: drop-shadow(0 18px 24px rgba(82,45,70,.2)); }
+
+/* Screen-space overlays */
+#captions { left: 60px; right: 60px; top: 196px; height: 260px; }
+.cap { position: absolute; left: 0; right: 0; top: 0; height: 260px; display: flex; align-items: center; justify-content: center; text-align: center; opacity: 0; }
+.cap p { margin: 0; font-size: 76px; font-weight: 800; line-height: 1.08; letter-spacing: -.015em; text-wrap: balance; max-width: 960px; }
+.cap .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .04em .1em; margin-bottom: -.1em; }
+.cap .wi { display: inline-block; }
+.cap .acc { color: var(--accent); }
+#captions.light .acc { color: #f6b8d6; }
+#finger { width: 76px; height: 76px; margin: -38px 0 0 -38px; opacity: 0; z-index: 50; }
+#finger .dot { position: absolute; inset: 0; border-radius: 50%; background: rgba(255,255,255,.86); box-shadow: 0 0 0 3px rgba(82,45,70,.55), 0 10px 26px rgba(40,20,35,.38); }
+#finger .ring { position: absolute; left: -10px; top: -10px; width: 96px; height: 96px; border-radius: 50%; border: 4px solid rgba(255,255,255,.95); opacity: 0; }
+.bubble { position: absolute; left: 0; top: 0; max-width: 840px; display: flex; align-items: center; gap: 22px; padding: 22px 34px 22px 22px; border-radius: 44px; background: rgba(255,247,251,.97); box-shadow: 0 24px 60px rgba(82,45,70,.28); opacity: 0; transform-origin: 0 100%; }
+.bubble i { flex: none; width: 132px; height: 132px; border-radius: 50%; overflow: hidden; background: var(--area); }
+.bubble i img { width: 100%; height: 100%; object-fit: cover; }
+.bubble span { font-size: 44px; font-weight: 700; line-height: 1.22; color: var(--ink); }
+
+/* The finale as the four areas (the web film): a tile for each, with its helper */
+.recap-areas{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:10px 40px 20px}
+.recap-area{display:flex;flex-direction:column;align-items:center;gap:6px;padding:26px 16px 22px;border-radius:36px;background:color-mix(in srgb,var(--area) 38%,#fff7fb);box-shadow:0 14px 30px rgba(82,45,70,.12);opacity:0}
+.recap-area i{width:150px;height:150px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.55)}
+.recap-area i img{width:100%;height:100%;object-fit:cover}
+.recap-area b{font-size:52px;font-weight:800;letter-spacing:-.02em;color:#4b2340}
+.recap-area small{font-size:28px;font-weight:700;color:rgba(75,35,64,.72)}
+.recap-foot{margin:6px 40px 40px;text-align:center;font-size:38px;font-weight:800;color:var(--ink)}

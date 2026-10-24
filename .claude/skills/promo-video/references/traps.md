@@ -1,6 +1,14 @@
-# Traps (each cost real time on the Daywell promo)
+# Traps (each cost real time on the Daywell films)
 
 Read this before building or debugging.
+
+## Pace and review
+
+- **Pace hides in stills.** Every still of the first cut of "Small things count" looked fine. At full speed, five
+  actions and six camera moves in 5 seconds read as rushed: "the movements and animations are way too fast". Watch
+  each moment at playback speed with sound before sending it, and count actions and camera moves.
+- **A batch review spreads one mistake over many moments.** Six moments went to the owner together, so the pace
+  problem had to be fixed six times. Send one moment, get notes, then build the next.
 
 ## Truth
 
@@ -26,6 +34,17 @@ Read this before building or debugging.
   (y < about 760 of 844), and pick scroll positions so the controls you tap are clear of it.
 - **Thumbnails mislead.** A slashed zero read as 9 on a contact sheet. Check text in full-size crops before
   "fixing" it.
+- **The real flow has an extra step.** The timer moment was planned as one tap on "Set timer", but that only
+  readies the timer; "Start timer" runs it. Capture and look at every state before choreographing.
+- **Wheels snap back during frame capture.** With scroll snapping on, a `scrollTop` between rows jumps to the
+  nearest row. Turn snapping off while capturing, then restore it and fire a `scroll` event.
+- **A text match boxes the wrong element.** A label that appears more than once (or sits inside a bigger element
+  with the same text) can give the wrong box. Mark the element you mean with `data-promo` in an `eval` step and box
+  it by that attribute.
+- **The preview server disappears.** The desktop app stopped the harness between turns and captures failed. Start
+  it before every run and check that it answers.
+- **A harness with its own stylesheet list misses new styles.** Daywell's preview harness imports CSS from its own
+  list, so the new `time-wheels.css` was missing and the wheels captured unstyled. Add each new stylesheet there.
 
 ## The engine
 
@@ -39,32 +58,15 @@ Read this before building or debugging.
   container clipped above any fixed bar.
 - **Captions sit over the phone when zoomed.** Add a band of the current sky colour behind the captions whenever
   zoom > 1, and switch caption ink to light when the sky is dark (by luminance, not by a "night" flag).
-- **Template literals don't survive the shell.** Writing JS with backticks through `node -e "…"` in bash is
-  mangled by command substitution. Edit files with the editor, or write a script file.
-
-## The shorts (October 2026)
-
-- **A field that submits itself spoils its last crop.** The sixth digit of the sign-in code signs in at once, so
-  the last typing crop caught the page mid-reload, blank. Capture the finished state separately: set the value from
-  script without an input event (an `eval` step), then crop it and take a full shot.
-- **A drawn screen must outlast the next card.** A chapter card covers the phone only once it has opened (about 1 s
-  after its bar). A drawing that ends before then leaves an empty screen under the opening card. Keep each
-  chapter's drawing until the next card has covered the phone.
-- **"scroll" is only for real page scrolls.** A list scrolled inside a dialog jumped, because the two captures
-  don't overlap as one page. Use "slide" there.
-- **"Still" needs a longer look.** Comparing each frame with the one before calls a slow drift or a breathing ring
-  "still". Compare with the frame half a second earlier. Holds while a bubble is read still froze, so the shorts
-  engine now pushes in slowly during any hold over 2.6 s, and the bubble's helper nods.
-- **Wide shots pivot on the focus point.** Below zoom 1, the camera keeps its focus point fixed, not the middle of
-  the frame. A slow push-in then drifts everything away from that point, so leave a margin on the far side.
-- **Renders side by side fight over ports and the Chrome profile.** Give each one its own `RENDER_SLOT`. On a busy
-  machine Chrome can also take over 10 s to start, so `render.mjs` waits up to a minute, and lets Chrome exit
-  before the next render in that slot.
-- **Exact text matches break when the UI adds counts.** A tab whose label gained a count no longer matched its name
-  exactly. The October redesign shows counts with CSS (`data-count`), so capture plans can match the name alone.
-- **The script can drift from the app.** "One tap" took two, "Undo" was "edit", "be in bed" was "Wake up at", and
-  "from anywhere" was only from Home. Check each line against the screen it plays over while capturing, and ask
-  the owner before changing an approved line.
+- **Template literals and backslashes don't survive the shell.** Writing JS with backticks through `node -e "…"`
+  in bash is mangled by command substitution, and a heredoc dropped the backslash from a regex's `\d`. Edit files
+  with the editor, or write a script file.
+- **A visible child inside a hidden parent stays visible.** Name chips stayed on screen after their layer was
+  hidden, because `visibility: hidden` on a parent doesn't hide a child set to `visibility: visible`. Turn whole
+  layers off with `display: none`.
+- **A flipbook timed backwards.** Even-step frames shown at `τ = 1 − (1 − p)²` make a wheel speed up and stop
+  dead. Show them at `τ = 1 − √(1 − p)`, or capture the frames on the ease-out and show them evenly. The first
+  Daywell cut had the backwards version; `engine/moments.js` is fixed.
 
 ## Sound
 
@@ -75,5 +77,12 @@ Read this before building or debugging.
 - **Quiet lines vanish under loud music.** A softly spoken line over full-energy music sat only 3.6 dB above it.
   Give that line a lift (+3 dB) and a deeper duck (-15 dB).
 - **Some effects start late.** Place hits by their peak and textures (typing, scrolling, sparkles) by their onset.
-- **The encoder moves the peaks.** A master at -2.4 dBTP came out of 192 kbps AAC at -0.1 dBTP, from one sharp
-  drum hit. Lowering the ceiling isn't enough on its own; encode at 256 kbps, and measure the delivered MP4.
+- **High context adherence flattens the music.** With `"high"` on every chunk, the planned quiet dusk and night
+  kept the morning's drums. Use `"medium"` or `"low"` on the contrast chunks and check with `bands.mjs`.
+- **The beat grid slips late in a take.** Moments sat within 25 ms of a beat until 130 s, then 0.12–0.18 s late.
+  Check every boundary, not just the first few.
+- **Effects shorter than 0.5 s are refused.** Ask for 0.5 s and place the sound by its peak.
+- **Music charges show up late.** The balance straight after a music call left out the take's charge, which
+  appeared later. Budget from the expected cost.
+- **The transcription check flags homophones.** "Your week" came back as "You're weak". Accept it, but name the
+  line to the owner.

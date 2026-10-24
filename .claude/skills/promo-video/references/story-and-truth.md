@@ -85,6 +85,8 @@ The script document is what the owner approves. It has:
 4. **Sound plan:** voice, music character and sections, effects per action, mastering target.
 5. **Approved facts** with sources, and the **never** list.
 6. **Credits estimate** for paid audio, and the decisions you need from the owner.
+7. **How the build will be shown:** one moment or scene at a time, as a short clip with sound, each folded in
+   before the next is built. Offer this as the plan rather than chapter-sized batches.
 
 ### Writing for the ear
 
@@ -96,6 +98,8 @@ The script document is what the owner approves. It has:
 - The words on screen are the voiceover, chunked into cards of at most two lines, so muted viewers get the same
   film. A bubble of a character's real in-app line is fine as text; don't give characters a voice they don't
   have in the product.
+- In a film of fixed moments: one line per moment, about 3–4 s spoken, naming the one thing the moment shows.
+  Each moment should make sense alone, because it may be posted as its own clip.
 
 ## 6. After approval
 

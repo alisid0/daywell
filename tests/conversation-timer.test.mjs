@@ -78,3 +78,10 @@ test('timer start input is bounded and does not accept provider-supplied unrelat
   assert.match(config.conversation_config.agent.prompt.prompt,/daywell_timer_context/);
   assert.doesNotMatch(config.conversation_config.agent.prompt.prompt,/Even if the user says yes, ask them to press Do this/);
 });
+
+test('a plain timer is not named twice in its status', () => {
+  const now = 1_790_000_000_000, running = { duration: 300, remaining: 300, endAt: now + 300_000, startedAt: now };
+  assert.equal(timerStatusReply({ ...running, title: 'Your timer' }, now), 'Your timer is running, with about 5 minutes left. Keep Daywell open for its alert; a locked phone may silence it.');
+  assert.match(timerStatusReply({ ...running, title: 'Emails' }, now), /^Your timer for “Emails” is running/);
+  assert.equal(timerStatusReply({ ...running, title: 'Your timer', endAt: now }, now), 'Your timer has finished.');
+});

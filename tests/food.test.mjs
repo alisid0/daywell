@@ -103,7 +103,7 @@ test("plans reserve compatible amounts without consuming stock; swaps and remova
   state = applyFoodCommand(state, command(plan("monday", 300))).state;
   state = applyFoodCommand(state, command(plan("tuesday", 400))).state;
   assert.equal(state.stock[0].quantity, 500);
-  assert.deepEqual(foodOverview(state).inventory[0], { ingredient: "rice", unit: "g", knownOnHand: 500, required: 700, reserved: 500, available: 0, unknownQuantity: false, needsCheck: false, toBuy: 200 });
+  assert.deepEqual(foodOverview(state).inventory[0], { ingredient: "rice", unit: "g", knownOnHand: 500, required: 700, reserved: 500, available: 0, unknownQuantity: false, needsCheck: false, toBuy: 200, unmeasured: false });
   state = applyFoodCommand(state, command(plan("tuesday", 100))).state;
   assert.equal(foodOverview(state).inventory[0].available, 100);
   state = applyFoodCommand(state, command({ type: "plan.remove", id: "monday" })).state;
@@ -526,4 +526,13 @@ test("one serving can be half consumed and half saved, without counting leftover
   assert.equal(note.portions,.5);assert.equal(note.calories,210);
   await assert.rejects(save({...action,consumed:[{stockId:"rice",quantity:10,unit:"g"}],leftovers:{...action.leftovers,id:"too-much",portions:.75}}),/exceed/);
   assert.equal((await getFoodSpace(db,"ali")).revision,snapshot.revision);
+});
+
+test("food added, changed or moved by hand can be undone", () => {
+  const add = applyFoodCommand(emptyFoodState(), { operationId: "add-1", expectedRevision: 0, action: { type: "stock.set", item: { id: "apples", ingredient: "Apples", quantity: 4, unit: "each", bestBefore: null } } });
+  assert.equal(add.state.stock.length, 1);
+  assert.equal(applyFoodCommand(add.state, { operationId: "undo-1", expectedRevision: 1, action: { type: "undo", operationId: "add-1" } }, add.effect).state.stock.length, 0);
+  const move = applyFoodCommand(add.state, { operationId: "move-1", expectedRevision: 1, action: { type: "stock.set", item: { id: "apples", ingredient: "Apples", quantity: 4, unit: "each", bestBefore: null, place: "fridge" } } });
+  const back = applyFoodCommand(move.state, { operationId: "undo-2", expectedRevision: 2, action: { type: "undo", operationId: "move-1" } }, move.effect).state;
+  assert.equal(back.stock[0].place, undefined);
 });

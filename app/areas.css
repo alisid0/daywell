@@ -1,0 +1,73 @@
+/* Move, Sleep and Relax, designed (Oct 2026) in the same language as Eat: tinted icon tiles by kind, chips, date
+   badges, soft washes of colour and checklists. Every colour is mixed from the palette tokens, so light and dark looks
+   both keep their own feel. Tones give each kind (walking, water, night …) a soft hue. */
+.area-tone-green{--tone:#8fcf9b}.area-tone-sea{--tone:#93c6e6}.area-tone-warm{--tone:#f0a58f}.area-tone-dusk{--tone:#bba6e6}.area-tone-treat{--tone:#f2a7c8}.area-tone-sun{--tone:#f4d36e}.area-tone-other{--tone:#d3bccb}
+.area-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:15px;flex-shrink:0;background:color-mix(in srgb,var(--tone,#d3bccb) 42%,var(--dw-surface,#fff7fb));color:var(--dw-ink,#522d46)}
+.area-icon.is-small{width:34px;height:34px;border-radius:11px}
+.area-chips{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0}
+.area-chips li{display:inline-flex;align-items:center;gap:5px;margin:0;padding:4px 10px;border-radius:999px;font-size:calc(12.5px*var(--rc-scale,1));font-weight:700;line-height:1.4;background:color-mix(in srgb,var(--dw-line,#d8b7cc) 42%,var(--dw-surface,#fff7fb));color:var(--dw-ink,#522d46)}
+.area-date{display:flex;flex-direction:column;align-items:center;justify-content:center;width:54px;height:62px;border-radius:18px;flex-shrink:0;line-height:1.1;background:color-mix(in srgb,var(--dw-luma,#e3d9f0) 75%,var(--dw-surface,#fff7fb));color:var(--dw-ink,#522d46)}
+.area-date small{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--dw-muted,#7d536e)}
+.area-date strong{font-size:22px;font-weight:700}
+
+/* Move: filters as chips with icons; routine cards with chips and a clear Start */
+.move-routines .move-filters{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px;padding:0;border:0}
+.move-routines .move-filters button{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:9px 14px;border-radius:999px;border:1px solid var(--well-line);background:var(--well-surface);color:var(--well-ink);font-weight:650}
+.move-routines .move-filters button[aria-pressed=true]{background:var(--well-accent);border-color:var(--well-accent);color:var(--dw-on-accent,#fff7fb)}
+.routine-card{position:relative;overflow:hidden;border-radius:26px 26px 20px 20px;box-shadow:0 10px 28px color-mix(in srgb,var(--well-ink) 6%,transparent)}
+.routine-card::before{content:"";position:absolute;inset:0 0 auto 0;height:74px;background:linear-gradient(180deg,color-mix(in srgb,var(--tone) 26%,transparent),transparent);pointer-events:none}
+.routine-card>*{position:relative}
+.routine-card .routine-start{grid-column:2;justify-self:start;margin-top:12px;min-height:44px;padding:10px 18px;border:0;background:color-mix(in srgb,var(--well-accent) 12%,var(--well-surface));color:var(--well-accent)}
+.routine-card .routine-start:hover{background:var(--well-accent);color:var(--dw-on-accent,#fff7fb)}
+.well-card.move-invitation{display:flex;align-items:center;gap:18px;background:linear-gradient(140deg,color-mix(in srgb,var(--dw-halo,#efb4a0) 30%,var(--well-surface)) 0%,var(--well-surface) 62%);box-shadow:0 14px 40px color-mix(in srgb,var(--well-ink) 6%,transparent)}
+.move-invitation h2{margin-bottom:8px}.well-card.move-invitation p{margin-bottom:14px}
+.area-today{list-style:none;display:grid;gap:8px;margin:16px 0 12px;padding:0}
+.area-today li{display:flex;align-items:center;gap:12px;margin:0;padding:10px 12px;border-radius:18px;background:color-mix(in srgb,var(--tone) 16%,var(--well-surface));border:1px solid color-mix(in srgb,var(--tone) 40%,var(--well-line))}
+.area-today li strong{display:block;font-size:calc(14.5px*var(--rc-scale,1))}.area-today li small{display:block;color:var(--well-muted);font-size:calc(13px*var(--rc-scale,1))}
+.food-stats.is-single{grid-template-columns:1fr}
+.food-stat p{margin:6px 0 0}
+.well-record.area-record{flex-wrap:nowrap;align-items:center}
+.area-record>div:not(.well-actions){flex:1;min-width:0}
+
+/* Sleep: each night as a date, how long, how you felt, and a bar from bedtime to waking (it describes, never scores) */
+.well-card.sleep-door{justify-content:flex-start;background:linear-gradient(140deg,color-mix(in srgb,var(--dw-luma,#e3d9f0) 60%,var(--well-surface)) 0%,var(--well-surface) 65%);box-shadow:0 14px 40px color-mix(in srgb,var(--well-ink) 6%,transparent)}
+.sleep-door>div{flex:1}
+.task-row.sleep-night{align-items:center;gap:14px}
+.sleep-night .entry-main strong{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:calc(17px*var(--rc-scale,1));font-weight:700}
+.sleep-feel{display:inline-flex;padding:3px 10px;border-radius:999px;font-size:calc(12px*var(--rc-scale,1));font-weight:700;background:color-mix(in srgb,var(--tone) 34%,var(--dw-surface,#fff7fb));color:var(--dw-ink,#522d46)}
+.night-bar{position:relative;height:10px;margin:10px 0 20px;border-radius:999px;background:color-mix(in srgb,var(--dw-line,#d8b7cc) 45%,transparent)}
+.night-bar span{position:absolute;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,#8f7fd6,#c4b2f0 70%,#f3c98b)}
+.night-bar i{position:absolute;top:14px;font-style:normal;font-size:10.5px;line-height:1;color:var(--dw-muted,#7d536e);white-space:nowrap}
+.night-bar i:nth-of-type(1){left:0}.night-bar i:nth-of-type(2){left:26.67%;transform:translateX(-50%)}.night-bar i:nth-of-type(3){right:0}
+.sleep-night .night-bar{margin:9px 0 8px}.sleep-night .night-bar i{display:none}
+.focus-summary.sleep-last .night-bar{align-self:stretch;margin:0 0 14px}
+
+/* Relax: sound tiles with pictures, the stop timer as one control, and guided sessions as cards */
+.sleep-sounds-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.sleep-sounds-tiles button{display:flex;align-items:center;gap:10px;min-height:52px;padding:8px 12px 8px 8px;border-radius:18px;text-align:left;font-weight:650;line-height:1.25}
+.sleep-sounds-tiles button[aria-pressed=true] .area-icon{background:color-mix(in srgb,var(--dw-on-accent,#fff7fb) 22%,transparent);color:inherit}
+.sleep-sounds-segment{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;border:1px solid var(--dw-line,#d8b7cc);border-radius:20px;background:color-mix(in srgb,var(--dw-surface,#fff7fb) 70%,transparent)}
+.sleep-sounds-segment button{border:0;border-radius:16px;background:none;min-height:42px;padding:8px 4px}
+.rest-unwind a{justify-content:flex-start;gap:14px;padding:14px;border-radius:22px;text-decoration:none;box-shadow:0 8px 24px color-mix(in srgb,var(--dw-ink,#522d46) 6%,transparent)}
+.rest-unwind-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.rest-unwind-text>span{font-weight:700;font-size:calc(15.5px*var(--rc-scale,1));color:var(--dw-ink,#522d46)}
+.rest-unwind-text em{font-style:normal;font-size:calc(13px*var(--rc-scale,1));line-height:1.45;color:var(--dw-muted,#7d536e)}
+.rest-unwind-text small{display:inline-flex;align-items:center;gap:5px;font-size:calc(12.5px*var(--rc-scale,1));font-weight:700;color:var(--dw-muted,#7d536e)}
+.rest-unwind-go{flex-shrink:0;color:var(--dw-muted,#7d536e)}
+/* Relax folds the sounds into one row; Sleep keeps the full list (owner-approved, 23 October 2026). */
+.rest-sounds{margin:22px 0 4px}
+.rest-sounds>summary{display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:22px;border:1px solid var(--dw-line,#e3cbd8);background:var(--dw-surface,#fff7fb);color:var(--dw-ink,#522d46);font-weight:650;text-align:left;cursor:pointer;list-style:none}
+.rest-sounds>summary::-webkit-details-marker{display:none}
+.rest-sounds>summary>span{flex:1;min-width:0}
+.rest-sounds>summary small{display:block;margin-top:2px;font-weight:400;font-size:calc(14px*var(--rc-scale,1));color:var(--dw-muted,#7d536e)}
+.rest-sounds[open]>summary{margin-bottom:14px}
+.rest-sounds[open]>summary>svg:last-child{rotate:180deg}
+/* The row already names the list, so the card inside keeps its title for screen readers only and skips its intro. */
+.rest-sounds .sleep-sounds{margin-top:0}
+.rest-sounds .sleep-sounds>h2{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.rest-sounds .sleep-sounds>h2+p{display:none}
+/* Focus says what will show here until there is something to count. */
+.focus-empty{margin:10px 0 0;color:var(--dw-muted,#7d536e)}
+.rest-reflection summary{display:inline-flex;align-items:center;gap:10px;min-height:44px;list-style:none}
+.rest-reflection summary::-webkit-details-marker{display:none}
+@media(max-width:520px){.well-card.move-invitation,.well-card.sleep-door{flex-direction:column;align-items:flex-start}}

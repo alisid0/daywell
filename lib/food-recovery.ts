@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { actionSchema, foodCommandSchema, planGuideSchema } from "./food.ts";
+import { actionSchema, foodCommandSchema, placeIds, planGuideSchema } from "./food.ts";
 import type { FoodAction } from "./food-client.ts";
 
 // Drafts may be incomplete (blank names/zero quantities); API commands may not.
@@ -7,8 +7,8 @@ import type { FoodAction } from "./food-client.ts";
 const text = z.string().max(160), id = z.string().regex(/^[a-zA-Z0-9-]{1,87}$/);
 const number = z.number().finite().min(-1_000_000).max(1_000_000);
 const date = z.string().max(10), unit = z.enum(["g", "kg", "ml", "l", "each", "portion"]);
-const stock = z.object({ id, ingredient: text, quantity: number.nullable(), unit, bestBefore: date.nullable() });
-const requirement = z.object({ ingredient: text, quantity: number, unit });
+const stock = z.object({ id, ingredient: text, quantity: number.nullable(), unit, bestBefore: date.nullable(), place: z.enum(placeIds).optional() });
+const requirement = z.object({ ingredient: text, quantity: number.nullable(), unit });
 const meal = z.enum(["Breakfast", "Lunch", "Dinner", "Snack"]);
 const plan = z.object({ id, title: text, date, meal, servings: number, ingredients: z.array(requirement).max(40), guide: planGuideSchema.optional() });
 const intake = z.object({ portions: number, calories: number.optional(), macros: z.object({ protein: number, carbs: number, fat: number }).optional(), source: z.enum(["label", "estimate", "app"]).optional(), sugarGrams: number.optional() });
@@ -20,7 +20,8 @@ const draftAction = z.union([
   z.object({ type: z.literal("plan.add"), plans: z.array(plan).min(1).max(7) }),
   z.object({ type: z.literal("plan.window"), startDate: date, days: z.union([z.literal(2), z.literal(3), z.literal(7)]), plans: z.array(plan).max(28) }),
   z.object({ type: z.literal("shopping.set"), item: z.object({ id, title: text, quantity: z.string().max(80), done: z.boolean() }) }),
-  z.object({ type: z.literal("purchase"), items: z.array(stock.extend({ quantity: number, shoppingId: id.optional() })).min(1).max(40) }),
+  z.object({ type: z.literal("shopping.add"), items: z.array(z.object({ id, title: text, quantity: z.string().max(80), done: z.boolean() })).min(1).max(20) }),
+  z.object({ type: z.literal("purchase"), items: z.array(stock.extend({ quantity: number.nullable(), shoppingId: id.optional() })).min(1).max(40) }),
   z.object({ type: z.literal("use"), ...consumption }),
   z.object({ type: z.literal("cook"), planId: id.optional(), ...consumption, servings: number,
     leftovers: z.object({ id, title: text, portions: number, bestBefore: date.nullable() }).optional() }),
@@ -28,18 +29,34 @@ const draftAction = z.union([
 ]) as z.ZodType<FoodAction>;
 const draftSchema = z.object({ revision: z.number().int().nonnegative(), action: draftAction });
 const recoverySchema = z.object({ version: z.literal(1), draft: draftSchema.nullable(), pending: foodCommandSchema.nullable(),
-  view: z.enum(["basket", "meals", "shopping", "history"]), start: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), days: z.union([z.literal(2), z.literal(3), z.literal(7)]) });
+  view: z.enum(["plate", "basket", "meals", "shopping", "history"]), start: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), days: z.union([z.literal(2), z.literal(3), z.literal(7)]) });
 export type FoodRecovery = z.infer<typeof recoverySchema>;
 export const recoveryPrefix = "daywell-food-recovery-v1-";
 type Storage = Pick<globalThis.Storage, "getItem" | "setItem" | "removeItem" | "key" | "length">;
 const key = (scope: string) => /^[a-f0-9]{64}$/.test(scope) ? recoveryPrefix + scope : null;
 
 export function clearOtherFoodRecovery(storage: Storage, scope: string | null) {
-  const keep = scope ? key(scope) : null;
+  const keep = scope ? [key(scope), trolleyKey(scope)] : [];
   for (let i = storage.length - 1; i >= 0; i--) {
     const name = storage.key(i);
-    if (name?.startsWith(recoveryPrefix) && name !== keep) storage.removeItem(name);
+    if ((name?.startsWith(recoveryPrefix) || name?.startsWith(trolleyPrefix)) && !keep.includes(name)) storage.removeItem(name);
   }
+}
+
+// The trolley tray: what's been picked up while shopping, kept on this device until it's put away.
+export const trolleyPrefix = "daywell-food-trolley-v1-";
+const trolleyKey = (scope: string) => /^[a-f0-9]{64}$/.test(scope) ? trolleyPrefix + scope : null;
+export function readTrolley(storage: Storage, scope: string): string[] {
+  const name = trolleyKey(scope);
+  try {
+    const value = name ? JSON.parse(storage.getItem(name) ?? "[]") : [];
+    return Array.isArray(value) ? [...new Set(value.filter((item): item is string => typeof item === "string" && item.length <= 300))].slice(0, 80) : [];
+  } catch { return []; }
+}
+export function writeTrolley(storage: Storage, scope: string, keys: string[]) {
+  const name = trolleyKey(scope);
+  if (!name) return;
+  if (keys.length) storage.setItem(name, JSON.stringify(keys.slice(0, 80))); else storage.removeItem(name);
 }
 export function readFoodRecovery(storage: Storage, scope: string): FoodRecovery | null {
   const name = key(scope);

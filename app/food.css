@@ -17,3 +17,151 @@
 @media(max-width:600px){.nutrition-totals{grid-template-columns:1fr;gap:12px}.nutrition-day .food-toolbar{align-items:flex-start;flex-direction:column}.nutrition-day .food-toolbar>label{width:100%}}
 
 .sugar-history{border-top:1px solid var(--well-line);padding-top:16px;margin-top:18px}.sugar-history summary{cursor:pointer;min-height:44px;padding-block:12px;font-weight:600}.sugar-history ul{list-style:none;margin:0;padding:0}.sugar-history li{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:12px 0;border-top:1px solid var(--well-line);font-size:calc(14px*var(--rc-scale,1))}.sugar-history li small{grid-column:1/-1;color:var(--well-muted);font-size:calc(14px*var(--rc-scale,1))}.sugar-history li strong{font-variant-numeric:tabular-nums}
+
+/* Eat, designed (Oct 2026): tiles for the basket, a plate for the day, checklists for shopping. Every colour is mixed
+   from the palette tokens, so each look (light or dark) keeps its own feel. Tones give each kind of food a soft hue. */
+.food-space{--tone:#d3bccb}
+.food-tone-grain{--tone:#e7c36f}.food-tone-green{--tone:#8fcf9b}.food-tone-fruit{--tone:#f29a8e}.food-tone-dairy{--tone:#f4d36e}.food-tone-meat{--tone:#f0a58f}.food-tone-sea{--tone:#93c6e6}.food-tone-meal{--tone:#bba6e6}.food-tone-treat{--tone:#f2a7c8}.food-tone-other{--tone:#d3bccb}
+.food-item-icon.is-tiny{display:inline-grid;width:24px;height:24px;border-radius:8px;margin-right:8px;vertical-align:-5px}
+.food-aisle{font-size:calc(12px*var(--rc-scale,1));font-weight:700;letter-spacing:.02em;color:var(--well-muted);margin-top:6px}
+.food-space .food-aisle+h3{margin-top:0}
+.food-aisle-group{margin-top:10px}
+.food-space .food-aisle-title{display:flex;align-items:center;gap:10px;margin:14px 0 2px;font-family:inherit;font-size:calc(14px*var(--rc-scale,1));font-weight:800;color:var(--well-muted)}
+.food-checklist.is-grouped li{grid-template-columns:auto minmax(0,1fr) auto}
+.food-recipe-top .food-meal-chip{gap:10px}
+.food-item-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:16px;flex-shrink:0;background:color-mix(in srgb,var(--tone) 42%,var(--well-surface));color:var(--well-ink)}
+.food-item-icon.is-small{width:38px;height:38px;border-radius:13px}
+.food-count{flex-shrink:0;align-self:center;font-size:calc(13px*var(--rc-scale,1));font-weight:700;color:var(--well-ink);padding:5px 11px;border-radius:999px;background:color-mix(in srgb,var(--well-accent) 12%,var(--well-surface))}
+.food-space .food-icon-button{width:44px;height:44px;min-height:44px;border-radius:15px;border:0;background:none;color:var(--well-muted);display:grid;place-items:center;cursor:pointer;flex-shrink:0}
+.food-space .food-icon-button:hover{background:color-mix(in srgb,var(--well-accent) 10%,transparent);color:var(--well-accent)}
+
+/* The three views as one segmented control, with a count for each */
+.food-space .food-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:5px;margin:8px 0 20px;border:1px solid var(--well-line);border-radius:26px;background:color-mix(in srgb,var(--well-surface) 72%,transparent)}
+.food-space .food-tabs button{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;padding:10px 8px;border:0;border-radius:21px;background:none;color:var(--well-muted);font-weight:650;line-height:1.2;text-align:center}
+.food-space .food-tabs button[aria-pressed=true]{background:var(--well-accent);color:var(--dw-on-accent,#fff7fb);box-shadow:0 8px 20px color-mix(in srgb,var(--well-accent) 26%,transparent)}
+.food-space .food-tabs button[data-count]::after{content:attr(data-count);min-width:22px;height:22px;padding:0 7px;border-radius:11px;display:inline-grid;place-items:center;font-size:calc(12px*var(--rc-scale,1));font-weight:700;background:color-mix(in srgb,var(--well-accent) 14%,var(--well-surface));color:var(--well-ink)}
+.food-space .food-tabs button[aria-pressed=true][data-count]::after{background:color-mix(in srgb,var(--dw-on-accent,#fff7fb) 24%,transparent);color:inherit}
+
+/* Invitations: a soft wash of colour and an icon, instead of a plain box */
+.food-space .food-invitation{position:relative;overflow:hidden;background:linear-gradient(140deg,color-mix(in srgb,var(--dw-halo,#efb4a0) 30%,var(--well-surface)) 0%,var(--well-surface) 62%);box-shadow:0 14px 40px color-mix(in srgb,var(--well-ink) 6%,transparent)}
+.food-invitation-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:18px;flex-shrink:0;background:color-mix(in srgb,var(--well-accent) 14%,var(--well-surface));color:var(--well-accent)}
+
+/* The basket: a shelf of tiles */
+.food-shelf-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 4px 14px}
+.food-shelf-title h2{margin:0;font-size:calc(22px*var(--rc-scale,1))}
+.food-pantry{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,158px),1fr));gap:12px}
+.food-item{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;padding:14px;border-radius:26px 26px 20px 20px;background:var(--well-surface);border:1px solid var(--well-line);box-shadow:0 10px 26px color-mix(in srgb,var(--well-ink) 6%,transparent);overflow:hidden}
+.food-item::before{content:"";position:absolute;inset:0 0 auto 0;height:74px;background:linear-gradient(180deg,color-mix(in srgb,var(--tone) 24%,transparent),transparent);pointer-events:none}
+.food-item>*{position:relative}
+.food-item-top{align-self:stretch;display:flex;justify-content:space-between;align-items:flex-start;gap:4px}
+.food-item-tools{display:flex;margin:-6px -8px 0 0}
+.food-space .food-item h3{margin:8px 0 0;font-size:calc(19px*var(--rc-scale,1));line-height:1.2}
+.food-item h3::first-letter,.food-check-text strong::first-letter,.food-chips li::first-letter{text-transform:uppercase}
+.food-space .food-item-amount{margin:0 0 2px;color:var(--well-muted);font-size:calc(14px*var(--rc-scale,1));line-height:1.3}
+.food-item-amount strong{font-family:var(--dw-display,inherit);font-size:calc(28px*var(--rc-scale,1));font-weight:700;letter-spacing:-.02em;color:var(--well-ink)}
+.food-space .food-item-amount.is-unknown{font-weight:700;color:var(--well-ink)}
+.food-reminder{white-space:nowrap;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:calc(12px*var(--rc-scale,1));font-weight:700;line-height:1.4;background:color-mix(in srgb,var(--well-line) 45%,var(--well-surface));color:var(--well-muted)}
+.food-reminder.is-soon,.food-reminder.is-today{background:color-mix(in srgb,#f2b84b 34%,var(--well-surface));color:var(--well-ink)}
+.food-reminder.is-past{background:color-mix(in srgb,#e9897b 30%,var(--well-surface));color:var(--well-ink)}
+.food-space .food-item-use{margin-top:auto;align-self:stretch;border:0;border-radius:16px;padding:10px 12px;font-weight:700;font-size:calc(13.5px*var(--rc-scale,1));line-height:1.25;cursor:pointer;background:color-mix(in srgb,var(--well-accent) 12%,var(--well-surface));color:var(--well-accent)}
+.food-space .food-item-use:hover{background:var(--well-accent);color:var(--dw-on-accent,#fff7fb)}
+.food-space .food-item-use:disabled{opacity:.55;cursor:default}
+
+/* Shopping: checklists you can tick */
+.food-list{position:relative;padding:22px;border-radius:30px 30px 22px 22px;background:var(--well-surface);border:1px solid var(--well-line);box-shadow:0 14px 40px color-mix(in srgb,var(--well-ink) 5%,transparent);margin:0 0 20px}
+.food-list-head{display:flex;align-items:flex-start;gap:14px;justify-content:space-between}
+.food-list-head>div{flex:1;min-width:0}
+.food-list-head h2{margin:0 0 6px;font-size:calc(24px*var(--rc-scale,1))}
+.food-space .food-list-head p{margin:0;font-size:calc(14px*var(--rc-scale,1))}
+.food-space .food-list .food-caption{margin:16px 0 2px;font-weight:600;color:var(--well-ink)}
+.food-checklist{list-style:none;margin:6px 0 0;padding:0}
+.food-checklist li{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:8px 12px;padding:12px 0;border-top:1px solid color-mix(in srgb,var(--well-line) 70%,transparent)}
+.food-checklist li:first-child{border-top:0}
+.food-checklist.is-notes li{grid-template-columns:auto minmax(0,1fr)}
+.food-space .food-check{width:44px;height:44px;min-height:44px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;cursor:pointer;border:2px solid color-mix(in srgb,var(--well-accent) 48%,var(--well-line));background:var(--well-surface);color:transparent;transition:background .15s,color .15s,border-color .15s}
+.food-space .food-check:hover,.food-space .food-check:focus-visible{color:var(--well-accent);background:color-mix(in srgb,var(--well-accent) 10%,var(--well-surface))}
+.food-space .food-check.is-checked{background:var(--well-accent);border-color:var(--well-accent);color:var(--dw-on-accent,#fff7fb)}
+.food-space .food-check.is-info{cursor:default;border-style:dashed;border-color:var(--well-line);color:var(--well-muted)}
+.food-check-text strong{display:block;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.food-check-text small{display:block;margin-top:2px;color:var(--well-muted);font-size:calc(13px*var(--rc-scale,1));line-height:1.45}
+.food-checklist li.is-done .food-check-text strong{text-decoration:line-through;text-decoration-thickness:2px;color:var(--well-muted)}
+.food-check-tools{grid-column:2/-1;display:flex;align-items:center;flex-wrap:wrap;gap:0 4px;margin-top:-4px}
+.food-check-tools .well-text-button{margin-right:auto;padding:8px 0}
+.food-list-action{margin-top:16px}
+.food-list-caption{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 0 2px}
+.food-space .food-list .food-list-caption .food-caption{margin:0}
+.food-space .food-add-row{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;margin-top:8px;padding:6px 14px 6px 10px;border-radius:18px;border:1.5px dashed var(--well-line);background:none;color:var(--well-accent);font-weight:700;cursor:pointer}
+.food-space .food-add-row svg{width:34px;height:34px;padding:7px;border-radius:50%;background:color-mix(in srgb,var(--well-accent) 12%,var(--well-surface))}
+.food-space .food-add-row:hover{background:color-mix(in srgb,var(--well-accent) 6%,var(--well-surface))}
+
+/* Next meals: a dated card per plan, and recipe ideas with a little colour */
+.food-plan{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;padding:18px;margin:0 0 14px;border-radius:28px 28px 22px 22px;background:var(--well-surface);border:1px solid var(--well-line);box-shadow:0 10px 30px color-mix(in srgb,var(--well-ink) 5%,transparent)}
+.food-plan-date{display:flex;flex-direction:column;align-items:center;justify-content:center;width:66px;height:78px;border-radius:22px;background:color-mix(in srgb,var(--tone) 34%,var(--well-surface));color:var(--well-ink);line-height:1.1}
+.food-plan-date span,.food-plan-date small{font-size:calc(12px*var(--rc-scale,1));font-weight:700;color:var(--well-muted);text-transform:uppercase;letter-spacing:.04em}
+.food-plan-date strong{font-family:var(--dw-display,inherit);font-size:calc(28px*var(--rc-scale,1))}
+.food-plan-body{min-width:0}
+.food-space .food-plan-body h2{margin:6px 0 4px;font-size:calc(22px*var(--rc-scale,1))}
+.food-meal-chip{display:inline-flex;align-items:center;gap:6px;font-size:calc(13px*var(--rc-scale,1));font-weight:700;color:var(--well-muted)}
+.food-chips{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px;padding:0}
+.food-space .food-chips li{margin:0;padding:5px 11px;border-radius:999px;font-size:calc(13px*var(--rc-scale,1));line-height:1.4;background:color-mix(in srgb,var(--well-line) 42%,var(--well-surface));color:var(--well-ink)}
+.food-chips li small{color:var(--well-muted)}
+.food-recipe{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;padding:18px;border-radius:28px 28px 22px 22px;background:var(--well-surface);border:1px solid var(--well-line);overflow:hidden;box-shadow:0 10px 30px color-mix(in srgb,var(--well-ink) 5%,transparent)}
+.food-recipe::before{content:"";position:absolute;inset:0 0 auto 0;height:96px;background:linear-gradient(180deg,color-mix(in srgb,var(--tone) 30%,transparent),transparent);pointer-events:none}
+.food-recipe>*{position:relative}
+.food-recipe-top{align-self:stretch;display:flex;justify-content:space-between;align-items:center}
+.food-time{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;font-size:calc(12.5px*var(--rc-scale,1));font-weight:700;color:var(--well-muted);background:var(--well-surface)}
+.food-space .food-recipe h3{margin:10px 0 0}
+.food-recipe details{margin:0 0 12px;align-self:stretch}
+.food-recipe summary{cursor:pointer;min-height:44px;display:flex;align-items:center;gap:10px;font-weight:600;color:var(--well-accent);list-style:none}
+.food-recipe summary::-webkit-details-marker{display:none}
+.food-recipe summary::before{content:"";width:7px;height:7px;border-right:2px solid;border-bottom:2px solid;transform:rotate(-45deg);transition:transform .15s}
+.food-recipe details[open] summary::before{transform:rotate(45deg)}
+.food-recipe .well-button{margin-top:auto}
+.food-space .food-story-row{flex-wrap:nowrap;align-items:center}
+.food-space .food-story-row>div{flex:1;min-width:0}
+
+/* Your food today: a plate of four meals, then the quiet numbers */
+.food-today .food-plate{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0 14px;padding:0}
+.food-today .food-plate li{margin:0;min-width:0}
+.food-space .food-slot{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;align-items:center;width:100%;min-height:68px;padding:12px;border-radius:20px;text-align:left;cursor:pointer;color:var(--well-ink);border:1.5px dashed var(--well-line);background:color-mix(in srgb,var(--well-surface) 55%,transparent)}
+.food-space .food-slot.is-filled{border-style:solid;border-color:color-mix(in srgb,var(--tone) 55%,var(--well-line));background:color-mix(in srgb,var(--tone) 20%,var(--well-surface))}
+.food-slot-icon{grid-row:1/3;width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--tone) 42%,var(--well-surface))}
+.food-slot-name{font-weight:700;font-size:calc(14px*var(--rc-scale,1));line-height:1.2}
+.food-slot-items{font-size:calc(12.5px*var(--rc-scale,1));line-height:1.35;color:var(--well-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.food-slot.is-filled .food-slot-items{color:var(--well-ink)}
+.food-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 6px}
+.food-stat{min-width:0;padding:14px 16px;border-radius:20px;background:color-mix(in srgb,var(--well-accent) 6%,var(--well-surface));border:1px solid color-mix(in srgb,var(--well-line) 65%,transparent)}
+.food-stat>span{display:block;font-size:calc(13px*var(--rc-scale,1));font-weight:700;color:var(--well-muted)}
+.food-stat strong{display:inline-block;margin:8px 6px 0 0;font-family:var(--dw-display,inherit);font-size:calc(30px*var(--rc-scale,1));line-height:1.1;letter-spacing:-.02em}
+.food-stat small{font-size:calc(13px*var(--rc-scale,1));color:var(--well-muted)}
+.food-space .food-stat p{margin:6px 0 0;font-size:calc(12.5px*var(--rc-scale,1));line-height:1.45}
+.food-stat .calorie-guide{display:block;margin-top:2px;font-size:calc(12.5px*var(--rc-scale,1));color:var(--well-muted)}
+.food-today-actions{margin:12px 0 4px}
+.food-today .food-date{display:flex;flex-direction:column;align-items:flex-start;gap:4px;font-size:calc(12.5px*var(--rc-scale,1));color:var(--well-muted)}
+.food-today .food-date input{width:auto;min-height:40px;padding:6px 12px;border-radius:14px}
+@media(max-width:700px){.food-space .food-tabs button{flex-direction:column;gap:3px;padding:9px 4px;font-size:calc(12.5px*var(--rc-scale,1))}.food-space .food-tabs button[data-count]::after{position:absolute;top:4px;right:6px;min-width:20px;height:20px;padding:0 5px;font-size:11px}.food-list{padding:18px 16px}.food-plan{padding:16px;gap:12px}.food-plan-date{width:58px;height:70px}}
+@media(max-width:340px){.food-stats{grid-template-columns:1fr}}
+/* Recipe ideas: "What could I make?" on the basket, and "Need a recipe?" while planning a meal */
+.basket-ideas{margin:26px 0;padding:24px;border-radius:32px 32px 24px 24px;border:1px solid var(--well-line);background:linear-gradient(150deg,color-mix(in srgb,var(--well-accent) 9%,var(--well-surface)) 0%,var(--well-surface) 70%);box-shadow:0 14px 40px color-mix(in srgb,var(--well-ink) 6%,transparent)}
+.basket-ideas-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:16px}.basket-ideas-head>div{flex:1;min-width:0}
+.food-space .basket-ideas h2{font-size:calc(24px*var(--rc-scale,1));margin:2px 0 6px}.food-space .basket-ideas-head p{margin:0}
+.basket-ideas-wish{display:flex;flex-direction:column;gap:6px;margin:0 0 14px;font-size:calc(14px*var(--rc-scale,1));font-weight:600}
+.basket-ideas>.well-button{width:100%;justify-content:center}
+.food-space .basket-ideas-summary{margin:16px 0 4px;font-weight:600}
+.basket-ideas-list{margin-top:14px}
+.food-space .idea-label{margin:12px 0 0;font-size:calc(13px*var(--rc-scale,1));font-weight:700;color:var(--well-muted)}
+.food-space .idea-label.is-ready{font-size:calc(14px*var(--rc-scale,1));color:var(--well-ink)}
+.basket-ideas-list details ol{list-style:decimal;padding-left:22px}
+.food-recipe .food-chips{margin:6px 0 4px}
+.food-space .food-chips.is-missing li{background:transparent;border:1.5px dashed color-mix(in srgb,var(--well-accent) 45%,var(--well-line))}
+.idea-actions{align-self:stretch;display:flex;flex-direction:column;align-items:stretch;gap:4px;margin-top:auto}.idea-actions .well-button{justify-content:center}
+.idea-listed{font-size:calc(13.5px*var(--rc-scale,1));color:var(--well-muted);text-align:center;padding:8px 0}
+.food-recipe .ai-report{align-self:stretch}
+.recipe-helper{margin:18px 0 6px;padding:18px;border-radius:24px;border:1px solid var(--well-line);background:color-mix(in srgb,var(--well-accent) 6%,var(--well-surface))}
+.recipe-helper-head{display:flex;gap:14px;align-items:flex-start}.recipe-helper-head>div{flex:1;min-width:0}.recipe-helper-head .food-invitation-icon{width:42px;height:42px;border-radius:15px}
+.recipe-helper h3{margin:2px 0 4px}.recipe-helper-head p{margin:0;font-size:calc(14px*var(--rc-scale,1))}
+.recipe-steps{margin:14px 0 6px;padding-left:22px;line-height:1.6;list-style:decimal}.recipe-steps li{margin:0 0 6px}
+.recipe-extras{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin:10px 0;padding:12px 14px;border-radius:16px;background:var(--well-surface);border:1px dashed var(--well-line)}.recipe-extras p{margin:0}
+.recipe-helper .well-actions{margin-top:12px}
+.food-note-row{align-items:end}
+@media(max-width:700px){.basket-ideas{padding:20px 18px}.basket-ideas-head .food-invitation-icon{display:none}}

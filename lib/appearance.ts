@@ -60,7 +60,7 @@ export const referenceLook: Appearance = {
   buttons: "pillowy", company: "perch", composition: "original",
 };
 export const designIterations = [
-  { id: "breathing", name: "Breathing room", description: "An open centre with voice first. Small companions rest below, leaving room to think.", detail: "The calmest direction" },
+  { id: "breathing", name: "Breathing room", description: "An open centre with voice first. Small companions rest below, leaving room to think.", detail: "The calmest layout" },
   { id: "cove", name: "Cosy cove", description: "A soft arch holds the companions and your voice control together. A little more shelter.", detail: "Comfort in one soft shape" },
   { id: "beside", name: "Gentle company", description: "Your words on one side, your companions on the other. An unhurried space to settle into.", detail: "A spacious, personal corner" },
 ] as const;

@@ -1,17 +1,40 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
+import { soundLook } from "./area-look";
 import { FADE_OUT_SECONDS, linearGain, loopPoints, sleepSoundGroups, sleepSoundUrl, sleepSounds, stopAfterMinutes, stopPlan, type SleepSound } from "@/lib/sleep-sounds";
+import type { SoundFocus } from "@/lib/sound-request";
 
 type Engine = { context: AudioContext; master: GainNode; buffers: Map<string, Promise<AudioBuffer>> };
 type Playing = { sound: SleepSound; sources: AudioBufferSourceNode[]; gain: GainNode };
 const soundById = new Map(sleepSounds.map(sound => [sound.id, sound]));
 const stopLabel = (minutes: number) => minutes === 0 ? "Off" : minutes === 60 ? "1 hour" : `${minutes} min`;
 const clockTimeAfter = (seconds: number) => Date.now() + seconds * 1000;
+// iPhones mute Web Audio when the side switch is on silent, though music still plays. Asking for "playback" (Safari 17
+// and later) lets these sounds play like music; on older iPhones, a moment of silence played through an ordinary audio
+// element in the same tap does the same.
+const SILENCE = "data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQIAAACAgA==";
+function preferPlayback() {
+  const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+  if (session) {
+    try { session.type = "playback"; } catch { /* the browser keeps its own choice */ }
+    return;
+  }
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1)) {
+    void new Audio(SILENCE).play().catch(() => undefined);
+  }
+}
+// A context the phone interrupted (a call, a locked screen) can stay suspended. Give up after a few seconds, and start a
+// fresh one on the next tap, rather than waiting for ever.
+async function running(context: AudioContext) {
+  await Promise.race([context.resume(), new Promise<never>((_, reject) => window.setTimeout(() => reject(Error("suspended")), 4000))]);
+  if (context.state !== "running") throw Error("suspended");
+}
 
 // Sounds for the quiet corner: one looping sound at a time, with gentle fades between them. It keeps playing while the
 // screen is off; "Stop after" fades out on the audio clock, so a sleeping page still stops on time. Leaving stops it.
-export function SleepSounds() {
+export function SleepSounds({ focusRequest = null }: { focusRequest?: SoundFocus | null }) {
+  const heading = useRef<HTMLHeadingElement>(null);
   const [selected, setSelected] = useState(sleepSounds[0].id), [playing, setPlaying] = useState(false), [loading, setLoading] = useState(false);
   const [volume, setVolume] = useState(0.7), [stopAfter, setStopAfter] = useState(0), [endsAt, setEndsAt] = useState<number | null>(null), [error, setError] = useState("");
   const engine = useRef<Engine | null>(null), current = useRef<Playing | null>(null), request = useRef(0), endTimer = useRef(0), stopAt = useRef<number | null>(null);
@@ -46,6 +69,7 @@ export function SleepSounds() {
     item.gain.gain.setValueAtTime(linearGain(item.sound.gainDb), fadeFrom); item.gain.gain.linearRampToValueAtTime(0, Math.max(fadeFrom + 0.1, end));
   }
   const finish = useCallback(() => {
+    request.current++; setLoading(false);
     window.clearTimeout(endTimer.current); stopAt.current = null; setEndsAt(null);
     const item = current.current; current.current = null; setPlaying(false);
     if (item) for (const source of item.sources) source.stop();
@@ -62,10 +86,15 @@ export function SleepSounds() {
   async function play(id: string) {
     const sound = soundById.get(id);
     if (!sound) return;
+    window.dispatchEvent(new Event("daywell-stop-voice"));
+    window.dispatchEvent(new CustomEvent("daywell-stop-library-audio", { detail: { source: "sleep-sounds" } }));
+    window.dispatchEvent(new CustomEvent("daywell-stop-guided-audio", { detail: { source: "sleep-sounds" } }));
+    window.dispatchEvent(new Event("daywell-stop-narration"));
+    preferPlayback();
     const e = ensureEngine(), ticket = ++request.current;
     setError(""); setLoading(true); setSelected(id);
     try {
-      await e.context.resume();
+      await running(e.context);
       const buffer = await bufferFor(e, sound);
       if (ticket !== request.current) return;
       fadeAway(current.current);
@@ -81,8 +110,12 @@ export function SleepSounds() {
       current.current = { sound, sources, gain };
       setPlaying(true);
       if (stopAt.current !== null) applyStop(current.current); else if (stopAfter) startTimer(stopAfter);
-    } catch {
-      if (ticket === request.current) setError("That sound couldn’t load. Check your connection and try again.");
+    } catch (problem) {
+      if (ticket !== request.current) return;
+      if (problem instanceof Error && problem.message === "suspended") {
+        if (engine.current === e) { void e.context.close(); engine.current = null; }
+        setError("The sound didn’t start. Tap Play again.");
+      } else setError("That sound couldn’t load. Check your connection and try again.");
     } finally {
       if (ticket === request.current) setLoading(false);
     }
@@ -106,6 +139,26 @@ export function SleepSounds() {
     if (e) e.master.gain.setTargetAtTime(value, e.context.currentTime, 0.05);
   }
   useEffect(() => {
+    if (!focusRequest) return;
+    const frame = requestAnimationFrame(() => {
+      finish(); setSelected(focusRequest.music ? "pan-flute" : sleepSounds[0].id);
+      heading.current?.focus({ preventScroll: true });
+      heading.current?.scrollIntoView({ block: "start", behavior: "instant" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [focusRequest, finish]);
+  useEffect(() => {
+    const stopForOtherAudio = (event: Event) => {
+      if ((event as CustomEvent<{ source?: string }>).detail?.source !== "sleep-sounds") finish();
+    };
+    window.addEventListener("daywell-stop-library-audio", stopForOtherAudio);
+    window.addEventListener("daywell-stop-guided-audio", stopForOtherAudio);
+    return () => {
+      window.removeEventListener("daywell-stop-library-audio", stopForOtherAudio);
+      window.removeEventListener("daywell-stop-guided-audio", stopForOtherAudio);
+    };
+  }, [finish]);
+  useEffect(() => {
     // Back on screen: catch up with a "Stop after" that ended while the page slept.
     const wake = () => { if (!document.hidden && stopAt.current !== null && engine.current && engine.current.context.currentTime >= stopAt.current) finish(); };
     const requests = request, timer = endTimer, audio = engine, playingNow = current;
@@ -122,11 +175,12 @@ export function SleepSounds() {
     ? `Stops at ${new Date(endsAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}, fading out over the last minute.`
     : `Stops ${stopAfter === 60 ? "an hour" : `${stopAfter} minutes`} after you press Play.`;
   return <section className="sleep-sounds" aria-labelledby="sleep-sounds-title">
-    <h2 id="sleep-sounds-title">Sounds for rest and sleep</h2>
+    <h2 ref={heading} tabIndex={-1} id="sleep-sounds-title">Sounds for rest and sleep</h2>
+    <p>Nature sounds and gentle music, with an optional stop timer.</p>
     {sleepSoundGroups.map(group => <div className="sleep-sounds-group" key={group.id}>
       <p id={`sleep-sounds-${group.id}`}>{group.label}</p>
-      <div className="sleep-sounds-chips" role="group" aria-labelledby={`sleep-sounds-${group.id}`}>
-        {sleepSounds.filter(sound => sound.group === group.id).map(sound => <button key={sound.id} type="button" aria-pressed={selected === sound.id} onClick={() => choose(sound.id)}>{sound.label}</button>)}
+      <div className="sleep-sounds-chips sleep-sounds-tiles" role="group" aria-labelledby={`sleep-sounds-${group.id}`}>
+        {sleepSounds.filter(sound => sound.group === group.id).map(sound => { const look = soundLook(sound.label); return <button key={sound.id} type="button" className={`area-tone-${look.tone}`} aria-pressed={selected === sound.id} onClick={() => choose(sound.id)}><span className="area-icon is-small" aria-hidden><look.Icon size={17} /></span>{sound.label}</button>; })}
       </div>
     </div>)}
     <div className="sleep-sounds-row">
@@ -135,12 +189,12 @@ export function SleepSounds() {
     </div>
     <div className="sleep-sounds-group">
       <p id="sleep-sounds-stop">Stop after</p>
-      <div className="sleep-sounds-chips" role="group" aria-labelledby="sleep-sounds-stop">
+      <div className="sleep-sounds-chips sleep-sounds-segment" role="group" aria-labelledby="sleep-sounds-stop">
         {stopAfterMinutes.map(minutes => <button key={minutes} type="button" aria-pressed={stopAfter === minutes} onClick={() => changeStopAfter(minutes)}>{stopLabel(minutes)}</button>)}
       </div>
     </div>
     <p className="sleep-sounds-note" aria-live="polite">{timerNote}</p>
-    <small>It fades out gently over the last minute. Some phones pause web sounds when the screen locks; the phone app will keep them going.</small>
+    <small>It fades out gently over the last minute. Some phones pause sounds when the screen locks; keep Daywell open if that happens.</small>
     {error && <p role="alert" className="form-error">{error}</p>}
   </section>;
 }

@@ -13,9 +13,9 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 
 | Table | What it holds | Personal | Kept for | Export / closure (#47) |
 | --- | --- | --- | --- | --- |
-| `settings` | Name, tools, bedtime, reading and voice choices; About you: birth year, optional sex, height and weight history (only with `bodyConsentAt`), calorie tracking | Yes. Body details are health data | Until changed or the account closes | Yes / yes |
+| `settings` | Name, tools, bedtime, reading and voice choices; the figure in workout pictures (female or male); the reps chosen for a move after a new best (Move's "What next?"); About you: birth year, optional sex, height and weight history (only with `bodyConsentAt`), calorie tracking; what the assistant may look at, and when the person agreed (`assistantAreas`, `assistantConsentAt`) | Yes. Body details are health data | Until changed or the account closes | Yes / yes |
 | `entries` | Everything saved in the day: tasks, shopping, meals with calories and sugar, workouts, sleep nights, alarms, the timer, calendar events and private reflections | Yes. Meals, workouts and sleep are health data, and reflections may be very personal | Until the person deletes them; up to 20,000 a person | Yes / yes |
-| `food_spaces` | Food basket, meal plans and shopping, one record a person | Yes | Until changed or closed | Yes / yes |
+| `food_spaces` | Food in the kitchen (with where each item is kept, and where each food usually goes), meal plans and shopping, one record a person | Yes | Until changed or closed | Yes / yes |
 | `food_operations` | Each food change and how to undo it | Yes | **Forever today.** Owner decision 13 October: 365 days | Yes / yes |
 | `usage_limits` | Counts of paid AI uses in the current window. In the public app, also sign-in protection counts, keyed by a hashed address or network | Low | Overwritten each window; sign-in counts removed daily | Yes / yes |
 | `accounts` (public app) | Email address, random account ID, when it was created and last signed in | Yes | Until the account closes | **Not yet** / **not yet** |
@@ -26,17 +26,19 @@ Review date: 13 October 2026. It covers `main` (`f8ee12e`), the live build (#46)
 
 ## Not stored by Daywell
 
-- Photos and voice recordings are sent for one estimate and never saved.
+- Photos and voice recordings are sent for one estimate and never saved. Receipt photos too: they're read once to put shopping away.
+- The assistant's conversation is held in the page's memory for the visit and sent with each question. It's forgotten when the person ends the chat or leaves Daywell.
 - Live conversation transcripts are held by ElevenLabs under the agent's retention setting, and go away when live voice is removed.
 - Payment details are never seen; Apple and Google handle payment.
-- Device-only drafts and reading or appearance choices stay in the browser.
+- Device-only drafts, the trolley tray (what's been picked up while shopping), Move's walk in progress (its start time) and "rest today" choice, and reading, appearance and voice choices (Daywell's voice, its speed, reading replies aloud, keep listening) stay in the browser.
 
 ## Sent to outside services
 
 | Service | What goes | When |
 | --- | --- | --- |
-| OpenAI | Food photo or description, basket and reserved amounts for a meal plan (`store: false`) | Only when asked |
-| ElevenLabs | Voice or typed messages, timer details, readout text | Live voice and readouts, which leave version 1 |
+| OpenAI | Food photo or description; basket and reserved amounts for a meal plan; the basket's names, quantities and units for recipe ideas; a planned meal's name and ingredients for recipe steps; a receipt photo, to put shopping away; for the assistant, the question, the visit's conversation and the records of the areas the person allowed (names, dates, times and amounts; never About you details, nutrition numbers or notes) (`store: false`) | Only when asked; the assistant only after the person chooses what it can see |
+| ElevenLabs | Nothing. “Hear this” reads food reviews in the phone's own voice (approved 23 October), and the app stopped starting live conversations on 22 October | Never |
+| The person's phone or browser (Apple or Google, depending on the device) | What they say while Talk to Daywell is listening, turned into text by the device's own speech service, and the text it reads aloud (replies and food reviews); some devices run these services online | Only while listening or reading aloud |
 | TypeSafe (US) | Unmatched requests to pick a recorded reply | Switched off |
 | Cloudflare | Everything above runs on its network; the planned chat would use its AI service, which doesn't train on customer data | Always |
 

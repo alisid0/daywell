@@ -1,0 +1,41 @@
+/* Endless wheels for a clock time or a length, and the buttons that open them (owner-approved, 24 October 2026).
+   These use each look's own colours; the sticker look adds its outline, hard shadow and mint band in personality.css.
+   See docs/time-pickers.md. */
+.time-button {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: calc(48px*var(--rc-scale,1));
+  padding: 0 14px; border-radius: 14px; border: 1px solid var(--dw-line, #e2d5df); background: var(--dw-surface, #ffffff); color: var(--dw-ink, #522d46);
+  font: 800 calc(18px*var(--rc-scale,1))/1 var(--dw-display, inherit); font-variant-numeric: tabular-nums; cursor: pointer; text-align: left;
+}
+.time-button::after {
+  content: ""; flex: none; width: 9px; height: 9px; border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor;
+  transform: translateY(-3px) rotate(45deg); transition: transform 160ms ease;
+}
+.time-button[aria-expanded="true"] { background: var(--dw-accent, #803c65); color: var(--dw-on-accent, #ffffff) }
+.time-button[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg) }
+.time-panel { display: grid; justify-items: center; gap: 6px; margin: 12px 0 4px }
+.time-panel-title { font-size: calc(14px*var(--rc-scale,1)); font-weight: 700; color: var(--dw-muted, #7d536e) }
+.time-wheels {
+  position: relative; display: flex; justify-content: center; gap: 6px; padding: 6px; border-radius: 20px;
+  background: var(--dw-surface, #ffffff); border: 1px solid var(--dw-line, #e2d5df);
+}
+/* The band behind the middle row: 6px padding, plus half of a 240px wheel, less half a row. */
+.time-wheels::before {
+  content: ""; position: absolute; left: 8px; right: 8px; top: 102px; height: 48px; border-radius: 14px; pointer-events: none;
+  background: color-mix(in srgb, var(--dw-accent, #803c65) 16%, transparent);
+}
+.time-wheel-wrap { position: relative; padding-bottom: 22px }
+.time-wheel {
+  position: relative; height: 240px; width: 68px; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y mandatory; scrollbar-width: none; border-radius: 12px;
+  -webkit-mask-image: linear-gradient(transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(transparent, #000 25%, #000 75%, transparent);
+}
+.time-wheel::-webkit-scrollbar { display: none }
+.time-wheel:focus-visible { outline: 3px solid var(--dw-focus, #2f6fd6); outline-offset: 2px }
+.time-wheel ol { list-style: none; margin: 0; padding: 96px 0 }
+.time-wheel li {
+  height: 48px; display: grid; place-items: center; scroll-snap-align: center; cursor: pointer;
+  font: 800 calc(26px*var(--rc-scale,1))/1 var(--dw-display, inherit); font-variant-numeric: tabular-nums; color: var(--dw-ink, #522d46);
+}
+.time-wheel-label { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; font-size: calc(14px*var(--rc-scale,1)); color: var(--dw-muted, #7d536e) }
+.timer-settings .time-wheels { width: fit-content; margin: 4px auto 16px }
+.mv-inline-wheels { flex-basis: 100%; display: grid; justify-items: center; margin-top: 8px }
+@media (prefers-reduced-motion: reduce) { .time-button::after { transition: none } }

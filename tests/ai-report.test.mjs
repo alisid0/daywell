@@ -54,8 +54,13 @@ test('the daily clean-up removes only reports older than 90 days, and the table 
 
 test('AI consent names the provider before anything is sent (Apple 5.1.2(i))', () => {
   const read = file => readFileSync(new URL(`../app/${file}`, import.meta.url), 'utf8');
-  assert.match(read('daywell-host.tsx'), /current timer details to ElevenLabs, which runs Daywell’s conversations/);
+  // The Plus assistant asks first, in its own sheet, and the panel's details say where questions go (22 October 2026).
+  assert.match(read('assistant.tsx'), /Asking sends your message and the records it needs to OpenAI to write the reply\./);
+  assert.match(read('daywell-host.tsx'), /Other questions go to the assistant, which uses OpenAI; before it first looks at your records, you choose what it can see\./);
+  assert.match(read('receipt.tsx'), /The photo goes to OpenAI to read it\. Daywell doesn’t keep it\./);
   assert.match(read('capture-hub.tsx'), /Asking for a plan sends your request, basket and reserved amounts to OpenAI\.".*"Your photo or description goes to OpenAI for an estimate\."/);
-  assert.match(read('food-plan-journey.tsx'), /Asking for a plan sends your basket and reserved amounts to OpenAI\./);
-  for (const file of ['daywell-host.tsx', 'capture-hub.tsx', 'food-plan-journey.tsx']) assert.doesNotMatch(read(file), /with the AI service|AI estimates\. Nothing|Starting shares/);
+  // Recipe ideas from the kitchen: the recipe cards, and the Week's idea for an empty slot.
+  assert.match(read('cook.tsx'), /Asking sends the names and quantities of the food in your kitchen to OpenAI\./);
+  assert.match(read('week.tsx'), /Asking sends the names and quantities of the food in your kitchen to OpenAI\./);
+  for (const file of ['daywell-host.tsx', 'assistant.tsx', 'receipt.tsx', 'capture-hub.tsx', 'cook.tsx', 'week.tsx']) assert.doesNotMatch(read(file), /with the AI service|AI estimates\. Nothing|Starting shares/);
 });

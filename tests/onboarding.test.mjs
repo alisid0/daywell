@@ -16,7 +16,7 @@ test("a timer is tried only after starting or completing it, not just choosing a
   assert.equal(hasTriedStep([{ id: "focus-session", kind: "session", data: {} }], "timer"), true);
 });
 test("older settings get the guide without changing their selected tools or name", () => {
-  const { guideDismissed, calorieTracking, birthYear, sex, heightCm, weights, bodyConsentAt, ...oldSettings } = defaults;
+  const { guideDismissed, calorieTracking, birthYear, sex, heightCm, weights, bodyConsentAt, guideFigure, moveTargets, assistantAreas, assistantConsentAt, ...oldSettings } = defaults;
   const result = settingsSchema.parse({ ...oldSettings, name: "Alex", modules: ["grocery"], onboarded: true });
   assert.equal(result.guideDismissed, false);
   assert.equal(result.name, "Alex");
@@ -27,5 +27,12 @@ test("older settings get the guide without changing their selected tools or name
   assert.equal(defaults.calorieTracking, false);
   assert.equal(result.birthYear, null);
   assert.deepEqual(result.weights, []);
+  assert.equal(result.guideFigure, "female");
+  assert.deepEqual(result.moveTargets, {});
+  // The assistant looks at nothing until the person agrees, and areas are kept only with that agreement.
+  assert.deepEqual(result.assistantAreas, []);
+  assert.equal(result.assistantConsentAt, null);
+  assert.equal(settingsSchema.safeParse({ ...result, assistantAreas: ['food'] }).success, false);
+  assert.deepEqual(settingsSchema.parse({ ...result, assistantAreas: ['food', 'food'], assistantConsentAt: '2026-10-22T18:30:00.000Z' }).assistantAreas, ['food']);
   assert.equal(settingsSchema.parse({ ...result, calorieTracking: true }).calorieTracking, true);
 });

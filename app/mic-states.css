@@ -43,9 +43,9 @@
 .nook-company .dw-companion-image{transition:rotate .5s cubic-bezier(.3,.7,.3,1),translate .5s cubic-bezier(.3,.7,.3,1),scale .5s}
 .daywell-host[data-mic="listening"] .nook-company .companion-image-luma{rotate:6deg;translate:0 2px}
 .daywell-host[data-mic="listening"] .nook-company .companion-image-bounce{rotate:-6deg;translate:0 2px}
-.daywell-host[data-mic="listening"] .nook-company .companion-image-pip{scale:1.03;translate:0 3px}
+.daywell-host[data-mic="listening"] .nook-company .companion-image-nori{scale:1.03;translate:0 3px}
 .daywell-host[data-mic="thinking"] .nook-company .dw-companion-image{rotate:-4deg;translate:0 -3px}
-.daywell-host[data-mic="speaking"] .nook-company .companion-image-pip{animation:mic-talk 1s ease-in-out infinite}
+.daywell-host[data-mic="speaking"] .nook-company .companion-image-nori{animation:mic-talk 1s ease-in-out infinite}
 @keyframes mic-talk{0%,100%{translate:0 0;scale:1}15%{translate:0 -2px;scale:1.02 .97}30%{translate:0 0;scale:.99 1.02}50%{translate:0 -3px;scale:1.02 .97}70%{translate:0 0;scale:1 1.01}}
 
 @media(prefers-reduced-motion:reduce){

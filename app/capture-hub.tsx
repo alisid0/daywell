@@ -9,9 +9,11 @@ import type { AppState } from "./use-daywell";
 import type { MealProposal } from "@/lib/food-journey";
 import { PrivacyDetails } from "./privacy-details";
 import { AiReport } from "./ai-report";
-import { useFoodNarration } from "./use-food-narration";
+import { useReadAloud } from "./use-read-aloud";
 import { foodNarration, foodDraftDetail } from "@/lib/food-narration";
 import { PlanCoverage, PlanGuide } from "./food-plan-journey";
+import { addFoodByHand } from "./kitchen";
+import { photoProblem, shrinkPhoto } from "./photo";
 
 type Mode = "meal" | "basket" | "grocery" | "plan";
 type CaptureStart = { mode?: string; intent?: string; text?: string; planStart?: string; planCount?: number; planMeal?: string };
@@ -21,7 +23,7 @@ type Draft = { summary: string; question: string | null; entries: Entry[]; baske
 const reportText = (draft: Draft) => [draft.summary, draft.question ?? "",
   ...draft.entries.map(entry => `${entry.data.title}: ${entry.kind === "food" ? foodDraftDetail(entry.data) : entry.data.quantity}`),
   ...(draft.plans ?? []).map(plan => `${plan.title} (${plan.date}, ${plan.meal})`),
-  ...(draft.basket ?? []).map(item => `${item.ingredient}: ${item.quantity === null ? "amount to check" : `${item.quantity} ${item.unit}`}`)].filter(Boolean).join("\n");
+  ...(draft.basket ?? []).map(item => item.quantity === null ? item.ingredient : `${item.ingredient}: ${item.quantity} ${item.unit}`)].filter(Boolean).join("\n");
 const choices: [Mode, string][] = [["meal", "Meal or drink"], ["basket", "Food basket"], ["grocery", "Shopping list"]];
 const capture = (mode: Mode, intent: "photo" | "voice") => window.dispatchEvent(new CustomEvent("daywell-capture", { detail: { mode, intent } }));
 
@@ -30,16 +32,16 @@ export function FoodCaptureCard({ a }: { a: AppState }) {
   return <section className="food-capture-card" aria-labelledby="food-capture-title">
     <span className="food-eyebrow">A picture. A few words. A little less effort.</span>
     <h2 id="food-capture-title">Show me. Tell me.</h2>
-    <p>{mode === "meal" ? "Snap your meal, then check the portion before saving." : mode === "basket" ? "Show what you have. We’ll leave uncertain amounts for you to check." : "Show your list or say what to pick up."}</p>
+    <p>{mode === "meal" ? "Snap your meal, then check the portion before saving." : mode === "basket" ? "Show what you have. Quantities are optional." : "Show your list or say what to pick up."}</p>
     <div className="capture-choices" role="group" aria-label="What are you sharing?">{choices.map(([id, label]) => <button type="button" key={id} aria-pressed={mode === id} onClick={() => setMode(id)}>{label}</button>)}</div>
     <div className="capture-primary-actions"><button className="well-button capture-shutter" onClick={() => capture(mode, "photo")}><Camera size={26}/>Take a photo</button><button className="well-button well-secondary" onClick={() => capture(mode, "voice")}><Mic size={24}/>Tell Daywell</button></div>
     <small>Review first. Save when it looks right.</small>
-    <button className="well-text-button capture-manual" onClick={() => { if (mode === "meal") a.openEditor("food"); else if (mode === "grocery") a.openEditor("grocery"); else { a.food.setView("basket"); a.food.open({ type: "stock.set", item: { id: crypto.randomUUID(), ingredient: "", quantity: null, unit: "g", bestBefore: null } }); } }}><Keyboard size={15}/>Add by hand instead</button>
+    <button className="well-text-button capture-manual" onClick={() => { if (mode === "meal") a.openEditor("food"); else if (mode === "grocery") a.openEditor("grocery"); else addFoodByHand(); }}><Keyboard size={15}/>Add by hand instead</button>
   </section>;
 }
 
 export function CaptureHub({ a }: { a: AppState }) {
-  const narration = useFoodNarration();
+  const narration = useReadAloud();
   const clearNarration = narration.clear;
   const [open, setOpen] = useState(false), [mode, setMode] = useState<Mode>("meal");
   const [planOptions, setPlanOptions] = useState({start:today(),count:2,meal:"Dinner"});
@@ -87,20 +89,18 @@ export function CaptureHub({ a }: { a: AppState }) {
     setMealOrigin("home"); setPlanOptions({ start: detail.planStart || today(), count: detail.planCount || 2, meal: detail.planMeal || "Dinner" });
     window.dispatchEvent(new Event("daywell-stop-voice"));
     if (detail.intent === "photo") picker.current?.click();
+    if (detail.intent === "type") setTyped(true);
     // Voice begins on the labelled record button, after the sharing notice is visible.
   }; });
   async function choosePhoto(file: File) {
     narration.clear(); const token = epoch.current; setError("");
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size > 15 * 1024 * 1024) { setError("Choose a JPEG, PNG or WebP photo under 15 MB."); return; }
+    const problem = photoProblem(file);
+    if (problem) { setError(problem); return; }
     setBusy(true); lock.current = true;
     try {
-      const bitmap = await createImageBitmap(file); const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
-      const canvas = document.createElement("canvas"); canvas.width = Math.round(bitmap.width * scale); canvas.height = Math.round(bitmap.height * scale);
-      canvas.getContext("2d")!.drawImage(bitmap, 0, 0, canvas.width, canvas.height); bitmap.close();
-      const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, "image/jpeg", .85));
-      if (!blob) throw Error("Couldn’t open that photo. Try another one.");
+      const shrunk = await shrinkPhoto(file, "food.jpg");
       if (epoch.current !== token) return;
-      setPhoto(new File([blob], "food.jpg", { type: "image/jpeg" })); setPreview(URL.createObjectURL(blob)); setResult(null); setContext(""); setConsumed(false); setAudio(null);
+      setPhoto(shrunk); setPreview(URL.createObjectURL(shrunk)); setResult(null); setContext(""); setConsumed(false); setAudio(null);
     } catch { if (epoch.current === token) setError("Couldn’t open that photo. Try another one."); }
     finally { if (epoch.current === token) { setBusy(false); lock.current = false; } }
   }
@@ -170,16 +170,16 @@ export function CaptureHub({ a }: { a: AppState }) {
     <input ref={picker} hidden aria-label="Take a food photo" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={e => { const file = e.target.files?.[0]; if (file) void choosePhoto(file); e.target.value = ""; }}/>
     <input ref={upload} hidden aria-label="Choose a food photo" type="file" accept="image/jpeg,image/png,image/webp" onChange={e => { const file = e.target.files?.[0]; if (file) void choosePhoto(file); e.target.value = ""; }}/>
     <Dialog open={open} onOpenChange={value => { if (!value) close(); }}><DialogContent className="food-capture-dialog"><DialogHeader><DialogTitle>{saved ? "A little less to remember." : result?.question ? "One quick question." : hasDraft ? "Does this look right?" : mode === "plan" ? "Let’s make a few meals." : choices.find(([id]) => id === mode)?.[1]}</DialogTitle><DialogDescription>{saved ? "Your confirmed entries are saved." : hasDraft ? "Check the details before saving." : "A photo or a few words is all you need."}</DialogDescription></DialogHeader>
-      {connected === false && <div className="capture-connection" role="status"><strong>Photo and voice recognition are unavailable right now.</strong><p>Try again shortly, or add your food by hand.</p><button className="well-text-button" onClick={() => void checkConnection()}><RotateCcw size={15}/>Try again</button><button className="well-text-button" onClick={() => { close(); if (mode === "basket") { a.setActive("eat"); a.food.open({ type: "stock.set", item: { id: crypto.randomUUID(), ingredient: "", quantity: null, unit: "g", bestBefore: null } }); } else if(mode === "plan") { a.setActive("eat"); a.food.setView("meals"); } else a.openEditor(mode === "meal" ? "food" : "grocery"); }}>Add by hand</button></div>}
+      {connected === false && <div className="capture-connection" role="status"><strong>Photo and voice recognition are unavailable right now.</strong><p>Try again shortly, or add your food by hand.</p><button className="well-text-button" onClick={() => void checkConnection()}><RotateCcw size={15}/>Try again</button><button className="well-text-button" onClick={() => { close(); if (mode === "basket") { a.setActive("eat"); addFoodByHand(); } else if(mode === "plan") { a.setActive("eat"); a.food.setView("meals"); } else a.openEditor(mode === "meal" ? "food" : "grocery"); }}>Add by hand</button></div>}
       {saved ? <div className="capture-finished"><Check size={34}/><button className="well-button" onClick={close}>Back to my day</button></div> : <>
         {mode === "meal" && !hasDraft && !result?.question && <div className="capture-choices" role="group" aria-label="Where is your meal from?">{Object.entries(mealOrigins).map(([id,label])=><button type="button" key={id} disabled={busy || recording} aria-pressed={mealOrigin===id} onClick={()=>setMealOrigin(id as keyof typeof mealOrigins)}>{label}</button>)}</div>}
         {mode === "plan" && !hasDraft && !result?.question && <><p>Up to {planOptions.count} {planOptions.meal.toLowerCase()} meals for one person, starting {planOptions.start}. Say any preferences or exclusions.</p><button className="well-button" disabled={busy || !connected} onClick={()=>void understand()}>Suggest from my saved basket</button></>}
         {preview && <figure className="food-photo-preview"><img src={preview} alt="Your food photo for review"/>{!busy && !recording && !uncertain && <button className="well-text-button" onClick={() => upload.current?.click()}>Choose another photo</button>}</figure>}
-        {result && <section className="capture-review"><div aria-live="polite"><p>{result.summary}</p>{result.question && <p><strong>{result.question}</strong></p>}</div><button className="well-text-button" disabled={recording || busy} onClick={() => void narration.speak(foodNarration(result))}><Volume2 size={16}/>{narration.status === "loading" ? "Cancel" : narration.status === "playing" ? "Stop reading" : "Hear this"}</button>{narration.status === "loading" && <small role="status">Getting your readout ready…</small>}{narration.error && <p role="alert">{narration.error}</p>}{result.transcript && <small>You said: “{result.transcript}”</small>}
-          {result.entries.map(entry => <article className="capture-draft-item" key={entry.id}><strong>{entry.data.title}</strong><small>{entry.kind === "food" ? foodDraftDetail(entry.data) : entry.data.quantity}</small>{entry.kind === "food" && <div className="capture-choices" role="group" aria-label={`Meal for ${entry.data.title}`}>{["Breakfast", "Lunch", "Dinner", "Snack"].map(meal => <button key={meal} disabled={busy || recording || uncertain} aria-pressed={entry.data.meal === meal} onClick={() => setResult({ ...result, entries: result.entries.map(old => old.id === entry.id ? { ...old, data: { ...old.data, meal } } : old) })}>{meal}</button>)}</div>}</article>)}
-          {result.plans?.map(plan=><article className="capture-draft-item" key={plan.id}><strong>{plan.title}</strong><small>{plan.date} · {plan.meal} · one person</small><small>{plan.ingredients.map(item=>`${item.quantity} ${item.unit} ${item.ingredient}`).join(" · ")}</small><PlanGuide plan={plan}/></article>)}
+        {result && <section className="capture-review"><div aria-live="polite"><p>{result.summary}</p>{result.question && <p><strong>{result.question}</strong></p>}</div>{narration.supported && <button className="well-text-button" disabled={recording || busy} onClick={() => narration.speak(foodNarration(result, a.settings.calorieTracking))}><Volume2 size={16}/>{narration.status === "playing" ? "Stop reading" : "Hear this"}</button>}{narration.error && <p role="alert">{narration.error}</p>}{result.transcript && <small>You said: “{result.transcript}”</small>}
+          {result.entries.map(entry => <article className="capture-draft-item" key={entry.id}><strong>{entry.data.title}</strong><small>{entry.kind === "food" ? foodDraftDetail(entry.data, a.settings.calorieTracking) : entry.data.quantity}</small>{entry.kind === "food" && <div className="capture-choices" role="group" aria-label={`Meal for ${entry.data.title}`}>{["Breakfast", "Lunch", "Dinner", "Snack"].map(meal => <button key={meal} disabled={busy || recording || uncertain} aria-pressed={entry.data.meal === meal} onClick={() => setResult({ ...result, entries: result.entries.map(old => old.id === entry.id ? { ...old, data: { ...old.data, meal } } : old) })}>{meal}</button>)}</div>}</article>)}
+          {result.plans?.map(plan=><article className="capture-draft-item" key={plan.id}><strong>{plan.title}</strong><small>{plan.date} · {plan.meal} · one person</small><small>{plan.ingredients.map(item=>item.quantity===null?item.ingredient:`${item.quantity} ${item.unit} ${item.ingredient}`).join(" · ")}</small><PlanGuide plan={plan}/></article>)}
           {!!result.plans?.length && a.food.snapshot && <PlanCoverage state={a.food.snapshot.state} plans={result.plans}/>}
-          {result.basket?.map(item => <article className="capture-draft-item" key={item.id}><ShoppingBasket size={16}/><strong>{item.ingredient}</strong><small>{item.quantity === null ? "Amount to check" : `${item.quantity} ${item.unit}`}</small></article>)}
+          {result.basket?.map(item => <article className="capture-draft-item" key={item.id}><ShoppingBasket size={16}/><strong>{item.ingredient}</strong><small>{item.quantity === null ? "No quantity" : `${item.quantity} ${item.unit}`}</small></article>)}
           {hasMeal && <><div className="capture-choices" role="group" aria-label="Adjust the portion shown">{[.5,2].map(factor=><button type="button" key={factor} disabled={busy || recording || uncertain} onClick={()=>{try{narration.clear();const entries=result.entries.map(entry=>entry.kind==="food"?resizeCapturedMeal(entry,factor):entry);setResult({...result,entries,summary:"Portion adjusted. "+entries.filter(entry=>entry.kind==="food").map(entry=>`${entry.data.title}: ${foodDraftDetail(entry.data)}`).join(". ")});setConsumed(false);}catch{setError("That portion is too small or large. Say a correction instead.");}}}>{factor===.5?"Half of the shown portion":"Twice the shown portion"}</button>)}</div><p className="food-caption">Nutrition is approximate. Say what changed if the portion looks wrong. Sugar stays unknown without an amount from you or a readable label.</p><label className="food-checkbox"><input type="checkbox" checked={consumed} disabled={busy || recording || uncertain} onChange={e => setConsumed(e.target.checked)}/>I consumed this and checked the portion shown</label></>}
           <AiReport key={reportText(result)} source={result.plans?.length ? "meal-plan" : "food-estimate"} noun={result.plans?.length ? "plan" : "estimate"} text={reportText(result)}/>
         </section>}
@@ -194,7 +194,7 @@ export function CaptureHub({ a }: { a: AppState }) {
         </>}
       </>}
       {error && <p className="form-error" role="alert">{error}</p>}
-      <p className="food-caption">{mode === "plan" ? "Asking for a plan sends your request, basket and reserved amounts to OpenAI." : "Your photo or description goes to OpenAI for an estimate."} Nothing is saved until you confirm.</p><PrivacyDetails><p>Continuing with a photo or description sends it to OpenAI. Starting a voice description records up to 30 seconds and sends it when you finish. Tap Finished speaking whenever you’re ready.</p>{mode === "plan" && <p>Meal suggestions also use your saved basket and the amounts reserved for other meals.</p>}<p>Hear this shares the review text with ElevenLabs to read it aloud in Daywell’s voice. You can request up to 20 new readouts a day; replaying the same review does not use another.</p><p>Daywell saves the entries you confirm, not the original photo or recording. Provider processing and retention are covered by <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noreferrer">OpenAI’s privacy policy</a> and <a href="https://elevenlabs.io/privacy-policy" target="_blank" rel="noreferrer">ElevenLabs’ privacy policy</a>.</p></PrivacyDetails>
+      <p className="food-caption">{mode === "plan" ? "Asking for a plan sends your request, basket and reserved amounts to OpenAI." : "Your photo or description goes to OpenAI for an estimate."} Nothing is saved until you confirm.</p><PrivacyDetails><p>Continuing with a photo or description sends it to OpenAI. Starting a voice description records up to 30 seconds and sends it when you finish. Tap Finished speaking whenever you’re ready.</p>{mode === "plan" && <p>Meal suggestions also use your saved basket and the amounts reserved for other meals.</p>}<p>Hear this reads the review aloud with your phone’s own voice, like the assistant’s replies. Daywell doesn’t send the text anywhere for this, though some phones use an online voice.</p><p>Daywell saves the entries you confirm, not the original photo or recording. Provider processing and retention are covered by <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noreferrer">OpenAI’s privacy policy</a>.</p></PrivacyDetails>
     </DialogContent></Dialog>
   </>;
 }

@@ -6,9 +6,10 @@ Owner decision, 8 October 2026: Daywell counts only requests that reach a paid A
 
 | Feature | Paid service | One use is | Limits |
 | --- | --- | --- | --- |
-| Live voice and AI chat | ElevenLabs and its AI model | a conversation that ElevenLabs actually starts | 6 every 10 minutes and 10 a day per person; 100 a day for everyone together. Each conversation ends after 15 minutes. |
-| Photo or voice understanding, and meal planning | OpenAI | a request sent to OpenAI | 20 a day per person |
-| Food review readout | ElevenLabs v4, using the configured Daywell agent voice | a new readout sent for generation; replay of the same open review uses its in-memory audio | 20 a day per person; up to 1,800 characters per readout |
+| Live voice and AI chat (since 22 October the app doesn't start these: the assistant answers instead) | ElevenLabs and its AI model | a conversation that ElevenLabs actually starts | 6 every 10 minutes and 10 a day per person; 100 a day for everyone together. Each conversation ends after 15 minutes. |
+| Photo or voice understanding (receipt photos included), and meal planning | OpenAI | a request sent to OpenAI | 20 a day per person |
+| Recipe ideas from the basket, and recipe steps for a planned meal | OpenAI | a request sent to OpenAI | 40 a day per person, a safety net set well above everyday use |
+| The Plus assistant's answers | OpenAI | a question sent to OpenAI | 300 a day per person, a safety net against scripts: paying users shouldn't meet it |
 | Optional recorded-reply matching | TypeSafe JEV | each classification request (topic and reply are separate) | 120 a day per person; disabled until acceptance testing |
 
 ## What never counts
@@ -16,6 +17,7 @@ Owner decision, 8 October 2026: Daywell counts only requests that reach a paid A
 - Pre-recorded replies in Just listen and the reply library.
 - Guided and unwind sessions, which play saved recordings.
 - Everyday commands, whether typed or spoken. Daywell understands them itself, and the browser turns speech into text.
+- Talking with the assistant: the phone or browser listens and reads replies aloud itself. Only the question sent to OpenAI counts.
 - Spoken workout cues, which use the device's own voice, and tap-to-talk workout commands.
 - The food basket, plans, shopping, calendar, timers, and anything else saved without AI.
 
@@ -29,7 +31,8 @@ The request is refused before any paid call, so it costs nothing. The person see
 | 10 a day for one person | You've had today's 10 live conversations. More are available tomorrow, and typing everyday commands still works. |
 | 100 a day for everyone | Live conversations are unavailable until tomorrow because Daywell's daily limit has been reached. Typing everyday commands still works. |
 | 20 photo or voice checks a day | You've used today's photo and voice checks. Typing an entry still works, and checks reset tomorrow. |
-| 20 food readouts a day | Read the review or replay its existing audio while that review remains open. New readouts reset tomorrow. |
+| 40 recipe-idea requests a day | That's a lot of recipe ideas for one day. More tomorrow; your basket and meal plans still work. |
+| 300 assistant questions a day | That's a lot of questions for one day. More tomorrow; your everyday tools still work. |
 | 120 picker requests a day | The picker falls back to offering a new conversation; exact recordings and everyday commands remain free. |
 
 Daily limits reset at midnight UTC, which is 1 am in UK summer time. A limit never cuts off a conversation that has already started; it ends at 15 minutes as usual.

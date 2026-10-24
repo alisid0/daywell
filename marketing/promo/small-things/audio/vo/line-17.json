@@ -1,0 +1,37 @@
+{
+ "text": "Record a walk with a spin.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Record",
+   "start": 0.081,
+   "end": 0.481
+  },
+  {
+   "word": "a",
+   "start": 0.521,
+   "end": 0.561
+  },
+  {
+   "word": "walk",
+   "start": 0.641,
+   "end": 0.881
+  },
+  {
+   "word": "with",
+   "start": 0.961,
+   "end": 1.041
+  },
+  {
+   "word": "a",
+   "start": 1.081,
+   "end": 1.121
+  },
+  {
+   "word": "spin.",
+   "start": 1.281,
+   "end": 1.761
+  }
+ ],
+ "heard": "Record a walk with a spin"
+}

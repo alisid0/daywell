@@ -1,0 +1,42 @@
+{
+ "text": "Or just ask, in your own words.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Or",
+   "start": 0.081,
+   "end": 0.241
+  },
+  {
+   "word": "just",
+   "start": 0.321,
+   "end": 0.481
+  },
+  {
+   "word": "ask,",
+   "start": 0.641,
+   "end": 1.081
+  },
+  {
+   "word": "in",
+   "start": 1.201,
+   "end": 1.281
+  },
+  {
+   "word": "your",
+   "start": 1.361,
+   "end": 1.521
+  },
+  {
+   "word": "own",
+   "start": 1.601,
+   "end": 1.761
+  },
+  {
+   "word": "words.",
+   "start": 1.841,
+   "end": 2.401
+  }
+ ],
+ "heard": "Or just ask in your own words"
+}

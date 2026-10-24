@@ -51,6 +51,7 @@ const onsetOf = (buf, peak) => { const th = peak * db(-24); for (let i = 0; i < 
 const VO_GAIN = db(cfg.voiceDb ?? 2);
 const voWindows = [];
 for (const [i, line] of lines.entries()) {
+  if (!line.text) continue; // a wordless moment
   const n = String(i + 1).padStart(2, "0"), own = cfg.lines?.[i + 1] || {};
   const buf = await decode(join(filmRoot, "audio", "vo", `line-${n}.mp3`));
   const words = JSON.parse(readFileSync(join(filmRoot, "audio", "vo", `line-${n}.json`), "utf8")).words;

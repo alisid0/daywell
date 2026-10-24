@@ -1,0 +1,32 @@
+{
+ "text": "Stop early? It still counts.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Stop",
+   "start": 0.16,
+   "end": 0.4
+  },
+  {
+   "word": "early?",
+   "start": 0.48,
+   "end": 1
+  },
+  {
+   "word": "It",
+   "start": 1.2,
+   "end": 1.36
+  },
+  {
+   "word": "still",
+   "start": 1.44,
+   "end": 1.68
+  },
+  {
+   "word": "counts.",
+   "start": 1.96,
+   "end": 2.32
+  }
+ ],
+ "heard": "Stop early? It still counts"
+}

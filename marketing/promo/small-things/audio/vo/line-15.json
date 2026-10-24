@@ -1,0 +1,37 @@
+{
+ "text": "Not today? Go gentler, or rest.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Not",
+   "start": 0.16,
+   "end": 0.32
+  },
+  {
+   "word": "today?",
+   "start": 0.56,
+   "end": 1
+  },
+  {
+   "word": "Go",
+   "start": 1.2,
+   "end": 1.28
+  },
+  {
+   "word": "gentler,",
+   "start": 1.44,
+   "end": 2.08
+  },
+  {
+   "word": "or",
+   "start": 2.24,
+   "end": 2.32
+  },
+  {
+   "word": "rest.",
+   "start": 2.4,
+   "end": 2.96
+  }
+ ],
+ "heard": "Not today? Go gentler or rest"
+}

@@ -1,0 +1,42 @@
+{
+ "text": "No streaks. No scores. Small things count.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "No",
+   "start": 0.225,
+   "end": 0.24
+  },
+  {
+   "word": "streaks.",
+   "start": 0.32,
+   "end": 1.04
+  },
+  {
+   "word": "No",
+   "start": 1.2,
+   "end": 1.28
+  },
+  {
+   "word": "scores.",
+   "start": 1.44,
+   "end": 2.2
+  },
+  {
+   "word": "Small",
+   "start": 2.4,
+   "end": 2.64
+  },
+  {
+   "word": "things",
+   "start": 2.72,
+   "end": 3.04
+  },
+  {
+   "word": "count.",
+   "start": 3.12,
+   "end": 3.6
+  }
+ ],
+ "heard": "No streaks, no scores. Small things count"
+}

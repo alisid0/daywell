@@ -19,6 +19,25 @@ const { connectedShopping } = bridgeModule ? await bridgeModule() : {};
 const foodView = () => connectedShopping ? connectedShopping(food.state, entries.filter(e => e.kind === "grocery").map(e => ({ id: e.id, data: JSON.stringify(e.data) }))) : food.state;
 
 const params = new URLSearchParams(location.search);
+// &fakevoice: a pretend microphone and phone voice, so talking can be tried silently. The microphone "hears"
+// window.__say (or "what should I cook") and sends it at a pause; each sentence is "spoken" for 1.2 seconds.
+if (params.has("fakevoice")) {
+  class FakeRecognition {
+    start() { const words = window.__say || "what should I cook"; this.timers = [setTimeout(() => this.onresult?.({ results: [Object.assign([{ transcript: words.split(" ").slice(0, 2).join(" ") }], { isFinal: false })] }), 400),
+      setTimeout(() => this.onresult?.({ results: [Object.assign([{ transcript: words }], { isFinal: false })] }), 900),
+      setTimeout(() => this.finish(), Number(params.get("fakevoice")) || 2600)]; }
+    finish() { this.timers.forEach(clearTimeout); this.onresult?.({ results: [Object.assign([{ transcript: window.__say || "what should I cook" }], { isFinal: true })] }); }
+    stop() { this.finish(); this.onend?.(); }
+    abort() { this.timers?.forEach(clearTimeout); }
+  }
+  window.SpeechRecognition = window.webkitSpeechRecognition = FakeRecognition;
+  window.__listens = 0;
+  const voices = [["serena", "Serena", "en-GB"], ["daniel", "Daniel", "en-GB"], ["martha", "Martha", "en-GB"], ["arthur", "Arthur", "en-GB"], ["samantha", "Samantha", "en-US"]].map(([voiceURI, name, lang]) => ({ voiceURI, name, lang }));
+  let queue = [], timer = null;
+  const next = () => { const line = queue.shift(); if (!line) { timer = null; return; } line.onstart?.(); timer = setTimeout(() => { line.onend?.(); next(); }, 1200); };
+  window.SpeechSynthesisUtterance = class { constructor(text) { this.text = text; } };
+  Object.defineProperty(window, "speechSynthesis", { value: { getVoices: () => voices, speak: line => { (window.__spoken ||= []).push(line.text); queue.push(line); if (!timer) next(); }, cancel: () => { clearTimeout(timer); timer = null; queue = []; }, addEventListener() {}, removeEventListener() {} } });
+}
 applyReadingComfort(document.documentElement, parseReadingComfort(JSON.stringify({ font: params.get("font") ?? "atkinson", size: params.get("size") ?? "standard", spacing: params.get("spacing") ?? "standard" })));
 
 // Sample data standing in for the server. Food commands run through the real lib/food.ts logic.
@@ -96,6 +115,26 @@ if (promo) {
     stock: food.state.stock.filter(item => item.id !== "s-milk").map(item => item.id === "s-tomato" ? { ...item, quantity: 4 } : item),
     plans: [], shopping: [{ id: "sh-bread", title: "Sourdough loaf", quantity: "1", done: false, changedBy: seed }] };
 }
+// &move: Sam's fortnight of moves for the Move redesign (22 October design), dated back from the real today.
+if (params.has("move")) {
+  const back = n => { const d = new Date(Date.now() - n * 864e5); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+  const sets = (exercise, reps, count = 1) => Array.from({ length: count }, () => ({ exercise, reps, kg: 0 }));
+  settings = { ...settings, name: "Sam" };
+  entries.push(
+    { id: "mvA", kind: "move", data: { title: "Walk", date: back(13), minutes: 20 } },
+    { id: "mvB", kind: "move", data: { title: "Hotel room fifteen", date: back(12), minutes: 15, sets: [...sets("Bodyweight squat", 12, 2), ...sets("Push-up", 8, 2)] } },
+    { id: "mvC", kind: "move", data: { title: "Hotel room fifteen", date: back(9), minutes: 15, sets: sets("Push-up", 8, 2) } },
+    { id: "mvD", kind: "move", data: { title: "Core in ten", date: back(5), minutes: 10, sets: [...sets("Dead bug", 6, 2), ...sets("Push-up", 12), ...sets("Push-up", 10)] } },
+    { id: "mvE", kind: "move", data: { title: "Walk to the park", date: back(3), minutes: 25 } },
+    { id: "mvF", kind: "move", data: { title: "Desk break", date: back(2), minutes: 5 } },
+    { id: "mvG", kind: "move", data: { title: "After-meal stroll", date: back(1), minutes: 15 } });
+}
+// &night: last night's sleep, for the Sleep page (calorie preview, 23 October 2026).
+// &meals: today's meals with calories, for Eat's food counter (calorie preview, 23 October 2026).
+if (params.has("meals")) entries.push(
+  { id: "f-cal1", kind: "food", data: { title: "Porridge with banana", date: "2026-10-23", meal: "Breakfast", calories: 350, protein: 12, carbs: 58, fat: 7, nutritionKnown: true, macrosKnown: true, nutritionSource: "estimate", portions: 1, foodStatus: "eaten" } },
+  { id: "f-cal2", kind: "food", data: { title: "Salmon & quinoa bowl", date: "2026-10-23", meal: "Lunch", calories: 520, protein: 32, carbs: 46, fat: 21, nutritionKnown: true, macrosKnown: true, nutritionSource: "estimate", portions: 1, foodStatus: "eaten", mealOrigin: "home" } });
+if (params.has("night")) entries.push({ id: "sl-last", kind: "sleep", data: { date: "2026-10-23", bedtime: "22:50", wakeTime: "06:35", minutes: 465, quality: "Rested" } });
 const cannedPhoto = date => ({ summary: "A salmon and quinoa bowl with peas, carrot, pepper and red cabbage. The portion and nutrition are estimates.", question: null, actions: [
   { kind: "food", title: "Salmon & quinoa bowl", date, minutes: null, time: null, endTime: null, quantity: null, calories: 520, protein: 32, carbs: 46, fat: 21, meal: "Breakfast", quality: null, repeatDays: [], portions: 1, sugarGrams: null, sugarSource: null, stockQuantity: null, stockUnit: null }] });
 const cannedPlan = { summary: "Three dinners for one from your basket, no mushrooms.", question: null, meals: [
@@ -119,6 +158,21 @@ const cannedIdeas = { summary: "Three easy ideas from your rice, eggs, spinach, 
 const cannedSteps = request => ({ summary: "Simple steps for your meal.", title: request.title || "Tomato and spinach noodles",
   steps: ["Cook the egg noodles following the pack instructions, then drain.", "Warm the olive oil in a pan and soften the garlic for a minute.", "Add the chopped tomatoes and cook for 5 minutes until saucy.", "Stir in the spinach until it wilts, then toss everything with the noodles."],
   extras: ["olive oil", "garlic"] });
+// &receipt (22 October design): the trolley list from the design, and a receipt to read.
+const receiptModule = Object.values(import.meta.glob("../../lib/receipt.ts"))[0];
+const receiptLib = params.has("receipt") && receiptModule ? await receiptModule() : null;
+if (receiptLib) food.state.shopping.push({ id: "sh-milk", title: "Milk", quantity: "2 pints", done: false, changedBy: seed }, { id: "sh-garlic", title: "Garlic", quantity: "", done: false, changedBy: seed });
+const cannedReceipt = { unreadable: 1, items: [
+  { name: "Semi-skimmed milk", quantity: 1136, unit: "ml", food: true }, { name: "Free-range eggs", quantity: 6, unit: "each", food: true },
+  { name: "Garlic", quantity: 1, unit: "each", food: true }, { name: "Greek-style yogurt", quantity: 500, unit: "g", food: true },
+  { name: "Frozen peas", quantity: 750, unit: "g", food: true }, { name: "Bananas", quantity: 5, unit: "each", food: true },
+  { name: "Sourdough loaf", quantity: 1, unit: "each", food: true }, { name: "Mature cheddar", quantity: 250, unit: "g", food: true },
+  { name: "Washing-up liquid", quantity: 1, unit: "each", food: false },
+] };
+const assistantModule = Object.values(import.meta.glob("../../lib/assistant.ts"))[0];
+const assistantLib = params.has("assistant") && assistantModule ? await assistantModule() : null;
+// &consented: the person already chose what the assistant can see.
+if (params.has("consented")) settings = { ...settings, assistantAreas: ["food", "move", "sleep", "plans"], assistantConsentAt: "2026-10-22T09:00:00.000Z" };
 window.__food = food; window.__entries = () => entries;
 const realFetch = window.fetch.bind(window);
 // Branches with the timer and reply-routing endpoints get mirrors that use the app's own rules (no provider calls).
@@ -257,6 +311,30 @@ window.fetch = async (input, init = {}) => {
     if (mode === "plan") return reply({ ...mealPlanDraft(cannedPlan, { start: String(form.get("planStart")), count: Number(form.get("planCount")), meal: String(form.get("planMeal")) }), transcript: "", source: "ai" });
     return reply({ ...draftEntries(cannedPhoto(date), date, settings.modules, mode), transcript: "", source: "ai" });
   }
+  if (path === "/api/capture" && receiptLib && method === "POST" && init.body?.get?.("mode") === "receipt") {
+    // &receipt: a canned receipt run through the app's own tidying (lib/receipt.ts). No provider calls.
+    await new Promise(r => setTimeout(r, 600));
+    if (params.get("receipt") === "fails") return reply({ error: "Couldn’t check your food right now. Please try again later." }, 502);
+    return reply({ receipt: receiptLib.receiptDraft(params.get("receipt") === "blank" ? { items: [], unreadable: 0 } : cannedReceipt), source: "ai" });
+  }
+  if (path === "/api/assistant" && assistantLib) {
+    // &assistant: canned replies through the app's own checks (lib/assistant.ts), like app/api/assistant/route.ts. No
+    // provider calls. assistant=fails answers with an error.
+    if (method === "GET") return reply({ connected: true });
+    if (!settings.assistantConsentAt) return reply({ error: "Choose what Daywell can look at first.", code: "CONSENT_NEEDED" }, 403);
+    const body = JSON.parse(init.body || "{}"), asked = String(body.messages?.at(-1)?.text || "").toLowerCase();
+    window.__assistantAsks = [...(window.__assistantAsks || []), body];
+    await new Promise(r => setTimeout(r, 500));
+    if (params.get("assistant") === "fails") return reply({ error: "Couldn’t answer that just now. Please try again." }, 502);
+    const step = (kind, fields) => ({ kind, title: "", date: null, time: null, minutes: null, meal: null, servings: null, quantity: null, ingredients: [], ...fields });
+    const canned = /plan|yes|tonight/.test(asked) ? { reply: "Here’s the plan. Nothing changes until you tap Do this.", companion: "nori", looked: ["food"], chips: [], steps: [
+        step("meal", { title: "Tomato rice", date: body.date, meal: "Dinner", servings: 1, ingredients: [{ ingredient: "rice", quantity: 150, unit: "g" }, { ingredient: "tomato", quantity: 2, unit: "each" }, { ingredient: "spinach", quantity: 80, unit: "g" }, { ingredient: "garlic", quantity: 1, unit: "each" }] }),
+        step("event", { title: "A 20-minute walk", date: body.date, time: "19:30", minutes: 20 })] }
+      : /cook|eat|dinner/.test(asked) ? { reply: "You’ve had eggs on 3 of the last 4 days, so how about tomato rice? You have rice and tomatoes, and the spinach is best used by Thursday. About 25 minutes.", companion: "nori", looked: ["food"], steps: [], chips: ["Plan it for tonight", "Show the recipe", "Something else"] }
+      : { reply: "I’m here. Ask me about your meals, moves, sleep or plans.", companion: "pip", looked: [], steps: [], chips: [] };
+    return reply({ ...assistantLib.assistantDraft(canned, body.date, settings.assistantAreas || []), source: "ai" });
+  }
+  if (path === "/api/assistant") return reply({ connected: false });
   if (path === "/api/capture") return reply({ connected: false });
   return realFetch(input, init);
 };
@@ -273,9 +351,19 @@ if (params.has("still")) { const st = document.createElement("style"); st.textCo
 if (params.has("old17")) { const st = document.createElement("style"); st.textContent = ".response-bank-meta [data-handling]{color:var(--dw-muted)!important}.meditation-choices button{text-align:center!important}"; document.head.appendChild(st); }
 // Standalone pages (page=meditate|bank|library); each exists only on branches that have it.
 const pages = { meditate: import.meta.glob("../../app/meditate/space.tsx"), bank: import.meta.glob("../../app/response-bank/bank.tsx"), library: import.meta.glob("../../app/audio-library/library.tsx"),
-  aireport: import.meta.glob("./ai-report-page.jsx"), account: import.meta.glob("../../app/account/your-data.tsx"), privacy: import.meta.glob("../../app/privacy/page.tsx"), support: import.meta.glob("../../app/support/page.tsx"), deleted: import.meta.glob("../../app/account-deleted/page.tsx"), signin: import.meta.glob("./sign-in-page.jsx"), plans: import.meta.glob("./plans-page.jsx") };
+  aireport: import.meta.glob("./ai-report-page.jsx"), notify: import.meta.glob("./notify-page.jsx"), account: import.meta.glob("../../app/account/your-data.tsx"), privacy: import.meta.glob("../../app/privacy/page.tsx"), support: import.meta.glob("../../app/support/page.tsx"), deleted: import.meta.glob("../../app/account-deleted/page.tsx"), signin: import.meta.glob("./sign-in-page.jsx"), plans: import.meta.glob("./plans-page.jsx") };
 const pageLoader = Object.values(pages[params.get("page")] ?? {})[0];
 const Page = pageLoader ? (await pageLoader()).default : null;
+// ?fix=design: the proposed design fixes 7–11 (23 October 2026), previewed before they're built.
+if (params.get("fix") === "design") await import("./design-fix.js");
+// ?fix=next: reminders, Your week and a calmer Today, previewed on top of 7–11 (23 October 2026).
+if (params.get("fix") === "next") await import("./design-next.js");
+if (params.get("fix") === "calories") await import("./calories-preview.js");
+if (params.get("fix") === "sticker") await import("./sticker-buttons.js");
+if (params.get("fix") === "sticker2") await import("./sticker-personality.js");
+if (params.get("fix") === "sticker3") await import("./sticker-extras.js");
+// ?fix=time: the owner's calendar and time picks on the real screens (24 October 2026).
+if (params.get("fix") === "time") await import("./time-pickers.js");
 createRoot(document.getElementById("root")).render(Page ? <Page initialSessionId={params.get("session") ?? undefined} signOutHref="/signout-with-chatgpt?return_to=%2F" /> : <Daywell initialView={params.get("view") ?? "eat"} account={params.has("account") ? { email: "sam@example.com", emailSignIn: true, plan: "plus" } : undefined} />);
 if (params.get("scroll")) setTimeout(() => window.scrollTo(0, Number(params.get("scroll"))), 1800);
 if (params.get("anchor")) setTimeout(() => document.querySelector(params.get("anchor"))?.scrollIntoView({ block: "center", behavior: "instant" }), 1800);

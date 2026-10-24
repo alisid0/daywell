@@ -1,0 +1,27 @@
+{
+ "text": "Breathe along with Luma.",
+ "tag": "[Soft]",
+ "words": [
+  {
+   "word": "Breathe",
+   "start": 0.16,
+   "end": 0.48
+  },
+  {
+   "word": "along",
+   "start": 0.56,
+   "end": 0.88
+  },
+  {
+   "word": "with",
+   "start": 0.96,
+   "end": 1.04
+  },
+  {
+   "word": "Luma.",
+   "start": 1.12,
+   "end": 1.68
+  }
+ ],
+ "heard": "Breathe along with Luma"
+}

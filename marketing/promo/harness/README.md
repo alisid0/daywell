@@ -51,3 +51,15 @@ the test code 246810, and signs in by itself on the sixth digit.
 
 To show a preview at a glance, `node tools/screens-board.mjs` (from `marketing/promo`) puts captured phone screens on
 one board, each under a caption.
+
+## Updated 24 October 2026
+
+- The port 5194 copy (`vite.fix.config.mjs`) now runs on a checkout of main, and "Small things count" is captured from
+  it: `HARNESS=http://localhost:5194/ node tools/capture.mjs --film=small-things`.
+- `css.js` keeps its own list of the app's stylesheets. Add every new stylesheet to it, or captures come out unstyled
+  (the time wheels did, until `time-wheels.css` was added).
+- New preview scripts for the owner's design reviews: the time pickers (`time-pickers.js`), the sticker look
+  (`sticker-buttons.js`, `sticker-extras.js`, `sticker-personality.js`), design fixes (`design-fix.js`,
+  `design-next.js`), bar options (`bar-options.js`), the calories preview (`calories-preview.js`) and a notifications
+  page (`notify-page.jsx`).
+- Two of the owner's private review pages stay on the original machine and out of this public copy.

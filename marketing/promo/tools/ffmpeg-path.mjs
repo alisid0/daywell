@@ -3,8 +3,10 @@
 // installed anywhere Node can find it, else `ffmpeg` on the PATH.
 import { existsSync } from "node:fs";
 import { createRequire } from "node:module";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
-const short = "C:/Users/info/AppData/Local/Temp/claude/ffm/node_modules/ffmpeg-static/ffmpeg.exe";
+const short = join(tmpdir(), "claude", "ffm", "node_modules", "ffmpeg-static", process.platform === "win32" ? "ffmpeg.exe" : "ffmpeg");
 let found = process.env.FFMPEG || (existsSync(short) ? short : null);
 if (!found) { try { found = createRequire(import.meta.url)("ffmpeg-static"); } catch { /* not installed */ } }
 export const FFMPEG = found || "ffmpeg";

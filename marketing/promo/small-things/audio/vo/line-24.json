@@ -1,0 +1,42 @@
+{
+ "text": "Pick a gentle time to wind down.",
+ "tag": "[Soft]",
+ "words": [
+  {
+   "word": "Pick",
+   "start": 0.08,
+   "end": 0.24
+  },
+  {
+   "word": "a",
+   "start": 0.32,
+   "end": 0.4
+  },
+  {
+   "word": "gentle",
+   "start": 0.48,
+   "end": 0.88
+  },
+  {
+   "word": "time",
+   "start": 0.96,
+   "end": 1.28
+  },
+  {
+   "word": "to",
+   "start": 1.36,
+   "end": 1.44
+  },
+  {
+   "word": "wind",
+   "start": 1.6,
+   "end": 1.76
+  },
+  {
+   "word": "down.",
+   "start": 1.96,
+   "end": 2.72
+  }
+ ],
+ "heard": "Pick a gentle time to wind down."
+}

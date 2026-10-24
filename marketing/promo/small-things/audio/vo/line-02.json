@@ -1,0 +1,47 @@
+{
+ "text": "So start small. With Daywell, small things count.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "So",
+   "start": 0.16,
+   "end": 0.24
+  },
+  {
+   "word": "start",
+   "start": 0.4,
+   "end": 0.64
+  },
+  {
+   "word": "small.",
+   "start": 0.72,
+   "end": 1.4
+  },
+  {
+   "word": "With",
+   "start": 1.6,
+   "end": 1.76
+  },
+  {
+   "word": "Daywell,",
+   "start": 1.84,
+   "end": 2.48
+  },
+  {
+   "word": "small",
+   "start": 2.64,
+   "end": 2.88
+  },
+  {
+   "word": "things",
+   "start": 2.96,
+   "end": 3.28
+  },
+  {
+   "word": "count.",
+   "start": 3.36,
+   "end": 3.92
+  }
+ ],
+ "heard": "So start small. With Daywell, small things count"
+}

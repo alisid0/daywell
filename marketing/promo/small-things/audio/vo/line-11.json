@@ -1,0 +1,42 @@
+{
+ "text": "Snap the receipt. It's all put away.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Snap",
+   "start": 0.24,
+   "end": 0.48
+  },
+  {
+   "word": "the",
+   "start": 0.56,
+   "end": 0.64
+  },
+  {
+   "word": "receipt.",
+   "start": 0.92,
+   "end": 1.36
+  },
+  {
+   "word": "It's",
+   "start": 1.52,
+   "end": 1.84
+  },
+  {
+   "word": "all",
+   "start": 1.92,
+   "end": 2.08
+  },
+  {
+   "word": "put",
+   "start": 2.16,
+   "end": 2.24
+  },
+  {
+   "word": "away.",
+   "start": 2.4,
+   "end": 3.28
+  }
+ ],
+ "heard": "Snap the receipt. It's all put away"
+}

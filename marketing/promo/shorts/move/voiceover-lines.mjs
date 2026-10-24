@@ -1,7 +1,7 @@
 // Daywell shorts: Move, with Bounce (marketing/shorts/SCRIPTS.md, approved by the owner on 15 October 2026).
 // `at` is when each line starts, in seconds: hook 0, title 6, chapters 12, 24, 36, 46, 58, 68, 80, what's included 96,
 // close 110 (120 BPM, so every chapter starts on a bar). `tag` steers delivery and isn't spoken.
-export const voice = { name: "Alice", id: "Xb7hH8MSUJpSbSDYk0k2", model: "eleven_v4", stability: 0.5, similarity: 0.75, seed: 1405 };
+export const voice = { name: "Alice", model: "eleven_v4", stability: 0.5, similarity: 0.75, seed: 1405 };
 
 const hook = "[Playful, upbeat, friendly narration]", upbeat = "[Warm, upbeat, friendly narration]";
 const chapter = "[Warm, upbeat, friendly narration]", close = "[Warm and confident]";

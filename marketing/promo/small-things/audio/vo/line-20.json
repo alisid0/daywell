@@ -1,0 +1,37 @@
+{
+ "text": "Make plans in a few spins.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Make",
+   "start": 0.081,
+   "end": 0.321
+  },
+  {
+   "word": "plans",
+   "start": 0.401,
+   "end": 0.801
+  },
+  {
+   "word": "in",
+   "start": 0.881,
+   "end": 0.961
+  },
+  {
+   "word": "a",
+   "start": 1.041,
+   "end": 1.121
+  },
+  {
+   "word": "few",
+   "start": 1.201,
+   "end": 1.361
+  },
+  {
+   "word": "spins.",
+   "start": 1.521,
+   "end": 2.161
+  }
+ ],
+ "heard": "Make plans in a few spins"
+}

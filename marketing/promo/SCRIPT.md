@@ -126,13 +126,13 @@ Proposed: ElevenLabs Music (`music_v2_5`), composed to the film's exact timings 
 | Dawn | 1:32–1:47 | The gentle groove returns |
 | End | 1:47–2:00 | Resolves to a warm final chord |
 
-ElevenLabs music is cleared for social media and advertising on paid plans, and the account is on Creator. The beat grid is measured from the delivered music, and every cut, tap and pop is snapped to it. The music sits about 9 dB under the voice.
+ElevenLabs music is cleared for social media and advertising on paid plans. The beat grid is measured from the delivered music, and every cut, tap and pop is snapped to it. The music sits about 9 dB under the voice.
 
 **Master:** −14 LUFS, true peak at or below −1 dBTP, measured on the delivered file.
 
 ## Credits
 
-The account is on Creator, with about 168,000 credits a month, renewing 12 November. It can't go over its allowance, because extra usage is switched off. The whole soundtrack should take about 12,000 credits: the voice in two takes plus retakes about 3,000, sound effects about 1,000, and music in up to three tries about 7,500. The voice samples used 404.
+Paid audio was made only after the owner approved, with the balance checked first (`tools/credits.mjs`, a free call). The account and cost figures were shared with the owner directly and stay out of this public repo.
 
 ## Look
 

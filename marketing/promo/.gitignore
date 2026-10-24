@@ -9,3 +9,12 @@ out/
 /audio/voice-*.mp3
 /audio/sound-effects-preview.mp3
 **/assets/shots/_*.png
+# Studio-only leftovers: scratch images, the superseded v1 draft and its music, skill backups, logs
+**/_*.png
+/assets/music/
+/v1/
+/skill-snapshots/
+/package.json
+/package-lock.json
+node_modules/
+*.log

@@ -1,6 +1,6 @@
 // The promo voiceover (SCRIPT.md). Owner picked Alice on 14 October 2026. `tag` steers delivery and isn't spoken;
 // `at` is when the line starts in the film, in seconds (scenes follow the measured music: 0 hook, 7 brand with "Daywell" on the 8 s drop, 12, 18, 28, 38, 46, 58 pause, 72 bedtime in the soft section, 88, 98, 104, 110).
-export const voice = { name: "Alice", id: "Xb7hH8MSUJpSbSDYk0k2", model: "eleven_v4", stability: 0.5, similarity: 0.75, seed: 1405 };
+export const voice = { name: "Alice", model: "eleven_v4", stability: 0.5, similarity: 0.75, seed: 1405 };
 
 const upbeat = "[Warm, upbeat, friendly narration]";
 export const lines = [

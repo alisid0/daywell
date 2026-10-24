@@ -3,20 +3,90 @@
   "model_id": "eleven_text_to_sound_v2",
   "prompt_influence": 0.6,
   "sounds": [
-    { "id": "tap", "seconds": 0.5, "text": "A single soft, clean button tap on a phone touchscreen in a calm wellbeing app: a short warm click, subtle and modern, dry, no reverb, no beep" },
-    { "id": "shutter", "seconds": 0.8, "text": "A soft, modern smartphone camera shutter: one quick, clean capture click, gentle and crisp, dry, no beeps or flash whine" },
-    { "id": "saved", "seconds": 1.0, "text": "A gentle, warm two-note confirmation chime when something is saved in a calm mobile app: soft rounded marimba tones, rising, short, quiet tail" },
-    { "id": "pop", "seconds": 0.6, "text": "A soft, friendly bubble pop as a cute cartoon helper pops onto a phone screen: light, round and playful, short, clean, no squeak" },
-    { "id": "ping", "seconds": 0.6, "text": "A soft, bright notification ping on a phone: one short clean bell note, friendly and light, dry, no reverb tail" },
-    { "id": "card-drop", "seconds": 1.0, "text": "A quick airy whoosh followed by a soft paper card landing on a desk: light, satisfying app transition, clean, no voice" },
-    { "id": "typing", "seconds": 1.4, "text": "Soft typing on a phone touchscreen keyboard: about twelve light, quick taps, close and clean, steady rhythm, no voice, no music" },
-    { "id": "timer", "seconds": 0.6, "text": "A gentle wooden tick as a timer starts in a calm app: one soft warm tick and a faint tock, dry, short" },
-    { "id": "swoosh", "seconds": 0.8, "text": "A light, airy swoosh as small items fly across a phone screen into a list: quick, playful and clean" },
-    { "id": "scroll", "seconds": 1.2, "text": "A finger quickly flicking and scrolling a social media feed on a phone: three soft swipes on glass, close and clean" },
-    { "id": "shimmer", "seconds": 1.5, "text": "A soft, warm magical shimmer rising: gentle sparkle, bright and positive, short, no whoosh" },
-    { "id": "stars", "seconds": 1.6, "text": "Very soft twinkling chimes like stars appearing in a night sky: delicate, quiet and dreamy, sparse" },
-    { "id": "tick", "seconds": 0.5, "text": "A tiny crisp tick as an item is ticked off a checklist in a mobile app: short, clean and satisfying" },
-    { "id": "whoosh", "seconds": 0.7, "text": "A short, soft whoosh for a smooth camera move: airy and clean, quick rise and fall, no impact" },
-    { "id": "logo-hit", "seconds": 2.0, "text": "A warm, satisfying brand logo hit: a soft deep thump with a bright bell shimmer on top that rings out, clean and positive" }
+    {
+      "id": "tap",
+      "seconds": 0.5,
+      "text": "A single soft, clean button tap on a phone touchscreen in a calm wellbeing app: a short warm click, subtle and modern, dry, no reverb, no beep"
+    },
+    {
+      "id": "shutter",
+      "seconds": 0.8,
+      "text": "A soft, modern smartphone camera shutter: one quick, clean capture click, gentle and crisp, dry, no beeps or flash whine"
+    },
+    {
+      "id": "saved",
+      "seconds": 1,
+      "text": "A gentle, warm two-note confirmation chime when something is saved in a calm mobile app: soft rounded marimba tones, rising, short, quiet tail"
+    },
+    {
+      "id": "pop",
+      "seconds": 0.6,
+      "text": "A soft, friendly bubble pop as a cute cartoon helper pops onto a phone screen: light, round and playful, short, clean, no squeak"
+    },
+    {
+      "id": "ping",
+      "seconds": 0.6,
+      "text": "A soft, bright notification ping on a phone: one short clean bell note, friendly and light, dry, no reverb tail"
+    },
+    {
+      "id": "card-drop",
+      "seconds": 1,
+      "text": "A quick airy whoosh followed by a soft paper card landing on a desk: light, satisfying app transition, clean, no voice"
+    },
+    {
+      "id": "typing",
+      "seconds": 1.4,
+      "text": "Soft typing on a phone touchscreen keyboard: about twelve light, quick taps, close and clean, steady rhythm, no voice, no music"
+    },
+    {
+      "id": "timer",
+      "seconds": 0.6,
+      "text": "A gentle wooden tick as a timer starts in a calm app: one soft warm tick and a faint tock, dry, short"
+    },
+    {
+      "id": "swoosh",
+      "seconds": 0.8,
+      "text": "A light, airy swoosh as small items fly across a phone screen into a list: quick, playful and clean"
+    },
+    {
+      "id": "scroll",
+      "seconds": 1.2,
+      "text": "A finger quickly flicking and scrolling a social media feed on a phone: three soft swipes on glass, close and clean"
+    },
+    {
+      "id": "shimmer",
+      "seconds": 1.5,
+      "text": "A soft, warm magical shimmer rising: gentle sparkle, bright and positive, short, no whoosh"
+    },
+    {
+      "id": "stars",
+      "seconds": 1.6,
+      "text": "Very soft twinkling chimes like stars appearing in a night sky: delicate, quiet and dreamy, sparse"
+    },
+    {
+      "id": "tick",
+      "seconds": 0.5,
+      "text": "A tiny crisp tick as an item is ticked off a checklist in a mobile app: short, clean and satisfying"
+    },
+    {
+      "id": "whoosh",
+      "seconds": 0.7,
+      "text": "A short, soft whoosh for a smooth camera move: airy and clean, quick rise and fall, no impact"
+    },
+    {
+      "id": "logo-hit",
+      "seconds": 2,
+      "text": "A warm, satisfying brand logo hit: a soft deep thump with a bright bell shimmer on top that rings out, clean and positive"
+    },
+    {
+      "id": "sticker",
+      "seconds": 0.6,
+      "text": "A soft, satisfying paper sticker being pressed onto a page: one quick light slap with a tiny papery peel, warm and dry, close up, no reverb, no music"
+    },
+    {
+      "id": "wheel",
+      "seconds": 0.5,
+      "text": "One very quiet, soft detent click, like a smooth scroll wheel turning a single notch: tiny, crisp and dry, close up, no reverb, no beep"
+    }
   ]
 }

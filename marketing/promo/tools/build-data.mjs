@@ -11,6 +11,7 @@ const sharp = loadSharp();
 const { lines } = await import(pathToFileURL(filmFile("voiceover-lines.mjs")).href);
 const vo = lines.map((line, i) => {
   const n = String(i + 1).padStart(2, "0");
+  if (!line.text) return { n, at: line.at, text: "", file: null, words: [], end: line.at }; // a wordless moment
   const j = JSON.parse(readFileSync(join(filmRoot, "audio", "vo", `line-${n}.json`), "utf8"));
   return { n, at: line.at, text: line.text, file: `audio/vo/line-${n}.mp3`,
     words: j.words.map(w => ({ w: w.word, t: +(line.at + w.start).toFixed(3), e: +(line.at + w.end).toFixed(3) })),

@@ -2,7 +2,7 @@
 // `at` is when each line starts, in seconds: hook 0, title 6, chapters 12, 22, 34, 46, 58, 72, 84, all of it 98,
 // close 110 (120 BPM, so every chapter starts on a bar). `tag` steers delivery and isn't spoken.
 // Sign-in comes after opening from the home screen, because an iPhone home-screen web app keeps its own storage.
-export const voice = { name: "Alice", id: "Xb7hH8MSUJpSbSDYk0k2", model: "eleven_v4", stability: 0.5, similarity: 0.75, seed: 1405 };
+export const voice = { name: "Alice", model: "eleven_v4", stability: 0.5, similarity: 0.75, seed: 1405 };
 
 const hook = "[Playful, upbeat, friendly narration]", upbeat = "[Warm, upbeat, friendly narration]";
 const chapter = "[Warm, upbeat, friendly narration]", close = "[Warm and confident]";

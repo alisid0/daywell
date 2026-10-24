@@ -23,7 +23,8 @@ const exists = async p => { try { return (await stat(p)).size > 1000; } catch { 
 
 await mkdir(outDir, { recursive: true });
 const todo = [];
-for (const [i] of lines.entries()) {
+for (const [i, line] of lines.entries()) {
+  if (!line.text) continue; // a wordless moment keeps its number but has no clip
   const n = String(i + 1).padStart(2, "0");
   if (redo.has(i + 1) || !(await exists(join(outDir, `line-${n}.mp3`)))) todo.push(i);
 }
@@ -32,6 +33,15 @@ const sub = await (await fetch("https://api.elevenlabs.io/v1/user/subscription",
 const remaining = sub.character_limit - sub.character_count;
 if (!["starter", "creator", "pro", "scale", "business", "enterprise"].includes(sub.tier) || sub.status !== "active") throw Error("A paid plan is needed for commercial use.");
 if (!(remaining >= characters + 20000)) throw Error("Not enough credits above the 20,000 reserve.");
+// The lines name the voice rather than giving its ID, so they can sit in a public repo: find it among the account's
+// voices by name (a free call). A film can still pin `id` when a name matches more than one voice.
+const voiceId = voice.id || await (async () => {
+  const list = (await (await fetch("https://api.elevenlabs.io/v1/voices", { headers: auth, signal: AbortSignal.timeout(20000) })).json()).voices || [];
+  const base = s => s.split(/\s+[-–—]\s+/)[0].trim().toLowerCase();
+  const hits = list.filter(v => base(v.name) === voice.name.toLowerCase());
+  if (hits.length !== 1) throw Error(`Voice "${voice.name}" matched ${hits.length} of the account's ${list.length} voices; set voice.id`);
+  return hits[0].voice_id;
+})();
 console.log(JSON.stringify({ film: filmRoot.split(/[\\/]/).slice(-2).join("/"), voice: voice.name, model: voice.model, linesToMake: todo.map(i => i + 1), characters, remainingBefore: remaining }));
 
 const plain = s => s.replace(/\[[^\]]*\]\s*/g, "");
@@ -41,10 +51,10 @@ for (const i of todo) {
   const body = {
     text, model_id: voice.model, seed: line.seed ?? voice.seed + i, // a line can pin its own seed (a better take)
     voice_settings: { stability: voice.stability, similarity_boost: voice.similarity },
-    previous_text: i > 0 ? lines.slice(Math.max(0, i - 2), i).map(l => plain(l.text)).join(" ") : undefined,
-    next_text: i < lines.length - 1 ? plain(lines[i + 1].text) : undefined,
+    previous_text: (i > 0 ? lines.slice(Math.max(0, i - 2), i).map(l => plain(l.text)).filter(Boolean).join(" ") : "") || undefined,
+    next_text: (i < lines.length - 1 ? plain(lines[i + 1].text) : "") || undefined,
   };
-  const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voice.id}/with-timestamps?output_format=mp3_44100_192`, {
+  const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/with-timestamps?output_format=mp3_44100_192`, {
     method: "POST", headers: { ...auth, "Content-Type": "application/json" }, body: JSON.stringify(body), signal: AbortSignal.timeout(120000),
   });
   if (!r.ok) { console.log(`line ${n}: HTTP ${r.status}`, (await r.text()).slice(0, 300)); continue; }

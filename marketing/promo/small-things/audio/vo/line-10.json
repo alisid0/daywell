@@ -1,0 +1,47 @@
+{
+ "text": "Out of milk? It goes on the list.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Out",
+   "start": 0.081,
+   "end": 0.241
+  },
+  {
+   "word": "of",
+   "start": 0.321,
+   "end": 0.401
+  },
+  {
+   "word": "milk?",
+   "start": 0.481,
+   "end": 1.041
+  },
+  {
+   "word": "It",
+   "start": 1.201,
+   "end": 1.361
+  },
+  {
+   "word": "goes",
+   "start": 1.441,
+   "end": 1.601
+  },
+  {
+   "word": "on",
+   "start": 1.681,
+   "end": 1.761
+  },
+  {
+   "word": "the",
+   "start": 1.801,
+   "end": 1.841
+  },
+  {
+   "word": "list.",
+   "start": 2.081,
+   "end": 2.401
+  }
+ ],
+ "heard": "Out of milk? It goes on the list"
+}

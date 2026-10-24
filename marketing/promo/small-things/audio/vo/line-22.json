@@ -1,0 +1,37 @@
+{
+ "text": "Evening. Nothing to do. Just be.",
+ "tag": "[Softer and slower]",
+ "words": [
+  {
+   "word": "Evening.",
+   "start": 0.24,
+   "end": 1.12
+  },
+  {
+   "word": "Nothing",
+   "start": 1.44,
+   "end": 1.68
+  },
+  {
+   "word": "to",
+   "start": 1.76,
+   "end": 1.84
+  },
+  {
+   "word": "do.",
+   "start": 1.92,
+   "end": 2.48
+  },
+  {
+   "word": "Just",
+   "start": 2.8,
+   "end": 3.04
+  },
+  {
+   "word": "be.",
+   "start": 3.2,
+   "end": 3.6
+  }
+ ],
+ "heard": "Evening nothing to do just be"
+}

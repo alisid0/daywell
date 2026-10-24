@@ -1,0 +1,32 @@
+{
+ "text": "And rest days count too.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "And",
+   "start": 0.081,
+   "end": 0.241
+  },
+  {
+   "word": "rest",
+   "start": 0.321,
+   "end": 0.561
+  },
+  {
+   "word": "days",
+   "start": 0.641,
+   "end": 0.881
+  },
+  {
+   "word": "count",
+   "start": 0.961,
+   "end": 1.201
+  },
+  {
+   "word": "too.",
+   "start": 1.281,
+   "end": 1.681
+  }
+ ],
+ "heard": "And rest days count too"
+}

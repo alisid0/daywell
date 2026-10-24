@@ -1,0 +1,22 @@
+{
+  "name": "daywell-small-things",
+  "length": 150,
+  "segment": 5,
+  "music": "take2.mp3",
+  "mix": {
+    "voiceDb": 2,
+    "musicDb": -9,
+    "duckDb": -9,
+    "ambience": [
+      {
+        "file": "public/sleep-sounds/waves-on-sand-31753bac13ad.mp3",
+        "from": 119.6,
+        "to": 131.2,
+        "db": -14,
+        "fadeIn": 1.6,
+        "fadeOut": 2.2,
+        "why": "the real Waves on sand under the night (moments 25 and 26)"
+      }
+    ]
+  }
+}

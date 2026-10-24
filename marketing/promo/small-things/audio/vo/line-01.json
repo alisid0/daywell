@@ -1,0 +1,47 @@
+{
+ "text": "Looking after yourself can feel like a lot.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Looking",
+   "start": 0.24,
+   "end": 0.48
+  },
+  {
+   "word": "after",
+   "start": 0.56,
+   "end": 0.8
+  },
+  {
+   "word": "yourself",
+   "start": 0.88,
+   "end": 1.36
+  },
+  {
+   "word": "can",
+   "start": 1.44,
+   "end": 1.68
+  },
+  {
+   "word": "feel",
+   "start": 1.76,
+   "end": 2
+  },
+  {
+   "word": "like",
+   "start": 2.08,
+   "end": 2.16
+  },
+  {
+   "word": "a",
+   "start": 2.32,
+   "end": 2.36
+  },
+  {
+   "word": "lot.",
+   "start": 2.4,
+   "end": 2.88
+  }
+ ],
+ "heard": "Looking after yourself can feel like a lot"
+}

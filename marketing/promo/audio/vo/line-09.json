@@ -1,0 +1,92 @@
+{
+ "text": "Wind down with a sleep sound. It fades out by itself. And nothing tracks you at night.",
+ "tag": "[Quiet, gentle, calm narration]",
+ "words": [
+  {
+   "word": "Wind",
+   "start": 0.16,
+   "end": 0.4
+  },
+  {
+   "word": "down",
+   "start": 0.48,
+   "end": 0.8
+  },
+  {
+   "word": "with",
+   "start": 0.88,
+   "end": 0.96
+  },
+  {
+   "word": "a",
+   "start": 1.04,
+   "end": 1.12
+  },
+  {
+   "word": "sleep",
+   "start": 1.2,
+   "end": 1.52
+  },
+  {
+   "word": "sound.",
+   "start": 1.6,
+   "end": 2.24
+  },
+  {
+   "word": "It",
+   "start": 2.48,
+   "end": 2.56
+  },
+  {
+   "word": "fades",
+   "start": 2.72,
+   "end": 2.96
+  },
+  {
+   "word": "out",
+   "start": 3.04,
+   "end": 3.2
+  },
+  {
+   "word": "by",
+   "start": 3.28,
+   "end": 3.36
+  },
+  {
+   "word": "itself.",
+   "start": 3.44,
+   "end": 4.28
+  },
+  {
+   "word": "And",
+   "start": 4.56,
+   "end": 4.72
+  },
+  {
+   "word": "nothing",
+   "start": 4.8,
+   "end": 5.2
+  },
+  {
+   "word": "tracks",
+   "start": 5.28,
+   "end": 5.52
+  },
+  {
+   "word": "you",
+   "start": 5.6,
+   "end": 5.68
+  },
+  {
+   "word": "at",
+   "start": 5.72,
+   "end": 5.76
+  },
+  {
+   "word": "night.",
+   "start": 5.84,
+   "end": 6.24
+  }
+ ],
+ "heard": "Wind down with a sleep sound. It fades out by itself and nothing tracks you at night"
+}

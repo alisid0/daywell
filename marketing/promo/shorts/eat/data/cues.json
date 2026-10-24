@@ -1,0 +1,416 @@
+[
+ {
+  "t": 0.74,
+  "sound": "pop",
+  "gain": -15,
+  "rate": 1
+ },
+ {
+  "t": 2.1,
+  "sound": "pop",
+  "gain": -14.5,
+  "rate": 1.06
+ },
+ {
+  "t": 3.86,
+  "sound": "pop",
+  "gain": -14,
+  "rate": 1.12
+ },
+ {
+  "t": 5.75,
+  "sound": "whoosh",
+  "gain": -17,
+  "rate": 1
+ },
+ {
+  "t": 7.22,
+  "sound": "logo-hit",
+  "gain": -7,
+  "rate": 1
+ },
+ {
+  "t": 7.27,
+  "sound": "shimmer",
+  "gain": -17,
+  "rate": 1
+ },
+ {
+  "t": 7.78,
+  "sound": "pop",
+  "gain": -15,
+  "rate": 1.05
+ },
+ {
+  "t": 10.25,
+  "sound": "swoosh",
+  "gain": -16,
+  "rate": 1
+ },
+ {
+  "t": 11.68,
+  "sound": "card-drop",
+  "gain": -11,
+  "rate": 1
+ },
+ {
+  "t": 12.3,
+  "sound": "whoosh",
+  "gain": -16,
+  "rate": 1
+ },
+ {
+  "t": 13.159,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 13.279,
+  "sound": "shutter",
+  "gain": -9,
+  "rate": 1
+ },
+ {
+  "t": 14.2,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 16.78,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 16.88,
+  "sound": "saved",
+  "gain": -12,
+  "rate": 1
+ },
+ {
+  "t": 18.76,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 20.45,
+  "sound": "pop",
+  "gain": -18,
+  "rate": 1.1
+ },
+ {
+  "t": 23.68,
+  "sound": "card-drop",
+  "gain": -11,
+  "rate": 1
+ },
+ {
+  "t": 24.3,
+  "sound": "whoosh",
+  "gain": -16,
+  "rate": 1
+ },
+ {
+  "t": 25.21,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 25.81,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 26.01,
+  "sound": "typing",
+  "gain": -14,
+  "rate": 1
+ },
+ {
+  "t": 30.94,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 31.04,
+  "sound": "saved",
+  "gain": -12,
+  "rate": 1
+ },
+ {
+  "t": 33.68,
+  "sound": "card-drop",
+  "gain": -11,
+  "rate": 1
+ },
+ {
+  "t": 34.3,
+  "sound": "whoosh",
+  "gain": -16,
+  "rate": 1
+ },
+ {
+  "t": 36.972,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 37.432,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 38.652,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 39.132,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 39.232,
+  "sound": "saved",
+  "gain": -12,
+  "rate": 1
+ },
+ {
+  "t": 45.68,
+  "sound": "card-drop",
+  "gain": -11,
+  "rate": 1
+ },
+ {
+  "t": 46.3,
+  "sound": "whoosh",
+  "gain": -16,
+  "rate": 1
+ },
+ {
+  "t": 47.422,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 48.092,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 48.652,
+  "sound": "typing",
+  "gain": -14,
+  "rate": 1
+ },
+ {
+  "t": 49.692,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 53.4,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 54.45,
+  "sound": "pop",
+  "gain": -18,
+  "rate": 1.1
+ },
+ {
+  "t": 57.68,
+  "sound": "card-drop",
+  "gain": -11,
+  "rate": 1
+ },
+ {
+  "t": 58.3,
+  "sound": "whoosh",
+  "gain": -16,
+  "rate": 1
+ },
+ {
+  "t": 61.352,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 62.862,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 62.962,
+  "sound": "saved",
+  "gain": -12,
+  "rate": 1
+ },
+ {
+  "t": 66.25,
+  "sound": "pop",
+  "gain": -18,
+  "rate": 1.1
+ },
+ {
+  "t": 69.68,
+  "sound": "card-drop",
+  "gain": -11,
+  "rate": 1
+ },
+ {
+  "t": 70.3,
+  "sound": "whoosh",
+  "gain": -16,
+  "rate": 1
+ },
+ {
+  "t": 71.612,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 74.882,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 76.3,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 79,
+  "sound": "tap",
+  "gain": -13,
+  "rate": 1
+ },
+ {
+  "t": 79.1,
+  "sound": "saved",
+  "gain": -12,
+  "rate": 1
+ },
+ {
+  "t": 81.68,
+  "sound": "card-drop",
+  "gain": -11,
+  "rate": 1
+ },
+ {
+  "t": 82.3,
+  "sound": "whoosh",
+  "gain": -16,
+  "rate": 1
+ },
+ {
+  "t": 86.65,
+  "sound": "pop",
+  "gain": -18,
+  "rate": 1.1
+ },
+ {
+  "t": 95.95,
+  "sound": "swoosh",
+  "gain": -16,
+  "rate": 1
+ },
+ {
+  "t": 96.35,
+  "sound": "tick",
+  "gain": -17,
+  "rate": 1
+ },
+ {
+  "t": 96.65,
+  "sound": "tick",
+  "gain": -17,
+  "rate": 1.045
+ },
+ {
+  "t": 96.95,
+  "sound": "tick",
+  "gain": -17,
+  "rate": 1.09
+ },
+ {
+  "t": 97.25,
+  "sound": "tick",
+  "gain": -17,
+  "rate": 1.135
+ },
+ {
+  "t": 97.55,
+  "sound": "tick",
+  "gain": -17,
+  "rate": 1.18
+ },
+ {
+  "t": 97.85,
+  "sound": "tick",
+  "gain": -17,
+  "rate": 1.225
+ },
+ {
+  "t": 98.15,
+  "sound": "tick",
+  "gain": -17,
+  "rate": 1.27
+ },
+ {
+  "t": 103.7,
+  "sound": "pop",
+  "gain": -14,
+  "rate": 1
+ },
+ {
+  "t": 103.95,
+  "sound": "pop",
+  "gain": -14,
+  "rate": 1.1
+ },
+ {
+  "t": 109.7,
+  "sound": "whoosh",
+  "gain": -18,
+  "rate": 1
+ },
+ {
+  "t": 110,
+  "sound": "logo-hit",
+  "gain": -5,
+  "rate": 1
+ },
+ {
+  "t": 110.05,
+  "sound": "shimmer",
+  "gain": -14,
+  "rate": 1
+ },
+ {
+  "t": 111.75,
+  "sound": "pop",
+  "gain": -15,
+  "rate": 1
+ }
+]

@@ -1,0 +1,62 @@
+{
+ "text": "Too much? Make a step easier. Feeling strong? Make it harder.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Too",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "much?",
+   "start": 0.322,
+   "end": 0.882
+  },
+  {
+   "word": "Make",
+   "start": 1.042,
+   "end": 1.202
+  },
+  {
+   "word": "a",
+   "start": 1.242,
+   "end": 1.282
+  },
+  {
+   "word": "step",
+   "start": 1.362,
+   "end": 1.602
+  },
+  {
+   "word": "easier.",
+   "start": 1.682,
+   "end": 2.362
+  },
+  {
+   "word": "Feeling",
+   "start": 2.562,
+   "end": 2.802
+  },
+  {
+   "word": "strong?",
+   "start": 2.962,
+   "end": 3.562
+  },
+  {
+   "word": "Make",
+   "start": 3.762,
+   "end": 3.922
+  },
+  {
+   "word": "it",
+   "start": 4.002,
+   "end": 4.082
+  },
+  {
+   "word": "harder.",
+   "start": 4.162,
+   "end": 4.642
+  }
+ ],
+ "heard": "Too much? Make a step easier. Feeling strong? Make it harder"
+}

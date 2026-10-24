@@ -1,0 +1,57 @@
+{
+ "text": "This is Daywell. Small, calm steps for your everyday basics.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "This",
+   "start": 0.161,
+   "end": 0.481
+  },
+  {
+   "word": "is",
+   "start": 0.561,
+   "end": 0.801
+  },
+  {
+   "word": "Daywell.",
+   "start": 0.921,
+   "end": 1.561
+  },
+  {
+   "word": "Small,",
+   "start": 1.761,
+   "end": 2.281
+  },
+  {
+   "word": "calm",
+   "start": 2.401,
+   "end": 2.641
+  },
+  {
+   "word": "steps",
+   "start": 2.721,
+   "end": 3.121
+  },
+  {
+   "word": "for",
+   "start": 3.201,
+   "end": 3.281
+  },
+  {
+   "word": "your",
+   "start": 3.361,
+   "end": 3.601
+  },
+  {
+   "word": "everyday",
+   "start": 3.681,
+   "end": 4.241
+  },
+  {
+   "word": "basics.",
+   "start": 4.401,
+   "end": 5.281
+  }
+ ],
+ "heard": "This is Daywell. Small, calm steps for your everyday basics."
+}

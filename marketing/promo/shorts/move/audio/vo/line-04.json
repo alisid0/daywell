@@ -1,0 +1,77 @@
+{
+ "text": "Bounce takes you through one step at a time, with a timer for each.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Bounce",
+   "start": 0.16,
+   "end": 0.48
+  },
+  {
+   "word": "takes",
+   "start": 0.6,
+   "end": 0.72
+  },
+  {
+   "word": "you",
+   "start": 0.8,
+   "end": 0.88
+  },
+  {
+   "word": "through",
+   "start": 1.04,
+   "end": 1.2
+  },
+  {
+   "word": "one",
+   "start": 1.28,
+   "end": 1.44
+  },
+  {
+   "word": "step",
+   "start": 1.52,
+   "end": 1.76
+  },
+  {
+   "word": "at",
+   "start": 1.8,
+   "end": 1.84
+  },
+  {
+   "word": "a",
+   "start": 1.92,
+   "end": 2
+  },
+  {
+   "word": "time,",
+   "start": 2.16,
+   "end": 2.56
+  },
+  {
+   "word": "with",
+   "start": 2.6,
+   "end": 2.64
+  },
+  {
+   "word": "a",
+   "start": 2.72,
+   "end": 2.8
+  },
+  {
+   "word": "timer",
+   "start": 2.88,
+   "end": 3.2
+  },
+  {
+   "word": "for",
+   "start": 3.28,
+   "end": 3.44
+  },
+  {
+   "word": "each.",
+   "start": 3.52,
+   "end": 4.24
+  }
+ ],
+ "heard": "Bounce takes you through one step at a time with a timer for each"
+}

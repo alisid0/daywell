@@ -1,0 +1,62 @@
+{
+ "text": "Sounds for rest, from forest at dawn to a temple drum.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "Sounds",
+   "start": 0.453,
+   "end": 0.48
+  },
+  {
+   "word": "for",
+   "start": 0.56,
+   "end": 0.64
+  },
+  {
+   "word": "rest,",
+   "start": 0.8,
+   "end": 1.44
+  },
+  {
+   "word": "from",
+   "start": 1.6,
+   "end": 1.76
+  },
+  {
+   "word": "forest",
+   "start": 1.92,
+   "end": 2.32
+  },
+  {
+   "word": "at",
+   "start": 2.4,
+   "end": 2.48
+  },
+  {
+   "word": "dawn",
+   "start": 2.56,
+   "end": 3.12
+  },
+  {
+   "word": "to",
+   "start": 3.2,
+   "end": 3.28
+  },
+  {
+   "word": "a",
+   "start": 3.36,
+   "end": 3.44
+  },
+  {
+   "word": "temple",
+   "start": 3.52,
+   "end": 3.92
+  },
+  {
+   "word": "drum.",
+   "start": 4,
+   "end": 4.48
+  }
+ ],
+ "heard": "Sounds for rest, from forest at dawn to a temple drum"
+}

@@ -1,0 +1,57 @@
+{
+ "text": "Everything feels like a lot? Step out of the scroll.",
+ "tag": "[Playful, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Everything",
+   "start": 0.16,
+   "end": 0.56
+  },
+  {
+   "word": "feels",
+   "start": 0.72,
+   "end": 0.96
+  },
+  {
+   "word": "like",
+   "start": 1.04,
+   "end": 1.12
+  },
+  {
+   "word": "a",
+   "start": 1.2,
+   "end": 1.28
+  },
+  {
+   "word": "lot?",
+   "start": 1.36,
+   "end": 2
+  },
+  {
+   "word": "Step",
+   "start": 2.24,
+   "end": 2.48
+  },
+  {
+   "word": "out",
+   "start": 2.56,
+   "end": 2.64
+  },
+  {
+   "word": "of",
+   "start": 2.72,
+   "end": 2.8
+  },
+  {
+   "word": "the",
+   "start": 2.84,
+   "end": 2.88
+  },
+  {
+   "word": "scroll.",
+   "start": 2.96,
+   "end": 3.52
+  }
+ ],
+ "heard": "Everything feels like a lot? Step out of the scroll"
+}

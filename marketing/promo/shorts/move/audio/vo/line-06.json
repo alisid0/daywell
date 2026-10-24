@@ -1,0 +1,82 @@
+{
+ "text": "With Plus, Bounce reads each step aloud, so your eyes can stay off the screen.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "With",
+   "start": 0.082,
+   "end": 0.322
+  },
+  {
+   "word": "Plus,",
+   "start": 0.402,
+   "end": 0.962
+  },
+  {
+   "word": "Bounce",
+   "start": 1.122,
+   "end": 1.362
+  },
+  {
+   "word": "reads",
+   "start": 1.442,
+   "end": 1.762
+  },
+  {
+   "word": "each",
+   "start": 1.922,
+   "end": 2.082
+  },
+  {
+   "word": "step",
+   "start": 2.162,
+   "end": 2.322
+  },
+  {
+   "word": "aloud,",
+   "start": 2.402,
+   "end": 3.002
+  },
+  {
+   "word": "so",
+   "start": 3.122,
+   "end": 3.202
+  },
+  {
+   "word": "your",
+   "start": 3.282,
+   "end": 3.442
+  },
+  {
+   "word": "eyes",
+   "start": 3.522,
+   "end": 3.762
+  },
+  {
+   "word": "can",
+   "start": 3.842,
+   "end": 4.002
+  },
+  {
+   "word": "stay",
+   "start": 4.082,
+   "end": 4.242
+  },
+  {
+   "word": "off",
+   "start": 4.322,
+   "end": 4.562
+  },
+  {
+   "word": "the",
+   "start": 4.602,
+   "end": 4.642
+  },
+  {
+   "word": "screen.",
+   "start": 4.722,
+   "end": 5.202
+  }
+ ],
+ "heard": "With Plus, Bounce reads each step aloud so your eyes can stay off the screen"
+}

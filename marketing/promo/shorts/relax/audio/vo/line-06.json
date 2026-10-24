@@ -1,0 +1,82 @@
+{
+ "text": "Or just listen to a few kind words, for moments like after an awkward conversation.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "Or",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "just",
+   "start": 0.402,
+   "end": 0.562
+  },
+  {
+   "word": "listen",
+   "start": 0.642,
+   "end": 0.882
+  },
+  {
+   "word": "to",
+   "start": 0.962,
+   "end": 1.042
+  },
+  {
+   "word": "a",
+   "start": 1.122,
+   "end": 1.202
+  },
+  {
+   "word": "few",
+   "start": 1.282,
+   "end": 1.522
+  },
+  {
+   "word": "kind",
+   "start": 1.602,
+   "end": 1.842
+  },
+  {
+   "word": "words,",
+   "start": 2.002,
+   "end": 2.602
+  },
+  {
+   "word": "for",
+   "start": 2.802,
+   "end": 2.882
+  },
+  {
+   "word": "moments",
+   "start": 2.962,
+   "end": 3.362
+  },
+  {
+   "word": "like",
+   "start": 3.442,
+   "end": 3.842
+  },
+  {
+   "word": "after",
+   "start": 3.922,
+   "end": 4.162
+  },
+  {
+   "word": "an",
+   "start": 4.282,
+   "end": 4.402
+  },
+  {
+   "word": "awkward",
+   "start": 4.482,
+   "end": 4.802
+  },
+  {
+   "word": "conversation.",
+   "start": 4.882,
+   "end": 5.682
+  }
+ ],
+ "heard": "Or just listen to a few kind words for moments like after an awkward conversation"
+}

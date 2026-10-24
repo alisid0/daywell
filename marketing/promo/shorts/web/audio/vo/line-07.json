@@ -1,0 +1,67 @@
+{
+ "text": "Type your email. We send a six-digit code. No password to remember.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Type",
+   "start": 0.082,
+   "end": 0.322
+  },
+  {
+   "word": "your",
+   "start": 0.402,
+   "end": 0.482
+  },
+  {
+   "word": "email.",
+   "start": 0.562,
+   "end": 1.202
+  },
+  {
+   "word": "We",
+   "start": 1.362,
+   "end": 1.522
+  },
+  {
+   "word": "send",
+   "start": 1.642,
+   "end": 1.762
+  },
+  {
+   "word": "a",
+   "start": 1.922,
+   "end": 2.082
+  },
+  {
+   "word": "six-digit",
+   "start": 2.202,
+   "end": 2.642
+  },
+  {
+   "word": "code.",
+   "start": 2.802,
+   "end": 3.322
+  },
+  {
+   "word": "No",
+   "start": 3.522,
+   "end": 3.602
+  },
+  {
+   "word": "password",
+   "start": 3.762,
+   "end": 4.162
+  },
+  {
+   "word": "to",
+   "start": 4.242,
+   "end": 4.322
+  },
+  {
+   "word": "remember.",
+   "start": 4.562,
+   "end": 4.882
+  }
+ ],
+ "heard": "Type your email. We send a six-digit code. No password to remember"
+}

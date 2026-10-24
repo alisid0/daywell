@@ -1,0 +1,97 @@
+{
+ "text": "What can my basket make? Three dinners from what you have. And the rest goes on your list.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "What",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "can",
+   "start": 0.322,
+   "end": 0.402
+  },
+  {
+   "word": "my",
+   "start": 0.482,
+   "end": 0.642
+  },
+  {
+   "word": "basket",
+   "start": 0.722,
+   "end": 1.122
+  },
+  {
+   "word": "make?",
+   "start": 1.202,
+   "end": 1.722
+  },
+  {
+   "word": "Three",
+   "start": 1.922,
+   "end": 2.162
+  },
+  {
+   "word": "dinners",
+   "start": 2.242,
+   "end": 2.642
+  },
+  {
+   "word": "from",
+   "start": 2.722,
+   "end": 2.802
+  },
+  {
+   "word": "what",
+   "start": 2.882,
+   "end": 2.962
+  },
+  {
+   "word": "you",
+   "start": 3.042,
+   "end": 3.122
+  },
+  {
+   "word": "have.",
+   "start": 3.202,
+   "end": 3.682
+  },
+  {
+   "word": "And",
+   "start": 3.842,
+   "end": 3.922
+  },
+  {
+   "word": "the",
+   "start": 4.002,
+   "end": 4.082
+  },
+  {
+   "word": "rest",
+   "start": 4.162,
+   "end": 4.402
+  },
+  {
+   "word": "goes",
+   "start": 4.482,
+   "end": 4.722
+  },
+  {
+   "word": "on",
+   "start": 4.802,
+   "end": 4.962
+  },
+  {
+   "word": "your",
+   "start": 5.042,
+   "end": 5.282
+  },
+  {
+   "word": "list.",
+   "start": 5.482,
+   "end": 5.762
+  }
+ ],
+ "heard": "What can my basket make? Three dinners from what you have, and the rest goes on your list"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "daywell-promo-v2",
+  "length": 120,
+  "music": "take1.mp3",
+  "mix": {
+    "voiceDb": 2,
+    "musicDb": -9,
+    "duckDb": -9,
+    "lines": { "8": { "gainDb": 3, "duckDb": -15, "why": "the softly spoken 'Still scrolling at nine?' over full-energy music" } },
+    "muffle": { "from": 61.44, "to": 72.0, "why": "from the word 'pause' to the music's own soft section" },
+    "ambience": [{ "file": "public/sleep-sounds/waves-on-sand-31753bac13ad.mp3", "from": 75.6, "to": 87.4, "db": -14, "fadeIn": 1.8, "fadeOut": 2.4, "why": "Daywell's own sleep sound under the night" }]
+  }
+}

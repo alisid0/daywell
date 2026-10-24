@@ -1,0 +1,67 @@
+{
+ "text": "What's for dinner? What's in the fridge? Did you even have lunch?",
+ "tag": "[Playful, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "What's",
+   "start": 0.16,
+   "end": 0.36
+  },
+  {
+   "word": "for",
+   "start": 0.4,
+   "end": 0.48
+  },
+  {
+   "word": "dinner?",
+   "start": 0.56,
+   "end": 1.2
+  },
+  {
+   "word": "What's",
+   "start": 1.44,
+   "end": 1.6
+  },
+  {
+   "word": "in",
+   "start": 1.64,
+   "end": 1.68
+  },
+  {
+   "word": "the",
+   "start": 1.76,
+   "end": 1.84
+  },
+  {
+   "word": "fridge?",
+   "start": 1.92,
+   "end": 2.56
+  },
+  {
+   "word": "Did",
+   "start": 2.72,
+   "end": 2.8
+  },
+  {
+   "word": "you",
+   "start": 2.88,
+   "end": 3.04
+  },
+  {
+   "word": "even",
+   "start": 3.12,
+   "end": 3.36
+  },
+  {
+   "word": "have",
+   "start": 3.48,
+   "end": 3.6
+  },
+  {
+   "word": "lunch?",
+   "start": 3.68,
+   "end": 4.24
+  }
+ ],
+ "heard": "What's for dinner? What's in the fridge? Did you even have lunch?"
+}

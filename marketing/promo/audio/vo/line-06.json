@@ -1,0 +1,87 @@
+{
+ "text": "Out of milk? Type it the way you'd say it. It lands on the right list.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Out",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "of",
+   "start": 0.322,
+   "end": 0.402
+  },
+  {
+   "word": "milk?",
+   "start": 0.482,
+   "end": 1.082
+  },
+  {
+   "word": "Type",
+   "start": 1.282,
+   "end": 1.442
+  },
+  {
+   "word": "it",
+   "start": 1.522,
+   "end": 1.602
+  },
+  {
+   "word": "the",
+   "start": 1.682,
+   "end": 1.762
+  },
+  {
+   "word": "way",
+   "start": 1.842,
+   "end": 1.922
+  },
+  {
+   "word": "you'd",
+   "start": 1.962,
+   "end": 2.162
+  },
+  {
+   "word": "say",
+   "start": 2.242,
+   "end": 2.402
+  },
+  {
+   "word": "it.",
+   "start": 2.482,
+   "end": 2.842
+  },
+  {
+   "word": "It",
+   "start": 2.962,
+   "end": 3.122
+  },
+  {
+   "word": "lands",
+   "start": 3.202,
+   "end": 3.442
+  },
+  {
+   "word": "on",
+   "start": 3.482,
+   "end": 3.522
+  },
+  {
+   "word": "the",
+   "start": 3.602,
+   "end": 3.682
+  },
+  {
+   "word": "right",
+   "start": 3.762,
+   "end": 4.002
+  },
+  {
+   "word": "list.",
+   "start": 4.082,
+   "end": 4.562
+  }
+ ],
+ "heard": "Out of milk? Type it the way you'd say it. It lands on the right list"
+}

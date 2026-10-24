@@ -96,8 +96,6 @@ html[data-daywell-style="nook"]{color-scheme:light}
 .nook-shell .calendar-workspace{background:#fffcf4;border:1px solid #e6d9cb;border-radius:32px;padding:28px;box-shadow:0 6px 0 #eadcc450}
 .nook-shell .calendar-intro{display:none}
 .nook-shell .calendar-view-tabs{margin-top:0}
-.nook-shell .calendar-month{background:#fff6e5}
-.nook-shell .calendar-days button[aria-pressed="true"]{background:#f6d185;color:var(--dw-ink)}
 .nook-shell .calendar-progress{background:#dce7ca}
 .nook-shell .workspace .focus-card{background:#674b6d}
 .nook-shell .sleep-hero{background:#655d81}
@@ -154,7 +152,6 @@ html[data-daywell-style="nook"] .stillwater-tool-list button:hover,html[data-day
   .nook-shell .stillwater-dock{gap:4px;padding:6px}
   .nook-shell .stillwater-dock button{min-width:86px}
   .nook-shell .calendar-workspace{padding:22px 15px;border-radius:26px}
-  .nook-shell .calendar-month{padding:14px 7px}
   .nook-shell .page-heading h1{font-size:calc(29px*var(--rc-scale,1))}
   .nook-shell .design-picker{padding:17px}
 }

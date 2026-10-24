@@ -93,6 +93,20 @@ html:is([data-daywell-style="moonlight"], [data-daywell-style="stillwater"]):not
 /* Page titles a step heavier, to match the buttons. */
 main h1 { font-weight: 800 !important }
 
+/* ---------- Time and length wheels, and the calendar's week strip (owner-approved, 24 October 2026) ---------- */
+.time-button { border: 2px solid var(--sk-line) !important; box-shadow: 3px 3px 0 var(--sk-shadow) !important; transition: transform var(--sk-press) ease-out, box-shadow var(--sk-press) ease-out !important }
+.time-button[aria-expanded="true"] { background: var(--sk-forest) !important; color: var(--sk-on-forest) !important }
+.time-wheels { border: 2.5px solid var(--sk-line) !important; box-shadow: 4px 4px 0 var(--sk-shadow) !important }
+.time-wheels::before { background: color-mix(in srgb, var(--sk-mint) 70%, transparent) !important; border: 2px solid var(--sk-line) }
+.calendar-week button { border: 2px solid var(--sk-line) !important; box-shadow: 3px 3px 0 var(--sk-shadow) !important; transition: transform var(--sk-press) ease-out, box-shadow var(--sk-press) ease-out !important }
+.calendar-week .calendar-is-today { background: var(--sk-peach) !important; color: var(--sk-on-peach) !important }
+.calendar-week button[aria-pressed="true"] { background: var(--sk-forest) !important; color: var(--sk-on-forest) !important }
+:is(.time-button, .calendar-week button):active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--sk-shadow) !important }
+/* The day's plans as bubbles. */
+.calendar-day-agenda .calendar-plan-rows article { background: color-mix(in srgb, var(--sk-forest) 10%, var(--dw-surface, #fff7fb)) !important; border: 0 !important; border-radius: 24px !important; padding-inline: 14px !important; margin-bottom: 8px }
+/* In the dark looks the band stays a tint, so the light numbers on it stay easy to read. */
+html:is([data-daywell-style="moonlight"], [data-daywell-style="stillwater"]):not([data-appearance-palette]) .time-wheels::before { background: color-mix(in srgb, var(--sk-mint) 26%, transparent) !important }
+
 @media (prefers-reduced-motion: reduce) {
-  :is(.well-button, .kitchen-primary, .host-primary, .calendar-primary, .sign-in-primary, .is-primary, .mv-btn, .ai-report-send, .welcome-primary, .kitchen-secondary, .kitchen-soon > button, .mv-round, .ai-report-cancel, .welcome-back, .receipt-retake, .receipt-hand, .week-fill, [data-slot="button"], .stillwater-header-button, .kitchen-round, .kitchen-toast-close, [data-slot="dialog-close"], .mv-chip, .mv-seg > button, .calendar-areas > button, .calendar-view-tabs > button, .capture-choices > button, .preset-row > button, .assistant-chip, .week-day, .mv-week, .calendar-strip, .rest-unwind a, .mv-quick button, .food-slot, .rest-sounds > summary, .host-talk-symbol) { transition-duration: 0s !important }
+  :is(.well-button, .kitchen-primary, .host-primary, .calendar-primary, .sign-in-primary, .is-primary, .mv-btn, .ai-report-send, .welcome-primary, .kitchen-secondary, .kitchen-soon > button, .mv-round, .ai-report-cancel, .welcome-back, .receipt-retake, .receipt-hand, .week-fill, [data-slot="button"], .stillwater-header-button, .kitchen-round, .kitchen-toast-close, [data-slot="dialog-close"], .mv-chip, .mv-seg > button, .calendar-areas > button, .calendar-view-tabs > button, .capture-choices > button, .preset-row > button, .assistant-chip, .week-day, .mv-week, .calendar-strip, .rest-unwind a, .mv-quick button, .food-slot, .rest-sounds > summary, .host-talk-symbol, .time-button, .calendar-week button) { transition-duration: 0s !important }
 }

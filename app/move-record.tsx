@@ -11,6 +11,7 @@ import { exercises, parseAmount, type Exercise, type Routine, type RoutineStep }
 import { exerciseNamed } from "@/lib/move-plan";
 import { ActivityCaloriesFields } from "./food-tracking";
 import { MoveFace } from "./move-look";
+import { LengthWheels } from "./time-wheels";
 import type { AppState } from "./use-daywell";
 
 // Recording a move (owner-approved design, 22 October 2026): after a workout the moves done are filled in to check;
@@ -188,7 +189,7 @@ export function MoveRecord({ a, start, figure, onClose, onSaved }: { a: AppState
     {mode !== "strength" && <fieldset className="mv-field"><legend>How long?</legend><div className="mv-chips">
       {MINUTE_CHOICES.map(m => <button key={m} type="button" className="mv-chip" aria-pressed={!otherMinutes && Number(minutes) === m} onClick={() => { setOtherMinutes(false); setMinutes(String(m)); }}>{m} min</button>)}
       <button type="button" className="mv-chip" aria-pressed={otherMinutes} onClick={() => setOtherMinutes(true)}>Other</button>
-      {otherMinutes && <label className="mv-inline"><input type="number" min={1} max={600} required value={minutes} onChange={e => setMinutes(e.target.value)} /> minutes</label>}
+      {otherMinutes && <div className="mv-inline-wheels"><LengthWheels value={Number(minutes) || 1} onChange={m => setMinutes(String(m))} max={600} /></div>}
     </div></fieldset>}
 
     <fieldset className="mv-field"><legend>When?</legend><div className="mv-chips">

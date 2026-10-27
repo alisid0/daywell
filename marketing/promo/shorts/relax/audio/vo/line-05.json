@@ -1,0 +1,62 @@
+{
+ "text": "With Plus, choose a guided session, in one of five voices.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "With",
+   "start": 0.082,
+   "end": 0.242
+  },
+  {
+   "word": "Plus,",
+   "start": 0.322,
+   "end": 0.922
+  },
+  {
+   "word": "choose",
+   "start": 1.042,
+   "end": 1.282
+  },
+  {
+   "word": "a",
+   "start": 1.362,
+   "end": 1.442
+  },
+  {
+   "word": "guided",
+   "start": 1.522,
+   "end": 1.922
+  },
+  {
+   "word": "session,",
+   "start": 2.002,
+   "end": 2.522
+  },
+  {
+   "word": "in",
+   "start": 2.642,
+   "end": 2.802
+  },
+  {
+   "word": "one",
+   "start": 2.842,
+   "end": 2.882
+  },
+  {
+   "word": "of",
+   "start": 2.962,
+   "end": 3.122
+  },
+  {
+   "word": "five",
+   "start": 3.202,
+   "end": 3.442
+  },
+  {
+   "word": "voices.",
+   "start": 3.522,
+   "end": 4.162
+  }
+ ],
+ "heard": "With Plus, choose a guided session in one of five voices"
+}

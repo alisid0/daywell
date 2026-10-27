@@ -1,0 +1,67 @@
+{
+ "text": "In the morning, note when you fell asleep, and how you feel.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "In",
+   "start": 0.082,
+   "end": 0.162
+  },
+  {
+   "word": "the",
+   "start": 0.242,
+   "end": 0.322
+  },
+  {
+   "word": "morning,",
+   "start": 0.442,
+   "end": 0.962
+  },
+  {
+   "word": "note",
+   "start": 1.122,
+   "end": 1.362
+  },
+  {
+   "word": "when",
+   "start": 1.442,
+   "end": 1.522
+  },
+  {
+   "word": "you",
+   "start": 1.602,
+   "end": 1.682
+  },
+  {
+   "word": "fell",
+   "start": 1.762,
+   "end": 1.842
+  },
+  {
+   "word": "asleep,",
+   "start": 1.962,
+   "end": 2.522
+  },
+  {
+   "word": "and",
+   "start": 2.642,
+   "end": 2.802
+  },
+  {
+   "word": "how",
+   "start": 2.882,
+   "end": 3.042
+  },
+  {
+   "word": "you",
+   "start": 3.122,
+   "end": 3.202
+  },
+  {
+   "word": "feel.",
+   "start": 3.282,
+   "end": 3.762
+  }
+ ],
+ "heard": "In the morning, note when you fell asleep and how you feel"
+}

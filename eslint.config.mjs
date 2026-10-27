@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Video-making tools (the promo studio and its Claude skill): standalone Node and browser scripts, not app code.
+    "marketing/**",
+    ".claude/**",
   ]),
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],

@@ -1,0 +1,37 @@
+{
+ "text": "Snap your breakfast. Daywell notes it.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Snap",
+   "start": 0.24,
+   "end": 0.56
+  },
+  {
+   "word": "your",
+   "start": 0.64,
+   "end": 0.72
+  },
+  {
+   "word": "breakfast.",
+   "start": 0.88,
+   "end": 1.52
+  },
+  {
+   "word": "Daywell",
+   "start": 1.68,
+   "end": 2.08
+  },
+  {
+   "word": "notes",
+   "start": 2.16,
+   "end": 2.4
+  },
+  {
+   "word": "it.",
+   "start": 2.48,
+   "end": 2.8
+  }
+ ],
+ "heard": "Snap your breakfast. Daywell notes it"
+}

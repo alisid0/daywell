@@ -1,0 +1,87 @@
+/* Daywell "moments" films: 1080×1920. Every frame is a pure function of time; engine/moments.js draws seek(t).
+   The look is the app's sticker personality: ink outlines, hard offset shadows, forest for the one accent. */
+@font-face { font-family: "Atkinson"; src: url(../assets/fonts/atkinson.woff2) format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "Bricolage"; src: url(../assets/fonts/bricolage.ttf) format("truetype"); font-weight: 200 800; }
+:root { --ink: #3a1f33; --muted: #7d536e; --line: #2b1424; --forest: #2f7a55; --peach: #ffc7a6; --mint: #a9dfd4; --paper: #fff7fb; --lilac: #ddd2f7; --butter: #fde7a8; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #fae7ef; }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Atkinson", system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+.layer { position: absolute; inset: 0; }
+.abs { position: absolute; left: 0; top: 0; }
+svg { display: block; }
+
+/* Sky */
+#sky { background: #fae7ef; }
+.blob { position: absolute; border-radius: 50%; }
+.star { position: absolute; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,.85); }
+#moon { width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; background: #f4e9f1; box-shadow: 0 0 60px 18px rgba(244,233,241,.25); }
+#moon::after { content: ""; position: absolute; left: 34px; top: -10px; width: 120px; height: 120px; border-radius: 50%; background: var(--night, #241c3a); }
+#world { transform-origin: 0 0; }
+
+/* Hook: to-do stickers */
+.todo { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 18px; padding: 16px 32px 16px 16px; border-radius: 26px; background: var(--paper); border: 4px solid var(--line); box-shadow: 7px 7px 0 var(--line); white-space: nowrap; opacity: 0; }
+.todo i { flex: none; width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; background: var(--butter); border: 3px solid var(--line); color: var(--line); }
+.todo.mint i { background: var(--mint); } .todo.peach i { background: var(--peach); } .todo.lilac i { background: var(--lilac); }
+.todo span { font-family: "Bricolage", "Atkinson", sans-serif; font-size: 52px; font-weight: 800; letter-spacing: -.01em; color: var(--ink); }
+
+/* Turn: the sun sticker, the wordmark and the helpers */
+.sunsticker { position: absolute; left: 0; top: 0; width: 300px; height: 300px; opacity: 0; }
+.sunsticker .disc, #endcard .sun .disc { width: 100%; height: 100%; border-radius: 50%; padding: 54px; background: var(--peach); border: 6px solid var(--line); box-shadow: 10px 10px 0 var(--line); color: var(--forest); }
+.wordmark { position: absolute; left: 0; width: 1080px; top: 1030px; text-align: center; font-family: "Bricolage", "Atkinson", sans-serif; font-size: 210px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--ink); opacity: 0; }
+.thelper, .ehelper { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; }
+.thelper img { position: absolute; left: -130px; top: -130px; width: 260px; height: 260px; object-fit: contain; filter: drop-shadow(0 16px 22px rgba(58,31,51,.22)); }
+
+/* Phone */
+#phone { left: 244px; top: 478px; width: 592px; height: 1244px; border-radius: 80px; background: #231a26; box-shadow: 14px 14px 0 var(--line), 0 50px 110px rgba(52,25,45,.3), inset 0 0 0 2px rgba(255,255,255,.08); }
+#screen { position: absolute; left: 16px; top: 16px; width: 560px; height: 1212px; border-radius: 64px; overflow: hidden; background: #fae7ef; }
+#screen img.shot { position: absolute; left: 0; top: 0; width: 560px; height: 1212px; opacity: 0; }
+#screen img.crop { position: absolute; opacity: 0; }
+#island { position: absolute; left: 50%; top: 26px; width: 130px; height: 38px; margin-left: -65px; border-radius: 20px; background: #120d14; z-index: 30; }
+#flash, #dim { position: absolute; inset: 0; opacity: 0; z-index: 20; }
+#flash { background: #fff; }
+#dim { background: #0b0812; }
+.hl { position: absolute; border-radius: 22px; background: rgba(47,122,85,.16); box-shadow: 0 0 0 4px rgba(47,122,85,.45); opacity: 0; z-index: 19; }
+#art { position: absolute; inset: 0; z-index: 8; pointer-events: none; }
+
+/* Stamps: a word stamp or an icon sticker */
+.stamp { position: absolute; left: 0; top: 0; opacity: 0; transform-origin: 50% 50%; }
+.stamp.word { display: flex; align-items: center; gap: 14px; padding: 14px 30px 14px 16px; border-radius: 24px; background: var(--paper); border: 5px solid var(--line); box-shadow: 8px 8px 0 var(--line); white-space: nowrap; }
+.stamp.word i { width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center; background: var(--forest); color: #fff; border: 3px solid var(--line); }
+.stamp.word b { font-family: "Bricolage", "Atkinson", sans-serif; font-size: 58px; font-weight: 800; letter-spacing: .01em; text-transform: uppercase; color: var(--forest); }
+.stamp.icon i { display: grid; place-items: center; width: 150px; height: 150px; border-radius: 50%; border: 5px solid var(--line); box-shadow: 8px 8px 0 var(--line); color: var(--line); }
+
+/* The page of stickers */
+#page { border-radius: 48px; background: var(--paper); border: 6px solid var(--line); box-shadow: 14px 14px 0 var(--line); opacity: 0; transform-origin: 50% 0; }
+.pagehead { position: absolute; left: 0; right: 0; top: 44px; text-align: center; font-family: "Bricolage", "Atkinson", sans-serif; font-size: 64px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); }
+
+/* Plus tag over the phone */
+#plus { left: 540px; top: 456px; width: 0; height: 0; }
+.pluspill { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 12px; padding: 10px 28px 10px 12px; border-radius: 999px; white-space: nowrap; background: linear-gradient(135deg, #f7dc9c, #f1bf7a); color: #5a3a12; border: 4px solid var(--line); box-shadow: 6px 6px 0 var(--line); opacity: 0; transform-origin: 50% 50%; }
+.pluspill i { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.5); }
+.pluspill span { font-family: "Bricolage", "Atkinson", sans-serif; font-size: 34px; font-weight: 800; }
+
+/* End card */
+#endcard { left: 0; top: 0; width: 1080px; height: 1920px; opacity: 0; }
+#endcard .sun { position: absolute; left: 400px; top: 600px; width: 280px; height: 280px; }
+#endcard .url { position: absolute; left: 0; right: 0; top: 960px; text-align: center; font-family: "Bricolage", "Atkinson", sans-serif; font-size: 124px; font-weight: 800; letter-spacing: -.035em; color: var(--ink); }
+#endcard .price { position: absolute; left: 50%; top: 1150px; padding: 16px 40px; border-radius: 999px; background: var(--paper); border: 5px solid var(--line); box-shadow: 8px 8px 0 var(--line); font-family: "Bricolage", "Atkinson", sans-serif; font-size: 48px; font-weight: 800; color: var(--forest); white-space: nowrap; }
+.ehelper img { position: absolute; left: -120px; top: -120px; width: 240px; height: 240px; object-fit: contain; filter: drop-shadow(0 16px 22px rgba(58,31,51,.2)); }
+
+/* Screen-space overlays */
+#captions { left: 60px; right: 60px; top: 196px; height: 260px; }
+.cap { position: absolute; left: 0; right: 0; top: 0; height: 260px; display: flex; align-items: center; justify-content: center; text-align: center; opacity: 0; }
+.cap p { margin: 0; font-family: "Bricolage", "Atkinson", sans-serif; font-size: 80px; font-weight: 800; line-height: 1.06; letter-spacing: -.02em; text-wrap: balance; max-width: 960px; }
+.cap .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .04em .1em; margin-bottom: -.1em; }
+.cap .wi { display: inline-block; }
+.cap .acc { color: var(--forest); }
+#captions.light .acc { color: #9fdcc4; }
+#finger { width: 76px; height: 76px; margin: -38px 0 0 -38px; opacity: 0; z-index: 50; }
+#finger .dot { position: absolute; inset: 0; border-radius: 50%; background: rgba(255,255,255,.86); box-shadow: 0 0 0 3px rgba(43,20,36,.6), 0 10px 26px rgba(40,20,35,.38); }
+#finger .ring { position: absolute; left: -10px; top: -10px; width: 96px; height: 96px; border-radius: 50%; border: 4px solid rgba(255,255,255,.95); opacity: 0; }
+.bubble { position: absolute; left: 0; top: 0; max-width: 840px; display: flex; align-items: center; gap: 22px; padding: 20px 34px 20px 20px; border-radius: 40px; background: var(--paper); border: 4px solid var(--line); box-shadow: 8px 8px 0 var(--line); opacity: 0; transform-origin: 0 100%; }
+.bubble i { flex: none; width: 128px; height: 128px; border-radius: 50%; overflow: hidden; background: var(--peach); border: 3px solid var(--line); }
+.bubble i img { width: 100%; height: 100%; object-fit: cover; }
+.bubble span { font-size: 44px; font-weight: 700; line-height: 1.22; color: var(--ink); }
+
+/* A small name sticker over a helper on the phone screen (film px). */
+.namechip { position: absolute; left: 0; top: 0; padding: 8px 20px; border-radius: 999px; background: var(--paper); border: 4px solid var(--line); box-shadow: 5px 5px 0 var(--line); font-family: "Bricolage", "Atkinson", sans-serif; font-size: 30px; font-weight: 800; color: var(--ink); white-space: nowrap; opacity: 0; transform-origin: 50% 100%; }

@@ -1,0 +1,27 @@
+{
+ "text": "Give it twenty-five minutes.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Give",
+   "start": 0.081,
+   "end": 0.161
+  },
+  {
+   "word": "it",
+   "start": 0.241,
+   "end": 0.401
+  },
+  {
+   "word": "twenty-five",
+   "start": 0.481,
+   "end": 1.121
+  },
+  {
+   "word": "minutes.",
+   "start": 1.201,
+   "end": 1.761
+  }
+ ],
+ "heard": "Give it twenty-five minutes"
+}

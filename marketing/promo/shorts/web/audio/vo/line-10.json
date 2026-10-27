@@ -1,0 +1,67 @@
+{
+ "text": "Eat, Move, Sleep and Relax, in one calm place, wherever you are.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Eat,",
+   "start": 0.082,
+   "end": 0.522
+  },
+  {
+   "word": "Move,",
+   "start": 0.642,
+   "end": 1.162
+  },
+  {
+   "word": "Sleep",
+   "start": 1.282,
+   "end": 1.682
+  },
+  {
+   "word": "and",
+   "start": 1.762,
+   "end": 1.922
+  },
+  {
+   "word": "Relax,",
+   "start": 2.082,
+   "end": 2.762
+  },
+  {
+   "word": "in",
+   "start": 2.882,
+   "end": 3.042
+  },
+  {
+   "word": "one",
+   "start": 3.122,
+   "end": 3.362
+  },
+  {
+   "word": "calm",
+   "start": 3.442,
+   "end": 3.762
+  },
+  {
+   "word": "place,",
+   "start": 4.042,
+   "end": 4.362
+  },
+  {
+   "word": "wherever",
+   "start": 4.402,
+   "end": 4.802
+  },
+  {
+   "word": "you",
+   "start": 4.882,
+   "end": 4.962
+  },
+  {
+   "word": "are.",
+   "start": 5.042,
+   "end": 5.282
+  }
+ ],
+ "heard": "Eat, move, sleep and relax in one calm place wherever you are"
+}

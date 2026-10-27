@@ -1,0 +1,72 @@
+{
+ "text": "This is Relax, with Luma. A pause from the scroll, and the day.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "This",
+   "start": 0.16,
+   "end": 0.32
+  },
+  {
+   "word": "is",
+   "start": 0.4,
+   "end": 0.48
+  },
+  {
+   "word": "Relax,",
+   "start": 0.56,
+   "end": 1.36
+  },
+  {
+   "word": "with",
+   "start": 1.44,
+   "end": 1.6
+  },
+  {
+   "word": "Luma.",
+   "start": 1.68,
+   "end": 2.32
+  },
+  {
+   "word": "A",
+   "start": 2.56,
+   "end": 2.64
+  },
+  {
+   "word": "pause",
+   "start": 2.72,
+   "end": 2.96
+  },
+  {
+   "word": "from",
+   "start": 3.04,
+   "end": 3.12
+  },
+  {
+   "word": "the",
+   "start": 3.2,
+   "end": 3.28
+  },
+  {
+   "word": "scroll,",
+   "start": 3.36,
+   "end": 4.04
+  },
+  {
+   "word": "and",
+   "start": 4.08,
+   "end": 4.24
+  },
+  {
+   "word": "the",
+   "start": 4.32,
+   "end": 4.4
+  },
+  {
+   "word": "day.",
+   "start": 4.56,
+   "end": 4.8
+  }
+ ],
+ "heard": "This is Relax with Luma, a pause from the scroll and the day"
+}

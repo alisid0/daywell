@@ -1,0 +1,52 @@
+{
+ "text": "Start with one small thing. Give it ten minutes.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Start",
+   "start": 0.162,
+   "end": 0.402
+  },
+  {
+   "word": "with",
+   "start": 0.482,
+   "end": 0.722
+  },
+  {
+   "word": "one",
+   "start": 0.802,
+   "end": 1.042
+  },
+  {
+   "word": "small",
+   "start": 1.122,
+   "end": 1.442
+  },
+  {
+   "word": "thing.",
+   "start": 1.522,
+   "end": 2.162
+  },
+  {
+   "word": "Give",
+   "start": 2.242,
+   "end": 2.322
+  },
+  {
+   "word": "it",
+   "start": 2.402,
+   "end": 2.562
+  },
+  {
+   "word": "ten",
+   "start": 2.642,
+   "end": 2.802
+  },
+  {
+   "word": "minutes.",
+   "start": 2.882,
+   "end": 3.762
+  }
+ ],
+ "heard": "Start with one small thing. Give it ten minutes"
+}

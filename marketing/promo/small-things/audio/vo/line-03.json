@@ -1,0 +1,42 @@
+{
+ "text": "Note how you slept. Spin, save, done.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Note",
+   "start": 0.298,
+   "end": 0.32
+  },
+  {
+   "word": "how",
+   "start": 0.4,
+   "end": 0.48
+  },
+  {
+   "word": "you",
+   "start": 0.56,
+   "end": 0.72
+  },
+  {
+   "word": "slept.",
+   "start": 0.76,
+   "end": 1.68
+  },
+  {
+   "word": "Spin,",
+   "start": 1.88,
+   "end": 2.32
+  },
+  {
+   "word": "save,",
+   "start": 2.48,
+   "end": 3.12
+  },
+  {
+   "word": "done.",
+   "start": 3.2,
+   "end": 4.08
+  }
+ ],
+ "heard": "Note how you slept. Spin, save, done"
+}

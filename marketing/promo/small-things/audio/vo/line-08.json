@@ -1,0 +1,42 @@
+{
+ "text": "No calorie counting, unless you want it.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "No",
+   "start": 0.16,
+   "end": 0.32
+  },
+  {
+   "word": "calorie",
+   "start": 0.4,
+   "end": 0.72
+  },
+  {
+   "word": "counting,",
+   "start": 0.8,
+   "end": 1.44
+  },
+  {
+   "word": "unless",
+   "start": 1.6,
+   "end": 1.92
+  },
+  {
+   "word": "you",
+   "start": 2,
+   "end": 2.08
+  },
+  {
+   "word": "want",
+   "start": 2.2,
+   "end": 2.32
+  },
+  {
+   "word": "it.",
+   "start": 2.4,
+   "end": 2.72
+  }
+ ],
+ "heard": "No calorie counting unless you want it"
+}

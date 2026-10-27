@@ -1,0 +1,27 @@
+{
+  "name": "daywell-short-sleep",
+  "length": 120,
+  "music": "take1.mp3",
+  "mix": {
+    "voiceDb": 2,
+    "musicDb": -9,
+    "duckDb": -9,
+    "muffle": {
+      "from": 60.4,
+      "to": 70.4,
+      "why": "the music hushes for the night chapter, then the morning brings it back"
+    },
+    "ambience": [
+      {
+        "file": "public/sleep-sounds/waves-on-sand-31753bac13ad.mp3",
+        "from": 42.6,
+        "to": 70.2,
+        "db": -18,
+        "fadeIn": 1.5,
+        "fadeOut": 2.6,
+        "why": "Daywell's own Waves on sand, chosen on screen, under the night"
+      }
+    ],
+    "ceilingDb": -2.5
+  }
+}

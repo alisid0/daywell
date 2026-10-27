@@ -1,0 +1,42 @@
+{
+ "text": "Your week, one swipe at a time.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Your",
+   "start": 0.16,
+   "end": 0.32
+  },
+  {
+   "word": "week,",
+   "start": 0.4,
+   "end": 0.92
+  },
+  {
+   "word": "one",
+   "start": 1.12,
+   "end": 1.28
+  },
+  {
+   "word": "swipe",
+   "start": 1.44,
+   "end": 1.76
+  },
+  {
+   "word": "at",
+   "start": 1.8,
+   "end": 1.84
+  },
+  {
+   "word": "a",
+   "start": 1.92,
+   "end": 1.96
+  },
+  {
+   "word": "time.",
+   "start": 2,
+   "end": 2.48
+  }
+ ],
+ "heard": "You're weak, one swipe at a time"
+}

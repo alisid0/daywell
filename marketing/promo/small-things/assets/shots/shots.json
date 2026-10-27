@@ -1,0 +1,270 @@
+{
+ "s3-sleep": {
+  "boxes": {
+   "log": {
+    "x": 42,
+    "y": 429.6,
+    "w": 151.4,
+    "h": 46
+   }
+  },
+  "scrollY": 1941
+ },
+ "s3-sheet": {
+  "boxes": {
+   "Log your sleep": {
+    "x": 42,
+    "y": 429.6,
+    "w": 151.4,
+    "h": 46
+   },
+   "fell": {
+    "x": 18,
+    "y": 558.6,
+    "w": 169.5,
+    "h": 48
+   }
+  },
+  "scrollY": 1941
+ },
+ "s3-open": {
+  "boxes": {
+   "hour": {
+    "x": 87,
+    "y": 363.5,
+    "w": 68,
+    "h": 240
+   }
+  },
+  "scrollY": 1941
+ },
+ "s3-spin-0": {
+  "boxes": {},
+  "scrollY": 1941
+ },
+ "s3-spin-1": {
+  "boxes": {},
+  "scrollY": 1941
+ },
+ "s3-spin-2": {
+  "boxes": {},
+  "scrollY": 1941
+ },
+ "s3-spin-3": {
+  "boxes": {},
+  "scrollY": 1941
+ },
+ "s3-spin-4": {
+  "boxes": {},
+  "scrollY": 1941
+ },
+ "s3-spin-5": {
+  "boxes": {},
+  "scrollY": 1941
+ },
+ "s3-spin-6": {
+  "boxes": {},
+  "scrollY": 1941
+ },
+ "s3-spun": {
+  "boxes": {},
+  "scrollY": 1941
+ },
+ "s3-save": {
+  "boxes": {
+   "save": {
+    "x": 18,
+    "y": 771.9,
+    "w": 354,
+    "h": 50
+   }
+  },
+  "scrollY": 1941
+ },
+ "s3-saved": {
+  "boxes": {
+   "Save entry": {
+    "x": 18,
+    "y": 771.9,
+    "w": 354,
+    "h": 50
+   }
+  },
+  "scrollY": 1941
+ },
+ "s4-today": {
+  "boxes": {
+   "trio": {
+    "x": 60,
+    "y": 363,
+    "w": 270,
+    "h": 110
+   }
+  },
+  "scrollY": 0
+ },
+ "s5-focus": {
+  "boxes": {
+   "plan": {
+    "x": 42,
+    "y": 469.7,
+    "w": 118,
+    "h": 36
+   }
+  },
+  "scrollY": 457
+ },
+ "s5-sheet": {
+  "boxes": {
+   "Plan a task": {
+    "x": 42,
+    "y": 469.7,
+    "w": 118,
+    "h": 36
+   },
+   "name": {
+    "x": 18,
+    "y": 518,
+    "w": 354,
+    "h": 46.5
+   }
+  },
+  "scrollY": 457
+ },
+ "s5-typed": {
+  "boxes": {
+   "s5-type": {
+    "x": 18,
+    "y": 518,
+    "w": 354,
+    "h": 46.5
+   },
+   "s5-type:clip": {
+    "x": 12,
+    "y": 512,
+    "w": 366,
+    "h": 58.5,
+    "counts": [
+     0,
+     2,
+     4,
+     6,
+     8,
+     10,
+     12,
+     13
+    ]
+   },
+   "save": {
+    "x": 18,
+    "y": 772,
+    "w": 354,
+    "h": 50
+   }
+  },
+  "scrollY": 457
+ },
+ "s5-saved": {
+  "boxes": {
+   "Save entry": {
+    "x": 18,
+    "y": 772,
+    "w": 354,
+    "h": 50
+   },
+   "task": {
+    "x": 66,
+    "y": 591.3,
+    "w": 132,
+    "h": 21
+   }
+  },
+  "scrollY": 682
+ },
+ "s6-top": {
+  "boxes": {},
+  "scrollY": 0
+ },
+ "s6-card": {
+  "boxes": {
+   "minutes": {
+    "x": 198,
+    "y": 395.7,
+    "w": 68,
+    "h": 240
+   }
+  },
+  "scrollY": 473
+ },
+ "s6-spin-0": {
+  "boxes": {},
+  "scrollY": 473
+ },
+ "s6-spin-1": {
+  "boxes": {},
+  "scrollY": 473
+ },
+ "s6-spin-2": {
+  "boxes": {},
+  "scrollY": 473
+ },
+ "s6-spin-3": {
+  "boxes": {},
+  "scrollY": 473
+ },
+ "s6-spin-4": {
+  "boxes": {},
+  "scrollY": 473
+ },
+ "s6-spin-5": {
+  "boxes": {},
+  "scrollY": 473
+ },
+ "s6-spin-6": {
+  "boxes": {},
+  "scrollY": 473
+ },
+ "s6-spin-7": {
+  "boxes": {},
+  "scrollY": 473
+ },
+ "s6-spun": {
+  "boxes": {
+   "set": {
+    "x": 42,
+    "y": 681.7,
+    "w": 99.4,
+    "h": 50
+   }
+  },
+  "scrollY": 473
+ },
+ "s6-set": {
+  "boxes": {
+   "css=[data-promo=set]": {
+    "x": 42,
+    "y": 681.7,
+    "w": 99.4,
+    "h": 50
+   },
+   "start": {
+    "x": 45,
+    "y": 558.2,
+    "w": 144.7,
+    "h": 50
+   }
+  },
+  "scrollY": 0
+ },
+ "s6-running": {
+  "boxes": {
+   "Start timer": {
+    "x": 45,
+    "y": 558.2,
+    "w": 144.7,
+    "h": 50
+   }
+  },
+  "scrollY": 0
+ }
+}

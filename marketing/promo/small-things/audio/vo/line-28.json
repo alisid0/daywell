@@ -1,0 +1,32 @@
+{
+ "text": "Make it look like you.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Make",
+   "start": 0.16,
+   "end": 0.32
+  },
+  {
+   "word": "it",
+   "start": 0.4,
+   "end": 0.48
+  },
+  {
+   "word": "look",
+   "start": 0.64,
+   "end": 0.8
+  },
+  {
+   "word": "like",
+   "start": 0.88,
+   "end": 1.12
+  },
+  {
+   "word": "you.",
+   "start": 1.2,
+   "end": 1.6
+  }
+ ],
+ "heard": "Make it look like you"
+}

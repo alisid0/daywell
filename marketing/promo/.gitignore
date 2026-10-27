@@ -1,0 +1,20 @@
+# Renders and mixes are rebuilt with one command each (see README); keep them out of git, for every film.
+out/
+**/audio/mix.wav
+**/audio/mix-raw.wav
+**/audio/vo-takes/
+# Samples and capture leftovers
+/audio/vo-samples/
+/audio/sfx-samples/
+/audio/voice-*.mp3
+/audio/sound-effects-preview.mp3
+**/assets/shots/_*.png
+# Studio-only leftovers: scratch images, the superseded v1 draft and its music, skill backups, logs
+**/_*.png
+/assets/music/
+/v1/
+/skill-snapshots/
+/package.json
+/package-lock.json
+node_modules/
+*.log

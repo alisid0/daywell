@@ -1,0 +1,62 @@
+{
+ "text": "Now Daywell opens from your home screen, like any other app.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Now",
+   "start": 0.304,
+   "end": 0.32
+  },
+  {
+   "word": "Daywell",
+   "start": 0.4,
+   "end": 0.88
+  },
+  {
+   "word": "opens",
+   "start": 0.96,
+   "end": 1.28
+  },
+  {
+   "word": "from",
+   "start": 1.36,
+   "end": 1.52
+  },
+  {
+   "word": "your",
+   "start": 1.6,
+   "end": 1.68
+  },
+  {
+   "word": "home",
+   "start": 1.76,
+   "end": 1.92
+  },
+  {
+   "word": "screen,",
+   "start": 2,
+   "end": 2.52
+  },
+  {
+   "word": "like",
+   "start": 2.56,
+   "end": 2.8
+  },
+  {
+   "word": "any",
+   "start": 2.88,
+   "end": 3.04
+  },
+  {
+   "word": "other",
+   "start": 3.12,
+   "end": 3.36
+  },
+  {
+   "word": "app.",
+   "start": 3.44,
+   "end": 4.16
+  }
+ ],
+ "heard": "Now Daywell opens from your home screen like any other app"
+}

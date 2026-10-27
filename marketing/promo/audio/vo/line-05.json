@@ -1,0 +1,92 @@
+{
+ "text": "Move with Bounce, one step at a time. Stop early? Save what you did. It still counts.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Move",
+   "start": 0.16,
+   "end": 0.4
+  },
+  {
+   "word": "with",
+   "start": 0.48,
+   "end": 0.64
+  },
+  {
+   "word": "Bounce,",
+   "start": 0.72,
+   "end": 1.36
+  },
+  {
+   "word": "one",
+   "start": 1.52,
+   "end": 1.68
+  },
+  {
+   "word": "step",
+   "start": 1.76,
+   "end": 2
+  },
+  {
+   "word": "at",
+   "start": 2.04,
+   "end": 2.08
+  },
+  {
+   "word": "a",
+   "start": 2.16,
+   "end": 2.24
+  },
+  {
+   "word": "time.",
+   "start": 2.44,
+   "end": 2.88
+  },
+  {
+   "word": "Stop",
+   "start": 3.12,
+   "end": 3.28
+  },
+  {
+   "word": "early?",
+   "start": 3.36,
+   "end": 3.88
+  },
+  {
+   "word": "Save",
+   "start": 4.08,
+   "end": 4.24
+  },
+  {
+   "word": "what",
+   "start": 4.32,
+   "end": 4.4
+  },
+  {
+   "word": "you",
+   "start": 4.48,
+   "end": 4.56
+  },
+  {
+   "word": "did.",
+   "start": 4.64,
+   "end": 5.04
+  },
+  {
+   "word": "It",
+   "start": 5.2,
+   "end": 5.28
+  },
+  {
+   "word": "still",
+   "start": 5.44,
+   "end": 5.68
+  },
+  {
+   "word": "counts.",
+   "start": 5.92,
+   "end": 6.24
+  }
+ ],
+ "heard": "Move with bounce, one step at a time. Stop early, save what you did. It still counts"
+}

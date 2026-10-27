@@ -1,0 +1,37 @@
+{
+ "text": "A move that fits your day.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "A",
+   "start": 0.081,
+   "end": 0.161
+  },
+  {
+   "word": "move",
+   "start": 0.241,
+   "end": 0.561
+  },
+  {
+   "word": "that",
+   "start": 0.641,
+   "end": 0.801
+  },
+  {
+   "word": "fits",
+   "start": 0.961,
+   "end": 1.201
+  },
+  {
+   "word": "your",
+   "start": 1.281,
+   "end": 1.441
+  },
+  {
+   "word": "day.",
+   "start": 1.641,
+   "end": 1.921
+  }
+ ],
+ "heard": "A move that fits your day"
+}

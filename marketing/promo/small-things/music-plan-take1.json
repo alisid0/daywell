@@ -1,0 +1,63 @@
+{
+  "note": "Small things count (owner approved new music, 24 Oct 2026). 96 BPM, so every 5-second moment is exactly two bars of 4/4 and each chunk starts on a moment's downbeat. Calm but alive: bright through the day, the most energy for Move, quiet at dusk and night (room for the real Waves on sand), then the groove returns at dawn and resolves.",
+  "model_id": "music_v2_5",
+  "seed": 2410,
+  "chunks": [
+    {
+      "text": "[Intro]\n{quick, slightly hectic plucks and ticking percussion building for two bars}",
+      "duration_ms": 5000,
+      "positive_styles": ["feel-good indie pop instrumental", "96 BPM", "F major", "busy staccato synth plucks", "ticking hi-hats", "a little hectic", "short build", "clean modern production"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "choir", "dark", "aggressive", "distorted", "EDM drop", "dubstep"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Reveal]\n{the busy plucks stop; one warm open chord lands on the downbeat, then a gentle groove begins}",
+      "duration_ms": 5000,
+      "positive_styles": ["warm open major chord", "soft felt piano", "gentle kick on the downbeat", "relief", "96 BPM", "F major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "dark", "aggressive", "big drop"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Morning groove]",
+      "duration_ms": 50000,
+      "positive_styles": ["light bright acoustic groove", "brushed drums", "plucked acoustic guitar", "soft handclaps on 2 and 4", "warm bass", "simple friendly melody", "leaves space for a voiceover", "96 BPM", "F major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "busy lead melody", "dark", "aggressive"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Lift]",
+      "duration_ms": 30000,
+      "positive_styles": ["the same groove with more energy", "fuller drums", "bouncy bass line", "bright synth pluck hook", "uplifting", "still leaves space for a voiceover", "96 BPM", "F major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "aggressive", "distorted", "EDM drop"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Easing back]",
+      "duration_ms": 15000,
+      "positive_styles": ["the groove eases back", "lighter drums", "warm guitar and piano", "settling", "96 BPM", "F major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "dark", "aggressive"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Dusk]\n{drums drop out}",
+      "duration_ms": 15000,
+      "positive_styles": ["no drums", "soft felt piano", "warm ambient pads", "slow and calm", "evening", "96 BPM pulse felt, not played", "F major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "drums", "percussion", "dark", "tense"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Night]\n{very sparse, low and calm, with lots of space}",
+      "duration_ms": 10000,
+      "positive_styles": ["very sparse", "low warm pad", "a few soft piano notes", "night", "peaceful", "lots of space", "F major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "drums", "percussion", "melody", "dark", "tense", "eerie"],
+      "context_adherence": "high"
+    },
+    {
+      "text": "[Dawn and outro]\n{the gentle groove returns, builds a little, then resolves to a warm final chord that rings out and ends cleanly}",
+      "duration_ms": 20000,
+      "positive_styles": ["the gentle groove returns", "brushed drums", "plucked guitar", "warm and hopeful", "resolves to a warm final major chord", "clean ending", "96 BPM", "F major"],
+      "negative_styles": ["vocals", "singing", "lyrics", "humming", "dark", "aggressive", "abrupt cut", "fade to silence too early"],
+      "context_adherence": "high"
+    }
+  ]
+}

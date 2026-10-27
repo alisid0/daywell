@@ -1,0 +1,37 @@
+{
+ "text": "Fill the week with dinner ideas.",
+ "tag": "[Warm, friendly narration]",
+ "words": [
+  {
+   "word": "Fill",
+   "start": 0.16,
+   "end": 0.4
+  },
+  {
+   "word": "the",
+   "start": 0.44,
+   "end": 0.48
+  },
+  {
+   "word": "week",
+   "start": 0.64,
+   "end": 0.88
+  },
+  {
+   "word": "with",
+   "start": 0.96,
+   "end": 1.12
+  },
+  {
+   "word": "dinner",
+   "start": 1.28,
+   "end": 1.52
+  },
+  {
+   "word": "ideas.",
+   "start": 1.6,
+   "end": 2.24
+  }
+ ],
+ "heard": "Fill the week with dinner ideas"
+}

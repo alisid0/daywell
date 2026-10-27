@@ -1,0 +1,87 @@
+{
+ "text": "In the morning, note how you slept. Look back at your week. No streaks. No scores.",
+ "tag": "[Warm and brighter again]",
+ "words": [
+  {
+   "word": "In",
+   "start": 0.08,
+   "end": 0.16
+  },
+  {
+   "word": "the",
+   "start": 0.2,
+   "end": 0.24
+  },
+  {
+   "word": "morning,",
+   "start": 0.32,
+   "end": 0.88
+  },
+  {
+   "word": "note",
+   "start": 1.04,
+   "end": 1.28
+  },
+  {
+   "word": "how",
+   "start": 1.36,
+   "end": 1.44
+  },
+  {
+   "word": "you",
+   "start": 1.52,
+   "end": 1.68
+  },
+  {
+   "word": "slept.",
+   "start": 1.72,
+   "end": 2.36
+  },
+  {
+   "word": "Look",
+   "start": 2.56,
+   "end": 2.8
+  },
+  {
+   "word": "back",
+   "start": 2.88,
+   "end": 3.04
+  },
+  {
+   "word": "at",
+   "start": 3.08,
+   "end": 3.12
+  },
+  {
+   "word": "your",
+   "start": 3.2,
+   "end": 3.36
+  },
+  {
+   "word": "week.",
+   "start": 3.52,
+   "end": 3.88
+  },
+  {
+   "word": "No",
+   "start": 4.08,
+   "end": 4.24
+  },
+  {
+   "word": "streaks.",
+   "start": 4.32,
+   "end": 5.08
+  },
+  {
+   "word": "No",
+   "start": 5.12,
+   "end": 5.28
+  },
+  {
+   "word": "scores.",
+   "start": 5.36,
+   "end": 6.32
+  }
+ ],
+ "heard": "In the morning, note how you slept. Look back at your week. No streaks, no scores"
+}

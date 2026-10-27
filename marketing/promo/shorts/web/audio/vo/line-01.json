@@ -1,0 +1,37 @@
+{
+ "text": "Daywell, right in your phone's browser.",
+ "tag": "[Playful, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "Daywell,",
+   "start": 0.16,
+   "end": 0.8
+  },
+  {
+   "word": "right",
+   "start": 0.96,
+   "end": 1.2
+  },
+  {
+   "word": "in",
+   "start": 1.28,
+   "end": 1.36
+  },
+  {
+   "word": "your",
+   "start": 1.44,
+   "end": 1.52
+  },
+  {
+   "word": "phone's",
+   "start": 1.64,
+   "end": 1.92
+  },
+  {
+   "word": "browser.",
+   "start": 2.2,
+   "end": 2.56
+  }
+ ],
+ "heard": "Daywell right in your phone's browser"
+}

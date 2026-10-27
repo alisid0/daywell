@@ -1,0 +1,62 @@
+{
+ "text": "Then there's nothing to do, and nothing tracking you at night.",
+ "tag": "[Warm, calm, friendly narration]",
+ "words": [
+  {
+   "word": "Then",
+   "start": 0.161,
+   "end": 0.321
+  },
+  {
+   "word": "there's",
+   "start": 0.401,
+   "end": 0.721
+  },
+  {
+   "word": "nothing",
+   "start": 0.801,
+   "end": 1.121
+  },
+  {
+   "word": "to",
+   "start": 1.201,
+   "end": 1.281
+  },
+  {
+   "word": "do,",
+   "start": 1.561,
+   "end": 1.921
+  },
+  {
+   "word": "and",
+   "start": 2.001,
+   "end": 2.081
+  },
+  {
+   "word": "nothing",
+   "start": 2.281,
+   "end": 2.481
+  },
+  {
+   "word": "tracking",
+   "start": 2.561,
+   "end": 2.961
+  },
+  {
+   "word": "you",
+   "start": 3.001,
+   "end": 3.041
+  },
+  {
+   "word": "at",
+   "start": 3.121,
+   "end": 3.201
+  },
+  {
+   "word": "night.",
+   "start": 3.281,
+   "end": 4.241
+  }
+ ],
+ "heard": "Then there's nothing to do and nothing tracking you at night"
+}

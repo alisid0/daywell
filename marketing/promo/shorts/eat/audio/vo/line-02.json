@@ -1,0 +1,52 @@
+{
+ "text": "This is Eat, with Nori. Everyday food, made easier.",
+ "tag": "[Warm, upbeat, friendly narration]",
+ "words": [
+  {
+   "word": "This",
+   "start": 0.16,
+   "end": 0.32
+  },
+  {
+   "word": "is",
+   "start": 0.4,
+   "end": 0.56
+  },
+  {
+   "word": "Eat,",
+   "start": 0.72,
+   "end": 1.16
+  },
+  {
+   "word": "with",
+   "start": 1.28,
+   "end": 1.44
+  },
+  {
+   "word": "Nori.",
+   "start": 1.52,
+   "end": 2.16
+  },
+  {
+   "word": "Everyday",
+   "start": 2.4,
+   "end": 2.8
+  },
+  {
+   "word": "food,",
+   "start": 2.88,
+   "end": 3.32
+  },
+  {
+   "word": "made",
+   "start": 3.44,
+   "end": 3.68
+  },
+  {
+   "word": "easier.",
+   "start": 3.84,
+   "end": 4.32
+  }
+ ],
+ "heard": "This is Eat with Nori, everyday food made easier"
+}
